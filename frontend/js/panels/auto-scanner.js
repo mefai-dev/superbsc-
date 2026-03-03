@@ -34,7 +34,7 @@ export class AutoScannerPanel extends BasePanel {
     const sigMap = {};
     for (const s of signals) {
       const addr = (s.contractAddress || '').toLowerCase();
-      if (addr) sigMap[addr] = s.signalDirection === 'buy' ? 'BUY' : 'SELL';
+      if (addr) sigMap[addr] = (s.direction || s.signalDirection || '') === 'buy' ? 'BUY' : 'SELL';
     }
 
     // Score meme tokens

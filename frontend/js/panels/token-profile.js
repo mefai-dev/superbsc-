@@ -82,26 +82,12 @@ export class TokenProfilePanel extends BasePanel {
     const logo = m.icon || m.logo || d.icon || '';
     const description = m.description || '';
 
-    // Price data
+    // Price data — dynamic has: price, volume24h, volume24hBuy/Sell
     const price = parseFloat(d.price || m.price || 0);
-    const change1h = parseFloat(d.percentChange1h || m.percentChange1h || 0);
-    const change24h = parseFloat(d.percentChange24h || m.percentChange24h || 0);
-    const change7d = parseFloat(d.percentChange7d || m.percentChange7d || 0);
-
-    // Market data
-    const mcap = parseFloat(d.marketCap || m.marketCap || 0);
-    const fdv = parseFloat(d.fullyDilutedValue || m.fullyDilutedValue || 0);
-    const liquidity = parseFloat(d.liquidity || m.liquidity || 0);
-    const volume24h = parseFloat(d.volume24h || m.volume24h || 0);
-    const high24h = parseFloat(d.high24h || m.high24h || 0);
-    const low24h = parseFloat(d.low24h || m.low24h || 0);
-
-    // Supply data
-    const totalSupply = d.totalSupply || m.totalSupply || null;
-    const circulatingSupply = d.circulatingSupply || m.circulatingSupply || null;
-
-    // Holder data
-    const holders = d.holders || d.holderCount || m.holders || null;
+    const volume24h = parseFloat(d.volume24h || 0);
+    const volume24hBuy = parseFloat(d.volume24hBuy || 0);
+    const volume24hSell = parseFloat(d.volume24hSell || 0);
+    const volume1h = parseFloat(d.volume1h || 0);
 
     let html = '';
 
@@ -131,43 +117,18 @@ export class TokenProfilePanel extends BasePanel {
     // Price section
     html += `<div class="profile-section">`;
     html += `<h3>Price</h3>`;
-    html += `<div style="font-size:18px;font-weight:700;margin-bottom:8px">$${formatPrice(price)}</div>`;
-    html += `<div class="profile-grid">`;
-    html += `<span class="profile-label">1h</span><span class="profile-value">${formatPercent(change1h)}</span>`;
-    html += `<span class="profile-label">24h</span><span class="profile-value">${formatPercent(change24h)}</span>`;
-    html += `<span class="profile-label">7d</span><span class="profile-value">${formatPercent(change7d)}</span>`;
-    if (high24h) html += `<span class="profile-label">24h High</span><span class="profile-value">$${formatPrice(high24h)}</span>`;
-    if (low24h) html += `<span class="profile-label">24h Low</span><span class="profile-value">$${formatPrice(low24h)}</span>`;
-    html += `</div></div>`;
+    html += `<div style="font-size:20px;font-weight:700;margin-bottom:8px">$${formatPrice(price)}</div>`;
+    html += `</div>`;
 
-    // Market section
+    // Volume section
     html += `<div class="profile-section">`;
-    html += `<h3>Market</h3>`;
+    html += `<h3>Volume</h3>`;
     html += `<div class="profile-grid">`;
-    if (mcap) html += `<span class="profile-label">MCap</span><span class="profile-value">${formatCurrency(mcap)}</span>`;
-    if (fdv) html += `<span class="profile-label">FDV</span><span class="profile-value">${formatCurrency(fdv)}</span>`;
-    if (liquidity) html += `<span class="profile-label">Liquidity</span><span class="profile-value">${formatCurrency(liquidity)}</span>`;
-    if (volume24h) html += `<span class="profile-label">Volume 24h</span><span class="profile-value">${formatCurrency(volume24h)}</span>`;
+    if (volume24h) html += `<span class="profile-label">24h Total</span><span class="profile-value">${formatCurrency(volume24h)}</span>`;
+    if (volume24hBuy) html += `<span class="profile-label">24h Buy</span><span class="profile-value val-up">${formatCurrency(volume24hBuy)}</span>`;
+    if (volume24hSell) html += `<span class="profile-label">24h Sell</span><span class="profile-value val-down">${formatCurrency(volume24hSell)}</span>`;
+    if (volume1h) html += `<span class="profile-label">1h Total</span><span class="profile-value">${formatCurrency(volume1h)}</span>`;
     html += `</div></div>`;
-
-    // Supply section
-    if (totalSupply || circulatingSupply) {
-      html += `<div class="profile-section">`;
-      html += `<h3>Supply</h3>`;
-      html += `<div class="profile-grid">`;
-      if (circulatingSupply) html += `<span class="profile-label">Circulating</span><span class="profile-value">${formatNumber(circulatingSupply)}</span>`;
-      if (totalSupply) html += `<span class="profile-label">Total</span><span class="profile-value">${formatNumber(totalSupply)}</span>`;
-      html += `</div></div>`;
-    }
-
-    // Holders section
-    if (holders !== null) {
-      html += `<div class="profile-section">`;
-      html += `<h3>Holders</h3>`;
-      html += `<div class="profile-grid">`;
-      html += `<span class="profile-label">Total</span><span class="profile-value">${formatNumber(holders)}</span>`;
-      html += `</div></div>`;
-    }
 
     return html;
   }
