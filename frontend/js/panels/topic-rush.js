@@ -7,7 +7,7 @@ export class TopicRushPanel extends BasePanel {
   constructor() {
     super();
     this._refreshRate = 60000;
-    this._tab = 10; // 10=Latest, 20=Rising, 30=Viral
+    this._tab = 10;
   }
 
   connectedCallback() {
@@ -43,14 +43,24 @@ export class TopicRushPanel extends BasePanel {
     const res = await window.mefaiApi.meme.topicList({ chainId: '56', rankType: this._tab, sort });
     if (!res || res?.error || res?.code !== '000000') return [];
     const items = res?.data || [];
-    return (Array.isArray(items) ? items : []).map(t => ({
-      id: t.topicId || '',
-      name: t.name?.topicNameEn || t.name?.topicNameCn || t.name || '',
-      type: t.type || '',
-      link: t.topicLink || '',
-      tokens: t.tokens || [],
-      netInflow: parseFloat(t.netInflow || 0),
-    }));
+    return (Array.isArray(items) ? items : []).map(t => {
+      // name is {topicNameEn, topicNameCn} object
+      const nameObj = t.name || {};
+      const name = (typeof nameObj === 'string') ? nameObj : (nameObj.topicNameEn || nameObj.topicNameCn || '');
+      // summary is {aiSummaryEn, aiSummaryCn} object
+      const sumObj = t.aiSummary || {};
+      const summary = (typeof sumObj === 'string') ? sumObj : (sumObj.aiSummaryEn || sumObj.aiSummaryCn || '');
+      return {
+        id: t.topicId || '',
+        name,
+        summary,
+        type: t.type || '',
+        tokenSize: t.tokenSize || 0,
+        netInflow: parseFloat(t.topicNetInflow || 0),
+        tokens: t.tokenList || [],
+        progress: t.progress || 0,
+      };
+    });
   }
 
   renderContent(data) {
@@ -59,17 +69,24 @@ export class TopicRushPanel extends BasePanel {
     let h = '';
     for (const topic of data) {
       h += `<div style="padding:8px;border-bottom:1px solid var(--border)">`;
-      h += `<div style="font-weight:600;font-size:12px;margin-bottom:4px">${u.escapeHtml(topic.name)}</div>`;
-      h += `<div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">${u.escapeHtml(topic.type)}`;
+      h += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">`;
+      h += `<span style="font-weight:600;font-size:12px">${u.escapeHtml(topic.name)}</span>`;
+      h += `<span style="font-size:9px;color:var(--text-muted)">${u.escapeHtml(topic.type)}</span>`;
+      h += `</div>`;
+      if (topic.summary) {
+        h += `<div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px;line-height:1.4">${u.escapeHtml(topic.summary.slice(0, 120))}</div>`;
+      }
+      h += `<div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">`;
+      h += `${topic.tokenSize} tokens`;
       if (topic.netInflow) {
         const cls = topic.netInflow >= 0 ? 'val-up' : 'val-down';
-        h += ` &middot; Net inflow: <span class="${cls}">${u.formatCurrency(topic.netInflow)}</span>`;
+        h += ` · Inflow: <span class="${cls}">${u.formatCurrency(topic.netInflow)}</span>`;
       }
       h += `</div>`;
       if (topic.tokens?.length) {
         h += `<div style="display:flex;gap:4px;flex-wrap:wrap">`;
-        for (const tk of topic.tokens.slice(0, 5)) {
-          h += `<span class="chain-badge" style="cursor:pointer" data-a="${tk.contractAddress || ''}" data-c="${tk.chainId || '56'}">${u.escapeHtml(tk.symbol || tk.name || '?')}</span>`;
+        for (const tk of topic.tokens.slice(0, 6)) {
+          h += `<span class="chain-badge" style="cursor:pointer" data-a="${tk.contractAddress || ''}" data-c="${tk.chainId || '56'}">${u.escapeHtml(tk.symbol || '?')}</span>`;
         }
         h += `</div>`;
       }
