@@ -37,12 +37,12 @@ export function createChart(container, data, options = {}) {
   const chart = LightweightCharts.createChart(container, chartOptions);
 
   const candleSeries = chart.addCandlestickSeries({
-    upColor: isDark ? '#e0e0e0' : '#1a1a1a',
-    downColor: isDark ? '#444444' : '#cccccc',
-    borderUpColor: isDark ? '#e0e0e0' : '#1a1a1a',
-    borderDownColor: isDark ? '#444444' : '#cccccc',
-    wickUpColor: isDark ? '#e0e0e0' : '#1a1a1a',
-    wickDownColor: isDark ? '#444444' : '#cccccc',
+    upColor: '#00c087',
+    downColor: '#e74c3c',
+    borderUpColor: '#00c087',
+    borderDownColor: '#e74c3c',
+    wickUpColor: '#00c087',
+    wickDownColor: '#e74c3c',
   });
 
   if (data && data.length) {
