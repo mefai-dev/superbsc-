@@ -1,6 +1,6 @@
 import { BasePanel } from '../components/base-panel.js';
 
-const { formatCurrency, formatAge, escapeHtml } = window.mefaiUtils;
+const { formatCurrency, formatPrice, formatAge, escapeHtml } = window.mefaiUtils;
 const { renderTable, bindTableEvents, sortRows } = window.mefaiTable;
 const renderRiskBadge = window.mefaiRiskBadge;
 
@@ -81,7 +81,7 @@ export class AutoScannerPanel extends BasePanel {
       h += `<td style="font-weight:600">${escapeHtml(t.token)} <span class="chain-badge">${t.chain}</span></td>`;
       h += `<td class="${sigCls}">${t.signal || '—'}</td>`;
       h += `<td class="val-num">${formatCurrency(t.mcap)}</td>`;
-      h += `<td class="val-num">${formatCurrency(t.price)}</td>`;
+      h += `<td class="val-num">$${formatPrice(t.price)}</td>`;
       h += `<td>${formatAge(t.age)}</td></tr>`;
     }
     h += '</tbody></table>';
