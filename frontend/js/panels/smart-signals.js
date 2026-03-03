@@ -1,8 +1,6 @@
-// MEFAI Smart Signals Panel — signals.smartMoney() data
 import { BasePanel } from '../components/base-panel.js';
 
-const { formatPrice, formatPercent, formatNumber, escapeHtml } = window.mefaiUtils;
-const { renderTable, bindTableEvents, sortRows } = window.mefaiTable;
+const { formatPrice, formatCurrency, escapeHtml } = window.mefaiUtils;
 
 export class SmartSignalsPanel extends BasePanel {
   static skill = 'Skill 4';
@@ -10,92 +8,73 @@ export class SmartSignalsPanel extends BasePanel {
 
   constructor() {
     super();
-    this._refreshRate = 10000;
-    this._sortKey = 'smCount';
-    this._sortDir = 'desc';
+    this._refreshRate = 15000;
+    this._sort = 'maxGain';
+    this._dir = 'desc';
   }
 
   async fetchData() {
     const res = await window.mefaiApi.signals.smartMoney();
-    if (!res || res?.error || res?.code === '000002') return [];
-    const items = res?.data?.tokens || res?.data || (Array.isArray(res) ? res : []);
-    if (!Array.isArray(items)) return [];
-    return items.map(s => ({
-      signalId: s.signalId || '',
-      symbol: s.ticker || s.symbol || '',
-      chainId: s.chainId || '',
-      contractAddress: s.contractAddress || '',
+    if (!res || res?.error || res?.code !== '000000') return [];
+    const items = res?.data || [];
+    return (Array.isArray(items) ? items : []).map(s => ({
+      symbol: s.ticker || '',
       logo: s.logoUrl || '',
-      mark: s.mark || '',
-      smCount: parseInt(s.smartMoneyTotalCount || 0),
-      signalPrice: parseFloat(s.smartSignalPrice || 0),
-      maxProfit: parseFloat(s.maxProfitPercent || 0),
-      currentPrice: parseFloat(s.tokenCurrentPrice || 0),
-      direction: (s.signalDirection || '').toLowerCase(),
-      status: s.signalStatus || '',
+      chain: s.chainId || '56',
+      address: s.contractAddress || '',
+      direction: (s.direction || '').toLowerCase(),
+      smCount: parseInt(s.smartMoneyCount || s.signalCount || 0),
+      alertPrice: parseFloat(s.alertPrice || 0),
+      currentPrice: parseFloat(s.currentPrice || 0),
+      maxGain: parseFloat(s.maxGain || 0),
+      status: s.status || '',
+      platform: s.launchPlatform || '',
     }));
   }
 
   renderContent(data) {
-    if (!data || !data.length) {
-      return `<div class="panel-loading" style="flex-direction:column;gap:8px;text-align:center">
-        <div>No smart money signals</div>
-        <div style="font-size:10px;color:var(--text-muted)">Signals appear when smart money wallets make notable trades.</div>
-      </div>`;
+    if (!data?.length) return '<div class="panel-loading">Loading signals...</div>';
+    const sorted = [...data].sort((a, b) => this._dir === 'desc' ? b[this._sort] - a[this._sort] : a[this._sort] - b[this._sort]);
+
+    let h = '<table class="data-table"><thead><tr>';
+    h += '<th data-k="symbol">Token</th><th data-k="direction">Dir</th>';
+    h += '<th data-k="smCount">SM#</th><th data-k="alertPrice">Signal $</th>';
+    h += '<th data-k="currentPrice">Now $</th><th data-k="maxGain">Gain%</th>';
+    h += '<th data-k="status">Status</th></tr></thead><tbody>';
+
+    for (const s of sorted) {
+      const icon = s.logo ? `<img src="${s.logo.startsWith('http') ? s.logo : 'https://bin.bnbstatic.com' + s.logo}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
+      const dirCls = s.direction === 'buy' ? 'val-up' : s.direction === 'sell' ? 'val-down' : '';
+      const dirText = s.direction === 'buy' ? 'BUY ↑' : s.direction === 'sell' ? 'SELL ↓' : '—';
+      const gainCls = s.maxGain > 0 ? 'val-up' : s.maxGain < 0 ? 'val-down' : '';
+      const statusCls = s.status === 'active' ? 'color:var(--up);font-weight:700' : 'color:var(--text-muted)';
+
+      h += `<tr data-a="${s.address}" data-c="${s.chain}">`;
+      h += `<td>${icon}<span style="font-weight:600">${escapeHtml(s.symbol)}</span></td>`;
+      h += `<td class="${dirCls}" style="font-weight:700">${dirText}</td>`;
+      h += `<td class="val-num">${s.smCount}</td>`;
+      h += `<td class="val-num">$${formatPrice(s.alertPrice)}</td>`;
+      h += `<td class="val-num">$${formatPrice(s.currentPrice)}</td>`;
+      h += `<td class="${gainCls}">${s.maxGain > 0 ? '+' : ''}${s.maxGain.toFixed(1)}%</td>`;
+      h += `<td style="${statusCls};font-size:10px;text-transform:uppercase">${escapeHtml(s.status || '—')}</td>`;
+      h += '</tr>';
     }
-
-    const sorted = sortRows(data, this._sortKey, this._sortDir);
-
-    const columns = [
-      { key: 'symbol', label: 'Token', width: '90px', render: (v, row) => {
-        const img = row.logo ? `<img src="${((u) => u && u.startsWith("http") ? u : "https://bin.bnbstatic.com" + (u || ""))(row.logo)}" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
-        return `${img}<span style="font-weight:600">${escapeHtml(v)}</span>`;
-      }},
-      { key: 'direction', label: 'Dir', width: '60px', render: (v) => {
-        if (v === 'buy') return '<span class="signal-buy">BUY &#8593;</span>';
-        if (v === 'sell') return '<span class="signal-sell">SELL &#8595;</span>';
-        return `<span style="color:var(--text-muted)">${escapeHtml(v.toUpperCase())}</span>`;
-      }},
-      { key: 'smCount', label: 'SM Count', align: 'right', render: (v) => formatNumber(v) },
-      { key: 'signalPrice', label: 'Signal $', align: 'right', render: (v) => `$${formatPrice(v)}` },
-      { key: 'currentPrice', label: 'Now $', align: 'right', render: (v) => `$${formatPrice(v)}` },
-      { key: 'maxProfit', label: 'Max Gain%', align: 'right', render: (v) => formatPercent(v) },
-      { key: 'status', label: 'Status', width: '70px', render: (v) => {
-        if (!v) return '<span style="color:var(--text-muted)">--</span>';
-        const isActive = v === 'active';
-        return `<span style="font-weight:${isActive ? '700' : '400'};text-transform:uppercase;font-size:10px;color:${isActive ? 'var(--text)' : 'var(--text-muted)'}">${escapeHtml(v)}</span>`;
-      }},
-    ];
-
-    return renderTable(columns, sorted, {
-      sortKey: this._sortKey,
-      sortDir: this._sortDir,
-    });
+    h += '</tbody></table>';
+    return h;
   }
 
   afterRender(body) {
-    const data = this._data;
-    if (!data || !data.length) return;
-
-    const sorted = sortRows(data, this._sortKey, this._sortDir);
-
-    bindTableEvents(body, null, sorted, {
-      onSort: (key) => {
-        if (this._sortKey === key) {
-          this._sortDir = this._sortDir === 'desc' ? 'asc' : 'desc';
-        } else {
-          this._sortKey = key;
-          this._sortDir = 'desc';
-        }
-        body.innerHTML = this.renderContent(this._data);
-        this.afterRender(body);
-      },
-      onRowClick: (row) => {
-        this.emitTokenFocus({ symbol: row.symbol, address: row.contractAddress, chain: row.chainId, platform: 'signal' });
-      },
-    });
+    if (!this._data?.length) return;
+    body.querySelectorAll('th[data-k]').forEach(th => th.addEventListener('click', () => {
+      const k = th.dataset.k;
+      if (this._sort === k) this._dir = this._dir === 'desc' ? 'asc' : 'desc';
+      else { this._sort = k; this._dir = 'desc'; }
+      body.innerHTML = this.renderContent(this._data);
+      this.afterRender(body);
+    }));
+    body.querySelectorAll('tr[data-a]').forEach(tr => tr.addEventListener('click', () => {
+      this.emitTokenFocus({ address: tr.dataset.a, chain: tr.dataset.c });
+    }));
   }
 }
-
 customElements.define('smart-signals-panel', SmartSignalsPanel);
-export default SmartSignalsPanel;
