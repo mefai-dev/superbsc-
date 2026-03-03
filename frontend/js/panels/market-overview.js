@@ -1,4 +1,5 @@
 import { BasePanel } from '../components/base-panel.js';
+const { escapeHtml } = window.mefaiUtils;
 
 export class MarketOverviewPanel extends BasePanel {
   static skill = 'Skill 1: Spot CEX';
@@ -98,7 +99,7 @@ export class MarketOverviewPanel extends BasePanel {
     for (const t of sorted) {
       const cls = t.change >= 0 ? 'val-up' : 'val-down';
       const ar = t.change >= 0 ? '↑' : '↓';
-      h += `<tr data-s="${t.fullSymbol}"><td style="font-weight:600">${t.symbol}</td>`;
+      h += `<tr data-s="${escapeHtml(t.fullSymbol)}"><td style="font-weight:600">${escapeHtml(t.symbol)}</td>`;
       h += `<td class="val-num">${u.formatPrice(t.price)}</td>`;
       h += `<td class="${cls}">${ar}${Math.abs(t.change).toFixed(2)}%</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.volume)}</td></tr>`;
