@@ -36,17 +36,17 @@ async def _run_scanner():
         while _scanner_state["running"]:
             try:
                 # Fetch trending tokens
-                trending_url = f"{WEB3}/public/market-cap/unified/rank/list"
+                trending_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list"
                 trending = await post_json(
                     trending_url, body={"page": 1, "size": 50}, ttl=0
                 )
 
                 # Fetch social hype
-                hype_url = f"{WEB3}/public/market-cap/social/hype/rank/leaderboard"
+                hype_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard"
                 hype = await fetch_json(hype_url, params={"page": 1, "size": 50}, ttl=0)
 
                 # Fetch smart money signals
-                smart_url = f"{WEB3}/public/market-cap/signal/smart-money"
+                smart_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money"
                 smart = await post_json(smart_url, body={}, ttl=0)
 
                 _scanner_results = [

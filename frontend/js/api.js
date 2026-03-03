@@ -66,7 +66,7 @@ export const api = {
     trending: (p) => post('/api/rank/trending', p || { page: 1, size: 20 }, 30000),
     smartInflow: (p) => post('/api/rank/smart-inflow', p || { chainId: 'CT_501', tagType: 2 }, 30000),
     memeRank: (p) => get('/api/rank/meme', p || { page: 1, size: 50 }, 60000),
-    topTraders: (p) => get('/api/rank/traders', p || { page: 1, size: 20 }, 60000),
+    topTraders: (p) => get('/api/rank/traders', p || { pageNo: 1, pageSize: 20 }, 60000),
   },
   // Skill 6: Audit
   audit: {

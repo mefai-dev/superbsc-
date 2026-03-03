@@ -14,6 +14,7 @@ DQUERY = settings.DQUERY_BASE
 @router.get("/search")
 async def token_search(
     keyword: str = Query(..., description="Search keyword, e.g. BTC, PEPE, ethereum"),
+    chain_ids: str = Query(None, alias="chainIds", description="Chain IDs filter, e.g. 56,1"),
 ):
     """Search for tokens by keyword.
 
@@ -21,6 +22,8 @@ async def token_search(
     """
     url = f"{WEB3}/v5/public/wallet-direct/buw/wallet/market/token/search"
     params = {"keyword": keyword}
+    if chain_ids:
+        params["chainIds"] = chain_ids
     return await fetch_json(url, params=params, ttl=60)
 
 

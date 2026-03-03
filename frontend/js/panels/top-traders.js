@@ -37,7 +37,7 @@ export class TopTradersPanel extends BasePanel {
       const cls = t.pnl >= 0 ? 'val-up' : 'val-down';
       const ar = t.pnl >= 0 ? '↑' : '↓';
       h += `<tr data-a="${t.address}"><td>${i + 1}</td>`;
-      h += `<td style="font-weight:600">${u.formatAddress(t.address)}${t.label ? ` <span style="color:var(--text-muted);font-size:9px">${t.label}</span>` : ''}</td>`;
+      h += `<td style="font-weight:600">${u.formatAddress(t.address)}${t.label ? ` <span style="color:var(--text-muted);font-size:9px">${u.escapeHtml(t.label)}</span>` : ''}</td>`;
       h += `<td class="${cls}">${ar}${u.formatCurrency(Math.abs(t.pnl))}</td>`;
       h += `<td class="${cls}">${ar}${(t.pnlPct * 100).toFixed(1)}%</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.balance)}</td></tr>`;

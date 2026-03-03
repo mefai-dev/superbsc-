@@ -28,8 +28,10 @@ async def token_audit_check(request: Request):
             status_code=400, detail="contractAddress is required in request body"
         )
 
-    # Map legacy 'chain' field to binanceChainId if needed
-    binance_chain_id = body.get("binanceChainId") or body.get("chainId") or "56"
+    # Map chain field to binanceChainId — accept all naming conventions
+    _CHAIN_MAP = {"bsc": "56", "eth": "1", "sol": "CT_501", "base": "8453", "arb": "42161"}
+    raw_chain = body.get("binanceChainId") or body.get("chainId") or body.get("chain") or "56"
+    binance_chain_id = _CHAIN_MAP.get(raw_chain.lower(), raw_chain)
     request_id = body.get("requestId") or str(uuid.uuid4())
 
     url = f"{WEB3}/v1/public/wallet-direct/security/token/audit"
