@@ -65,7 +65,7 @@ export class MemeRushPanel extends BasePanel {
     for (const t of data) {
       h += `<tr data-a="${t.address}" data-c="${t.chain}">`;
       h += `<td style="font-weight:600">${u.escapeHtml(t.symbol)}</td>`;
-      h += `<td class="val-num">${u.formatPrice(t.price)}</td>`;
+      h += `<td class="val-num">$${u.formatPrice(t.price)}</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.mcap)}</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.liquidity)}</td>`;
       h += `<td class="val-num">${u.formatNumber(t.holders)}</td>`;

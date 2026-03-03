@@ -127,17 +127,31 @@ export class TokenAuditPanel extends BasePanel {
 
     if (riskItems.length) {
       html += `<div class="profile-section">`;
-      html += `<h3>Risk Items (${riskItems.length})</h3>`;
+      html += `<h3>Security Checks</h3>`;
       html += `<div style="font-size:11px">`;
-      riskItems.forEach(r => {
-        const itemName = r.itemName || r.name || r.title || 'Unknown risk';
-        const itemRisk = r.riskLevel ?? r.level ?? 0;
-        const riskLabel = typeof itemRisk === 'number' ? (itemRisk >= 2 ? 'HIGH' : itemRisk === 1 ? 'MED' : 'LOW') : String(itemRisk).toUpperCase();
-        const riskCls = typeof itemRisk === 'number' ? (itemRisk >= 2 ? 'risk-high' : itemRisk === 1 ? 'risk-medium' : 'risk-low') : riskClass(itemRisk);
-        html += `<div style="padding:3px 0;border-bottom:1px solid var(--border)">`;
-        html += `<span class="${riskCls}" style="font-weight:700;margin-right:6px;font-size:10px;padding:1px 4px;border:1px solid">${riskLabel}</span>`;
-        html += `${escapeHtml(itemName)}`;
-        html += `</div>`;
+      riskItems.forEach(cat => {
+        const catName = cat.name || cat.id || 'Unknown';
+        const details = cat.details || [];
+        if (!details.length) return;
+        const hits = details.filter(d => d.isHit);
+        html += `<div style="padding:4px 0 2px;font-weight:700;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">${escapeHtml(catName)} (${hits.length}/${details.length})</div>`;
+        details.forEach(d => {
+          const hit = d.isHit;
+          const isRisk = d.riskType === 'RISK';
+          let badge, cls;
+          if (hit) {
+            badge = isRisk ? 'RISK' : 'WARN';
+            cls = isRisk ? 'risk-high' : 'risk-medium';
+          } else {
+            badge = 'PASS';
+            cls = 'risk-low';
+          }
+          const title = d.title || 'Unknown';
+          html += `<div style="padding:2px 0;border-bottom:1px solid var(--border);opacity:${hit ? 1 : 0.6}">`;
+          html += `<span class="${cls}" style="font-weight:700;margin-right:6px;font-size:9px;padding:1px 4px;border:1px solid;display:inline-block;min-width:32px;text-align:center">${badge}</span>`;
+          html += `${escapeHtml(title)}`;
+          html += `</div>`;
+        });
       });
       html += `</div></div>`;
     }
