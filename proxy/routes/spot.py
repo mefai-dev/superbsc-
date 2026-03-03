@@ -57,18 +57,41 @@ async def _signed_post(path: str, params: dict) -> dict:
     return resp.json()
 
 
+_tickers_cache = {"data": None, "ts": 0}
+
 @router.get("/tickers")
-async def tickers(symbols: Optional[str] = Query(None, description="Comma-separated symbols, e.g. BTCUSDT,ETHUSDT")):
-    """Get 24hr ticker data for all or selected symbols."""
-    url = f"{BASE}/api/v3/ticker/24hr"
-    params = {}
+async def tickers(symbols: Optional[str] = Query(None, description="Comma-separated symbols")):
+    """Get 24hr ticker data — pre-filtered USDT pairs, sorted by volume."""
+    import time as _time
+    # Aggressive caching: keep tickers for 30s in a dedicated fast-path cache
+    now = _time.time()
     if symbols:
+        # Single symbol request
+        url = f"{BASE}/api/v3/ticker/24hr"
         symbol_list = [s.strip().upper() for s in symbols.split(",")]
         if len(symbol_list) == 1:
-            params["symbol"] = symbol_list[0]
-        else:
-            params["symbols"] = str(symbol_list).replace("'", '"')
-    return await fetch_json(url, params=params, ttl=60)
+            return await fetch_json(url, params={"symbol": symbol_list[0]}, ttl=30)
+        import json as _json
+        return await fetch_json(url, params={"symbols": _json.dumps(symbol_list)}, ttl=30)
+
+    # No params = all tickers — use aggressive cache + filter
+    if _tickers_cache["data"] and now - _tickers_cache["ts"] < 30:
+        return _tickers_cache["data"]
+
+    url = f"{BASE}/api/v3/ticker/24hr"
+    raw = await fetch_json(url, ttl=30)
+    if not isinstance(raw, list):
+        return raw  # error passthrough
+
+    # Filter USDT pairs with meaningful volume, take top 100
+    filtered = sorted(
+        [t for t in raw if t.get("symbol", "").endswith("USDT") and float(t.get("quoteVolume", 0)) > 50000],
+        key=lambda x: float(x.get("quoteVolume", 0)),
+        reverse=True,
+    )[:100]
+    _tickers_cache["data"] = filtered
+    _tickers_cache["ts"] = now
+    return filtered
 
 
 @router.get("/ticker")
