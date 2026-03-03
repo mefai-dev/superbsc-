@@ -24,6 +24,7 @@ const panelRegistry = {
   'token-profile': 'token-profile-panel',
   'dex-chart': 'dex-chart-panel',
   'auto-scanner': 'auto-scanner-panel',
+  'smart-flow': 'smart-flow-panel',
 };
 
 // Layout presets
@@ -41,7 +42,7 @@ const layouts = {
   'whale-watcher': {
     name: 'Whale Watcher',
     grid: 'grid-2x2',
-    panels: ['top-traders', 'smart-inflow', 'smart-signals', 'wallet-tracker'],
+    panels: ['top-traders', 'smart-flow', 'smart-signals', 'smart-inflow'],
   },
   'deep-dive': {
     name: 'Deep Dive',
@@ -69,11 +70,11 @@ async function loadPanels() {
     'meme-rush', 'topic-rush', 'wallet-tracker', 'smart-signals',
     'social-hype', 'trending-tokens', 'smart-inflow', 'meme-rank',
     'top-traders', 'token-audit', 'token-search', 'token-profile',
-    'dex-chart', 'auto-scanner',
+    'dex-chart', 'auto-scanner', 'smart-flow',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=8`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=9`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }

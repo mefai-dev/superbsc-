@@ -6,9 +6,62 @@ export class MarketOverviewPanel extends BasePanel {
 
   constructor() {
     super();
-    this._refreshRate = 10000;
+    this._refreshRate = 30000; // REST fallback every 30s (WS handles real-time)
     this._sort = 'volume';
     this._dir = 'desc';
+    this._wsUnsub = null;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // Subscribe to WebSocket for real-time updates
+    if (window.mefaiStream) {
+      this._wsUnsub = window.mefaiStream.subscribeAll((prices) => {
+        this._updatePricesFromWS(prices);
+      });
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._wsUnsub) this._wsUnsub();
+  }
+
+  _updatePricesFromWS(prices) {
+    if (!this._data?.length) return;
+    const body = this.querySelector('.panel-body');
+    if (!body) return;
+
+    // Update prices in-place (DOM update, no full re-render)
+    for (const row of body.querySelectorAll('tr[data-s]')) {
+      const sym = row.dataset.s;
+      const ws = prices.get(sym);
+      if (!ws) continue;
+
+      const cells = row.querySelectorAll('td');
+      if (cells.length < 4) continue;
+
+      const newPrice = parseFloat(ws.price);
+      const newChange = parseFloat(ws.change);
+      const u = window.mefaiUtils;
+
+      // Update price cell
+      cells[1].textContent = u.formatPrice(newPrice);
+
+      // Update change cell with color
+      const cls = newChange >= 0 ? 'val-up' : 'val-down';
+      const ar = newChange >= 0 ? '↑' : '↓';
+      cells[2].className = cls;
+      cells[2].textContent = `${ar}${Math.abs(newChange).toFixed(2)}%`;
+
+      // Also update internal data
+      const item = this._data.find(d => d.fullSymbol === sym);
+      if (item) {
+        item.price = newPrice;
+        item.change = newChange;
+        item.volume = parseFloat(ws.volume || item.volume);
+      }
+    }
   }
 
   async fetchData() {
@@ -33,6 +86,7 @@ export class MarketOverviewPanel extends BasePanel {
   renderContent(data) {
     if (!data?.length) return '<div class="panel-loading">Loading market data...</div>';
     const u = window.mefaiUtils;
+    const ws = window.mefaiStream?.connected;
     const sorted = [...data].sort((a, b) => {
       const va = a[this._sort], vb = b[this._sort];
       return this._dir === 'desc' ? (vb > va ? 1 : -1) : (va > vb ? 1 : -1);

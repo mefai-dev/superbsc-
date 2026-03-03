@@ -20,6 +20,7 @@ class StatusBar extends HTMLElement {
         <span id="status-layout">Overview</span>
       </div>
       <div class="status-right">
+        <span id="status-ws" style="color:var(--text-muted)"></span>
         <span id="status-scanner"></span>
         <span id="status-clock">${this.getTime()}</span>
       </div>
@@ -33,6 +34,12 @@ class StatusBar extends HTMLElement {
   updateClock() {
     const el = this.querySelector('#status-clock');
     if (el) el.textContent = this.getTime();
+    // Update WS status
+    const wsEl = this.querySelector('#status-ws');
+    if (wsEl && window.mefaiStream) {
+      wsEl.textContent = window.mefaiStream.connected ? 'WS LIVE' : '';
+      wsEl.style.color = window.mefaiStream.connected ? 'var(--up)' : 'var(--text-muted)';
+    }
   }
 
   async checkHealth() {
