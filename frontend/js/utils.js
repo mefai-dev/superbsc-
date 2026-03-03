@@ -93,5 +93,11 @@ export function riskClass(level) {
   return 'risk-low';
 }
 
-window.mefaiUtils = { formatCurrency, formatPrice, formatPercent, formatNumber, formatAddress, formatTime, formatAge, copyToClipboard, debounce, escapeHtml, riskClass };
-export default { formatCurrency, formatPrice, formatPercent, formatNumber, formatAddress, formatTime, formatAge, copyToClipboard, debounce, escapeHtml, riskClass };
+export function tokenIcon(iconPath) {
+  if (!iconPath) return '';
+  if (iconPath.startsWith('http')) return iconPath;
+  return `https://bin.bnbstatic.com${iconPath}`;
+}
+
+window.mefaiUtils = { formatCurrency, formatPrice, formatPercent, formatNumber, formatAddress, formatTime, formatAge, copyToClipboard, debounce, escapeHtml, riskClass, tokenIcon };
+export default { formatCurrency, formatPrice, formatPercent, formatNumber, formatAddress, formatTime, formatAge, copyToClipboard, debounce, escapeHtml, riskClass, tokenIcon };

@@ -89,7 +89,7 @@ export class TokenSearchPanel extends BasePanel {
       html += `<div class="search-result" data-index="${i}" style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer">`;
       html += `<div style="display:flex;align-items:center;gap:6px">`;
       if (item.icon) {
-        html += `<img src="${escapeHtml(item.icon)}" style="width:18px;height:18px;border-radius:50%" onerror="this.style.display='none'">`;
+        html += `<img src="${window.mefaiUtils.tokenIcon(item.icon)}" style="width:18px;height:18px;border-radius:50%" onerror="this.style.display='none'">`;
       }
       html += `<div>`;
       html += `<span style="font-weight:600">${escapeHtml(item.name)}</span>`;

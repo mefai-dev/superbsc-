@@ -48,7 +48,7 @@ export class SmartSignalsPanel extends BasePanel {
 
     const columns = [
       { key: 'symbol', label: 'Token', width: '90px', render: (v, row) => {
-        const img = row.logo ? `<img src="${escapeHtml(row.logo)}" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
+        const img = row.logo ? `<img src="${window.mefaiUtils.tokenIcon(row.logo)}" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
         return `${img}<span style="font-weight:600">${escapeHtml(v)}</span>`;
       }},
       { key: 'direction', label: 'Dir', width: '60px', render: (v) => {

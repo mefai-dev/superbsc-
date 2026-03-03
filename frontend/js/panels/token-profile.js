@@ -109,7 +109,7 @@ export class TokenProfilePanel extends BasePanel {
     html += `<div class="profile-section">`;
     html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">`;
     if (logo) {
-      html += `<img src="${escapeHtml(logo)}" class="token-icon" style="width:24px;height:24px;border-radius:50%" onerror="this.style.display='none'">`;
+      html += `<img src="${window.mefaiUtils.tokenIcon(logo)}" class="token-icon" style="width:24px;height:24px;border-radius:50%" onerror="this.style.display='none'">`;
     }
     html += `<div>`;
     html += `<span style="font-weight:700;font-size:14px">${escapeHtml(name || symbol || 'Unknown')}</span>`;
