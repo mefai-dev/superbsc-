@@ -1,7 +1,7 @@
-// MEFAI DEX Chart Panel — token.kline(), listens to focusedToken
 import { BasePanel } from '../components/base-panel.js';
 
-const { escapeHtml } = window.mefaiUtils;
+const DEFAULT_ADDR = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
+const DEFAULT_CHAIN = '56';
 
 export class DexChartPanel extends BasePanel {
   static skill = 'Skill 7.4';
@@ -9,28 +9,32 @@ export class DexChartPanel extends BasePanel {
 
   constructor() {
     super();
-    this._refreshRate = 30000;
-    this._chartInterval = '1h';
-    this._token = null;
-    this._chartInstance = null;
+    this._refreshRate = 60000;
+    this._interval = '1h';
+    this._address = DEFAULT_ADDR;
+    this._chain = DEFAULT_CHAIN;
+    this._label = 'WBNB';
+    this._chart = null;
     this._unsub = null;
   }
 
   connectedCallback() {
     this.classList.add('panel');
-    this.render();
-    // Listen to focused token changes
+    this._renderShell();
     this._unsub = window.mefaiStore?.subscribe('focusedToken', (token) => {
-      if (token?.address) {
-        this._token = token;
+      if (token?.address && token.address !== this._address) {
+        this._address = token.address;
+        this._chain = token.chain || DEFAULT_CHAIN;
+        this._label = token.symbol || token.address.slice(0, 8);
         this._destroyChart();
         this.refresh();
       }
     });
-    // Check if there's already a focused token
     const current = window.mefaiStore?.get('focusedToken');
     if (current?.address) {
-      this._token = current;
+      this._address = current.address;
+      this._chain = current.chain || DEFAULT_CHAIN;
+      this._label = current.symbol || '';
     }
     this.startAutoRefresh();
   }
@@ -41,106 +45,82 @@ export class DexChartPanel extends BasePanel {
     if (this._unsub) this._unsub();
   }
 
-  render() {
-    const title = this.getAttribute('title') || this.constructor.defaultTitle;
-    const skill = this.constructor.skill;
+  _renderShell() {
     this.innerHTML = `
       <div class="panel-header">
         <div>
-          <span class="panel-title">${title}</span>
-          ${skill ? `<span class="panel-skill">${skill}</span>` : ''}
-          <span class="chart-token-label" style="margin-left:6px;color:var(--text-muted);font-size:10px"></span>
+          <span class="panel-title">DEX Chart</span>
+          <span class="panel-skill">Skill 7.4</span>
+          <span class="chart-label" style="margin-left:8px;color:var(--text-secondary);font-size:11px;font-weight:600">${this._label}</span>
         </div>
-        <div class="panel-actions">
-          <button class="panel-refresh" title="Refresh">&#8635;</button>
-        </div>
+        <div class="panel-actions"><button class="panel-refresh">↻</button></div>
       </div>
       <div class="filter-bar">
-        <button class="btn interval-btn${this._chartInterval === '5m' ? ' btn-primary' : ''}" data-interval="5m">5m</button>
-        <button class="btn interval-btn${this._chartInterval === '15m' ? ' btn-primary' : ''}" data-interval="15m">15m</button>
-        <button class="btn interval-btn${this._chartInterval === '1h' ? ' btn-primary' : ''}" data-interval="1h">1h</button>
-        <button class="btn interval-btn${this._chartInterval === '4h' ? ' btn-primary' : ''}" data-interval="4h">4h</button>
-        <button class="btn interval-btn${this._chartInterval === '1d' ? ' btn-primary' : ''}" data-interval="1d">1d</button>
+        ${['5m','15m','1h','4h','1d'].map(i =>
+          `<button class="btn iv-btn${this._interval === i ? ' btn-primary' : ''}" data-i="${i}">${i}</button>`
+        ).join('')}
       </div>
       <div class="panel-body" style="padding:0">
-        <div class="panel-loading">Select a token to view chart</div>
-      </div>
-    `;
-    this.querySelector('.panel-refresh')?.addEventListener('click', () => {
+        <div class="panel-loading">Loading chart...</div>
+      </div>`;
+    this.querySelector('.panel-refresh')?.addEventListener('click', () => { this._destroyChart(); this.refresh(); });
+    this.querySelectorAll('.iv-btn').forEach(b => b.addEventListener('click', () => {
+      this._interval = b.dataset.i;
+      this.querySelectorAll('.iv-btn').forEach(x => x.classList.remove('btn-primary'));
+      b.classList.add('btn-primary');
       this._destroyChart();
       this.refresh();
-    });
-    this.querySelectorAll('.interval-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        this._chartInterval = btn.dataset.interval;
-        this.querySelectorAll('.interval-btn').forEach(b => b.classList.remove('btn-primary'));
-        btn.classList.add('btn-primary');
-        this._destroyChart();
-        this.refresh();
-      });
-    });
+    }));
     this.refresh();
   }
 
   async fetchData() {
-    if (!this._token?.address) return null;
+    if (!this._address) return null;
     const res = await window.mefaiApi.token.kline({
-      address: this._token.address,
-      chain: this._token.chain || 'eth',
-      interval: this._chartInterval,
+      address: this._address,
+      chain: this._chain,
+      interval: this._interval,
       limit: 200,
     });
-    if (!res || res?.error || res?.code === '000002') return [];
-    const items = res?.data?.tokens || res?.data || (Array.isArray(res) ? res : []);
-    return Array.isArray(items) ? items : [];
+    if (!res || res?.error) return null;
+    // DQuery returns {data: [[open,high,low,close,volume,time,count], ...]}
+    const raw = res?.data || (Array.isArray(res) ? res : null);
+    if (!raw || !Array.isArray(raw) || !raw.length) return null;
+    // Convert DQuery format to TradingView format
+    return raw.map(c => {
+      if (Array.isArray(c)) {
+        return { time: Math.floor(c[5] / 1000), open: c[0], high: c[1], low: c[2], close: c[3] };
+      }
+      return c;
+    }).filter(c => c.time && !isNaN(c.open));
   }
 
   renderContent(data) {
-    if (!data || !this._token?.address) return '<div class="panel-loading">Select a token to view chart</div>';
-    if (!data.length) return '<div class="panel-loading">No kline data available for this token</div>';
+    // Update label
+    const lbl = this.querySelector('.chart-label');
+    if (lbl) lbl.textContent = this._label;
 
-    // Update token label
-    const label = this.querySelector('.chart-token-label');
-    if (label) {
-      label.textContent = this._token.symbol || this._token.address?.slice(0, 8) || '';
-    }
-
-    return '<div class="chart-container" id="dex-chart-container"></div>';
+    if (!data?.length) return '<div class="panel-loading">No chart data</div>';
+    return '<div class="chart-container" id="dex-chart-c"></div>';
   }
 
   afterRender(body) {
-    const data = this._data;
-    if (!data || !data.length) return;
-
-    const container = body.querySelector('#dex-chart-container');
-    if (!container) return;
-
+    if (!this._data?.length) return;
+    const container = body.querySelector('#dex-chart-c');
+    if (!container || !window.mefaiChart) return;
     this._destroyChart();
-
-    if (!window.mefaiChart) {
-      container.innerHTML = '<div class="panel-loading">Chart library not loaded</div>';
-      return;
-    }
-
-    const formatted = window.mefaiChart.formatKlineData(data);
-    if (!formatted.length) {
-      container.innerHTML = '<div class="panel-loading">Invalid kline data</div>';
-      return;
-    }
-
     requestAnimationFrame(() => {
-      this._chartInstance = window.mefaiChart.createChart(container, formatted);
+      this._chart = window.mefaiChart.createChart(container, this._data);
     });
   }
 
   _destroyChart() {
-    if (this._chartInstance) {
-      if (this._chartInstance.ro) this._chartInstance.ro.disconnect();
-      if (this._chartInstance.chart) this._chartInstance.chart.remove();
-      this._chartInstance = null;
+    if (this._chart) {
+      if (this._chart.ro) this._chart.ro.disconnect();
+      if (this._chart.chart) this._chart.chart.remove();
+      this._chart = null;
     }
   }
 }
 
 customElements.define('dex-chart-panel', DexChartPanel);
-export default DexChartPanel;

@@ -70,31 +70,31 @@ async def token_dynamic(
     return await fetch_json(url, params=params, ttl=60)
 
 
+# chainId → DQuery platform mapping
+_CHAIN_TO_PLATFORM = {
+    "56": "bsc", "bsc": "bsc",
+    "1": "eth", "eth": "eth",
+    "CT_501": "solana", "solana": "solana", "sol": "solana",
+    "8453": "base", "base": "base",
+    "42161": "arbitrum", "arb": "arbitrum",
+    "137": "polygon", "polygon": "polygon",
+    "43114": "avalanche", "avax": "avalanche",
+}
+
+
 @router.get("/kline")
 async def token_kline(
-    address: Optional[str] = Query(
-        None, alias="contractAddress", description="Token contract address"
-    ),
-    symbol: Optional[str] = Query(None, description="Token symbol"),
-    chain: Optional[str] = Query(None, description="Blockchain network"),
-    interval: str = Query("1h", description="Kline interval, e.g. 1m, 5m, 1h, 1d"),
-    limit: int = Query(100, description="Number of candles to return"),
+    address: Optional[str] = Query(None, description="Token contract address"),
+    chain: Optional[str] = Query("56", description="Chain ID or name"),
+    platform: Optional[str] = Query(None, description="DQuery platform name"),
+    interval: str = Query("1h", description="Kline interval"),
+    limit: int = Query(100, description="Number of candles"),
 ):
-    """Get token kline/candlestick data from DQuery.
-
-    GET https://dquery.sintral.io/u-kline/v1/k-line/candles
-    """
+    """Get token kline/candlestick data from DQuery."""
+    if not address:
+        raise HTTPException(status_code=400, detail="address is required")
+    # Resolve platform from chain
+    plat = platform or _CHAIN_TO_PLATFORM.get(chain or "56", "bsc")
     url = f"{DQUERY}/k-line/candles"
-    params = {"interval": interval, "limit": limit}
-    if address:
-        params["address"] = address
-    if symbol:
-        params["symbol"] = symbol
-    if chain:
-        params["chain"] = chain
-    if not any(k in params for k in ("address", "symbol", "chain")):
-        raise HTTPException(
-            status_code=400,
-            detail="At least one of contractAddress, symbol, or chain is required",
-        )
+    params = {"address": address, "platform": plat, "interval": interval, "limit": limit}
     return await fetch_json(url, params=params, ttl=60)
