@@ -14,7 +14,6 @@ Continuously:
 import asyncio
 import time
 import logging
-from typing import Any
 
 from proxy.cache import post_json, fetch_json
 from proxy.config import settings

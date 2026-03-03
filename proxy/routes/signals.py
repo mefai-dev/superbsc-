@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Query
-from fastapi.requests import Request
 
 from proxy.cache import post_json
 from proxy.config import settings

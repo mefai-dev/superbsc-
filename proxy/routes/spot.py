@@ -6,7 +6,7 @@ from typing import Optional
 from fastapi import APIRouter, Query, HTTPException
 from fastapi.requests import Request
 
-from proxy.cache import fetch_json, post_json, get_client
+from proxy.cache import fetch_json, get_client
 from proxy.config import settings
 
 router = APIRouter()

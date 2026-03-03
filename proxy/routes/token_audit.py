@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, HTTPException
 from fastapi.requests import Request
 
 from proxy.cache import post_json
