@@ -45,7 +45,7 @@ export class TrendingTokensPanel extends BasePanel {
     const columns = [
       { key: 'rank', label: '#', width: '35px', render: (v) => `<span style="color:var(--text-muted)">${v}</span>` },
       { key: 'symbol', label: 'Token', width: '100px', render: (v, row) => {
-        const img = row.icon ? `<img src="${escapeHtml(row.icon)}" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
+        const img = row.icon ? `<img src="${window.mefaiUtils.tokenIcon(row.icon)}" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
         return `${img}<span style="font-weight:600">${escapeHtml(v)}</span>`;
       }},
       { key: 'price', label: 'Price', align: 'right', render: (v) => `$${formatPrice(v)}` },
