@@ -43,25 +43,27 @@ export class MarketOverviewPanel extends BasePanel {
       if (cells.length < 4) continue;
 
       const newPrice = parseFloat(ws.price);
-      const newChange = parseFloat(ws.change);
+      if (isNaN(newPrice)) continue;
       const u = window.mefaiUtils;
 
-      // Update price cell
+      // Update price cell only
       cells[1].textContent = u.formatPrice(newPrice);
 
-      // Update change cell with color
-      const cls = newChange >= 0 ? 'val-up' : 'val-down';
-      const ar = newChange >= 0 ? '↑' : '↓';
-      cells[2].className = cls;
-      cells[2].textContent = `${ar}${Math.abs(newChange).toFixed(2)}%`;
-
-      // Also update internal data
-      const item = this._data.find(d => d.fullSymbol === sym);
-      if (item) {
-        item.price = newPrice;
-        item.change = newChange;
-        item.volume = parseFloat(ws.volume || item.volume);
+      // Update change only if available (not from mini ticker)
+      if (ws.change !== null && ws.change !== undefined) {
+        const newChange = parseFloat(ws.change);
+        if (!isNaN(newChange)) {
+          const cls = newChange >= 0 ? 'val-up' : 'val-down';
+          const ar = newChange >= 0 ? '↑' : '↓';
+          cells[2].className = cls;
+          cells[2].textContent = `${ar}${Math.abs(newChange).toFixed(2)}%`;
+          const item = this._data.find(d => d.fullSymbol === sym);
+          if (item) item.change = newChange;
+        }
       }
+
+      const item = this._data.find(d => d.fullSymbol === sym);
+      if (item) item.price = newPrice;
     }
   }
 

@@ -46,9 +46,10 @@ export class MemeRankPanel extends BasePanel {
         label: 'Score',
         width: '120px',
         render: (v) => {
-          const pct = Math.min(100, Math.max(0, v));
-          return `<span>${v.toFixed(1)}</span>
-            <span class="score-bar"><span class="score-fill" style="width:${pct}%"></span></span>`;
+          const pct = Math.min(100, Math.max(0, (v / 5) * 100)); // score is 0-5
+          const color = pct >= 70 ? 'var(--up)' : pct >= 40 ? '#f39c12' : 'var(--down)';
+          return `<span style="font-weight:700;color:${color}">${v.toFixed(1)}</span>
+            <span class="score-bar"><span class="score-fill" style="width:${pct}%;background:${color}"></span></span>`;
         },
       },
       {

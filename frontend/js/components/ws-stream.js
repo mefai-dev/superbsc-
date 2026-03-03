@@ -110,7 +110,7 @@ class BinanceStream {
     this._prices.set(sym, {
       symbol: sym,
       price: t.c || t.lastPrice,
-      change: t.P || t.priceChangePercent,
+      change: t.P || t.priceChangePercent || null,  // null if mini ticker (no P field)
       volume: t.q || t.quoteVolume,
       high: t.h || t.highPrice,
       low: t.l || t.lowPrice,

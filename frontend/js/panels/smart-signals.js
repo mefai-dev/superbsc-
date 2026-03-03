@@ -47,7 +47,7 @@ export class SmartSignalsPanel extends BasePanel {
       const dirCls = s.direction === 'buy' ? 'val-up' : s.direction === 'sell' ? 'val-down' : '';
       const dirText = s.direction === 'buy' ? 'BUY ↑' : s.direction === 'sell' ? 'SELL ↓' : '—';
       const gainCls = s.maxGain > 0 ? 'val-up' : s.maxGain < 0 ? 'val-down' : '';
-      const statusCls = s.status === 'active' ? 'color:var(--up);font-weight:700' : 'color:var(--text-muted)';
+      const statusCls = s.status === 'active' ? 'color:var(--up);font-weight:700' : s.status === 'timeout' ? 'color:var(--down);font-weight:400' : 'color:var(--text-muted)';
 
       h += `<tr data-a="${s.address}" data-c="${s.chain}">`;
       h += `<td>${icon}<span style="font-weight:600">${escapeHtml(s.symbol)}</span></td>`;

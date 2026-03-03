@@ -464,7 +464,7 @@ status-bar {
 /* Score bar */
 .score-bar {
   width: 60px;
-  height: 4px;
+  height: 6px;
   background: var(--border);
   display: inline-block;
   vertical-align: middle;
@@ -472,8 +472,11 @@ status-bar {
 }
 .score-fill {
   height: 100%;
-  background: var(--text);
+  background: linear-gradient(90deg, var(--down) 0%, #f39c12 40%, var(--up) 100%);
 }
+.score-fill-green { background: var(--up); }
+.score-fill-red { background: var(--down); }
+.score-fill-yellow { background: #f39c12; }
 
 /* Sparkline */
 .sparkline { display: inline-block; vertical-align: middle; }
