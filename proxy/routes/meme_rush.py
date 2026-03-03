@@ -8,11 +8,15 @@ router = APIRouter()
 WEB3 = settings.WEB3_BASE
 
 
+_RUSH_FIELDS = {"chainId", "rankType", "limit", "page", "pageSize"}
+
+
 @router.post("/rush")
 async def meme_rush_pulse(request: Request):
-    body = await request.json()
+    raw = await request.json()
+    body = {k: v for k, v in raw.items() if k in _RUSH_FIELDS}
     body.setdefault("chainId", "56")
-    body.setdefault("rankType", 10)  # 10=New, 20=Finalizing, 30=Migrated (INTEGER)
+    body.setdefault("rankType", 10)
     body.setdefault("limit", 20)
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list"
     return await post_json(url, body=body, ttl=60)

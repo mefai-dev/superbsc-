@@ -7,6 +7,14 @@ from proxy.config import settings
 router = APIRouter()
 WEB3 = settings.WEB3_BASE
 
+# Allowed fields per endpoint (sanitize input)
+_TRENDING_FIELDS = {"page", "size", "chainId", "type", "sort", "orderBy"}
+_INFLOW_FIELDS = {"chainId", "tagType", "period", "page", "pageSize"}
+
+
+def _sanitize(body: dict, allowed: set) -> dict:
+    return {k: v for k, v in body.items() if k in allowed}
+
 
 @router.get("/social-hype")
 async def social_hype(
@@ -29,7 +37,8 @@ async def social_hype(
 
 @router.post("/trending")
 async def trending(request: Request):
-    body = await request.json()
+    raw = await request.json()
+    body = _sanitize(raw, _TRENDING_FIELDS)
     body.setdefault("page", 1)
     body.setdefault("size", 20)
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list"
@@ -38,7 +47,8 @@ async def trending(request: Request):
 
 @router.post("/smart-inflow")
 async def smart_inflow(request: Request):
-    body = await request.json()
+    raw = await request.json()
+    body = _sanitize(raw, _INFLOW_FIELDS)
     body.setdefault("chainId", "CT_501")
     body.setdefault("tagType", 2)
     url = f"{WEB3}/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query"
@@ -47,7 +57,9 @@ async def smart_inflow(request: Request):
 
 @router.get("/meme")
 async def meme_rank(
-    chainId: str = Query("56"), page: int = Query(1), size: int = Query(50)
+    chainId: str = Query("56"),
+    page: int = Query(1),
+    size: int = Query(50),
 ):
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list"
     return await fetch_json(
