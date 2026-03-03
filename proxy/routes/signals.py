@@ -12,8 +12,16 @@ WEB3 = settings.WEB3_BASE
 async def smart_money_signals(
     page: int = Query(1, description="Page number"),
     size: int = Query(20, alias="pageSize", description="Page size"),
-    chain_id: str = Query("56", alias="chainId", description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH"),
-    signal_type: str = Query("", alias="smartSignalType", description="Signal type filter (empty string for all)"),
+    chain_id: str = Query(
+        "56",
+        alias="chainId",
+        description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH",
+    ),
+    signal_type: str = Query(
+        "",
+        alias="smartSignalType",
+        description="Signal type filter (empty string for all)",
+    ),
 ):
     """Get smart money signals from Binance Web3.
 

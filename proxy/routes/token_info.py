@@ -26,8 +26,14 @@ async def token_search(
 
 @router.get("/meta")
 async def token_meta(
-    address: str = Query(..., alias="contractAddress", description="Token contract address"),
-    chain_id: str = Query("56", alias="chainId", description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH"),
+    address: str = Query(
+        ..., alias="contractAddress", description="Token contract address"
+    ),
+    chain_id: str = Query(
+        "56",
+        alias="chainId",
+        description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH",
+    ),
 ):
     """Get token metadata / static info (name, symbol, logo, description, links).
 
@@ -43,8 +49,14 @@ async def token_meta(
 
 @router.get("/dynamic")
 async def token_dynamic(
-    address: str = Query(..., alias="contractAddress", description="Token contract address"),
-    chain_id: str = Query("56", alias="chainId", description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH"),
+    address: str = Query(
+        ..., alias="contractAddress", description="Token contract address"
+    ),
+    chain_id: str = Query(
+        "56",
+        alias="chainId",
+        description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH",
+    ),
 ):
     """Get token dynamic info (price, volume, market cap, holders, liquidity).
 
@@ -60,7 +72,9 @@ async def token_dynamic(
 
 @router.get("/kline")
 async def token_kline(
-    address: Optional[str] = Query(None, alias="contractAddress", description="Token contract address"),
+    address: Optional[str] = Query(
+        None, alias="contractAddress", description="Token contract address"
+    ),
     symbol: Optional[str] = Query(None, description="Token symbol"),
     chain: Optional[str] = Query(None, description="Blockchain network"),
     interval: str = Query("1h", description="Kline interval, e.g. 1m, 5m, 1h, 1d"),
@@ -79,5 +93,8 @@ async def token_kline(
     if chain:
         params["chain"] = chain
     if not any(k in params for k in ("address", "symbol", "chain")):
-        raise HTTPException(status_code=400, detail="At least one of contractAddress, symbol, or chain is required")
+        raise HTTPException(
+            status_code=400,
+            detail="At least one of contractAddress, symbol, or chain is required",
+        )
     return await fetch_json(url, params=params, ttl=60)

@@ -22,7 +22,11 @@ async def meme_rush_pulse(request: Request):
 async def meme_rush_topics(
     chainId: str = Query("56"),
     rankType: int = Query(10),  # 10=Latest, 20=Rising, 30=Viral (INTEGER)
-    sort: int = Query(10),      # 10=create time, 20=net inflow, 30=viral time
+    sort: int = Query(10),  # 10=create time, 20=net inflow, 30=viral time
 ):
-    url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list"
-    return await fetch_json(url, params={"chainId": chainId, "rankType": rankType, "sort": sort}, ttl=60)
+    url = (
+        f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list"
+    )
+    return await fetch_json(
+        url, params={"chainId": chainId, "rankType": rankType, "sort": sort}, ttl=60
+    )

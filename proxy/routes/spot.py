@@ -59,10 +59,14 @@ async def _signed_post(path: str, params: dict) -> dict:
 
 _tickers_cache = {"data": None, "ts": 0}
 
+
 @router.get("/tickers")
-async def tickers(symbols: Optional[str] = Query(None, description="Comma-separated symbols")):
+async def tickers(
+    symbols: Optional[str] = Query(None, description="Comma-separated symbols"),
+):
     """Get 24hr ticker data — pre-filtered USDT pairs, sorted by volume."""
     import time as _time
+
     # Aggressive caching: keep tickers for 30s in a dedicated fast-path cache
     now = _time.time()
     if symbols:
@@ -72,7 +76,10 @@ async def tickers(symbols: Optional[str] = Query(None, description="Comma-separa
         if len(symbol_list) == 1:
             return await fetch_json(url, params={"symbol": symbol_list[0]}, ttl=30)
         import json as _json
-        return await fetch_json(url, params={"symbols": _json.dumps(symbol_list)}, ttl=30)
+
+        return await fetch_json(
+            url, params={"symbols": _json.dumps(symbol_list)}, ttl=30
+        )
 
     # No params = all tickers — use aggressive cache + filter
     if _tickers_cache["data"] and now - _tickers_cache["ts"] < 30:
@@ -85,7 +92,12 @@ async def tickers(symbols: Optional[str] = Query(None, description="Comma-separa
 
     # Filter USDT pairs with meaningful volume, take top 100
     filtered = sorted(
-        [t for t in raw if t.get("symbol", "").endswith("USDT") and float(t.get("quoteVolume", 0)) > 50000],
+        [
+            t
+            for t in raw
+            if t.get("symbol", "").endswith("USDT")
+            and float(t.get("quoteVolume", 0)) > 50000
+        ],
         key=lambda x: float(x.get("quoteVolume", 0)),
         reverse=True,
     )[:100]
@@ -143,15 +155,28 @@ async def open_orders(
 
 
 @router.post("/order")
-async def place_order(request: Request, test: bool = Query(False, description="Use test endpoint")):
+async def place_order(
+    request: Request, test: bool = Query(False, description="Use test endpoint")
+):
     """Place an order (HMAC-signed, requires API key). Set test=true for test mode."""
     body = await request.json()
     params = {}
-    for key in ("symbol", "side", "type", "timeInForce", "quantity", "price", "stopPrice", "newOrderRespType"):
+    for key in (
+        "symbol",
+        "side",
+        "type",
+        "timeInForce",
+        "quantity",
+        "price",
+        "stopPrice",
+        "newOrderRespType",
+    ):
         if key in body:
             params[key] = body[key]
     if not params.get("symbol") or not params.get("side") or not params.get("type"):
-        raise HTTPException(status_code=400, detail="symbol, side, and type are required")
+        raise HTTPException(
+            status_code=400, detail="symbol, side, and type are required"
+        )
     params["symbol"] = params["symbol"].upper()
     path = "/api/v3/order/test" if test else "/api/v3/order"
     return await _signed_post(path, params)

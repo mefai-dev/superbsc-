@@ -11,7 +11,11 @@ WEB3 = settings.WEB3_BASE
 @router.get("/positions")
 async def active_positions(
     address: str = Query(..., description="Wallet address to look up"),
-    chain_id: str = Query("56", alias="chainId", description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH"),
+    chain_id: str = Query(
+        "56",
+        alias="chainId",
+        description="Chain ID: 56=BSC, CT_501=Solana, 8453=Base, 1=ETH",
+    ),
     offset: int = Query(0, description="Pagination offset"),
 ):
     """Get active token positions for a wallet address.

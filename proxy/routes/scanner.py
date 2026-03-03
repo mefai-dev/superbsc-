@@ -37,7 +37,9 @@ async def _run_scanner():
             try:
                 # Fetch trending tokens
                 trending_url = f"{WEB3}/public/market-cap/unified/rank/list"
-                trending = await post_json(trending_url, body={"page": 1, "size": 50}, ttl=0)
+                trending = await post_json(
+                    trending_url, body={"page": 1, "size": 50}, ttl=0
+                )
 
                 # Fetch social hype
                 hype_url = f"{WEB3}/public/market-cap/social/hype/rank/leaderboard"

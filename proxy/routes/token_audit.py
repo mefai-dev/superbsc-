@@ -24,7 +24,9 @@ async def token_audit_check(request: Request):
 
     contract_address = body.get("contractAddress") or body.get("address")
     if not contract_address:
-        raise HTTPException(status_code=400, detail="contractAddress is required in request body")
+        raise HTTPException(
+            status_code=400, detail="contractAddress is required in request body"
+        )
 
     # Map legacy 'chain' field to binanceChainId if needed
     binance_chain_id = body.get("binanceChainId") or body.get("chainId") or "56"

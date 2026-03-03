@@ -26,31 +26,39 @@ _cache: dict[str, tuple[float, Any]] = {}
 _refreshing: set[str] = set()  # keys currently being refreshed in background
 _client: httpx.AsyncClient | None = None
 
-FRESH_TTL = 60      # Serve from cache without refresh
-STALE_TTL = 300     # Serve stale + trigger background refresh
-GEO_BLOCK_TTL = 600 # Cache 451 errors for 10 minutes
+FRESH_TTL = 60  # Serve from cache without refresh
+STALE_TTL = 300  # Serve stale + trigger background refresh
+GEO_BLOCK_TTL = 600  # Cache 451 errors for 10 minutes
 
 
 def _key(url: str, params: dict | None = None, body: dict | None = None) -> str:
-    raw = url + json.dumps(params or {}, sort_keys=True) + json.dumps(body or {}, sort_keys=True)
+    raw = (
+        url
+        + json.dumps(params or {}, sort_keys=True)
+        + json.dumps(body or {}, sort_keys=True)
+    )
     return hashlib.md5(raw.encode()).hexdigest()
 
 
-def get_cached(url: str, params: dict | None = None, body: dict | None = None, ttl: int = FRESH_TTL) -> tuple[Any | None, bool]:
+def get_cached(
+    url: str, params: dict | None = None, body: dict | None = None, ttl: int = FRESH_TTL
+) -> tuple[Any | None, bool]:
     """Returns (data, is_fresh). data=None if nothing cached. is_fresh=False if stale."""
     k = _key(url, params, body)
     if k in _cache:
         ts, data = _cache[k]
         age = time.time() - ts
         if age < ttl:
-            return data, True   # fresh
+            return data, True  # fresh
         if age < STALE_TTL:
             return data, False  # stale but usable
         del _cache[k]
     return None, False
 
 
-def set_cached(url: str, data: Any, params: dict | None = None, body: dict | None = None) -> None:
+def set_cached(
+    url: str, data: Any, params: dict | None = None, body: dict | None = None
+) -> None:
     k = _key(url, params, body)
     _cache[k] = (time.time(), data)
     if len(_cache) > 1000:
@@ -89,7 +97,9 @@ async def _do_fetch(url: str, params: dict | None, headers: dict) -> Any:
     return resp.json()
 
 
-async def _do_post(url: str, body: dict | None, params: dict | None, headers: dict) -> Any:
+async def _do_post(
+    url: str, body: dict | None, params: dict | None, headers: dict
+) -> Any:
     client = await get_client()
     resp = await client.post(url, json=body, params=params, headers=headers)
     if resp.status_code >= 400:
@@ -161,7 +171,9 @@ async def fetch_json(url: str, params: dict | None = None, ttl: int = FRESH_TTL)
     return data
 
 
-async def post_json(url: str, body: dict | None = None, params: dict | None = None, ttl: int = FRESH_TTL) -> Any:
+async def post_json(
+    url: str, body: dict | None = None, params: dict | None = None, ttl: int = FRESH_TTL
+) -> Any:
     """POST with stale-while-revalidate cache."""
     cached, is_fresh = get_cached(url, params=params, body=body, ttl=ttl)
     headers = _extra_headers(url)
