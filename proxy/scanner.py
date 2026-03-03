@@ -127,7 +127,9 @@ class ScannerEngine:
             audit_data = audit.get("data", {})
             risk = audit_data.get("riskLevel", audit_data.get("risk", ""))
             result["risk"] = risk or "—"
-            result["auditResult"] = "PASS" if risk and risk.lower() == "low" else risk or "—"
+            result["auditResult"] = (
+                "PASS" if risk and risk.lower() == "low" else risk or "—"
+            )
             if risk and risk.lower() == "low":
                 score += 20
             elif risk and risk.lower() == "high":
