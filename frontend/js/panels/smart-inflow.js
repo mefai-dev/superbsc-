@@ -40,7 +40,7 @@ export class SmartInflowPanel extends BasePanel {
       h += `<td class="val-num">$${u.formatPrice(t.price)}</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.mcap)}</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.volume)}</td>`;
-      h += `<td class="${cls}">${t.change >= 0 ? '↑' : '↓'}${Math.abs(t.change * 100).toFixed(1)}%</td></tr>`;
+      h += `<td class="${cls}">${t.change >= 0 ? '↑' : '↓'}${Math.abs(t.change).toFixed(1)}%</td></tr>`;
     }
     h += '</tbody></table>';
     return h;
