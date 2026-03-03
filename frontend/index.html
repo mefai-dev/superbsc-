@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEFAI SuperBSC Terminal</title>
+  <base href="/superbsc/">
+  <link rel="stylesheet" href="static/css/main.css?v=6">
+</head>
+<body>
+  <header id="header">
+    <div class="header-left">
+      <span class="logo">MEFAI</span>
+      <nav id="layout-nav">
+        <button class="layout-btn active" data-layout="overview">Overview</button>
+        <button class="layout-btn" data-layout="meme-hunter">Meme Hunter</button>
+        <button class="layout-btn" data-layout="whale-watcher">Whale Watcher</button>
+        <button class="layout-btn" data-layout="deep-dive">Deep Dive</button>
+        <button class="layout-btn" data-layout="trader">Trader</button>
+        <button class="layout-btn" data-layout="scanner">Scanner</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <button id="theme-toggle" title="Toggle theme (d)">◉</button>
+      <button id="search-trigger" title="Search (Cmd+K)">Search</button>
+      <button id="help-btn" title="Shortcuts (?)">?</button>
+    </div>
+  </header>
+
+  <main id="grid" class="grid"></main>
+
+  <footer id="status-bar">
+    <status-bar></status-bar>
+  </footer>
+
+  <!-- Mobile bottom navigation -->
+  <nav id="mobile-nav">
+    <button class="mobile-nav-btn active" data-layout="overview">Overview</button>
+    <button class="mobile-nav-btn" data-layout="meme-hunter">Meme</button>
+    <button class="mobile-nav-btn" data-layout="whale-watcher">Whale</button>
+    <button class="mobile-nav-btn" data-layout="trader">Trade</button>
+    <button class="mobile-nav-btn" data-layout="scanner">Scan</button>
+    <button class="mobile-nav-btn" data-layout="deep-dive">Research</button>
+  </nav>
+
+  <!-- Search overlay -->
+  <div id="search-overlay" class="overlay hidden">
+    <div class="overlay-content">
+      <input type="text" id="search-input" placeholder="Search token by name, symbol, or address..." autofocus>
+      <div id="search-results"></div>
+    </div>
+  </div>
+
+  <!-- Command palette -->
+  <div id="command-overlay" class="overlay hidden">
+    <div class="overlay-content">
+      <input type="text" id="command-input" placeholder="Type a command..." autofocus>
+      <div id="command-results"></div>
+    </div>
+  </div>
+
+  <!-- Help overlay -->
+  <div id="help-overlay" class="overlay hidden">
+    <div class="overlay-content help-content">
+      <h2>Keyboard Shortcuts</h2>
+      <table>
+        <tr><td><kbd>Cmd+K</kbd></td><td>Search tokens</td></tr>
+        <tr><td><kbd>/</kbd></td><td>Command palette</td></tr>
+        <tr><td><kbd>1-6</kbd></td><td>Switch layout</td></tr>
+        <tr><td><kbd>d</kbd></td><td>Toggle dark mode</td></tr>
+        <tr><td><kbd>r</kbd></td><td>Refresh active panel</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Close overlay</td></tr>
+        <tr><td><kbd>?</kbd></td><td>This help</td></tr>
+      </table>
+      <p class="muted">Press Esc to close</p>
+    </div>
+  </div>
+
+  <!-- Context menu -->
+  <div id="context-menu" class="context-menu hidden"></div>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Vendor -->
+  <script src="static/vendor/lightweight-charts.js"></script>
+
+  <!-- Scripts -->
+  <script type="module" src="static/js/store.js?v=6"></script>
+  <script type="module" src="static/js/api.js?v=6"></script>
+  <script type="module" src="static/js/utils.js?v=6"></script>
+  <script type="module" src="static/js/components/base-panel.js?v=6"></script>
+  <script type="module" src="static/js/components/data-table.js?v=6"></script>
+  <script type="module" src="static/js/components/status-bar.js?v=6"></script>
+  <script type="module" src="static/js/components/search-bar.js?v=6"></script>
+  <script type="module" src="static/js/components/command-palette.js?v=6"></script>
+  <script type="module" src="static/js/components/context-menu.js?v=6"></script>
+  <script type="module" src="static/js/components/toast.js?v=6"></script>
+  <script type="module" src="static/js/components/risk-badge.js?v=6"></script>
+  <script type="module" src="static/js/components/mini-chart.js?v=6"></script>
+  <script type="module" src="static/js/components/chart.js?v=6"></script>
+  <script type="module" src="static/js/app.js?v=6"></script>
+</body>
+</html>

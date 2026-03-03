@@ -1,0 +1,104 @@
+// MEFAI Base Panel — Web Component base class for all panels
+
+export class BasePanel extends HTMLElement {
+  static skill = '';
+  static defaultTitle = 'Panel';
+
+  constructor() {
+    super();
+    this._interval = null;
+    this._refreshRate = 10000;
+    this._loading = false;
+    this._data = null;
+    this._error = null;
+  }
+
+  connectedCallback() {
+    this.classList.add('panel');
+    this.render();
+    this.startAutoRefresh();
+  }
+
+  disconnectedCallback() {
+    this.stopAutoRefresh();
+  }
+
+  render() {
+    const title = this.getAttribute('title') || this.constructor.defaultTitle;
+    const skill = this.constructor.skill;
+    this.innerHTML = `
+      <div class="panel-header">
+        <div>
+          <span class="panel-title">${title}</span>
+          ${skill ? `<span class="panel-skill">${skill}</span>` : ''}
+        </div>
+        <div class="panel-actions">
+          <button class="panel-refresh" title="Refresh">↻</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-loading">Loading...</div>
+      </div>
+    `;
+    this.querySelector('.panel-refresh')?.addEventListener('click', () => this.refresh());
+    this.refresh();
+  }
+
+  async refresh() {
+    if (this._loading) return;
+    this._loading = true;
+    const body = this.querySelector('.panel-body');
+    try {
+      this._data = await this.fetchData();
+      this._error = null;
+      body.innerHTML = this.renderContent(this._data);
+      this.afterRender(body);
+    } catch (e) {
+      this._error = e;
+      body.innerHTML = `<div class="panel-error">Error: ${e.message}</div>`;
+    }
+    this._loading = false;
+  }
+
+  async fetchData() {
+    return null;
+  }
+
+  renderContent(data) {
+    return '<div class="panel-loading">No data</div>';
+  }
+
+  afterRender(body) {
+    // Override for post-render hooks (event listeners, charts, etc.)
+  }
+
+  startAutoRefresh() {
+    this.stopAutoRefresh();
+    if (this._refreshRate > 0) {
+      this._interval = setInterval(() => this.refresh(), this._refreshRate);
+    }
+  }
+
+  stopAutoRefresh() {
+    if (this._interval) {
+      clearInterval(this._interval);
+      this._interval = null;
+    }
+  }
+
+  setRefreshRate(ms) {
+    this._refreshRate = ms;
+    if (this.isConnected) this.startAutoRefresh();
+  }
+
+  emitTokenFocus(token) {
+    window.mefaiStore?.focusToken(token);
+  }
+
+  emitWalletFocus(wallet) {
+    window.mefaiStore?.focusWallet(wallet);
+  }
+}
+
+window.BasePanel = BasePanel;
+export default BasePanel;

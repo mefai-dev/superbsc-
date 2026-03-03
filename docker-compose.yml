@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  mefai:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - PROXY_HOST=0.0.0.0
+      - PROXY_PORT=8000
+    restart: unless-stopped
