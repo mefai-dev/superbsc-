@@ -49,22 +49,47 @@ async def index():
     return FileResponse(os.path.join(frontend_dir, "index.html"))
 
 
-# Warm-up cache on startup — pre-fetch overview panel data
-@app.on_event("startup")
-async def warmup_cache():
+# All warmup URLs
+def _warmup_tasks():
     WEB3 = settings.WEB3_BASE
     SPOT = settings.SPOT_BASE
-    logger.info("Warming up cache...")
-    tasks = [
-        # Overview layout panels: Market Overview, Trending, Smart Signals, Token Profile
-        fetch_json(f"{SPOT}/api/v3/ticker/24hr", ttl=60),
-        post_json(f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list", body={"page": 1, "size": 20}, ttl=60),
-        post_json(f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money", body={"page": 1, "pageSize": 20, "smartSignalType": "", "chainId": "56"}, ttl=60),
-        fetch_json(f"{WEB3}/v1/public/wallet-direct/buw/wallet/dex/market/token/meta/info", params={"chainId": "56", "contractAddress": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"}, ttl=60),
-        # Other frequently used
-        fetch_json(f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list", params={"chainId": "56", "page": 1, "size": 50}, ttl=60),
-        fetch_json(f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard", params={"chainId": "56", "page": 1, "size": 20, "targetLanguage": "en", "timeRange": 1}, ttl=60),
+    return [
+        # Spot
+        (fetch_json, (f"{SPOT}/api/v3/ticker/24hr",), {}),
+        (fetch_json, (f"{SPOT}/api/v3/depth",), {"params": {"symbol": "BTCUSDT", "limit": 20}}),
+        (fetch_json, (f"{SPOT}/api/v3/klines",), {"params": {"symbol": "BTCUSDT", "interval": "1h", "limit": 100}}),
+        # Trending + Signals
+        (post_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list",), {"body": {"page": 1, "size": 20}}),
+        (post_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money",), {"body": {"page": 1, "pageSize": 20, "smartSignalType": "", "chainId": "56"}}),
+        # Token profile (BNB default)
+        (fetch_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/dex/market/token/meta/info",), {"params": {"chainId": "56", "contractAddress": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"}}),
+        # Meme + Social + Traders
+        (fetch_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list",), {"params": {"chainId": "56", "page": 1, "size": 50}}),
+        (fetch_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard",), {"params": {"chainId": "56", "page": 1, "size": 20, "targetLanguage": "en", "timeRange": 1}}),
+        (fetch_json, (f"{WEB3}/v1/public/wallet-direct/market/leaderboard/query",), {"params": {"chainId": "56", "tag": "ALL", "pageNo": 1, "pageSize": 25, "sortBy": 0, "orderBy": 0, "period": "7d"}}),
+        (post_json, (f"{WEB3}/v1/public/wallet-direct/tracker/wallet/token/inflow/rank/query",), {"body": {"chainId": "CT_501", "tagType": 2}}),
+        (post_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/rank/list",), {"body": {"chainId": "56", "rankType": 10, "limit": 20}}),
+        (fetch_json, (f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list",), {"params": {"chainId": "56", "rankType": 10, "sort": 10}}),
     ]
+
+
+@app.on_event("startup")
+async def warmup_cache():
+    logger.info("Warming up cache (all endpoints)...")
+    tasks = [fn(*args, **kwargs) for fn, args, kwargs in _warmup_tasks()]
     results = await asyncio.gather(*tasks, return_exceptions=True)
     ok = sum(1 for r in results if not isinstance(r, Exception) and not (isinstance(r, dict) and r.get("error")))
     logger.info(f"Cache warm-up complete: {ok}/{len(tasks)} endpoints cached")
+    # Start periodic background refresh every 45 seconds
+    asyncio.create_task(_periodic_refresh())
+
+
+async def _periodic_refresh():
+    """Background task: refresh all cached data every 45s so users always get instant responses."""
+    while True:
+        await asyncio.sleep(45)
+        try:
+            tasks = [fn(*args, **kwargs) for fn, args, kwargs in _warmup_tasks()]
+            await asyncio.gather(*tasks, return_exceptions=True)
+        except Exception:
+            pass
