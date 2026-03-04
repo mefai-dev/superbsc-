@@ -55,7 +55,9 @@ app.include_router(token_info.router, prefix="/api/token", tags=["Skill 7: Token
 app.include_router(scanner_routes.router, prefix="/api/scanner", tags=["Auto-Scanner"])
 app.include_router(futures.router, prefix="/api/futures", tags=["Skill 8: Futures"])
 app.include_router(goplus.router, prefix="/api/goplus", tags=["Skill 9: GoPlus"])
-app.include_router(dexscreener.router, prefix="/api/dex", tags=["Skill 10: DexScreener"])
+app.include_router(
+    dexscreener.router, prefix="/api/dex", tags=["Skill 10: DexScreener"]
+)
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
