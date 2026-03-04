@@ -119,26 +119,52 @@ async def token_kline(
     limit = min(max(limit, 1), 1000)
     if not address:
         raise HTTPException(status_code=400, detail="address is required")
+
+    # DQuery supported intervals — others need Binance spot fallback
+    dquery_intervals = {
+        "1m", "1h", "2h", "4h", "6h", "8h", "12h", "1d", "3d", "1w", "1M",
+    }
+
+    # Map unsupported intervals to nearest DQuery interval for DEX tokens
+    _interval_map = {"5m": "1m", "15m": "1m", "30m": "1h", "3m": "1m"}
+
+    # Try Binance spot fallback first for known CEX pairs
+    symbol = _ADDR_TO_SYMBOL.get(address.lower())
+    if symbol and symbol != "USDTUSDT":
+        fallback_url = f"{SPOT_BASE}/api/v3/klines"
+        fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
+        result = await fetch_json(fallback_url, params=fallback_params, ttl=60)
+        if isinstance(result, list) and len(result) > 0:
+            return {"data": result, "source": "binance"}
+
     # Resolve platform from chain
     plat = platform or _CHAIN_TO_PLATFORM.get(chain or "56", "bsc")
+    dq_interval = interval if interval in dquery_intervals else _interval_map.get(interval, "1h")
+    dq_limit = limit * 5 if dq_interval != interval else limit  # more candles if aggregating
+
     url = f"{DQUERY}/k-line/candles"
     params = {
         "address": address,
         "platform": plat,
-        "interval": interval,
-        "limit": limit,
+        "interval": dq_interval,
+        "limit": min(dq_limit, 1000),
     }
     result = await fetch_json(url, params=params, ttl=60)
 
-    # Fallback to Binance spot klines for common pairs if DQuery fails
-    if isinstance(result, dict) and result.get("error"):
-        symbol = _ADDR_TO_SYMBOL.get(address.lower())
-        if symbol:
-            logger.debug(
-                f"DQuery failed for {address}, falling back to Binance spot klines ({symbol})"
-            )
-            fallback_url = f"{SPOT_BASE}/api/v3/klines"
-            fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
-            return await fetch_json(fallback_url, params=fallback_params, ttl=60)
+    # Check for DQuery error response
+    if isinstance(result, dict):
+        status = result.get("status", {})
+        if status.get("error_code") not in (None, "0", 0):
+            # DQuery failed — try Binance spot as last resort
+            if symbol:
+                fallback_url = f"{SPOT_BASE}/api/v3/klines"
+                fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
+                return await fetch_json(fallback_url, params=fallback_params, ttl=60)
+            return {"data": [], "error": status.get("error_message", "No data")}
+        if result.get("error"):
+            if symbol:
+                fallback_url = f"{SPOT_BASE}/api/v3/klines"
+                fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
+                return await fetch_json(fallback_url, params=fallback_params, ttl=60)
 
     return result

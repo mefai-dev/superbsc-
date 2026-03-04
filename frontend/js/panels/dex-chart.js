@@ -56,7 +56,7 @@ export class DexChartPanel extends BasePanel {
         <div class="panel-actions"><button class="panel-refresh">↻</button></div>
       </div>
       <div class="filter-bar">
-        ${['5m','15m','1h','4h','1d'].map(i =>
+        ${['1m','5m','15m','1h','4h','1d','1w'].map(i =>
           `<button class="btn iv-btn${this._interval === i ? ' btn-primary' : ''}" data-i="${i}">${i}</button>`
         ).join('')}
       </div>
@@ -82,17 +82,21 @@ export class DexChartPanel extends BasePanel {
       interval: this._interval,
       limit: 200,
     });
-    if (!res || res?.error) return null;
-    // DQuery returns {data: [[open,high,low,close,volume,time,count], ...]}
+    if (!res) return null;
     const raw = res?.data || (Array.isArray(res) ? res : null);
     if (!raw || !Array.isArray(raw) || !raw.length) return null;
-    // Convert DQuery format to TradingView format
+
     return raw.map(c => {
       if (Array.isArray(c)) {
-        return { time: Math.floor(c[5] / 1000), open: c[0], high: c[1], low: c[2], close: c[3] };
+        // Binance spot format: [time, open, high, low, close, vol, ...]
+        if (c.length >= 6 && c[0] > 1e11) {
+          return { time: Math.floor(c[0] / 1000), open: +c[1], high: +c[2], low: +c[3], close: +c[4] };
+        }
+        // DQuery format: [open, high, low, close, vol, time, count]
+        return { time: Math.floor(c[5] / 1000), open: +c[0], high: +c[1], low: +c[2], close: +c[3] };
       }
       return c;
-    }).filter(c => c.time && !isNaN(c.open));
+    }).filter(c => c.time && !isNaN(c.open) && c.open > 0);
   }
 
   renderContent(data) {
