@@ -82,7 +82,6 @@ export class EarnComparatorPanel extends BasePanel {
   _renderAuthCard() {
     let h = '<style scoped>';
     h += '.earn-auth{text-align:center;padding:20px}';
-    h += '.earn-auth-icon{font-size:36px;margin-bottom:8px}';
     h += '.earn-auth-title{font-size:14px;font-weight:700;margin-bottom:6px}';
     h += '.earn-auth-desc{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.5}';
     h += '.earn-preview{background:var(--bg-secondary);border-radius:6px;padding:12px;margin-top:12px;text-align:left}';
@@ -91,7 +90,6 @@ export class EarnComparatorPanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="earn-auth">';
-    h += '<div class="earn-auth-icon">&#128274;</div>';
     h += '<div class="earn-auth-title">Configure Binance API Key</div>';
     h += '<div class="earn-auth-desc">This skill requires a Binance API key with read-only permissions to access Simple Earn product data.</div>';
     h += '<div class="earn-preview"><h4>Feature Preview</h4>';

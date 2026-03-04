@@ -33,7 +33,6 @@ export class SwapRouterPanel extends BasePanel {
     let h = '<style scoped>';
     h += '.sw-info{padding:12px}';
     h += '.sw-header{text-align:center;margin-bottom:16px}';
-    h += '.sw-icon{font-size:36px;margin-bottom:6px}';
     h += '.sw-title{font-size:14px;font-weight:700}';
     h += '.sw-sub{font-size:11px;color:var(--text-muted);margin-top:4px}';
     h += '.sw-chains{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}';
@@ -47,7 +46,7 @@ export class SwapRouterPanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="sw-info">';
-    h += '<div class="sw-header"><div class="sw-icon">&#128260;</div>';
+    h += '<div class="sw-header">';
     h += '<div class="sw-title">Binance Web3 Wallet Swap</div>';
     h += '<div class="sw-sub">Multi-chain DEX aggregation via Binance Web3 Wallet</div></div>';
 

@@ -32,7 +32,6 @@ export class TradeJournalPanel extends BasePanel {
   _renderAuthCard() {
     let h = '<style scoped>';
     h += '.tj-auth{text-align:center;padding:20px}';
-    h += '.tj-icon{font-size:36px;margin-bottom:8px}';
     h += '.tj-title{font-size:14px;font-weight:700;margin-bottom:6px}';
     h += '.tj-desc{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.5}';
     h += '.tj-preview{background:var(--bg-secondary);border-radius:6px;padding:12px;text-align:left;margin-top:12px}';
@@ -46,7 +45,6 @@ export class TradeJournalPanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="tj-auth">';
-    h += '<div class="tj-icon">&#128221;</div>';
     h += '<div class="tj-title">API Key Required</div>';
     h += '<div class="tj-desc">Track and analyze your trading performance with automated journaling from Binance trade history.</div>';
 

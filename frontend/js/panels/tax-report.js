@@ -32,7 +32,6 @@ export class TaxReportPanel extends BasePanel {
   _renderAuthCard() {
     let h = '<style scoped>';
     h += '.tax-auth{text-align:center;padding:20px}';
-    h += '.tax-auth-icon{font-size:36px;margin-bottom:8px}';
     h += '.tax-auth-title{font-size:14px;font-weight:700;margin-bottom:6px}';
     h += '.tax-auth-desc{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.5}';
     h += '.tax-steps{background:var(--bg-secondary);border-radius:6px;padding:12px;text-align:left;margin-top:12px}';
@@ -45,7 +44,6 @@ export class TaxReportPanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="tax-auth">';
-    h += '<div class="tax-auth-icon">&#128203;</div>';
     h += '<div class="tax-auth-title">API Key Required</div>';
     h += '<div class="tax-auth-desc">Generate tax reports from your Binance trade history. Requires a read-only API key with trade access.</div>';
 
