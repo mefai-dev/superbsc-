@@ -179,6 +179,24 @@ export const api = {
     start: () => post('/api/scanner/start', {}, 0),
     stop: () => post('/api/scanner/stop', {}, 0),
   },
+  // Skill 8: Futures (public, no auth)
+  futures: {
+    premiumIndex: (s) => get('/api/futures/premiumIndex', s ? { symbol: s } : {}, 15000),
+    ticker24hr: (s) => get('/api/futures/ticker24hr', s ? { symbol: s } : {}, 15000),
+    openInterest: (s) => get('/api/futures/openInterest', { symbol: s || 'BTCUSDT' }, 30000),
+    longShortRatio: (s, p) => get('/api/futures/longShortRatio', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
+    fundingHistory: (s, l) => get('/api/futures/fundingHistory', { symbol: s || 'BTCUSDT', limit: l || 10 }, 60000),
+  },
+  // Skill 9: GoPlus Security
+  goplus: {
+    tokenSecurity: (addr, chain) => get('/api/goplus/token-security', { address: addr, chainId: chain || '56' }, 120000),
+  },
+  // Skill 10: DexScreener
+  dex: {
+    latestProfiles: () => get('/api/dex/latest-profiles', {}, 30000),
+    search: (q, chain) => get('/api/dex/search', { q, chainIds: chain || 'bsc' }, 30000),
+    token: (addr) => get('/api/dex/token', { address: addr }, 30000),
+  },
   health: () => get('/health', {}, 30000),
 };
 

@@ -18,6 +18,9 @@ from proxy.routes import (
     market_rank,
     token_audit,
     address,
+    futures,
+    goplus,
+    dexscreener,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -50,6 +53,9 @@ app.include_router(market_rank.router, prefix="/api/rank", tags=["Skill 5: Ranki
 app.include_router(token_audit.router, prefix="/api/audit", tags=["Skill 6: Audit"])
 app.include_router(token_info.router, prefix="/api/token", tags=["Skill 7: Token Info"])
 app.include_router(scanner_routes.router, prefix="/api/scanner", tags=["Auto-Scanner"])
+app.include_router(futures.router, prefix="/api/futures", tags=["Skill 8: Futures"])
+app.include_router(goplus.router, prefix="/api/goplus", tags=["Skill 9: GoPlus"])
+app.include_router(dexscreener.router, prefix="/api/dex", tags=["Skill 10: DexScreener"])
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")

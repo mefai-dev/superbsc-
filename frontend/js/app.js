@@ -26,6 +26,13 @@ const panelRegistry = {
   'auto-scanner': 'auto-scanner-panel',
   'smart-flow': 'smart-flow-panel',
   'all-skills': 'all-skills-panel',
+  'alpha-radar': 'alpha-radar-panel',
+  'signal-pnl': 'signal-pnl-panel',
+  'futures-pulse': 'futures-pulse-panel',
+  'sm-acceleration': 'sm-acceleration-panel',
+  'token-scout': 'token-scout-panel',
+  'funding-arb': 'funding-arb-panel',
+  'social-divergence': 'social-divergence-panel',
 };
 
 // Layout presets
@@ -65,6 +72,21 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['auto-scanner', 'token-audit', 'token-profile', 'smart-signals'],
   },
+  'alpha': {
+    name: 'Alpha',
+    grid: 'grid-2x2',
+    panels: ['alpha-radar', 'signal-pnl', 'smart-signals', 'trending-tokens'],
+  },
+  'futures': {
+    name: 'Futures',
+    grid: 'grid-2x2',
+    panels: ['futures-pulse', 'funding-arb', 'market-overview', 'smart-signals'],
+  },
+  'discovery': {
+    name: 'Discovery',
+    grid: 'grid-2x3',
+    panels: ['token-scout', 'sm-acceleration', 'social-divergence', 'alpha-radar', 'trending-tokens', 'meme-rank'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -77,10 +99,12 @@ async function loadPanels() {
     'social-hype', 'trending-tokens', 'smart-inflow', 'meme-rank',
     'top-traders', 'token-audit', 'token-search', 'token-profile',
     'dex-chart', 'auto-scanner', 'smart-flow', 'all-skills',
+    'alpha-radar', 'signal-pnl',
+    'futures-pulse', 'sm-acceleration', 'token-scout', 'funding-arb', 'social-divergence',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709550000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709560000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -198,7 +222,7 @@ document.addEventListener('keydown', (e) => {
 
   // 1-7 — switch layout
   const num = parseInt(e.key);
-  if (num >= 1 && num <= 7) {
+  if (num >= 1 && num <= 10) {
     const keys = Object.keys(layouts);
     if (keys[num - 1]) setLayout(keys[num - 1]);
     return;
