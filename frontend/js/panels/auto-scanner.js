@@ -76,8 +76,9 @@ export class AutoScannerPanel extends BasePanel {
       const pct = Math.min(100, Math.max(0, t.score));
       const sigCls = t.signal === 'BUY' ? 'val-up' : t.signal === 'SELL' ? 'val-down' : '';
       h += `<tr data-a="${t.address}" data-c="${t.chain}">`;
-      const scoreColor = pct >= 70 ? 'var(--up)' : pct >= 40 ? '#f39c12' : 'var(--down)';
-      h += `<td><span style="font-weight:700;color:${scoreColor}">${t.score.toFixed(0)}</span> <span class="score-bar"><span class="score-fill" style="width:${pct}%;background:${scoreColor}"></span></span></td>`;
+      const hex = pct >= 70 ? '#0ecb81' : pct >= 40 ? '#f0b90b' : '#f6465d';
+      const barW = Math.max(5, pct);
+      h += `<td><span style="font-weight:700;color:${hex}">${t.score.toFixed(0)}</span> <span class="score-bar"><span class="score-fill" style="width:${barW}%;background:${hex}"></span></span></td>`;
       h += `<td style="font-weight:600">${escapeHtml(t.token)} <span class="chain-badge">${t.chain}</span></td>`;
       h += `<td class="${sigCls}">${t.signal || '—'}</td>`;
       h += `<td class="val-num">${formatCurrency(t.mcap)}</td>`;

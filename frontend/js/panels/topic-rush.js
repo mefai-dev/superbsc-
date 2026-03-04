@@ -71,7 +71,7 @@ export class TopicRushPanel extends BasePanel {
       h += `<div style="padding:8px;border-bottom:1px solid var(--border)">`;
       h += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">`;
       h += `<span style="font-weight:600;font-size:12px">${u.escapeHtml(topic.name)}</span>`;
-      h += `<span style="font-size:9px;color:var(--text-muted)">${u.escapeHtml(topic.type)}</span>`;
+      h += `<span style="font-size:9px;color:var(--accent);border:1px solid var(--accent);padding:1px 6px;border-radius:3px;font-weight:600">${u.escapeHtml(topic.type)}</span>`;
       h += `</div>`;
       if (topic.summary) {
         h += `<div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px;line-height:1.4">${u.escapeHtml(topic.summary.slice(0, 120))}</div>`;
@@ -86,7 +86,7 @@ export class TopicRushPanel extends BasePanel {
       if (topic.tokens?.length) {
         h += `<div style="display:flex;gap:4px;flex-wrap:wrap">`;
         for (const tk of topic.tokens.slice(0, 6)) {
-          h += `<span class="chain-badge" style="cursor:pointer" data-a="${tk.contractAddress || ''}" data-c="${tk.chainId || '56'}">${u.escapeHtml(tk.symbol || '?')}</span>`;
+          h += `<span class="chain-badge" style="cursor:pointer;color:var(--accent);border-color:var(--accent)" data-a="${tk.contractAddress || ''}" data-c="${tk.chainId || '56'}">${u.escapeHtml(tk.symbol || '?')}</span>`;
         }
         h += `</div>`;
       }
