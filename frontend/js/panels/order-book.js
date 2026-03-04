@@ -74,10 +74,10 @@ export class OrderBookPanel extends BasePanel {
     const askHTML = asks.slice().reverse().map(a => {
       const w = (a.t / maxT * 100).toFixed(1);
       return `<tr class="ob-row">
+        <td class="ob-bg"><div class="ob-depth ob-depth-ask" style="width:${w}%"></div></td>
         <td class="ob-price ask-price">${this._fmtPrice(a.p)}</td>
         <td class="ob-qty">${this._fmtQty(a.q)}</td>
         <td class="ob-total">${this._fmtQty(a.t)}</td>
-        <div class="ob-depth ob-depth-ask" style="width:${w}%"></div>
       </tr>`;
     }).join('');
 
@@ -85,10 +85,10 @@ export class OrderBookPanel extends BasePanel {
     const bidHTML = bids.map(b => {
       const w = (b.t / maxT * 100).toFixed(1);
       return `<tr class="ob-row">
+        <td class="ob-bg"><div class="ob-depth ob-depth-bid" style="width:${w}%"></div></td>
         <td class="ob-price bid-price">${this._fmtPrice(b.p)}</td>
         <td class="ob-qty">${this._fmtQty(b.q)}</td>
         <td class="ob-total">${this._fmtQty(b.t)}</td>
-        <div class="ob-depth ob-depth-bid" style="width:${w}%"></div>
       </tr>`;
     }).join('');
 
@@ -109,10 +109,11 @@ export class OrderBookPanel extends BasePanel {
 .ob-tbl{width:100%;border-collapse:collapse;table-layout:fixed}
 .ob-row{position:relative;height:20px;transition:background .1s}
 .ob-row:hover{background:rgba(255,255,255,.03)}
+.ob-bg{position:absolute;inset:0;padding:0;z-index:0;pointer-events:none;width:100%;border:none}
 .ob-price,.ob-qty,.ob-total{padding:0 10px;line-height:20px;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ob-price{font-weight:700;width:38%}
-.ob-qty{text-align:right;width:32%;color:var(--text-secondary)}
-.ob-total{text-align:right;width:30%;color:var(--text-muted);font-size:10px}
+.ob-price{font-weight:700;width:35%}
+.ob-qty{text-align:right;width:30%;color:var(--text-secondary)}
+.ob-total{text-align:right;width:25%;color:var(--text-muted);font-size:10px}
 .ask-price{color:#f6465d}
 .bid-price{color:#0ecb81}
 .ob-depth{position:absolute;top:0;right:0;height:100%;pointer-events:none;z-index:0;transition:width .3s ease}
