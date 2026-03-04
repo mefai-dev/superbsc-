@@ -11,10 +11,12 @@ export class OrderBookPanel extends BasePanel {
     this._symbol = 'BTCUSDT';
     this._unsubscribe = null;
     this._precision = 2;
+    this._depth = 20; // 1, 10, 20 (100 mapped to 20 in API but shows more rows)
   }
 
   connectedCallback() {
-    super.connectedCallback();
+    this.classList.add('panel');
+    this._renderShell();
     this._unsubscribe = window.mefaiStore?.subscribe('focusedToken', (token) => {
       if (token?.symbol && token.platform === 'spot') {
         const sym = token.symbol.endsWith('USDT') ? token.symbol : token.symbol + 'USDT';
@@ -25,15 +27,44 @@ export class OrderBookPanel extends BasePanel {
     if (cur?.symbol && cur.platform === 'spot') {
       this._symbol = cur.symbol.endsWith('USDT') ? cur.symbol : cur.symbol + 'USDT';
     }
+    this.startAutoRefresh();
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback();
+    this.stopAutoRefresh();
     if (this._unsubscribe) this._unsubscribe();
   }
 
+  _renderShell() {
+    const u = window.mefaiUtils;
+    this.innerHTML = `
+      <div class="panel-header">
+        <div>
+          <span class="panel-title">Order Book</span>
+          <span class="panel-skill">Skill 1</span>
+        </div>
+        <div class="panel-actions" style="display:flex;gap:4px;align-items:center">
+          <span style="font-size:9px;color:var(--text-muted)">Depth:</span>
+          ${[5, 10, 20].map(d => `<button class="btn ob-depth-btn${this._depth === d ? ' btn-primary' : ''}" data-d="${d}" style="font-size:9px;padding:1px 6px">${d}</button>`).join('')}
+          <button class="panel-refresh" title="Refresh">↻</button>
+        </div>
+      </div>
+      <div class="panel-body" style="padding:0">
+        ${this._skeletonHTML()}
+      </div>`;
+    this.querySelector('.panel-refresh')?.addEventListener('click', () => this.refresh());
+    this.querySelectorAll('.ob-depth-btn').forEach(b => b.addEventListener('click', () => {
+      this._depth = parseInt(b.dataset.d);
+      this.querySelectorAll('.ob-depth-btn').forEach(x => x.classList.remove('btn-primary'));
+      b.classList.add('btn-primary');
+      this.refresh();
+    }));
+    this.refresh();
+  }
+
   async fetchData() {
-    const res = await window.mefaiApi.spot.depth(this._symbol, 20);
+    const limit = this._depth;
+    const res = await window.mefaiApi.spot.depth(this._symbol, limit);
     if (!res || res?.error) return { bids: [], asks: [], symbol: this._symbol };
     const raw = res?.data || res;
     return {
@@ -49,17 +80,16 @@ export class OrderBookPanel extends BasePanel {
       return `<div class="panel-loading">Waiting for ${u.escapeHtml(this._symbol)} depth…</div>`;
     }
 
-    const bids = data.bids.slice(0, 15).map(b => ({ p: parseFloat(b[0]), q: parseFloat(b[1]) }));
-    const asks = data.asks.slice(0, 15).map(a => ({ p: parseFloat(a[0]), q: parseFloat(a[1]) }));
+    const rows = this._depth;
+    const bids = data.bids.slice(0, rows).map(b => ({ p: parseFloat(b[0]), q: parseFloat(b[1]) }));
+    const asks = data.asks.slice(0, rows).map(a => ({ p: parseFloat(a[0]), q: parseFloat(a[1]) }));
 
-    // Determine price precision
     if (bids[0]) {
       const ps = bids[0].p.toString();
       const dot = ps.indexOf('.');
       this._precision = dot >= 0 ? ps.length - dot - 1 : 2;
     }
 
-    // Cumulative totals
     let ct = 0; bids.forEach(b => { ct += b.q; b.t = ct; });
     ct = 0; asks.forEach(a => { ct += a.q; a.t = ct; });
     const maxT = Math.max(bids[bids.length - 1]?.t || 1, asks[asks.length - 1]?.t || 1);
@@ -70,7 +100,6 @@ export class OrderBookPanel extends BasePanel {
     const sprP = mid ? (spr / mid * 100) : 0;
     const sym = data.symbol.replace('USDT', '');
 
-    // Ask rows — reversed so lowest ask is nearest to spread
     const askHTML = asks.slice().reverse().map(a => {
       const w = (a.t / maxT * 100).toFixed(1);
       return `<tr class="ob-row">
@@ -81,7 +110,6 @@ export class OrderBookPanel extends BasePanel {
       </tr>`;
     }).join('');
 
-    // Bid rows
     const bidHTML = bids.map(b => {
       const w = (b.t / maxT * 100).toFixed(1);
       return `<tr class="ob-row">
@@ -98,11 +126,6 @@ export class OrderBookPanel extends BasePanel {
 
     return `<style>
 .ob-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;font-variant-numeric:tabular-nums;font-size:11px}
-.ob-header{display:flex;justify-content:space-between;align-items:center;padding:4px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
-.ob-header-left{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.ob-header-right{font-size:9px;display:flex;align-items:center;gap:4px}
-.ob-live{width:5px;height:5px;border-radius:50%;background:#0ecb81;display:inline-block;animation:ob-blink 2s infinite}
-@keyframes ob-blink{0%,100%{opacity:1}50%{opacity:.4}}
 .ob-cols{display:grid;grid-template-columns:1fr 1fr 1fr;padding:3px 10px;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0}
 .ob-cols span:nth-child(2),.ob-cols span:nth-child(3){text-align:right}
 .ob-scroll{flex:1;overflow-y:auto;overflow-x:hidden;min-height:0}
@@ -121,26 +144,20 @@ export class OrderBookPanel extends BasePanel {
 .ob-depth-bid{background:rgba(14,203,129,.12)}
 .ob-mid{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
 .ob-mid-price{font-size:18px;font-weight:900;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
-.ob-mid-arrow{font-size:14px}
-.ob-mid-info{display:flex;flex-direction:column;align-items:flex-end}
 .ob-mid-spread{font-size:9px;color:var(--text-muted)}
 .ob-mid-usd{font-size:9px;color:var(--text-secondary)}
 </style>
 <div class="ob-wrap">
-  <div class="ob-header">
-    <span class="ob-header-left">${u.escapeHtml(sym)}/USDT</span>
-    <span class="ob-header-right"><span class="ob-live"></span> Live Depth</span>
-  </div>
   <div class="ob-cols"><span>Price(USDT)</span><span>Amount(${u.escapeHtml(sym)})</span><span>Total</span></div>
   <div class="ob-scroll">
     <table class="ob-tbl"><tbody>${askHTML}</tbody></table>
   </div>
   <div class="ob-mid">
     <span class="ob-mid-price">
-      <span class="ob-mid-arrow" style="color:${midColor}">${midArrow}</span>
+      <span style="color:${midColor};font-size:14px">${midArrow}</span>
       <span style="color:${midColor}">${u.formatPrice(mid)}</span>
     </span>
-    <div class="ob-mid-info">
+    <div style="display:flex;flex-direction:column;align-items:flex-end">
       <span class="ob-mid-usd">≈ $${u.formatPrice(mid)}</span>
       <span class="ob-mid-spread">Spread: ${u.formatPrice(spr)} (${sprP.toFixed(3)}%)</span>
     </div>

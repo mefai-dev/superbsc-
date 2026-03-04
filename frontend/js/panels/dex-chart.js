@@ -10,7 +10,7 @@ export class DexChartPanel extends BasePanel {
   constructor() {
     super();
     this._refreshRate = 60000;
-    this._interval = '1h';
+    this._klineIv = '1h';
     this._address = DEFAULT_ADDR;
     this._chain = DEFAULT_CHAIN;
     this._label = 'WBNB';
@@ -57,7 +57,7 @@ export class DexChartPanel extends BasePanel {
       </div>
       <div class="filter-bar">
         ${['1m','5m','15m','1h','4h','1d','1w'].map(i =>
-          `<button class="btn iv-btn${this._interval === i ? ' btn-primary' : ''}" data-i="${i}">${i}</button>`
+          `<button class="btn iv-btn${this._klineIv === i ? ' btn-primary' : ''}" data-i="${i}">${i}</button>`
         ).join('')}
       </div>
       <div class="panel-body" style="padding:0">
@@ -65,7 +65,7 @@ export class DexChartPanel extends BasePanel {
       </div>`;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => { this._destroyChart(); this.refresh(); });
     this.querySelectorAll('.iv-btn').forEach(b => b.addEventListener('click', () => {
-      this._interval = b.dataset.i;
+      this._klineIv = b.dataset.i;
       this.querySelectorAll('.iv-btn').forEach(x => x.classList.remove('btn-primary'));
       b.classList.add('btn-primary');
       this._destroyChart();
@@ -79,7 +79,7 @@ export class DexChartPanel extends BasePanel {
     const res = await window.mefaiApi.token.kline({
       address: this._address,
       chain: this._chain,
-      interval: this._interval,
+      interval: this._klineIv,
       limit: 200,
     });
     if (!res) return null;

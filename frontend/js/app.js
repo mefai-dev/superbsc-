@@ -80,7 +80,7 @@ async function loadPanels() {
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709519000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709520000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
