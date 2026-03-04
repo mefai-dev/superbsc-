@@ -17,9 +17,9 @@ export class WalletTrackerPanel extends BasePanel {
     this._chain = 'eth';
     this._unsub = null;
     this._presets = [
-      { label: 'Vitalik', address: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', chain: 'eth' },
-      { label: 'Justin Sun', address: '0x3DdfA8eC3052539b6C9549F12cEA2C295cfF5296', chain: 'eth' },
-      { label: 'CZ BSC', address: '0x8894E0a0c962CB723c1ef18d18b7D7f9e1Ce0E28', chain: 'bsc' },
+      { label: 'Vitalik', address: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', chain: 'eth', joke: "Let's see what Vitalik is dumping today... for science!" },
+      { label: 'Justin Sun', address: '0x3DdfA8eC3052539b6C9549F12cEA2C295cfF5296', chain: 'eth', joke: "Justin Sun's wallet — the man who bought lunch with Buffett" },
+      { label: 'CZ BSC', address: '0x8894E0a0c962CB723c1ef18d18b7D7f9e1Ce0E28', chain: 'bsc', joke: "CZ's BSC bag — 4 is not enough, he needs all of them" },
     ];
   }
 
@@ -70,7 +70,7 @@ export class WalletTrackerPanel extends BasePanel {
         <button class="btn wallet-btn">Track</button>
       </div>
       <div style="display:flex;gap:4px;padding:4px 8px;border-bottom:1px solid var(--border);flex-wrap:wrap">
-        ${this._presets.map(p => `<button class="btn preset-btn" data-addr="${p.address}" data-chain="${p.chain}" style="font-size:9px;padding:2px 8px">${p.label}</button>`).join('')}
+        ${this._presets.map(p => `<button class="btn preset-btn" data-addr="${p.address}" data-chain="${p.chain}" data-joke="${escapeHtml(p.joke || '')}" style="font-size:9px;padding:2px 8px">${p.label}</button>`).join('')}
       </div>
       <div class="panel-body">
         <div class="panel-loading">Select a whale wallet or enter an address</div>
@@ -96,6 +96,7 @@ export class WalletTrackerPanel extends BasePanel {
       btn.addEventListener('click', () => {
         this._address = btn.dataset.addr;
         this._chain = btn.dataset.chain;
+        this._activeJoke = btn.dataset.joke || '';
         const addrInput = this.querySelector('.wallet-address');
         const chainSelect = this.querySelector('.wallet-chain');
         if (addrInput) addrInput.value = this._address;
@@ -150,7 +151,11 @@ export class WalletTrackerPanel extends BasePanel {
       { key: 'value', label: 'Value', align: 'right', render: v => formatCurrency(v) },
     ];
 
-    let html = `<div style="padding:0 0 8px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">`;
+    let html = '';
+    if (this._activeJoke) {
+      html += `<div style="padding:4px 0 6px;font-size:10px;color:var(--accent);font-style:italic">${escapeHtml(this._activeJoke)}</div>`;
+    }
+    html += `<div style="padding:0 0 8px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">`;
     html += `${formatAddress(this._address)} &mdash; Total: <span style="color:var(--text);font-weight:700">${formatCurrency(total)}</span>`;
     html += `</div>`;
     html += renderTable(columns, sorted, {

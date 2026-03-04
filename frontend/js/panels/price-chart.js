@@ -11,7 +11,7 @@ export class PriceChartPanel extends BasePanel {
     super();
     this._refreshRate = 15000;
     this._symbol = 'BTCUSDT';
-    this._interval = '1h';
+    this._klineIv = '1h';
     this._chartInstance = null;
     this._unsubscribe = null;
   }
@@ -21,13 +21,13 @@ export class PriceChartPanel extends BasePanel {
     this._unsubscribe = window.mefaiStore?.subscribe('focusedToken', (token) => {
       if (token?.symbol && token.platform === 'spot' && token.symbol !== this._symbol) {
         this._symbol = token.symbol;
+        this._destroyChart();
         this.refresh();
       }
     });
     const current = window.mefaiStore?.get('focusedToken');
     if (current?.symbol && current.platform === 'spot') {
       this._symbol = current.symbol;
-      this.refresh();
     }
   }
 
@@ -56,22 +56,23 @@ export class PriceChartPanel extends BasePanel {
           <span class="panel-skill" style="margin-left:8px" id="chart-symbol">${window.mefaiUtils.escapeHtml(this._symbol)}</span>
         </div>
         <div class="panel-actions">
-          ${INTERVALS.map(iv => `<button class="interval-btn${iv === this._interval ? ' active' : ''}" data-interval="${iv}" style="font-size:10px;padding:2px 6px;border:1px solid ${iv === this._interval ? 'var(--accent)' : 'transparent'}">${iv}</button>`).join('')}
+          ${INTERVALS.map(iv => `<button class="interval-btn${iv === this._klineIv ? ' active' : ''}" data-interval="${iv}" style="font-size:10px;padding:2px 6px;border:1px solid ${iv === this._klineIv ? 'var(--accent)' : 'transparent'}">${iv}</button>`).join('')}
           <button class="panel-refresh" title="Refresh">&#8635;</button>
         </div>
       </div>
       <div class="panel-body" style="padding:0">
-        <div class="panel-loading">Loading...</div>
+        ${this._skeletonHTML()}
       </div>
     `;
-    this.querySelector('.panel-refresh')?.addEventListener('click', () => this.refresh());
+    this.querySelector('.panel-refresh')?.addEventListener('click', () => { this._destroyChart(); this.refresh(); });
     this.querySelectorAll('.interval-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        this._interval = btn.dataset.interval;
+        this._klineIv = btn.dataset.interval;
         this.querySelectorAll('.interval-btn').forEach(b => {
-          b.style.borderColor = b.dataset.interval === this._interval ? 'var(--accent)' : 'transparent';
-          b.classList.toggle('active', b.dataset.interval === this._interval);
+          b.style.borderColor = b.dataset.interval === this._klineIv ? 'var(--accent)' : 'transparent';
+          b.classList.toggle('active', b.dataset.interval === this._klineIv);
         });
+        this._destroyChart();
         this.refresh();
       });
     });
@@ -79,11 +80,10 @@ export class PriceChartPanel extends BasePanel {
   }
 
   async fetchData() {
-    const res = await window.mefaiApi.spot.klines(this._symbol, this._interval, 100);
-    if (!res || res?.error || res?.code === '000002') return { klines: [], symbol: this._symbol, interval: this._interval };
-    // spot.klines() returns Array of arrays: [[time,open,high,low,close,vol,...], ...]
+    const res = await window.mefaiApi.spot.klines(this._symbol, this._klineIv, 100);
+    if (!res || res?.error || res?.code === '000002') return { klines: [], symbol: this._symbol };
     const klines = Array.isArray(res) ? res : (res?.data || res?.klines || []);
-    return { klines: Array.isArray(klines) ? klines : [], symbol: this._symbol, interval: this._interval };
+    return { klines: Array.isArray(klines) ? klines : [], symbol: this._symbol };
   }
 
   renderContent(data) {
@@ -106,7 +106,7 @@ export class PriceChartPanel extends BasePanel {
     this._destroyChart();
 
     const container = body.querySelector('#price-chart-container');
-    if (!container) return;
+    if (!container || !window.mefaiChart) return;
 
     const formatted = window.mefaiChart.formatKlineData(data.klines);
     if (!formatted.length) {
