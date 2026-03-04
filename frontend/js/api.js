@@ -199,11 +199,21 @@ export const api = {
     search: (q, chain) => get('/api/dex/search', { q, chainIds: chain || 'bsc' }, 30000),
     token: (addr) => get('/api/dex/token', { address: addr }, 30000),
     tokenChain: (chain, addr) => get('/api/dex/token-chain', { chain, address: addr }, 30000),
+    topBoosts: () => get('/api/dex/top-boosts', {}, 30000),
   },
   // Skill 11: CoinGecko
   coingecko: {
     categories: (order) => get('/api/coingecko/categories', { order: order || 'market_cap_desc' }, 120000),
     categoryCoins: (cat, n) => get('/api/coingecko/category-coins', { category: cat, per_page: n || 20 }, 120000),
+    global: () => get('/api/coingecko/global', {}, 60000),
+    globalDefi: () => get('/api/coingecko/global-defi', {}, 60000),
+  },
+  // Skill 13: DefiLlama
+  defillama: {
+    yields: () => get('/api/defillama/yields', {}, 120000),
+    protocols: () => get('/api/defillama/protocols', {}, 300000),
+    stablecoins: () => get('/api/defillama/stablecoins', {}, 300000),
+    stablecoinChains: () => get('/api/defillama/stablecoin-chains', {}, 300000),
   },
   // Skill 12: Etherscan
   etherscan: {

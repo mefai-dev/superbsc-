@@ -48,3 +48,9 @@ async def get_token_chain(
 ):
     """Get token pairs filtered by chain."""
     return await fetch_json(f"{DEX}/tokens/v1/{chain}/{address}", ttl=30)
+
+
+@router.get("/top-boosts")
+async def top_boosts():
+    """Top boosted tokens on DexScreener."""
+    return await fetch_json(f"{DEX}/token-boosts/top/v1", ttl=30)
