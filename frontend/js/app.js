@@ -40,6 +40,9 @@ const panelRegistry = {
   'dex-intel': 'dex-intel-panel',
   'goplus-scanner': 'goplus-scanner-panel',
   'multi-chain-wallet': 'multi-chain-wallet-panel',
+  'liquidity-lifecycle': 'liquidity-lifecycle-panel',
+  'capital-rotation': 'capital-rotation-panel',
+  'contract-mutation': 'contract-mutation-panel',
 };
 
 // Layout presets
@@ -109,6 +112,11 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['liquidation-heatmap', 'futures-pulse', 'funding-arb', 'order-book-intel'],
   },
+  'security': {
+    name: 'Security',
+    grid: 'grid-2x2',
+    panels: ['contract-mutation', 'liquidity-lifecycle', 'goplus-scanner', 'capital-rotation'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -125,10 +133,11 @@ async function loadPanels() {
     'futures-pulse', 'sm-acceleration', 'token-scout', 'funding-arb', 'social-divergence',
     'whale-intel', 'order-book-intel', 'token-grad',
     'liquidation-heatmap', 'dex-intel', 'goplus-scanner', 'multi-chain-wallet',
+    'liquidity-lifecycle', 'capital-rotation', 'contract-mutation',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709560000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709570000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -250,7 +259,7 @@ document.addEventListener('keydown', (e) => {
 
   // 1-7 — switch layout
   const num = parseInt(e.key);
-  if (num >= 1 && num <= 13) {
+  if (num >= 1 && num <= 14) {
     const keys = Object.keys(layouts);
     if (keys[num - 1]) setLayout(keys[num - 1]);
     return;

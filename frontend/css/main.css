@@ -776,6 +776,7 @@ status-bar {
 /* Mobile bottom nav + actions — hidden on desktop */
 #mobile-nav { display: none; }
 #mobile-actions { display: none; }
+.hamburger-drawer { display: none; }
 
 .mobile-action-btn {
   background: none;

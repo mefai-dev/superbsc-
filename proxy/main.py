@@ -21,6 +21,8 @@ from proxy.routes import (
     futures,
     goplus,
     dexscreener,
+    coingecko,
+    etherscan,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -57,6 +59,12 @@ app.include_router(futures.router, prefix="/api/futures", tags=["Skill 8: Future
 app.include_router(goplus.router, prefix="/api/goplus", tags=["Skill 9: GoPlus"])
 app.include_router(
     dexscreener.router, prefix="/api/dex", tags=["Skill 10: DexScreener"]
+)
+app.include_router(
+    coingecko.router, prefix="/api/coingecko", tags=["Skill 11: CoinGecko"]
+)
+app.include_router(
+    etherscan.router, prefix="/api/etherscan", tags=["Skill 12: Etherscan"]
 )
 
 # Serve frontend

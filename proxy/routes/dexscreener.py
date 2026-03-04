@@ -39,3 +39,12 @@ async def get_pairs(
 async def get_token(address: str = Query(...)):
     """Get token info from DexScreener."""
     return await fetch_json(f"{DEX}/latest/dex/tokens/{address}", ttl=30)
+
+
+@router.get("/token-chain")
+async def get_token_chain(
+    chain: str = Query("bsc"),
+    address: str = Query(...),
+):
+    """Get token pairs filtered by chain."""
+    return await fetch_json(f"{DEX}/tokens/v1/{chain}/{address}", ttl=30)

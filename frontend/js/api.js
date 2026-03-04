@@ -198,6 +198,17 @@ export const api = {
     latestProfiles: () => get('/api/dex/latest-profiles', {}, 30000),
     search: (q, chain) => get('/api/dex/search', { q, chainIds: chain || 'bsc' }, 30000),
     token: (addr) => get('/api/dex/token', { address: addr }, 30000),
+    tokenChain: (chain, addr) => get('/api/dex/token-chain', { chain, address: addr }, 30000),
+  },
+  // Skill 11: CoinGecko
+  coingecko: {
+    categories: (order) => get('/api/coingecko/categories', { order: order || 'market_cap_desc' }, 120000),
+    categoryCoins: (cat, n) => get('/api/coingecko/category-coins', { category: cat, per_page: n || 20 }, 120000),
+  },
+  // Skill 12: Etherscan
+  etherscan: {
+    sourceCode: (addr, chain) => get('/api/etherscan/sourcecode', { address: addr, chainId: chain || '56' }, 300000),
+    abi: (addr, chain) => get('/api/etherscan/abi', { address: addr, chainId: chain || '56' }, 300000),
   },
   health: () => get('/health', {}, 30000),
 };
