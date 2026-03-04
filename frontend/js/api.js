@@ -142,6 +142,9 @@ export const api = {
     trades: (s, l) => get('/api/spot/trades', { symbol: s, limit: l || 50 }, 5000),
     aggTrades: (s, l) => get('/api/spot/aggTrades', { symbol: s, limit: l || 50 }, 5000),
     exchangeInfo: (s) => get('/api/spot/exchangeInfo', s ? { symbol: s } : {}, 300000),
+    bookTicker: (s) => get('/api/spot/bookTicker', s ? { symbol: s } : {}, 5000),
+    tickerWindow: (syms, w) => get('/api/spot/tickerWindow', { symbols: syms, windowSize: w || '1d' }, 30000),
+    tradingDay: (syms) => get('/api/spot/tradingDay', syms ? { symbols: syms } : {}, 30000),
   },
   // Skill 2: Meme Rush
   meme: {
@@ -192,6 +195,10 @@ export const api = {
     topLongShortAccount: (s, p) => get('/api/futures/topLongShortAccount', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
     topLongShortPosition: (s, p) => get('/api/futures/topLongShortPosition', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
     takerBuySellRatio: (s, p) => get('/api/futures/takerBuySellRatio', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
+    openInterestHist: (s, p, l) => get('/api/futures/openInterestHist', { symbol: s || 'BTCUSDT', period: p || '1h', limit: l || 30 }, 60000),
+    fundingInfo: () => get('/api/futures/fundingInfo', {}, 300000),
+    bookTicker: (s) => get('/api/futures/bookTicker', s ? { symbol: s } : {}, 10000),
+    indexInfo: (s) => get('/api/futures/indexInfo', s ? { symbol: s } : {}, 120000),
   },
   // Skill 9: GoPlus Security
   goplus: {

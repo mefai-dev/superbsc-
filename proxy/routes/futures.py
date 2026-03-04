@@ -6,6 +6,7 @@ from proxy.cache import fetch_json
 router = APIRouter()
 # Direct access is geo-blocked; use Frankfurt proxy which has unrestricted access
 FAPI = "http://134.122.77.171:9500"
+FAPI2 = "http://46.101.148.181:9500"
 
 
 @router.get("/premiumIndex")
@@ -94,4 +95,46 @@ async def taker_ratio(
         f"{FAPI}/futures/data/takerlongshortRatio",
         params={"symbol": symbol.upper(), "period": period, "limit": limit},
         ttl=60,
+    )
+
+
+@router.get("/openInterestHist")
+async def oi_hist(
+    symbol: str = Query("BTCUSDT"),
+    period: str = Query("1h"),
+    limit: int = Query(30, le=500),
+):
+    """Historical open interest."""
+    return await fetch_json(
+        f"{FAPI2}/futures/data/openInterestHist",
+        params={"symbol": symbol.upper(), "period": period, "limit": limit},
+        ttl=60,
+    )
+
+
+@router.get("/fundingInfo")
+async def funding_info():
+    """All perpetual funding rate info."""
+    return await fetch_json(f"{FAPI2}/fapi/v1/fundingInfo", ttl=300)
+
+
+@router.get("/bookTicker")
+async def book_ticker(symbol: str = Query(None)):
+    """Futures order book top bid/ask."""
+    params = {}
+    if symbol:
+        params["symbol"] = symbol.upper()
+    return await fetch_json(
+        f"{FAPI2}/fapi/v1/ticker/bookTicker", params=params or None, ttl=10
+    )
+
+
+@router.get("/indexInfo")
+async def index_info(symbol: str = Query(None)):
+    """Index price composition (BTCDOMUSDT, DEFIUSDT etc.)."""
+    params = {}
+    if symbol:
+        params["symbol"] = symbol.upper()
+    return await fetch_json(
+        f"{FAPI2}/fapi/v1/indexInfo", params=params or None, ttl=120
     )
