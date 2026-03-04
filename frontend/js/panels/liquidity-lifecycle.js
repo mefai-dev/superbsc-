@@ -1,7 +1,7 @@
 // MEFAI Liquidity Lifecycle — LP lock status, holder concentration, DEX distribution
 import { BasePanel } from '../components/base-panel.js';
 
-const { escapeHtml, fmtUsd, fmtNum } = window.mefaiUtils;
+const { escapeHtml, formatCurrency, formatNumber } = window.mefaiUtils;
 
 export class LiquidityLifecyclePanel extends BasePanel {
   static skill = 'Skill 15';
@@ -184,8 +184,8 @@ export class LiquidityLifecyclePanel extends BasePanel {
     // Summary stats
     h += '<div class="ll-stats">';
     h += `<div class="ll-stat"><div class="ll-stat-label">Locked</div><div class="ll-stat-val" style="color:${lockedPercent > 0.5 ? '#0ecb81' : '#f6465d'}">${(lockedPercent * 100).toFixed(1)}%</div></div>`;
-    h += `<div class="ll-stat"><div class="ll-stat-label">Liquidity</div><div class="ll-stat-val">${fmtUsd(totalLiq)}</div></div>`;
-    h += `<div class="ll-stat"><div class="ll-stat-label">Holders</div><div class="ll-stat-val">${fmtNum(holderCount)}</div></div>`;
+    h += `<div class="ll-stat"><div class="ll-stat-label">Liquidity</div><div class="ll-stat-val">${formatCurrency(totalLiq)}</div></div>`;
+    h += `<div class="ll-stat"><div class="ll-stat-label">Holders</div><div class="ll-stat-val">${formatNumber(holderCount)}</div></div>`;
     h += `<div class="ll-stat"><div class="ll-stat-label">Age</div><div class="ll-stat-val">${ageDays >= 1 ? Math.floor(ageDays) + 'd' : '<1d'}</div></div>`;
     h += '</div>';
 
@@ -215,7 +215,7 @@ export class LiquidityLifecyclePanel extends BasePanel {
     if (dexList.length) {
       h += '<div class="ll-section"><h4>DEX Distribution</h4>';
       dexList.slice(0, 5).forEach(d => {
-        h += `<div class="ll-row"><span>${escapeHtml(d.name || 'Unknown')}</span><span>${fmtUsd(parseFloat(d.liquidity || 0))}</span></div>`;
+        h += `<div class="ll-row"><span>${escapeHtml(d.name || 'Unknown')}</span><span>${formatCurrency(parseFloat(d.liquidity || 0))}</span></div>`;
       });
       h += '</div>';
     }
@@ -227,7 +227,7 @@ export class LiquidityLifecyclePanel extends BasePanel {
         const vol = p?.volume?.h24 || 0;
         const liq = p?.liquidity?.usd || 0;
         const label = `${p?.baseToken?.symbol || '?'}/${p?.quoteToken?.symbol || '?'}`;
-        h += `<div class="ll-row"><span>${escapeHtml(label)}</span><span>L:${fmtUsd(liq)} V:${fmtUsd(vol)}</span></div>`;
+        h += `<div class="ll-row"><span>${escapeHtml(label)}</span><span>L:${formatCurrency(liq)} V:${formatCurrency(vol)}</span></div>`;
       });
       h += '</div>';
     }

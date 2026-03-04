@@ -1,7 +1,7 @@
 // MEFAI Capital Rotation Radar — Sector capital flow detection
 import { BasePanel } from '../components/base-panel.js';
 
-const { escapeHtml, fmtUsd, fmtPct } = window.mefaiUtils;
+const { escapeHtml, formatCurrency, formatPercent } = window.mefaiUtils;
 
 const CORE_SECTORS = [
   'meme-token', 'ai-agents', 'ai-meme-coins',
@@ -75,9 +75,9 @@ export class CapitalRotationPanel extends BasePanel {
     // Rotation banner
     if (topInflow && topOutflow && rotationStrength > 2) {
       h += '<div class="cr-rotation">';
-      h += `<span class="cr-from">${escapeHtml(topOutflow.name || '')} ${fmtPct(topOutflow.market_cap_change_24h)}</span>`;
+      h += `<span class="cr-from">${escapeHtml(topOutflow.name || '')} ${formatPercent(topOutflow.market_cap_change_24h)}</span>`;
       h += `<span class="cr-arrow">\u2192</span>`;
-      h += `<span class="cr-to">${escapeHtml(topInflow.name || '')} ${fmtPct(topInflow.market_cap_change_24h)}</span>`;
+      h += `<span class="cr-to">${escapeHtml(topInflow.name || '')} ${formatPercent(topInflow.market_cap_change_24h)}</span>`;
       h += `<div style="margin-top:3px"><span class="cr-strength" style="color:${strengthColor};background:${strengthColor}22">${strengthLabel}</span></div>`;
       h += '</div>';
     }
@@ -99,9 +99,9 @@ export class CapitalRotationPanel extends BasePanel {
       const volIntensity = s.market_cap ? ((s.volume_24h || 0) / s.market_cap * 100).toFixed(1) : '0';
       h += '<tr>';
       h += `<td style="font-weight:600;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(s.name || s.id)}</td>`;
-      h += `<td style="text-align:right">${fmtUsd(s.market_cap || 0)}</td>`;
+      h += `<td style="text-align:right">${formatCurrency(s.market_cap || 0)}</td>`;
       h += `<td style="text-align:right" class="${cls}">${chg >= 0 ? '+' : ''}${chg.toFixed(2)}%</td>`;
-      h += `<td style="text-align:right">${fmtUsd(s.volume_24h || 0)}</td>`;
+      h += `<td style="text-align:right">${formatCurrency(s.volume_24h || 0)}</td>`;
       h += `<td style="text-align:center">${flow}</td>`;
       h += '</tr>';
     });

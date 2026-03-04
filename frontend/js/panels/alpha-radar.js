@@ -197,8 +197,8 @@ export class AlphaRadarPanel extends BasePanel {
       const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
 
       const tierCls = r.alphaScore >= 80 ? 'alpha-gold' : r.alphaScore >= 60 ? 'alpha-green' : r.alphaScore >= 40 ? 'alpha-yellow' : 'alpha-gray';
-      const barColor = '#474d57';
-      const barGlow = '';
+      const barColor = r.alphaScore >= 80 ? '#f0b90b' : r.alphaScore >= 60 ? '#0ecb81' : r.alphaScore >= 40 ? '#e8a317' : '#474d57';
+      const barGlow = r.alphaScore >= 80 ? 'box-shadow:0 0 8px rgba(240,185,11,.6)' : r.alphaScore >= 60 ? 'box-shadow:0 0 6px rgba(14,203,129,.4)' : '';
       const pct = Math.min(100, r.alphaScore);
 
       const badgesHtml = r.badges.map(b =>

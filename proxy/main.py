@@ -190,6 +190,12 @@ def _warmup_tasks():
             ),
             {"params": {"chainId": "56", "rankType": 10, "sort": 10}},
         ),
+        # CoinGecko categories (capital rotation)
+        (
+            fetch_json,
+            ("https://api.coingecko.com/api/v3/coins/categories",),
+            {"params": {"order": "market_cap_desc"}, "ttl": 120},
+        ),
     ]
 
 
