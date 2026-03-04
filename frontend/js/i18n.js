@@ -20,6 +20,8 @@ const T = {
   en: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Overview', 'nav.meme': 'Meme',
     'nav.whale': 'Whale', 'nav.trade': 'Trade', 'nav.scan': 'Scan', 'nav.research': 'Research',
+    'nav.memeHunter': 'Meme Hunter', 'nav.whaleWatcher': 'Whale Watcher',
+    'nav.deepDive': 'Deep Dive', 'nav.trader': 'Trader', 'nav.scanner': 'Scanner',
     'btn.search': 'Search', 'btn.theme': 'Theme', 'btn.settings': 'Settings', 'btn.track': 'Track',
     'settings.title': 'Settings', 'settings.theme': 'Theme', 'settings.fontSize': 'Font Size',
     'settings.layout': 'Default Layout', 'settings.compact': 'Compact Mode',
@@ -48,6 +50,8 @@ const T = {
   zh: {
     'nav.mefai': 'MEFAI', 'nav.overview': '概览', 'nav.meme': 'Meme',
     'nav.whale': '鲸鱼', 'nav.trade': '交易', 'nav.scan': '扫描', 'nav.research': '研究',
+    'nav.memeHunter': 'Meme猎手', 'nav.whaleWatcher': '鲸鱼观察',
+    'nav.deepDive': '深度研究', 'nav.trader': '交易员', 'nav.scanner': '扫描器',
     'btn.search': '搜索', 'btn.theme': '主题', 'btn.settings': '设置', 'btn.track': '追踪',
     'settings.title': '设置', 'settings.theme': '主题', 'settings.fontSize': '字体大小',
     'settings.layout': '默认布局', 'settings.compact': '紧凑模式',
@@ -76,6 +80,8 @@ const T = {
   tr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Genel', 'nav.meme': 'Meme',
     'nav.whale': 'Balina', 'nav.trade': 'Trade', 'nav.scan': 'Tara', 'nav.research': 'Araştır',
+    'nav.memeHunter': 'Meme Avcısı', 'nav.whaleWatcher': 'Balina Takip',
+    'nav.deepDive': 'Derinlemesine', 'nav.trader': 'Trader', 'nav.scanner': 'Tarayıcı',
     'btn.search': 'Ara', 'btn.theme': 'Tema', 'btn.settings': 'Ayarlar', 'btn.track': 'Takip',
     'settings.title': 'Ayarlar', 'settings.theme': 'Tema', 'settings.fontSize': 'Yazı Boyutu',
     'settings.layout': 'Varsayılan Düzen', 'settings.compact': 'Kompakt Mod',
@@ -104,6 +110,8 @@ const T = {
   vi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Tổng quan', 'nav.meme': 'Meme',
     'nav.whale': 'Cá voi', 'nav.trade': 'Giao dịch', 'nav.scan': 'Quét', 'nav.research': 'Nghiên cứu',
+    'nav.memeHunter': 'Săn Meme', 'nav.whaleWatcher': 'Theo dõi Cá voi',
+    'nav.deepDive': 'Phân tích sâu', 'nav.trader': 'Trader', 'nav.scanner': 'Quét',
     'btn.search': 'Tìm kiếm', 'btn.theme': 'Giao diện', 'btn.settings': 'Cài đặt', 'btn.track': 'Theo dõi',
     'settings.title': 'Cài đặt', 'settings.theme': 'Giao diện', 'settings.fontSize': 'Cỡ chữ',
     'settings.layout': 'Bố cục mặc định', 'settings.compact': 'Chế độ gọn',
@@ -132,6 +140,8 @@ const T = {
   hi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'अवलोकन', 'nav.meme': 'Meme',
     'nav.whale': 'व्हेल', 'nav.trade': 'ट्रेड', 'nav.scan': 'स्कैन', 'nav.research': 'रिसर्च',
+    'nav.memeHunter': 'Meme हंटर', 'nav.whaleWatcher': 'व्हेल वॉचर',
+    'nav.deepDive': 'गहन विश्लेषण', 'nav.trader': 'ट्रेडर', 'nav.scanner': 'स्कैनर',
     'btn.search': 'खोजें', 'btn.theme': 'थीम', 'btn.settings': 'सेटिंग्स', 'btn.track': 'ट्रैक',
     'settings.title': 'सेटिंग्स', 'settings.theme': 'थीम', 'settings.fontSize': 'फॉन्ट साइज़',
     'settings.layout': 'डिफ़ॉल्ट लेआउट', 'settings.compact': 'कॉम्पैक्ट मोड',
@@ -160,6 +170,8 @@ const T = {
   fa: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نمای کلی', 'nav.meme': 'Meme',
     'nav.whale': 'نهنگ', 'nav.trade': 'معامله', 'nav.scan': 'اسکن', 'nav.research': 'تحقیق',
+    'nav.memeHunter': 'شکارچی Meme', 'nav.whaleWatcher': 'رصد نهنگ',
+    'nav.deepDive': 'تحلیل عمیق', 'nav.trader': 'معامله‌گر', 'nav.scanner': 'اسکنر',
     'btn.search': 'جستجو', 'btn.theme': 'پوسته', 'btn.settings': 'تنظیمات', 'btn.track': 'ردیابی',
     'settings.title': 'تنظیمات', 'settings.theme': 'پوسته', 'settings.fontSize': 'اندازه فونت',
     'settings.layout': 'چیدمان پیش‌فرض', 'settings.compact': 'حالت فشرده',
@@ -188,6 +200,8 @@ const T = {
   de: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Übersicht', 'nav.meme': 'Meme',
     'nav.whale': 'Wal', 'nav.trade': 'Handel', 'nav.scan': 'Scan', 'nav.research': 'Forschung',
+    'nav.memeHunter': 'Meme-Jäger', 'nav.whaleWatcher': 'Wal-Beobachter',
+    'nav.deepDive': 'Tiefenanalyse', 'nav.trader': 'Händler', 'nav.scanner': 'Scanner',
     'btn.search': 'Suche', 'btn.theme': 'Design', 'btn.settings': 'Einstellungen', 'btn.track': 'Verfolgen',
     'settings.title': 'Einstellungen', 'settings.theme': 'Design', 'settings.fontSize': 'Schriftgröße',
     'settings.layout': 'Standard-Layout', 'settings.compact': 'Kompaktmodus',
@@ -216,6 +230,8 @@ const T = {
   fr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Aperçu', 'nav.meme': 'Meme',
     'nav.whale': 'Baleine', 'nav.trade': 'Trading', 'nav.scan': 'Scan', 'nav.research': 'Recherche',
+    'nav.memeHunter': 'Chasseur Meme', 'nav.whaleWatcher': 'Guetteur Baleine',
+    'nav.deepDive': 'Analyse profonde', 'nav.trader': 'Trader', 'nav.scanner': 'Scanner',
     'btn.search': 'Recherche', 'btn.theme': 'Thème', 'btn.settings': 'Paramètres', 'btn.track': 'Suivre',
     'settings.title': 'Paramètres', 'settings.theme': 'Thème', 'settings.fontSize': 'Taille police',
     'settings.layout': 'Mise en page', 'settings.compact': 'Mode compact',
@@ -244,6 +260,8 @@ const T = {
   ar: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نظرة عامة', 'nav.meme': 'Meme',
     'nav.whale': 'حوت', 'nav.trade': 'تداول', 'nav.scan': 'مسح', 'nav.research': 'بحث',
+    'nav.memeHunter': 'صياد Meme', 'nav.whaleWatcher': 'مراقب الحيتان',
+    'nav.deepDive': 'تحليل معمّق', 'nav.trader': 'متداول', 'nav.scanner': 'ماسح',
     'btn.search': 'بحث', 'btn.theme': 'المظهر', 'btn.settings': 'إعدادات', 'btn.track': 'تتبع',
     'settings.title': 'إعدادات', 'settings.theme': 'المظهر', 'settings.fontSize': 'حجم الخط',
     'settings.layout': 'التخطيط الافتراضي', 'settings.compact': 'الوضع المضغوط',
@@ -272,6 +290,8 @@ const T = {
   es: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'General', 'nav.meme': 'Meme',
     'nav.whale': 'Ballena', 'nav.trade': 'Trading', 'nav.scan': 'Escaneo', 'nav.research': 'Investigación',
+    'nav.memeHunter': 'Cazador Meme', 'nav.whaleWatcher': 'Vigilante Ballena',
+    'nav.deepDive': 'Inmersión profunda', 'nav.trader': 'Trader', 'nav.scanner': 'Escáner',
     'btn.search': 'Buscar', 'btn.theme': 'Tema', 'btn.settings': 'Ajustes', 'btn.track': 'Rastrear',
     'settings.title': 'Ajustes', 'settings.theme': 'Tema', 'settings.fontSize': 'Tamaño fuente',
     'settings.layout': 'Diseño predeterminado', 'settings.compact': 'Modo compacto',
@@ -343,9 +363,9 @@ function applyTranslations() {
     }
   });
 
-  // 2. Panel titles — lookup by panel tag name
+  // 2. Panel titles — lookup by custom element tag name
   document.querySelectorAll('.panel-title').forEach(el => {
-    const panel = el.closest('[class*="panel"]');
+    const panel = el.closest('.panel');
     if (!panel) return;
     const tag = panel.tagName.toLowerCase();
     const key = _tagToKey[tag];
