@@ -385,10 +385,28 @@ function loadingMessages() {
   ];
 }
 
+// Detect browser language → match to supported languages
+function detectBrowserLang() {
+  const langs = navigator.languages || [navigator.language || 'en'];
+  for (const bl of langs) {
+    const code = bl.split('-')[0].toLowerCase();
+    if (T[code]) return code;
+  }
+  return 'en';
+}
+
 // Initialize
 function init() {
   const saved = store.getPref('language');
-  if (saved && T[saved]) _lang = saved;
+  if (saved && T[saved]) {
+    // User explicitly chose a language before
+    _lang = saved;
+  } else {
+    // First visit → auto-detect from browser
+    const detected = detectBrowserLang();
+    _lang = detected;
+    store.savePref('language', detected);
+  }
 
   // Populate language selectors
   document.querySelectorAll('.lang-select').forEach(sel => {
@@ -398,8 +416,8 @@ function init() {
     sel.addEventListener('change', () => setLang(sel.value));
   });
 
-  // Apply on load
-  if (_lang !== 'en') applyTranslations();
+  // Always apply translations (even for 'en' to ensure init-loader text updates)
+  applyTranslations();
 }
 
 // Run init when DOM is ready

@@ -6,7 +6,7 @@ const defaultPrefs = {
   defaultLayout: 'overview',
   fontSize: 'normal',
   compactMode: false,
-  language: 'en',
+  language: null,
 };
 
 function loadPrefs() {
