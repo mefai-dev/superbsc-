@@ -53,7 +53,7 @@ export class WalletTrackerPanel extends BasePanel {
         </div>
       </div>
       <div class="filter-bar" style="flex-wrap:wrap">
-        <input type="text" class="wallet-address form-input" placeholder="Wallet address" value="${escapeHtml(this._address)}" style="flex:1;min-width:120px">
+        <input type="text" class="wallet-address form-input" placeholder="${_t('common.walletAddress')}" value="${escapeHtml(this._address)}" style="flex:1;min-width:120px">
         <select class="wallet-chain form-select">
           <option value="eth"${this._chain === 'eth' ? ' selected' : ''}>ETH</option>
           <option value="bsc"${this._chain === 'bsc' ? ' selected' : ''}>BSC</option>
@@ -61,10 +61,10 @@ export class WalletTrackerPanel extends BasePanel {
           <option value="base"${this._chain === 'base' ? ' selected' : ''}>BASE</option>
           <option value="arb"${this._chain === 'arb' ? ' selected' : ''}>ARB</option>
         </select>
-        <button class="btn wallet-btn">Track</button>
+        <button class="btn wallet-btn">${_t('btn.track')}</button>
       </div>
       <div class="panel-body">
-        <div class="panel-loading">Enter a wallet address to track</div>
+        <div class="panel-loading">${_t('common.enterAddress')}</div>
       </div>
     `;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => {
@@ -104,22 +104,22 @@ export class WalletTrackerPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data) return '<div class="panel-loading">Enter a wallet address to track</div>';
-    if (!data.length) return '<div class="panel-loading">No positions found for this wallet</div>';
+    if (!data) return `<div class="panel-loading">${_t('common.enterAddress')}</div>`;
+    if (!data.length) return `<div class="panel-loading">${_t('msg.noPositions')}</div>`;
 
     const sorted = sortRows(data, this._sortKey, this._sortDir);
     const total = data.reduce((sum, row) => sum + (row.value || 0), 0);
 
     const columns = [
-      { key: 'token', label: 'Token', render: (v) => `<span style="font-weight:600">${escapeHtml(v)}</span>` },
-      { key: 'qty', label: 'Qty', align: 'right', render: v => formatNumber(v) },
-      { key: 'price', label: 'Price', align: 'right', render: v => `$${formatPrice(v)}` },
-      { key: 'change24h', label: '24h%', align: 'right', render: v => formatPercent(v) },
-      { key: 'value', label: 'Value', align: 'right', render: v => formatCurrency(v) },
+      { key: 'token', label: _t('col.token'), render: (v) => `<span style="font-weight:600">${escapeHtml(v)}</span>` },
+      { key: 'qty', label: _t('col.qty'), align: 'right', render: v => formatNumber(v) },
+      { key: 'price', label: _t('col.price'), align: 'right', render: v => `$${formatPrice(v)}` },
+      { key: 'change24h', label: _t('col.change24h'), align: 'right', render: v => formatPercent(v) },
+      { key: 'value', label: _t('col.value'), align: 'right', render: v => formatCurrency(v) },
     ];
 
     let html = `<div style="padding:0 0 8px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">`;
-    html += `${formatAddress(this._address)} &mdash; Total: <span style="color:var(--text);font-weight:700">${formatCurrency(total)}</span>`;
+    html += `${formatAddress(this._address)} &mdash; ${_t('trade.total')}: <span style="color:var(--text);font-weight:700">${formatCurrency(total)}</span>`;
     html += `</div>`;
     html += renderTable(columns, sorted, { sortKey: this._sortKey, sortDir: this._sortDir });
     return html;

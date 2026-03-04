@@ -69,8 +69,8 @@ export class TokenProfilePanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data) return '<div class="panel-loading">Loading token profile...</div>';
-    if (data?._fetchError) return '<div class="panel-loading">Unable to load token profile. Please try again.</div>';
+    if (!data) return `<div class="panel-loading">${_t('msg.loadingProfile')}</div>`;
+    if (data?._fetchError) return `<div class="panel-loading">${_t('msg.profileError')}</div>`;
 
     const m = data.meta || {};
     const d = data.dynamic || {};
@@ -99,14 +99,14 @@ export class TokenProfilePanel extends BasePanel {
       html += `<img src="${logoUrl}" class="token-icon" style="width:24px;height:24px;border-radius:50%" onerror="this.style.display='none'">`;
     }
     html += `<div>`;
-    html += `<span style="font-weight:700;font-size:14px">${escapeHtml(name || symbol || 'Unknown')}</span>`;
+    html += `<span style="font-weight:700;font-size:14px">${escapeHtml(name || symbol || _t('label.unknown'))}</span>`;
     if (symbol) html += ` <span style="color:var(--text-muted)">${escapeHtml(symbol)}</span>`;
     html += `</div>`;
     if (chain) html += `<span class="chain-badge">${escapeHtml(String(chain))}</span>`;
     html += `</div>`;
     if (address && address.length > 10) {
       html += `<div style="font-size:10px;color:var(--text-muted)">`;
-      html += `${formatAddress(address)} <button class="copy-btn" data-copy="${escapeHtml(address)}">copy</button>`;
+      html += `${formatAddress(address)} <button class="copy-btn" data-copy="${escapeHtml(address)}">${_t('label.copy')}</button>`;
       html += `</div>`;
     }
     if (description) {
@@ -117,18 +117,18 @@ export class TokenProfilePanel extends BasePanel {
 
     // Price section
     html += `<div class="profile-section">`;
-    html += `<h3>Price</h3>`;
+    html += `<h3>${_t('col.price')}</h3>`;
     html += `<div style="font-size:20px;font-weight:700;margin-bottom:8px">$${formatPrice(price)}</div>`;
     html += `</div>`;
 
     // Volume section
     html += `<div class="profile-section">`;
-    html += `<h3>Volume</h3>`;
+    html += `<h3>${_t('col.volume')}</h3>`;
     html += `<div class="profile-grid">`;
-    if (volume24h) html += `<span class="profile-label">24h Total</span><span class="profile-value">${formatCurrency(volume24h)}</span>`;
-    if (volume24hBuy) html += `<span class="profile-label">24h Buy</span><span class="profile-value val-up">${formatCurrency(volume24hBuy)}</span>`;
-    if (volume24hSell) html += `<span class="profile-label">24h Sell</span><span class="profile-value val-down">${formatCurrency(volume24hSell)}</span>`;
-    if (volume1h) html += `<span class="profile-label">1h Total</span><span class="profile-value">${formatCurrency(volume1h)}</span>`;
+    if (volume24h) html += `<span class="profile-label">${_t('label.total24h')}</span><span class="profile-value">${formatCurrency(volume24h)}</span>`;
+    if (volume24hBuy) html += `<span class="profile-label">${_t('label.buy24h')}</span><span class="profile-value val-up">${formatCurrency(volume24hBuy)}</span>`;
+    if (volume24hSell) html += `<span class="profile-label">${_t('label.sell24h')}</span><span class="profile-value val-down">${formatCurrency(volume24hSell)}</span>`;
+    if (volume1h) html += `<span class="profile-label">${_t('label.total1h')}</span><span class="profile-value">${formatCurrency(volume1h)}</span>`;
     html += `</div></div>`;
 
     return html;
@@ -140,8 +140,8 @@ export class TokenProfilePanel extends BasePanel {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         copyToClipboard(btn.dataset.copy);
-        btn.textContent = 'copied';
-        setTimeout(() => { btn.textContent = 'copy'; }, 1500);
+        btn.textContent = _t('label.copied');
+        setTimeout(() => { btn.textContent = _t('label.copy'); }, 1500);
       });
     });
   }

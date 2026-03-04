@@ -26,7 +26,7 @@ export class SmartFlowPanel extends BasePanel {
 
   renderContent(data) {
     if (!data?.signals?.length && !data?.inflows?.length) {
-      return '<div class="panel-loading">Loading smart money flow...</div>';
+      return `<div class="panel-loading">${_t('msg.loadingFlow')}</div>`;
     }
 
     const W = 500, H = 320;
@@ -66,7 +66,7 @@ export class SmartFlowPanel extends BasePanel {
     let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:100%;min-height:250px">`;
 
     // Title
-    svg += `<text x="${midX}" y="18" text-anchor="middle" fill="var(--text-muted)" font-size="10" font-family="var(--font-mono)">SMART MONEY FLOW</text>`;
+    svg += `<text x="${midX}" y="18" text-anchor="middle" fill="var(--text-muted)" font-size="10" font-family="var(--font-mono)">${_t('flow.title')}</text>`;
 
     // Draw wallets on left
     const walletSpacing = (H - 60) / Math.max(walletCount, 1);
@@ -110,9 +110,9 @@ export class SmartFlowPanel extends BasePanel {
 
     // Legend
     svg += `<circle cx="${midX - 50}" cy="${H - 12}" r="4" fill="var(--up)"/>`;
-    svg += `<text x="${midX - 42}" y="${H - 9}" fill="var(--text-muted)" font-size="8" font-family="var(--font-mono)">Buy</text>`;
+    svg += `<text x="${midX - 42}" y="${H - 9}" fill="var(--text-muted)" font-size="8" font-family="var(--font-mono)">${_t('flow.buy')}</text>`;
     svg += `<circle cx="${midX + 10}" cy="${H - 12}" r="4" fill="var(--down)"/>`;
-    svg += `<text x="${midX + 18}" y="${H - 9}" fill="var(--text-muted)" font-size="8" font-family="var(--font-mono)">Sell</text>`;
+    svg += `<text x="${midX + 18}" y="${H - 9}" fill="var(--text-muted)" font-size="8" font-family="var(--font-mono)">${_t('flow.sell')}</text>`;
 
     svg += '</svg>';
     return svg;

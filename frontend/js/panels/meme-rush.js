@@ -24,9 +24,9 @@ export class MemeRushPanel extends BasePanel {
         <div class="panel-actions"><button class="panel-refresh">↻</button></div>
       </div>
       <div class="panel-tabs">
-        <button class="panel-tab ${this._tab === 10 ? 'active' : ''}" data-t="10">New</button>
-        <button class="panel-tab ${this._tab === 20 ? 'active' : ''}" data-t="20">Finalizing</button>
-        <button class="panel-tab ${this._tab === 30 ? 'active' : ''}" data-t="30">Migrated</button>
+        <button class="panel-tab ${this._tab === 10 ? 'active' : ''}" data-t="10">${_t('tab.new')}</button>
+        <button class="panel-tab ${this._tab === 20 ? 'active' : ''}" data-t="20">${_t('tab.finalizing')}</button>
+        <button class="panel-tab ${this._tab === 30 ? 'active' : ''}" data-t="30">${_t('tab.migrated')}</button>
       </div>
       <div class="panel-body"><div class="panel-loading">Loading...</div></div>`;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => this.refresh());
@@ -57,10 +57,10 @@ export class MemeRushPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">No meme tokens in this category</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.noMemeTokens')}</div>`;
     const u = window.mefaiUtils;
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th>Token</th><th>Price</th><th>MCap</th><th>Liquidity</th><th>Holders</th><th>Age</th>';
+    h += `<th>${_t('col.token')}</th><th>${_t('col.price')}</th><th>${_t('col.mcap')}</th><th>${_t('col.liquidity')}</th><th>${_t('col.holders')}</th><th>${_t('col.age')}</th>`;
     h += '</tr></thead><tbody>';
     for (const t of data) {
       h += `<tr data-a="${t.address}" data-c="${t.chain}">`;

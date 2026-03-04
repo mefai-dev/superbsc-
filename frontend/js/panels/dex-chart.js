@@ -61,7 +61,7 @@ export class DexChartPanel extends BasePanel {
         ).join('')}
       </div>
       <div class="panel-body" style="padding:0">
-        <div class="panel-loading">Loading chart...</div>
+        <div class="panel-loading">${_t('msg.loadingChart')}</div>
       </div>`;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => { this._destroyChart(); this.refresh(); });
     this.querySelectorAll('.iv-btn').forEach(b => b.addEventListener('click', () => {
@@ -104,7 +104,7 @@ export class DexChartPanel extends BasePanel {
     const lbl = this.querySelector('.chart-label');
     if (lbl) lbl.textContent = this._label;
 
-    if (!data?.length) return '<div class="panel-loading">No chart data</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.noChartData')}</div>`;
     return '<div class="chart-container" id="dex-chart-c"></div>';
   }
 

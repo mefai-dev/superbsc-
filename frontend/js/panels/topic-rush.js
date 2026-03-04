@@ -24,9 +24,9 @@ export class TopicRushPanel extends BasePanel {
         <div class="panel-actions"><button class="panel-refresh">↻</button></div>
       </div>
       <div class="panel-tabs">
-        <button class="panel-tab ${this._tab === 10 ? 'active' : ''}" data-t="10">Latest</button>
-        <button class="panel-tab ${this._tab === 20 ? 'active' : ''}" data-t="20">Rising</button>
-        <button class="panel-tab ${this._tab === 30 ? 'active' : ''}" data-t="30">Viral</button>
+        <button class="panel-tab ${this._tab === 10 ? 'active' : ''}" data-t="10">${_t('tab.latest')}</button>
+        <button class="panel-tab ${this._tab === 20 ? 'active' : ''}" data-t="20">${_t('tab.rising')}</button>
+        <button class="panel-tab ${this._tab === 30 ? 'active' : ''}" data-t="30">${_t('tab.viral')}</button>
       </div>
       <div class="panel-body"><div class="panel-loading">Loading...</div></div>`;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => this.refresh());
@@ -64,7 +64,7 @@ export class TopicRushPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">No topics available</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.noTopics')}</div>`;
     const u = window.mefaiUtils;
     let h = '';
     for (const topic of data) {
@@ -77,10 +77,10 @@ export class TopicRushPanel extends BasePanel {
         h += `<div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px;line-height:1.4">${u.escapeHtml(topic.summary.slice(0, 120))}</div>`;
       }
       h += `<div style="font-size:10px;color:var(--text-muted);margin-bottom:4px">`;
-      h += `${topic.tokenSize} tokens`;
+      h += `${topic.tokenSize} ${_t('label.tokens')}`;
       if (topic.netInflow) {
         const cls = topic.netInflow >= 0 ? 'val-up' : 'val-down';
-        h += ` · Inflow: <span class="${cls}">${u.formatCurrency(topic.netInflow)}</span>`;
+        h += ` · ${_t('trade.inflow')}: <span class="${cls}">${u.formatCurrency(topic.netInflow)}</span>`;
       }
       h += `</div>`;
       if (topic.tokens?.length) {

@@ -33,10 +33,10 @@ export class SocialHypePanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">Loading social hype...</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.loadingSocial')}</div>`;
     const u = window.mefaiUtils;
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th>#</th><th>Token</th><th>Hype</th><th>Sentiment</th><th>MCap</th><th>24h%</th>';
+    h += `<th>${_t('col.rank')}</th><th>${_t('col.token')}</th><th>${_t('col.hype')}</th><th>${_t('col.sentiment')}</th><th>${_t('col.mcap')}</th><th>${_t('col.change24h')}</th>`;
     h += '</tr></thead><tbody>';
     for (const t of data) {
       const iconUrl = u.tokenIcon(t.icon);

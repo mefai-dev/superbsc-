@@ -33,20 +33,20 @@ export class SmartSignalsPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">Loading signals...</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.loadingSignals')}</div>`;
     const sorted = [...data].sort((a, b) => this._dir === 'desc' ? b[this._sort] - a[this._sort] : a[this._sort] - b[this._sort]);
 
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th data-k="symbol">Token</th><th data-k="direction">Dir</th>';
-    h += '<th data-k="smCount">SM#</th><th data-k="alertPrice">Signal $</th>';
-    h += '<th data-k="currentPrice">Now $</th><th data-k="maxGain">Gain%</th>';
-    h += '<th data-k="status">Status</th></tr></thead><tbody>';
+    h += `<th data-k="symbol">${_t('col.token')}</th><th data-k="direction">${_t('col.dir')}</th>`;
+    h += `<th data-k="smCount">${_t('col.smCount')}</th><th data-k="alertPrice">${_t('col.signalPrice')}</th>`;
+    h += `<th data-k="currentPrice">${_t('col.nowPrice')}</th><th data-k="maxGain">${_t('col.gainPct')}</th>`;
+    h += `<th data-k="status">${_t('col.status')}</th></tr></thead><tbody>`;
 
     for (const s of sorted) {
       const iconUrl = window.mefaiUtils.tokenIcon(s.logo);
       const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
       const dirCls = s.direction === 'buy' ? 'val-up' : s.direction === 'sell' ? 'val-down' : '';
-      const dirText = s.direction === 'buy' ? 'BUY ↑' : s.direction === 'sell' ? 'SELL ↓' : '—';
+      const dirText = s.direction === 'buy' ? _t('trade.buyUp') : s.direction === 'sell' ? _t('trade.sellDown') : '—';
       const gainCls = s.maxGain > 0 ? 'val-up' : s.maxGain < 0 ? 'val-down' : '';
       const statusCls = s.status === 'active' ? 'color:var(--up);font-weight:700' : s.status === 'timeout' ? 'color:var(--down);font-weight:400' : 'color:var(--text-muted)';
 

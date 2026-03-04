@@ -28,10 +28,10 @@ export class TokenSearchPanel extends BasePanel {
         </div>
       </div>
       <div class="filter-bar">
-        <input type="text" class="search-query form-input" placeholder="Search token name or symbol..." style="flex:1">
+        <input type="text" class="search-query form-input" placeholder="${_t('msg.searchPlaceholder')}" style="flex:1">
       </div>
       <div class="panel-body">
-        <div class="panel-loading">Type to search tokens</div>
+        <div class="panel-loading">${_t('msg.typeToSearch')}</div>
       </div>
     `;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => {
@@ -49,7 +49,7 @@ export class TokenSearchPanel extends BasePanel {
         debouncedSearch();
       } else if (this._query.length === 0) {
         const body = this.querySelector('.panel-body');
-        if (body) body.innerHTML = '<div class="panel-loading">Type to search tokens</div>';
+        if (body) body.innerHTML = `<div class="panel-loading">${_t('msg.typeToSearch')}</div>`;
       }
     });
   }
@@ -78,9 +78,9 @@ export class TokenSearchPanel extends BasePanel {
   renderContent(data) {
     if (!data || !data.length) {
       if (this._query && this._query.length >= 2) {
-        return '<div class="panel-loading">No results found</div>';
+        return `<div class="panel-loading">${_t('msg.noResults')}</div>`;
       }
-      return '<div class="panel-loading">Type to search tokens</div>';
+      return `<div class="panel-loading">${_t('msg.typeToSearch')}</div>`;
     }
 
     let html = '<div class="search-results-list">';

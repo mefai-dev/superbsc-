@@ -52,7 +52,7 @@ export class TokenAuditPanel extends BasePanel {
         </div>
       </div>
       <div class="filter-bar">
-        <input type="text" class="audit-address form-input" placeholder="Contract address" value="${escapeHtml(this._address)}" style="flex:1">
+        <input type="text" class="audit-address form-input" placeholder="${_t('audit.placeholder')}" value="${escapeHtml(this._address)}" style="flex:1">
         <select class="audit-chain form-select">
           <option value="56"${this._chain === '56' ? ' selected' : ''}>BSC</option>
           <option value="1"${this._chain === '1' ? ' selected' : ''}>ETH</option>
@@ -60,10 +60,10 @@ export class TokenAuditPanel extends BasePanel {
           <option value="8453"${this._chain === '8453' ? ' selected' : ''}>BASE</option>
           <option value="42161"${this._chain === '42161' ? ' selected' : ''}>ARB</option>
         </select>
-        <button class="btn audit-btn">Audit</button>
+        <button class="btn audit-btn">${_t('audit.btn')}</button>
       </div>
       <div class="panel-body">
-        <div class="panel-loading">Enter a contract address to audit</div>
+        <div class="panel-loading">${_t('audit.enterAddress')}</div>
       </div>
     `;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => this.refresh());
@@ -93,8 +93,8 @@ export class TokenAuditPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data) return '<div class="panel-loading">Enter a contract address to audit</div>';
-    if (data?._fetchError) return '<div class="panel-loading">Unable to audit token. Please try again.</div>';
+    if (!data) return `<div class="panel-loading">${_t('audit.enterAddress')}</div>`;
+    if (data?._fetchError) return `<div class="panel-loading">${_t('audit.error')}</div>`;
 
     const risk = data.riskLevel ?? data.risk ?? 0;
     const hasResult = data.hasResult;
@@ -106,31 +106,31 @@ export class TokenAuditPanel extends BasePanel {
 
     let html = `<div style="text-align:center;padding:16px 0">`;
     html += `<div style="font-size:24px;margin-bottom:8px">${renderRiskBadge(risk)}</div>`;
-    html += `<div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Risk Level</div>`;
+    html += `<div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">${_t('audit.riskLevel')}</div>`;
     if (hasResult === false) {
-      html += `<div style="font-size:10px;color:var(--text-muted);margin-top:4px">No audit data available for this contract</div>`;
+      html += `<div style="font-size:10px;color:var(--text-muted);margin-top:4px">${_t('audit.noData')}</div>`;
     }
     html += `</div>`;
 
     html += `<div class="profile-section">`;
-    html += `<h3>Tax &amp; Fees</h3>`;
+    html += `<h3>${_t('audit.taxFees')}</h3>`;
     html += `<div class="profile-grid">`;
-    html += `<span class="profile-label">Buy Tax</span><span class="profile-value">${buyTax !== null ? buyTax + '%' : '--'}</span>`;
-    html += `<span class="profile-label">Sell Tax</span><span class="profile-value">${sellTax !== null ? sellTax + '%' : '--'}</span>`;
+    html += `<span class="profile-label">${_t('audit.buyTax')}</span><span class="profile-value">${buyTax !== null ? buyTax + '%' : '--'}</span>`;
+    html += `<span class="profile-label">${_t('audit.sellTax')}</span><span class="profile-value">${sellTax !== null ? sellTax + '%' : '--'}</span>`;
     html += `</div></div>`;
 
     html += `<div class="profile-section">`;
-    html += `<h3>Verification</h3>`;
+    html += `<h3>${_t('audit.verification')}</h3>`;
     html += `<div class="profile-grid">`;
-    html += `<span class="profile-label">Verified</span><span class="profile-value">${this._boolDisplay(verified)}</span>`;
+    html += `<span class="profile-label">${_t('audit.verified')}</span><span class="profile-value">${this._boolDisplay(verified)}</span>`;
     html += `</div></div>`;
 
     if (riskItems.length) {
       html += `<div class="profile-section">`;
-      html += `<h3>Security Checks</h3>`;
+      html += `<h3>${_t('audit.security')}</h3>`;
       html += `<div style="font-size:11px">`;
       riskItems.forEach(cat => {
-        const catName = cat.name || cat.id || 'Unknown';
+        const catName = cat.name || cat.id || _t('label.unknown');
         const details = cat.details || [];
         if (!details.length) return;
         const hits = details.filter(d => d.isHit);
@@ -140,13 +140,13 @@ export class TokenAuditPanel extends BasePanel {
           const isRisk = d.riskType === 'RISK';
           let badge, cls;
           if (hit) {
-            badge = isRisk ? 'RISK' : 'WARN';
+            badge = isRisk ? _t('audit.risk') : _t('audit.warn');
             cls = isRisk ? 'risk-high' : 'risk-medium';
           } else {
-            badge = 'PASS';
+            badge = _t('audit.pass');
             cls = 'risk-low';
           }
-          const title = d.title || 'Unknown';
+          const title = d.title || _t('label.unknown');
           html += `<div style="padding:2px 0;border-bottom:1px solid var(--border);opacity:${hit ? 1 : 0.6}">`;
           html += `<span class="${cls}" style="font-weight:700;margin-right:6px;font-size:9px;padding:1px 4px;border:1px solid;display:inline-block;min-width:32px;text-align:center">${badge}</span>`;
           html += `${escapeHtml(title)}`;

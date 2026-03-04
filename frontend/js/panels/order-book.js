@@ -44,7 +44,7 @@ export class OrderBookPanel extends BasePanel {
           <span class="panel-skill">Skill 1</span>
         </div>
         <div class="panel-actions" style="display:flex;gap:4px;align-items:center">
-          <span style="font-size:9px;color:var(--text-muted)">Depth:</span>
+          <span style="font-size:9px;color:var(--text-muted)">${_t('trade.depth')}:</span>
           ${[5, 10, 20].map(d => `<button class="btn ob-depth-btn${this._depth === d ? ' btn-primary' : ''}" data-d="${d}" style="font-size:9px;padding:1px 6px">${d}</button>`).join('')}
           <button class="panel-refresh" title="Refresh">↻</button>
         </div>
@@ -148,7 +148,7 @@ export class OrderBookPanel extends BasePanel {
 .ob-mid-usd{font-size:9px;color:var(--text-secondary)}
 </style>
 <div class="ob-wrap">
-  <div class="ob-cols"><span>Price(USDT)</span><span>Amount(${u.escapeHtml(sym)})</span><span>Total</span></div>
+  <div class="ob-cols"><span>${_t('ob.priceUsdt')}</span><span>${_t('ob.amount')}(${u.escapeHtml(sym)})</span><span>${_t('ob.total')}</span></div>
   <div class="ob-scroll">
     <table class="ob-tbl"><tbody>${askHTML}</tbody></table>
   </div>
@@ -159,7 +159,7 @@ export class OrderBookPanel extends BasePanel {
     </span>
     <div style="display:flex;flex-direction:column;align-items:flex-end">
       <span class="ob-mid-usd">≈ $${u.formatPrice(mid)}</span>
-      <span class="ob-mid-spread">Spread: ${u.formatPrice(spr)} (${sprP.toFixed(3)}%)</span>
+      <span class="ob-mid-spread">${_t('ob.spread')}: ${u.formatPrice(spr)} (${sprP.toFixed(3)}%)</span>
     </div>
   </div>
   <div class="ob-scroll">

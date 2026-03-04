@@ -89,8 +89,8 @@ export class PriceChartPanel extends BasePanel {
   renderContent(data) {
     if (!data || !data.klines || !data.klines.length) {
       return `<div class="panel-loading" style="flex-direction:column;gap:4px;text-align:center">
-        <div>No kline data</div>
-        <div style="font-size:10px;color:var(--text-muted)">Select a trading pair to view the price chart</div>
+        <div>${_t('msg.noKline')}</div>
+        <div style="font-size:10px;color:var(--text-muted)">${_t('msg.selectPair')}</div>
       </div>`;
     }
     return '<div class="chart-container" id="price-chart-container"></div>';
@@ -110,7 +110,7 @@ export class PriceChartPanel extends BasePanel {
 
     const formatted = window.mefaiChart.formatKlineData(data.klines);
     if (!formatted.length) {
-      container.innerHTML = '<div class="panel-loading">Invalid kline data</div>';
+      container.innerHTML = `<div class="panel-loading">${_t('msg.invalidKline')}</div>`;
       return;
     }
 

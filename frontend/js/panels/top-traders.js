@@ -27,12 +27,12 @@ export class TopTradersPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">Loading trader data...</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.loadingTraders')}</div>`;
     const u = window.mefaiUtils;
     const sorted = [...data].sort((a, b) => this._dir === 'desc' ? b[this._sort] - a[this._sort] : a[this._sort] - b[this._sort]);
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th>#</th><th data-k="address">Address</th><th data-k="pnl">PnL</th>';
-    h += '<th data-k="pnlPct">PnL%</th><th data-k="balance">Balance</th></tr></thead><tbody>';
+    h += `<th>${_t('col.rank')}</th><th data-k="address">${_t('col.address')}</th><th data-k="pnl">${_t('col.pnl')}</th>`;
+    h += `<th data-k="pnlPct">${_t('col.pnlPct')}</th><th data-k="balance">${_t('col.balance')}</th></tr></thead><tbody>`;
     sorted.forEach((t, i) => {
       const cls = t.pnl >= 0 ? 'val-up' : 'val-down';
       const ar = t.pnl >= 0 ? '↑' : '↓';

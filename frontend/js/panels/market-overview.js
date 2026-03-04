@@ -87,7 +87,7 @@ export class MarketOverviewPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">Loading market data...</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.loadingMarket')}</div>`;
     const u = window.mefaiUtils;
     const ws = window.mefaiStream?.connected;
     const sorted = [...data].sort((a, b) => {
@@ -95,8 +95,8 @@ export class MarketOverviewPanel extends BasePanel {
       return this._dir === 'desc' ? (vb > va ? 1 : -1) : (va > vb ? 1 : -1);
     });
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th data-k="symbol">Pair</th><th data-k="price">Price</th>';
-    h += '<th data-k="change">24h%</th><th data-k="volume">Volume</th>';
+    h += `<th data-k="symbol">${_t('col.pair')}</th><th data-k="price">${_t('col.price')}</th>`;
+    h += `<th data-k="change">${_t('col.change24h')}</th><th data-k="volume">${_t('col.volume')}</th>`;
     h += '</tr></thead><tbody>';
     for (const t of sorted) {
       const cls = t.change >= 0 ? 'val-up' : 'val-down';

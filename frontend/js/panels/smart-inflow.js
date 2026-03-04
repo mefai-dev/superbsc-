@@ -27,10 +27,10 @@ export class SmartInflowPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">Loading inflow data...</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.loadingInflow')}</div>`;
     const u = window.mefaiUtils;
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th>Token</th><th>Price</th><th>MCap</th><th>Volume</th><th>24h%</th>';
+    h += `<th>${_t('col.token')}</th><th>${_t('col.price')}</th><th>${_t('col.mcap')}</th><th>${_t('col.volume')}</th><th>${_t('col.change24h')}</th>`;
     h += '</tr></thead><tbody>';
     for (const t of data) {
       const iconUrl = u.tokenIcon(t.icon);

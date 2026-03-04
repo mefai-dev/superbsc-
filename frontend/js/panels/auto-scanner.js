@@ -63,14 +63,14 @@ export class AutoScannerPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data?.length) return '<div class="panel-loading">Scanning market data...</div>';
+    if (!data?.length) return `<div class="panel-loading">${_t('msg.scanning')}</div>`;
 
     const sorted = sortRows(data, this._sortKey, this._sortDir);
 
     let h = '<table class="data-table"><thead><tr>';
-    h += '<th data-k="score">Score</th><th data-k="token">Token</th>';
-    h += '<th data-k="signal">Signal</th><th data-k="mcap">MCap</th>';
-    h += '<th data-k="price">Price</th><th data-k="age">Age</th></tr></thead><tbody>';
+    h += `<th data-k="score">${_t('col.score')}</th><th data-k="token">${_t('col.token')}</th>`;
+    h += `<th data-k="signal">${_t('col.signal')}</th><th data-k="mcap">${_t('col.mcap')}</th>`;
+    h += `<th data-k="price">${_t('col.price')}</th><th data-k="age">${_t('col.age')}</th></tr></thead><tbody>`;
 
     for (const t of sorted) {
       const pct = Math.min(100, Math.max(0, t.score));

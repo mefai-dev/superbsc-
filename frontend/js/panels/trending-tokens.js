@@ -37,23 +37,23 @@ export class TrendingTokensPanel extends BasePanel {
 
   renderContent(data) {
     if (!data || !data.length) {
-      return '<div class="panel-loading">No trending tokens available</div>';
+      return `<div class="panel-loading">${_t('msg.noTrending')}</div>`;
     }
 
     const sorted = sortRows(data, this._sortKey, this._sortDir);
 
     const columns = [
-      { key: 'rank', label: '#', width: '35px', render: (v) => `<span style="color:var(--text-muted)">${v}</span>` },
-      { key: 'symbol', label: 'Token', width: '100px', render: (v, row) => {
+      { key: 'rank', label: _t('col.rank'), width: '35px', render: (v) => `<span style="color:var(--text-muted)">${v}</span>` },
+      { key: 'symbol', label: _t('col.token'), width: '100px', render: (v, row) => {
         const iconUrl = window.mefaiUtils.tokenIcon(row.icon);
         const img = iconUrl ? `<img src="${iconUrl}" style="width:16px;height:16px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
         return `${img}<span style="font-weight:600">${escapeHtml(v)}</span>`;
       }},
-      { key: 'price', label: 'Price', align: 'right', render: (v) => `$${formatPrice(v)}` },
-      { key: 'change1h', label: '1h%', align: 'right', render: (v) => formatPercent(v) },
-      { key: 'change24h', label: '24h%', align: 'right', render: (v) => formatPercent(v) },
-      { key: 'mcap', label: 'MCap', align: 'right', render: (v) => formatCurrency(v) },
-      { key: 'volume', label: 'Volume', align: 'right', render: (v) => formatCurrency(v) },
+      { key: 'price', label: _t('col.price'), align: 'right', render: (v) => `$${formatPrice(v)}` },
+      { key: 'change1h', label: _t('col.change1h'), align: 'right', render: (v) => formatPercent(v) },
+      { key: 'change24h', label: _t('col.change24h'), align: 'right', render: (v) => formatPercent(v) },
+      { key: 'mcap', label: _t('col.mcap'), align: 'right', render: (v) => formatCurrency(v) },
+      { key: 'volume', label: _t('col.volume'), align: 'right', render: (v) => formatCurrency(v) },
     ];
 
     return renderTable(columns, sorted, {

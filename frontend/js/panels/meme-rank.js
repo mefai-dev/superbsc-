@@ -35,15 +35,15 @@ export class MemeRankPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data || !data.length) return '<div class="panel-loading">No meme rank data available</div>';
+    if (!data || !data.length) return `<div class="panel-loading">${_t('msg.noMemeRank')}</div>`;
 
     const sorted = sortRows(data, this._sortKey, this._sortDir);
 
     const columns = [
-      { key: 'rank', label: '#', width: '36px', render: v => `<span style="color:var(--text-muted)">${v}</span>` },
+      { key: 'rank', label: _t('col.rank'), width: '36px', render: v => `<span style="color:var(--text-muted)">${v}</span>` },
       {
         key: 'score',
-        label: 'Score',
+        label: _t('col.score'),
         width: '120px',
         render: (v) => {
           const pct = Math.min(100, Math.max(5, (v / 5) * 100)); // score is 0-5
@@ -54,16 +54,16 @@ export class MemeRankPanel extends BasePanel {
       },
       {
         key: 'symbol',
-        label: 'Token',
+        label: _t('col.token'),
         render: (v, row) => {
           const chain = row.chainId ? ` <span class="chain-badge">${escapeHtml(String(row.chainId))}</span>` : '';
           return `<span style="font-weight:600">${escapeHtml(v)}</span>${chain}`;
         },
       },
-      { key: 'price', label: 'Price', align: 'right', render: v => `$${formatPrice(v)}` },
-      { key: 'change', label: '24h%', align: 'right', render: v => formatPercent(v) },
-      { key: 'mcap', label: 'MCap', align: 'right', render: v => formatCurrency(v) },
-      { key: 'liquidity', label: 'Liquidity', align: 'right', render: v => formatCurrency(v) },
+      { key: 'price', label: _t('col.price'), align: 'right', render: v => `$${formatPrice(v)}` },
+      { key: 'change', label: _t('col.change24h'), align: 'right', render: v => formatPercent(v) },
+      { key: 'mcap', label: _t('col.mcap'), align: 'right', render: v => formatCurrency(v) },
+      { key: 'liquidity', label: _t('col.liquidity'), align: 'right', render: v => formatCurrency(v) },
     ];
 
     return renderTable(columns, sorted, {

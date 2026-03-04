@@ -72,7 +72,7 @@ export class AllSkillsPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data) return '<div class="panel-loading">Loading dashboard...</div>';
+    if (!data) return `<div class="panel-loading">${_t('msg.loadingDash')}</div>`;
     const u = window.mefaiUtils;
     const st = data.stats;
 
@@ -134,20 +134,20 @@ export class AllSkillsPanel extends BasePanel {
     </div>`;
     // Signal Summary
     h += `<div class="dash-card dash-card-lg">
-      <div class="dash-lbl">Signal Pulse</div>
+      <div class="dash-lbl">${_t('dash.signalPulse')}</div>
       <div style="display:flex;gap:12px;align-items:center">
         <div>
           <div class="dash-val" style="font-size:14px">${st.totalSignals}</div>
-          <div class="dash-sub">Total</div>
+          <div class="dash-sub">${_t('trade.total')}</div>
         </div>
         <div>
-          <span class="dash-pill pill-buy">▲ ${st.buys} Buy</span>
+          <span class="dash-pill pill-buy">▲ ${st.buys} ${_t('trade.buy')}</span>
         </div>
         <div>
-          <span class="dash-pill pill-sell">▼ ${st.sells} Sell</span>
+          <span class="dash-pill pill-sell">▼ ${st.sells} ${_t('trade.sell')}</span>
         </div>
         <div>
-          <span class="dash-pill pill-active">● ${st.active} Active</span>
+          <span class="dash-pill pill-active">● ${st.active} ${_t('trade.active')}</span>
         </div>
       </div>
       <div class="dash-bar-row">
@@ -158,7 +158,7 @@ export class AllSkillsPanel extends BasePanel {
     h += `</div>`;
 
     // Row 2 — Hot Signals (cards, not table!)
-    h += `<div class="dash-section"><div class="dash-section-title">Hot Signals — Smart Money</div></div>`;
+    h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.hotSignals')}</div></div>`;
     h += `<div class="dash-grid">`;
     for (const s of data.hotSignals) {
       const dir = (s.signalDirection || s.direction || '').toLowerCase();
@@ -170,7 +170,7 @@ export class AllSkillsPanel extends BasePanel {
         ${icon}
         <div class="dash-mini-info">
           <div class="dash-mini-sym">${u.escapeHtml(s.ticker || s.symbol || '')}</div>
-          <div class="dash-mini-val">SM: ${smCount} · $${u.formatPrice(parseFloat(s.currentPrice || 0))}</div>
+          <div class="dash-mini-val">${_t('label.smartMoney')}: ${smCount} · $${u.formatPrice(parseFloat(s.currentPrice || 0))}</div>
         </div>
         <div style="text-align:right">
           <span class="dash-pill ${dir === 'buy' ? 'pill-buy' : 'pill-sell'}">${dir === 'buy' ? '▲' : '▼'} ${dir}</span>
@@ -184,7 +184,7 @@ export class AllSkillsPanel extends BasePanel {
     h += `<div class="dash-row">`;
     // Gainers
     h += `<div class="dash-card" style="flex:1">
-      <div class="dash-section-title" style="margin-top:0">Top Gainers</div>`;
+      <div class="dash-section-title" style="margin-top:0">${_t('dash.topGainers')}</div>`;
     for (const g of data.gainers) {
       h += `<div style="display:flex;justify-content:space-between;padding:2px 0;font-size:10px">
         <span style="font-weight:600">${u.escapeHtml(g.sym)}</span>
@@ -194,7 +194,7 @@ export class AllSkillsPanel extends BasePanel {
     h += `</div>`;
     // Losers
     h += `<div class="dash-card" style="flex:1">
-      <div class="dash-section-title" style="margin-top:0">Top Losers</div>`;
+      <div class="dash-section-title" style="margin-top:0">${_t('dash.topLosers')}</div>`;
     for (const l of data.losers) {
       h += `<div style="display:flex;justify-content:space-between;padding:2px 0;font-size:10px">
         <span style="font-weight:600">${u.escapeHtml(l.sym)}</span>
@@ -206,7 +206,7 @@ export class AllSkillsPanel extends BasePanel {
 
     // Row 4 — Trending tokens (mini cards)
     if (data.trending.length) {
-      h += `<div class="dash-section"><div class="dash-section-title">Trending Tokens</div></div>`;
+      h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.trendingTokens')}</div></div>`;
       h += `<div class="dash-grid">`;
       for (const t of data.trending) {
         const iconUrl = u.tokenIcon(t.icon || '');
@@ -226,7 +226,7 @@ export class AllSkillsPanel extends BasePanel {
 
     // Row 5 — Smart Inflow (if available)
     if (data.inflow.length) {
-      h += `<div class="dash-section"><div class="dash-section-title">Smart Money Inflow</div></div>`;
+      h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.smartInflow')}</div></div>`;
       h += `<div class="dash-grid">`;
       for (const t of data.inflow) {
         const iconUrl = u.tokenIcon(t.tokenLogo || t.icon || '');
@@ -236,7 +236,7 @@ export class AllSkillsPanel extends BasePanel {
           ${icon}
           <div class="dash-mini-info">
             <div class="dash-mini-sym">${u.escapeHtml(t.tokenSymbol || t.symbol || '')}</div>
-            <div class="dash-mini-val">${u.formatCurrency(inAmt)} inflow</div>
+            <div class="dash-mini-val">${u.formatCurrency(inAmt)} ${_t('trade.inflow')}</div>
           </div>
         </div>`;
       }
