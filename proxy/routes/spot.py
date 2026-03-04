@@ -63,7 +63,9 @@ async def exchange_info(symbol: str = Query(None)):
     params = {}
     if symbol:
         params["symbol"] = symbol.upper()
-    return await fetch_json(f"{BASE}/api/v3/exchangeInfo", params=params or None, ttl=300)
+    return await fetch_json(
+        f"{BASE}/api/v3/exchangeInfo", params=params or None, ttl=300
+    )
 
 
 _tickers_cache = {"data": None, "ts": 0}
@@ -223,3 +225,45 @@ async def agg_trades(
     return await fetch_json(
         url, params={"symbol": symbol.upper(), "limit": limit}, ttl=5
     )
+
+
+@router.get("/bookTicker")
+async def book_ticker(symbol: str = Query(None)):
+    """Best bid/ask for one or all symbols."""
+    params = {}
+    if symbol:
+        params["symbol"] = symbol.upper()
+    return await fetch_json(
+        f"{BASE}/api/v3/ticker/bookTicker", params=params or None, ttl=5
+    )
+
+
+@router.get("/tickerWindow")
+async def ticker_window(
+    symbols: str = Query(None, description="Comma-separated symbols"),
+    windowSize: str = Query("1d", description="Window: 1m,2m..59m,1h..23h,1d..7d"),
+):
+    """Rolling window ticker stats (multi-timeframe)."""
+    url = f"{BASE}/api/v3/ticker"
+    params = {"windowSize": windowSize}
+    if symbols:
+        import json as _json
+
+        symbol_list = [s.strip().upper() for s in symbols.split(",")]
+        params["symbols"] = _json.dumps(symbol_list)
+    return await fetch_json(url, params=params, ttl=30)
+
+
+@router.get("/tradingDay")
+async def trading_day(
+    symbols: str = Query(None, description="Comma-separated symbols"),
+):
+    """UTC trading day ticker stats."""
+    url = f"{BASE}/api/v3/ticker/tradingDay"
+    params = {}
+    if symbols:
+        import json as _json
+
+        symbol_list = [s.strip().upper() for s in symbols.split(",")]
+        params["symbols"] = _json.dumps(symbol_list)
+    return await fetch_json(url, params=params, ttl=30)

@@ -81,9 +81,7 @@ app.include_router(
 )
 app.include_router(earn.router, prefix="/api/earn", tags=["Skill 17: Earn"])
 app.include_router(margin.router, prefix="/api/margin", tags=["Skill 18: Margin"])
-app.include_router(
-    products.router, prefix="/api/products", tags=["Skill 19: Products"]
-)
+app.include_router(products.router, prefix="/api/products", tags=["Skill 19: Products"])
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")

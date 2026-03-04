@@ -71,6 +71,15 @@ const panelRegistry = {
   'product-explorer': 'product-explorer-panel',
   'funding-heatmap': 'funding-heatmap-panel',
   'ath-tracker': 'ath-tracker-panel',
+  'taker-pressure': 'taker-pressure-panel',
+  'oi-surge': 'oi-surge-panel',
+  'spread-monitor': 'spread-monitor-panel',
+  'index-composition': 'index-composition-panel',
+  'funding-scanner': 'funding-scanner-panel',
+  'momentum-screener': 'momentum-screener-panel',
+  'volatility-rank': 'volatility-rank-panel',
+  'volume-profile': 'volume-profile-panel',
+  'whale-tracker': 'whale-tracker-panel',
 };
 
 // Layout presets
@@ -180,6 +189,16 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['product-explorer', 'market-dominance', 'airdrop-calendar', 'api-monitor'],
   },
+  'derivatives': {
+    name: 'Derivatives',
+    grid: 'grid-2x3',
+    panels: ['taker-pressure', 'oi-surge', 'funding-scanner', 'spread-monitor', 'index-composition', 'whale-tracker'],
+  },
+  'screener': {
+    name: 'Screener',
+    grid: 'grid-2x2',
+    panels: ['momentum-screener', 'volatility-rank', 'volume-profile', 'ath-tracker'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -205,10 +224,13 @@ async function loadPanels() {
     'margin-optimizer', 'basis-spread', 'market-dominance', 'trading-rules',
     'trader-divergence', 'airdrop-calendar', 'api-monitor', 'product-explorer',
     'funding-heatmap', 'ath-tracker',
+    'taker-pressure', 'oi-surge', 'spread-monitor', 'index-composition',
+    'funding-scanner', 'momentum-screener', 'volatility-rank', 'volume-profile',
+    'whale-tracker',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709700000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709800000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
