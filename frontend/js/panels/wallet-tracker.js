@@ -16,6 +16,11 @@ export class WalletTrackerPanel extends BasePanel {
     this._address = '';
     this._chain = 'eth';
     this._unsub = null;
+    this._presets = [
+      { label: 'Vitalik', address: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', chain: 'eth' },
+      { label: 'Justin Sun', address: '0x3DdfA8eC3052539b6C9549F12cEA2C295cfF5296', chain: 'eth' },
+      { label: 'CZ BSC', address: '0x8894E0a0c962CB723c1ef18d18b7D7f9e1Ce0E28', chain: 'bsc' },
+    ];
   }
 
   connectedCallback() {
@@ -53,8 +58,8 @@ export class WalletTrackerPanel extends BasePanel {
           <button class="panel-refresh" title="Refresh">&#8635;</button>
         </div>
       </div>
-      <div class="filter-bar">
-        <input type="text" class="wallet-address form-input" placeholder="Wallet address" value="${escapeHtml(this._address)}" style="flex:1">
+      <div class="filter-bar" style="flex-wrap:wrap">
+        <input type="text" class="wallet-address form-input" placeholder="Wallet address" value="${escapeHtml(this._address)}" style="flex:1;min-width:120px">
         <select class="wallet-chain form-select">
           <option value="eth"${this._chain === 'eth' ? ' selected' : ''}>ETH</option>
           <option value="bsc"${this._chain === 'bsc' ? ' selected' : ''}>BSC</option>
@@ -64,8 +69,11 @@ export class WalletTrackerPanel extends BasePanel {
         </select>
         <button class="btn wallet-btn">Track</button>
       </div>
+      <div style="display:flex;gap:4px;padding:4px 8px;border-bottom:1px solid var(--border);flex-wrap:wrap">
+        ${this._presets.map(p => `<button class="btn preset-btn" data-addr="${p.address}" data-chain="${p.chain}" style="font-size:9px;padding:2px 8px">${p.label}</button>`).join('')}
+      </div>
       <div class="panel-body">
-        <div class="panel-loading">Enter a wallet address to track</div>
+        <div class="panel-loading">Select a whale wallet or enter an address</div>
       </div>
     `;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => {
@@ -82,6 +90,18 @@ export class WalletTrackerPanel extends BasePanel {
         this._chain = this.querySelector('.wallet-chain')?.value || 'eth';
         if (this._address) this.refresh();
       }
+    });
+    // Preset whale buttons
+    this.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this._address = btn.dataset.addr;
+        this._chain = btn.dataset.chain;
+        const addrInput = this.querySelector('.wallet-address');
+        const chainSelect = this.querySelector('.wallet-chain');
+        if (addrInput) addrInput.value = this._address;
+        if (chainSelect) chainSelect.value = this._chain;
+        this.refresh();
+      });
     });
   }
 
@@ -105,7 +125,7 @@ export class WalletTrackerPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data) return '<div class="panel-loading">Enter a wallet address to track</div>';
+    if (!data) return '<div class="panel-loading">Select a whale wallet or enter an address</div>';
     if (!data.length) return '<div class="panel-loading">No positions found for this wallet</div>';
 
     const sorted = sortRows(data, this._sortKey, this._sortDir);
