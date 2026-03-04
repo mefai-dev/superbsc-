@@ -229,13 +229,13 @@ export class AllSkillsPanel extends BasePanel {
       h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.smartInflow')}</div></div>`;
       h += `<div class="dash-grid">`;
       for (const t of data.inflow) {
-        const iconUrl = u.tokenIcon(t.tokenLogo || t.icon || '');
+        const iconUrl = u.tokenIcon(t.tokenIconUrl || t.tokenLogo || t.icon || '');
         const icon = iconUrl ? `<img src="${iconUrl}" class="dash-mini-icon" onerror="this.style.display='none'">` : `<div class="dash-mini-icon" style="background:var(--border)"></div>`;
-        const inAmt = parseFloat(t.smartMoneyInflow || t.inflowAmount || 0);
-        h += `<div class="dash-mini" data-a="${t.contractAddress || ''}" data-c="${t.chainId || ''}">
+        const inAmt = parseFloat(t.inflow || t.smartMoneyInflow || t.inflowAmount || 0);
+        h += `<div class="dash-mini" data-a="${t.ca || t.contractAddress || ''}" data-c="${t.chainId || 'SOL'}">
           ${icon}
           <div class="dash-mini-info">
-            <div class="dash-mini-sym">${u.escapeHtml(t.tokenSymbol || t.symbol || '')}</div>
+            <div class="dash-mini-sym">${u.escapeHtml(t.tokenName || t.tokenSymbol || t.symbol || '')}</div>
             <div class="dash-mini-val">${u.formatCurrency(inAmt)} ${_t('trade.inflow')}</div>
           </div>
         </div>`;

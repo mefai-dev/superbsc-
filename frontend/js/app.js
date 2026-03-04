@@ -36,6 +36,10 @@ const panelRegistry = {
   'whale-intel': 'whale-intel-panel',
   'order-book-intel': 'order-book-intel-panel',
   'token-grad': 'token-grad-panel',
+  'liquidation-heatmap': 'liquidation-heatmap-panel',
+  'dex-intel': 'dex-intel-panel',
+  'goplus-scanner': 'goplus-scanner-panel',
+  'multi-chain-wallet': 'multi-chain-wallet-panel',
 };
 
 // Layout presets
@@ -95,6 +99,16 @@ const layouts = {
     grid: 'grid-2x3',
     panels: ['whale-intel', 'order-book-intel', 'token-grad', 'top-traders', 'smart-signals', 'alpha-radar'],
   },
+  'defi': {
+    name: 'DeFi',
+    grid: 'grid-2x2',
+    panels: ['dex-intel', 'goplus-scanner', 'token-audit', 'multi-chain-wallet'],
+  },
+  'risk': {
+    name: 'Risk',
+    grid: 'grid-2x2',
+    panels: ['liquidation-heatmap', 'futures-pulse', 'funding-arb', 'order-book-intel'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -110,6 +124,7 @@ async function loadPanels() {
     'alpha-radar', 'signal-pnl',
     'futures-pulse', 'sm-acceleration', 'token-scout', 'funding-arb', 'social-divergence',
     'whale-intel', 'order-book-intel', 'token-grad',
+    'liquidation-heatmap', 'dex-intel', 'goplus-scanner', 'multi-chain-wallet',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
@@ -231,7 +246,7 @@ document.addEventListener('keydown', (e) => {
 
   // 1-7 — switch layout
   const num = parseInt(e.key);
-  if (num >= 1 && num <= 10) {
+  if (num >= 1 && num <= 13) {
     const keys = Object.keys(layouts);
     if (keys[num - 1]) setLayout(keys[num - 1]);
     return;

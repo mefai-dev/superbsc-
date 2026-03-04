@@ -174,8 +174,8 @@ export class AlphaRadarPanel extends BasePanel {
     const badgeColors = { SM: '#0ecb81', SO: '#1e90ff', TR: '#f0b90b', ME: '#a855f7', IN: '#22d3ee' };
 
     let h = '<style scoped>';
-    h += `.alpha-bar{height:6px;background:var(--border);border-radius:3px;width:80px;display:inline-block;vertical-align:middle;margin-left:6px}`;
-    h += `.alpha-fill{height:100%;border-radius:3px;transition:width .3s}`;
+    h += `.alpha-bar{height:8px;background:var(--border);border-radius:4px;width:80px;display:inline-block;vertical-align:middle;margin-left:6px;overflow:hidden}`;
+    h += `.alpha-fill{height:100%;border-radius:4px;transition:width .3s;box-shadow:0 0 4px currentColor}`;
     h += `.alpha-gold{color:#f0b90b;text-shadow:0 0 8px rgba(240,185,11,0.5)}`;
     h += `.alpha-green{color:#0ecb81}`;
     h += `.alpha-yellow{color:#f0b90b}`;
@@ -197,7 +197,8 @@ export class AlphaRadarPanel extends BasePanel {
       const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
 
       const tierCls = r.alphaScore >= 80 ? 'alpha-gold' : r.alphaScore >= 60 ? 'alpha-green' : r.alphaScore >= 40 ? 'alpha-yellow' : 'alpha-gray';
-      const barColor = r.alphaScore >= 80 ? '#f0b90b' : r.alphaScore >= 60 ? '#0ecb81' : r.alphaScore >= 40 ? '#f0b90b' : '#474d57';
+      const barColor = r.alphaScore >= 80 ? '#f0b90b' : r.alphaScore >= 60 ? '#0ecb81' : r.alphaScore >= 40 ? '#e8a317' : '#474d57';
+      const barGlow = r.alphaScore >= 80 ? 'box-shadow:0 0 8px rgba(240,185,11,.6)' : r.alphaScore >= 60 ? 'box-shadow:0 0 6px rgba(14,203,129,.4)' : '';
       const pct = Math.min(100, r.alphaScore);
 
       const badgesHtml = r.badges.map(b =>
@@ -208,7 +209,7 @@ export class AlphaRadarPanel extends BasePanel {
 
       h += `<tr data-a="${r.address}" data-c="${r.chain}">`;
       h += `<td>${icon}<span style="font-weight:600">${escapeHtml(r.symbol)}</span></td>`;
-      h += `<td class="${tierCls}" style="font-weight:700">${r.alphaScore}<span class="alpha-bar"><span class="alpha-fill" style="width:${pct}%;background:${barColor}"></span></span></td>`;
+      h += `<td class="${tierCls}" style="font-weight:700">${r.alphaScore}<span class="alpha-bar"><span class="alpha-fill" style="width:${pct}%;background:${barColor};${barGlow}"></span></span></td>`;
       h += `<td>${badgesHtml}</td>`;
       h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '—'}</td>`;
       h += `<td class="${cls24}">${r.change24h ? (r.change24h >= 0 ? '↑' : '↓') + Math.abs(r.change24h).toFixed(1) + '%' : '—'}</td>`;

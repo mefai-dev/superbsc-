@@ -908,6 +908,7 @@ select.lang-select {
   /* Mobile bottom nav — text only, no icons */
   #mobile-nav {
     display: flex;
+    flex-wrap: wrap;
     flex-shrink: 0;
     background: var(--bg-panel);
     border-top: 1px solid var(--border);
@@ -917,17 +918,19 @@ select.lang-select {
   .mobile-nav-btn {
     background: none;
     border: none;
-    border-top: 2px solid transparent;
+    border-top: 1px solid var(--border);
     color: var(--text-muted);
     font-family: var(--font-mono);
-    font-size: 9px;
-    padding: 12px 2px 10px;
+    font-size: 8px;
+    padding: 7px 1px 5px;
     cursor: pointer;
-    flex: 1;
+    flex: 1 0 calc(100% / 7);
+    max-width: calc(100% / 6);
     text-align: center;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
     transition: all 0.15s;
+    box-sizing: border-box;
   }
   .mobile-nav-btn.active {
     border-top-color: var(--accent);
