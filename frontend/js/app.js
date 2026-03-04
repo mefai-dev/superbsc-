@@ -51,6 +51,16 @@ const panelRegistry = {
   'dex-volume': 'dex-volume-panel',
   'protocol-revenue': 'protocol-revenue-panel',
   'chain-growth': 'chain-growth-panel',
+  'p2p-scanner': 'p2p-scanner-panel',
+  'wallet-risk-score': 'wallet-risk-score-panel',
+  'grid-analyzer': 'grid-analyzer-panel',
+  'announcement-monitor': 'announcement-monitor-panel',
+  'earn-comparator': 'earn-comparator-panel',
+  'tax-report': 'tax-report-panel',
+  'trade-journal': 'trade-journal-panel',
+  'convert-best-rate': 'convert-best-rate-panel',
+  'swap-router': 'swap-router-panel',
+  'alpha-airdrop': 'alpha-airdrop-panel',
 };
 
 // Layout presets
@@ -140,6 +150,16 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['chain-growth', 'dex-volume', 'protocol-revenue', 'protocol-tvl'],
   },
+  'cex-tools': {
+    name: 'CEX Tools',
+    grid: 'grid-2x3',
+    panels: ['p2p-scanner', 'earn-comparator', 'grid-analyzer', 'convert-best-rate', 'announcement-monitor', 'wallet-risk-score'],
+  },
+  'journal': {
+    name: 'Journal',
+    grid: 'grid-2x2',
+    panels: ['trade-journal', 'tax-report', 'swap-router', 'alpha-airdrop'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -159,10 +179,13 @@ async function loadPanels() {
     'liquidity-lifecycle', 'capital-rotation', 'contract-mutation',
     'yield-radar', 'stablecoin-flow', 'protocol-tvl', 'market-pulse', 'launch-scanner',
     'dex-volume', 'protocol-revenue', 'chain-growth',
+    'p2p-scanner', 'wallet-risk-score', 'grid-analyzer', 'announcement-monitor',
+    'earn-comparator', 'tax-report', 'trade-journal', 'convert-best-rate',
+    'swap-router', 'alpha-airdrop',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709580000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709600000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }

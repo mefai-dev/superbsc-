@@ -23,6 +23,12 @@ class Settings:
     WEB3_BASE = "https://web3.binance.com/bapi/defi"
     # DQuery kline service
     DQUERY_BASE = "https://dquery.sintral.io/u-kline/v1"
+    # Binance BAPI (public CMS/composite APIs)
+    BAPI_BASE = "https://www.binance.com/bapi"
+    # P2P marketplace API
+    P2P_BASE = "https://p2p.binance.com/bapi"
+    # Signed API (SAPI endpoints — earn, convert, etc.)
+    SAPI_BASE = "https://api.binance.com"
 
 
 settings = Settings()

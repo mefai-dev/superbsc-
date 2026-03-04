@@ -24,6 +24,9 @@ from proxy.routes import (
     coingecko,
     etherscan,
     defillama,
+    p2p,
+    announcements,
+    earn,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -70,6 +73,11 @@ app.include_router(
 app.include_router(
     defillama.router, prefix="/api/defillama", tags=["Skill 13: DefiLlama"]
 )
+app.include_router(p2p.router, prefix="/api/p2p", tags=["Skill 14: P2P"])
+app.include_router(
+    announcements.router, prefix="/api/announcements", tags=["Skill 15: Announcements"]
+)
+app.include_router(earn.router, prefix="/api/earn", tags=["Skill 17: Earn"])
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")

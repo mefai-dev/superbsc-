@@ -192,6 +192,7 @@ export const api = {
   // Skill 9: GoPlus Security
   goplus: {
     tokenSecurity: (addr, chain) => get('/api/goplus/token-security', { address: addr, chainId: chain || '56' }, 120000),
+    addressSecurity: (addr, chain) => get('/api/goplus/address-security', { address: addr, chainId: chain || '56' }, 120000),
   },
   // Skill 10: DexScreener
   dex: {
@@ -223,6 +224,19 @@ export const api = {
   etherscan: {
     sourceCode: (addr, chain) => get('/api/etherscan/sourcecode', { address: addr, chainId: chain || '56' }, 300000),
     abi: (addr, chain) => get('/api/etherscan/abi', { address: addr, chainId: chain || '56' }, 300000),
+  },
+  // Skill 14: P2P
+  p2p: {
+    search: (p) => post('/api/p2p/search', p || { fiat: 'TRY', asset: 'USDT', tradeType: 'BUY', rows: 20, page: 1 }, 60000),
+  },
+  // Skill 15: Announcements
+  announcements: {
+    list: (p) => get('/api/announcements/list', p || { type: 1, catalogId: 48, pageNo: 1, pageSize: 20 }, 120000),
+  },
+  // Skill 17: Earn
+  earn: {
+    flexibleList: (p) => get('/api/earn/flexible-list', p || {}, 120000),
+    lockedList: (p) => get('/api/earn/locked-list', p || {}, 120000),
   },
   health: () => get('/health', {}, 30000),
 };
