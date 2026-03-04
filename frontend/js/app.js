@@ -69,7 +69,7 @@ const layouts = {
 
 const grid = document.getElementById('grid');
 
-// Load all panel modules dynamically
+// Load all panel modules dynamically — returns when all loaded
 async function loadPanels() {
   const panelModules = [
     'market-overview', 'order-book', 'price-chart', 'spot-trading',
@@ -80,7 +80,7 @@ async function loadPanels() {
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709516000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709517000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
