@@ -55,14 +55,10 @@ export class BasePanel extends HTMLElement {
   }
 
   _skeletonHTML() {
-    const msgs = [
-      'AI is analyzing markets',
-      'Scanning blockchain data',
-      'Processing smart money signals',
-      'Fetching live market data',
-      'Connecting to data feeds',
-      'AI models warming up',
-      'Syncing with exchange',
+    const msgs = window.mefaiI18n?.loadingMessages?.() || [
+      'AI is analyzing markets', 'Scanning blockchain data',
+      'Processing smart money signals', 'Fetching live market data',
+      'Connecting to data feeds', 'AI models warming up', 'Syncing with exchange',
     ];
     const msg = msgs[Math.floor(Math.random() * msgs.length)];
     return `<div class="panel-loading">

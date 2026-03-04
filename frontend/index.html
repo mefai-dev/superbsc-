@@ -178,22 +178,23 @@
     <status-bar></status-bar>
   </footer>
 
-  <!-- Mobile action buttons (search, theme, settings) -->
+  <!-- Mobile action buttons (search, theme, settings, language) -->
   <div id="mobile-actions">
-    <button class="mobile-action-btn" id="mobile-search">Search</button>
-    <button class="mobile-action-btn" id="mobile-theme">Theme</button>
-    <button class="mobile-action-btn" id="mobile-settings">Settings</button>
+    <button class="mobile-action-btn" id="mobile-search" data-i18n="btn.search">Search</button>
+    <button class="mobile-action-btn" id="mobile-theme" data-i18n="btn.theme">Theme</button>
+    <button class="mobile-action-btn" id="mobile-settings" data-i18n="btn.settings">Settings</button>
+    <select class="mobile-action-btn lang-select" id="mobile-lang"></select>
   </div>
 
   <!-- Mobile bottom navigation — text only, no icons -->
   <nav id="mobile-nav">
-    <button class="mobile-nav-btn active" data-layout="mefai">MEFAI</button>
-    <button class="mobile-nav-btn" data-layout="overview">Overview</button>
-    <button class="mobile-nav-btn" data-layout="meme-hunter">Meme</button>
-    <button class="mobile-nav-btn" data-layout="whale-watcher">Whale</button>
-    <button class="mobile-nav-btn" data-layout="trader">Trade</button>
-    <button class="mobile-nav-btn" data-layout="scanner">Scan</button>
-    <button class="mobile-nav-btn" data-layout="deep-dive">Research</button>
+    <button class="mobile-nav-btn active" data-layout="mefai" data-i18n="nav.mefai">MEFAI</button>
+    <button class="mobile-nav-btn" data-layout="overview" data-i18n="nav.overview">Overview</button>
+    <button class="mobile-nav-btn" data-layout="meme-hunter" data-i18n="nav.meme">Meme</button>
+    <button class="mobile-nav-btn" data-layout="whale-watcher" data-i18n="nav.whale">Whale</button>
+    <button class="mobile-nav-btn" data-layout="trader" data-i18n="nav.trade">Trade</button>
+    <button class="mobile-nav-btn" data-layout="scanner" data-i18n="nav.scan">Scan</button>
+    <button class="mobile-nav-btn" data-layout="deep-dive" data-i18n="nav.research">Research</button>
   </nav>
 
   <!-- Search overlay -->
@@ -238,21 +239,21 @@
       </div>
       <div class="settings-body">
         <div class="settings-group">
-          <label>Theme</label>
+          <label data-i18n="settings.theme">Theme</label>
           <div class="settings-options" data-setting="theme">
-            <button class="settings-option" data-value="dark">Dark</button>
-            <button class="settings-option" data-value="light">Light</button>
+            <button class="settings-option" data-value="dark" data-i18n="settings.dark">Dark</button>
+            <button class="settings-option" data-value="light" data-i18n="settings.light">Light</button>
           </div>
         </div>
         <div class="settings-group">
-          <label>Font Size</label>
+          <label data-i18n="settings.fontSize">Font Size</label>
           <div class="settings-options" data-setting="fontSize">
-            <button class="settings-option" data-value="normal">Normal</button>
-            <button class="settings-option" data-value="large">Large</button>
+            <button class="settings-option" data-value="normal" data-i18n="settings.normal">Normal</button>
+            <button class="settings-option" data-value="large" data-i18n="settings.large">Large</button>
           </div>
         </div>
         <div class="settings-group">
-          <label>Default Layout</label>
+          <label data-i18n="settings.layout">Default Layout</label>
           <div class="settings-options" data-setting="defaultLayout">
             <button class="settings-option" data-value="mefai">MEFAI</button>
             <button class="settings-option" data-value="overview">Overview</button>
@@ -264,10 +265,16 @@
           </div>
         </div>
         <div class="settings-group">
-          <label>Compact Mode</label>
+          <label data-i18n="settings.compact">Compact Mode</label>
           <div class="settings-toggle" data-setting="compactMode">
-            <span class="settings-toggle-label">Compact tables</span>
+            <span class="settings-toggle-label" data-i18n="settings.compactTables">Compact tables</span>
             <div class="toggle-switch" id="compact-toggle"></div>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label data-i18n="settings.language">Language</label>
+          <div class="settings-options">
+            <select class="lang-select form-select" style="width:100%;padding:8px"></select>
           </div>
         </div>
       </div>
@@ -296,6 +303,7 @@
   <script type="module" src="static/js/components/chart.js?v=1709530000"></script>
   <script type="module" src="static/js/components/ws-stream.js?v=1709530000"></script>
   <script type="module" src="static/js/components/settings.js?v=1709530000"></script>
+  <script type="module" src="static/js/i18n.js?v=1709530000"></script>
   <script type="module" src="static/js/app.js?v=1709530000"></script>
 </body>
 </html>
