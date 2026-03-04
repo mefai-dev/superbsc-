@@ -122,7 +122,17 @@ async def token_kline(
 
     # DQuery supported intervals — others need Binance spot fallback
     dquery_intervals = {
-        "1m", "1h", "2h", "4h", "6h", "8h", "12h", "1d", "3d", "1w", "1M",
+        "1m",
+        "1h",
+        "2h",
+        "4h",
+        "6h",
+        "8h",
+        "12h",
+        "1d",
+        "3d",
+        "1w",
+        "1M",
     }
 
     # Map unsupported intervals to nearest DQuery interval for DEX tokens
@@ -139,8 +149,12 @@ async def token_kline(
 
     # Resolve platform from chain
     plat = platform or _CHAIN_TO_PLATFORM.get(chain or "56", "bsc")
-    dq_interval = interval if interval in dquery_intervals else _interval_map.get(interval, "1h")
-    dq_limit = limit * 5 if dq_interval != interval else limit  # more candles if aggregating
+    dq_interval = (
+        interval if interval in dquery_intervals else _interval_map.get(interval, "1h")
+    )
+    dq_limit = (
+        limit * 5 if dq_interval != interval else limit
+    )  # more candles if aggregating
 
     url = f"{DQUERY}/k-line/candles"
     params = {
@@ -158,13 +172,21 @@ async def token_kline(
             # DQuery failed — try Binance spot as last resort
             if symbol:
                 fallback_url = f"{SPOT_BASE}/api/v3/klines"
-                fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
+                fallback_params = {
+                    "symbol": symbol,
+                    "interval": interval,
+                    "limit": limit,
+                }
                 return await fetch_json(fallback_url, params=fallback_params, ttl=60)
             return {"data": [], "error": status.get("error_message", "No data")}
         if result.get("error"):
             if symbol:
                 fallback_url = f"{SPOT_BASE}/api/v3/klines"
-                fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
+                fallback_params = {
+                    "symbol": symbol,
+                    "interval": interval,
+                    "limit": limit,
+                }
                 return await fetch_json(fallback_url, params=fallback_params, ttl=60)
 
     return result
