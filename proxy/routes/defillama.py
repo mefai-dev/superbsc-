@@ -34,3 +34,27 @@ async def stablecoins():
 async def stablecoin_chains():
     """Stablecoin circulating amounts per chain."""
     return await fetch_json(f"{STABLES}/stablecoinchains", ttl=300)
+
+
+@router.get("/dex-volume")
+async def dex_volume():
+    """BSC DEX volume overview — 129+ protocols."""
+    return await fetch_json(f"{API}/overview/dexs/BSC", ttl=120)
+
+
+@router.get("/fees")
+async def fees():
+    """BSC protocol fees & revenue — 237+ protocols."""
+    return await fetch_json(f"{API}/overview/fees/BSC", ttl=120)
+
+
+@router.get("/chain-tvl")
+async def chain_tvl():
+    """BSC historical TVL timeseries."""
+    return await fetch_json(f"{API}/v2/historicalChainTvl/BSC", ttl=300)
+
+
+@router.get("/chains")
+async def chains():
+    """All chains with current TVL for ranking."""
+    return await fetch_json(f"{API}/v2/chains", ttl=300)
