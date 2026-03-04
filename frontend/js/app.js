@@ -48,6 +48,9 @@ const panelRegistry = {
   'protocol-tvl': 'protocol-tvl-panel',
   'market-pulse': 'market-pulse-panel',
   'launch-scanner': 'launch-scanner-panel',
+  'dex-volume': 'dex-volume-panel',
+  'protocol-revenue': 'protocol-revenue-panel',
+  'chain-growth': 'chain-growth-panel',
 };
 
 // Layout presets
@@ -132,6 +135,11 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['launch-scanner', 'goplus-scanner', 'dex-intel', 'liquidity-lifecycle'],
   },
+  'ecosystem': {
+    name: 'Ecosystem',
+    grid: 'grid-2x2',
+    panels: ['chain-growth', 'dex-volume', 'protocol-revenue', 'protocol-tvl'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -150,6 +158,7 @@ async function loadPanels() {
     'liquidation-heatmap', 'dex-intel', 'goplus-scanner', 'multi-chain-wallet',
     'liquidity-lifecycle', 'capital-rotation', 'contract-mutation',
     'yield-radar', 'stablecoin-flow', 'protocol-tvl', 'market-pulse', 'launch-scanner',
+    'dex-volume', 'protocol-revenue', 'chain-growth',
   ];
   await Promise.allSettled(
     panelModules.map(name =>

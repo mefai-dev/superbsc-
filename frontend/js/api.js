@@ -214,6 +214,10 @@ export const api = {
     protocols: () => get('/api/defillama/protocols', {}, 300000),
     stablecoins: () => get('/api/defillama/stablecoins', {}, 300000),
     stablecoinChains: () => get('/api/defillama/stablecoin-chains', {}, 300000),
+    dexVolume: () => get('/api/defillama/dex-volume', {}, 120000),
+    fees: () => get('/api/defillama/fees', {}, 120000),
+    chainTvl: () => get('/api/defillama/chain-tvl', {}, 300000),
+    chains: () => get('/api/defillama/chains', {}, 300000),
   },
   // Skill 12: Etherscan
   etherscan: {
