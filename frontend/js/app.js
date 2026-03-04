@@ -80,7 +80,7 @@ async function loadPanels() {
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709530000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709540000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -131,6 +131,11 @@ function setLayout(layoutKey) {
 
   // Persist last layout as default
   store.savePref('defaultLayout', layoutKey);
+
+  // Apply translations to newly created panel titles
+  if (window.mefaiI18n?.applyTranslations) {
+    requestAnimationFrame(() => window.mefaiI18n.applyTranslations());
+  }
 }
 
 // Keyboard shortcuts

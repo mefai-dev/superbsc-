@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#0b0e11">
   <title>Binance Skills Terminal</title>
   <base href="/superbsc/">
-  <link rel="stylesheet" href="static/css/main.css?v=1709530000">
+  <link rel="stylesheet" href="static/css/main.css?v=1709540000">
 </head>
 <body>
   <!-- Inline fallback: ensures globals are available before modules load -->
@@ -149,18 +149,19 @@
         Binance Skills
       </span>
       <nav id="layout-nav">
-        <button class="layout-btn active" data-layout="mefai">MEFAI</button>
-        <button class="layout-btn" data-layout="overview">Overview</button>
-        <button class="layout-btn" data-layout="meme-hunter">Meme Hunter</button>
-        <button class="layout-btn" data-layout="whale-watcher">Whale Watcher</button>
-        <button class="layout-btn" data-layout="deep-dive">Deep Dive</button>
-        <button class="layout-btn" data-layout="trader">Trader</button>
-        <button class="layout-btn" data-layout="scanner">Scanner</button>
+        <button class="layout-btn active" data-layout="mefai" data-i18n="nav.mefai">MEFAI</button>
+        <button class="layout-btn" data-layout="overview" data-i18n="nav.overview">Overview</button>
+        <button class="layout-btn" data-layout="meme-hunter" data-i18n="nav.memeHunter">Meme Hunter</button>
+        <button class="layout-btn" data-layout="whale-watcher" data-i18n="nav.whaleWatcher">Whale Watcher</button>
+        <button class="layout-btn" data-layout="deep-dive" data-i18n="nav.deepDive">Deep Dive</button>
+        <button class="layout-btn" data-layout="trader" data-i18n="nav.trader">Trader</button>
+        <button class="layout-btn" data-layout="scanner" data-i18n="nav.scanner">Scanner</button>
       </nav>
     </div>
     <div class="header-right">
-      <button id="search-trigger" title="Search (Cmd+K)">Search</button>
-      <button id="theme-toggle" title="Toggle theme (d)">Theme</button>
+      <button id="search-trigger" title="Search (Cmd+K)" data-i18n="btn.search">Search</button>
+      <select class="lang-select header-lang-select" id="header-lang"></select>
+      <button id="theme-toggle" title="Toggle theme (d)" data-i18n="btn.theme">Theme</button>
       <button id="settings-btn" title="Settings">&#9881;</button>
       <button id="help-btn" title="Shortcuts (?)">?</button>
     </div>
@@ -288,22 +289,22 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
-  <script type="module" src="static/js/store.js?v=1709530000"></script>
-  <script type="module" src="static/js/api.js?v=1709530000"></script>
-  <script type="module" src="static/js/utils.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/base-panel.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/data-table.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/status-bar.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/search-bar.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/command-palette.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/context-menu.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/toast.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/risk-badge.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/mini-chart.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/chart.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/ws-stream.js?v=1709530000"></script>
-  <script type="module" src="static/js/components/settings.js?v=1709530000"></script>
-  <script type="module" src="static/js/i18n.js?v=1709530000"></script>
-  <script type="module" src="static/js/app.js?v=1709530000"></script>
+  <script type="module" src="static/js/store.js?v=1709540000"></script>
+  <script type="module" src="static/js/api.js?v=1709540000"></script>
+  <script type="module" src="static/js/utils.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/base-panel.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/data-table.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/status-bar.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/search-bar.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/command-palette.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/context-menu.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/toast.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/risk-badge.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/mini-chart.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/chart.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/ws-stream.js?v=1709540000"></script>
+  <script type="module" src="static/js/components/settings.js?v=1709540000"></script>
+  <script type="module" src="static/js/i18n.js?v=1709540000"></script>
+  <script type="module" src="static/js/app.js?v=1709540000"></script>
 </body>
 </html>
