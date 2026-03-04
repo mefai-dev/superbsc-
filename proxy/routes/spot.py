@@ -122,7 +122,7 @@ async def depth(
     """Get order book depth for a symbol."""
     url = f"{BASE}/api/v3/depth"
     params = {"symbol": symbol.upper(), "limit": limit}
-    return await fetch_json(url, params=params, ttl=60)
+    return await fetch_json(url, params=params, ttl=5)
 
 
 @router.get("/klines")

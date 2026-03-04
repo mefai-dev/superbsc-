@@ -53,8 +53,14 @@ class BinanceStream {
   }
 
   _ensureConnection() {
-    if (this._ws && this._ws.readyState === WebSocket.OPEN) return;
     if (this._ws && this._ws.readyState === WebSocket.CONNECTING) return;
+    // Reconnect if new streams were added after initial connection
+    if (this._ws && this._ws.readyState === WebSocket.OPEN) {
+      const current = new Set(this._ws.url.split('/ws/')[1]?.split('/') || []);
+      const needed = Array.from(this._subs.keys());
+      if (needed.every(s => current.has(s))) return;
+      this._ws.close();
+    }
     this._connect();
   }
 

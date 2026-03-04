@@ -89,7 +89,7 @@ function trackWallet(address) {
 
 function switchLayout(name) {
   if (!name) return;
-  window.mefaiStore?.set('layout', name.trim());
+  window.setLayout?.(name.trim());
 }
 
 function toggleTheme() {

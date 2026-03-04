@@ -22,7 +22,7 @@ export class SmartSignalsPanel extends BasePanel {
       logo: s.logoUrl || '',
       chain: s.chainId || '56',
       address: s.contractAddress || '',
-      direction: (s.direction || '').toLowerCase(),
+      direction: (s.signalDirection || s.direction || '').toLowerCase(),
       smCount: parseInt(s.smartMoneyCount || s.signalCount || 0),
       alertPrice: parseFloat(s.alertPrice || 0),
       currentPrice: parseFloat(s.currentPrice || 0),

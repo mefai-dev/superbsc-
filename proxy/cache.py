@@ -44,6 +44,8 @@ def get_cached(
     url: str, params: dict | None = None, body: dict | None = None, ttl: int = FRESH_TTL
 ) -> tuple[Any | None, bool]:
     """Returns (data, is_fresh). data=None if nothing cached. is_fresh=False if stale."""
+    if ttl <= 0:
+        return None, False  # bypass cache entirely
     k = _key(url, params, body)
     if k in _cache:
         ts, data = _cache[k]

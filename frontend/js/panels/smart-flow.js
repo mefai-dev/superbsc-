@@ -43,7 +43,7 @@ export class SmartFlowPanel extends BasePanel {
       if (addr && !tokenSet.has(addr)) {
         tokenSet.set(addr, {
           symbol: s.ticker || '?',
-          direction: s.signalDirection || 'buy',
+          direction: s.direction || s.signalDirection || 'buy',
           logo: s.logoUrl || '',
         });
       }
@@ -73,7 +73,7 @@ export class SmartFlowPanel extends BasePanel {
     for (let i = 0; i < walletCount; i++) {
       const y = 40 + i * walletSpacing;
       const s = signals[i];
-      const isBuy = (s.signalDirection || '').toLowerCase() === 'buy';
+      const isBuy = (s.direction || s.signalDirection || '').toLowerCase() === 'buy';
       const color = isBuy ? 'var(--up)' : 'var(--down)';
       svg += `<circle cx="${leftX}" cy="${y}" r="6" fill="none" stroke="${color}" stroke-width="1.5"/>`;
       svg += `<text x="${leftX + 12}" y="${y + 3}" fill="var(--text-secondary)" font-size="8" font-family="var(--font-mono)">SM ${i + 1}</text>`;
@@ -96,7 +96,7 @@ export class SmartFlowPanel extends BasePanel {
       const tIdx = tokens.findIndex(t => t.symbol === s.ticker);
       if (tIdx < 0) continue;
       const ty = 40 + tIdx * tokenSpacing;
-      const isBuy = (s.signalDirection || '').toLowerCase() === 'buy';
+      const isBuy = (s.direction || s.signalDirection || '').toLowerCase() === 'buy';
       const color = isBuy ? 'var(--up)' : 'var(--down)';
       const opacity = isBuy ? '0.6' : '0.3';
 
