@@ -139,6 +139,8 @@ export const api = {
     account: () => get('/api/spot/account', {}, 30000),
     openOrders: (s) => get('/api/spot/orders', s ? { symbol: s } : {}, 10000),
     placeOrder: (p) => post('/api/spot/order', p, 0),
+    trades: (s, l) => get('/api/spot/trades', { symbol: s, limit: l || 50 }, 5000),
+    aggTrades: (s, l) => get('/api/spot/aggTrades', { symbol: s, limit: l || 50 }, 5000),
   },
   // Skill 2: Meme Rush
   meme: {

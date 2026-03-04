@@ -188,3 +188,29 @@ async def place_order(
     params["symbol"] = params["symbol"].upper()
     path = "/api/v3/order/test" if test else "/api/v3/order"
     return await _signed_post(path, params)
+
+
+@router.get("/trades")
+async def recent_trades(
+    symbol: str = Query(..., description="Trading pair, e.g. BTCUSDT"),
+    limit: int = Query(50, description="Number of trades to return"),
+):
+    """Get recent trades for a symbol."""
+    limit = min(max(limit, 1), 1000)
+    url = f"{BASE}/api/v3/trades"
+    return await fetch_json(
+        url, params={"symbol": symbol.upper(), "limit": limit}, ttl=5
+    )
+
+
+@router.get("/aggTrades")
+async def agg_trades(
+    symbol: str = Query(..., description="Trading pair, e.g. BTCUSDT"),
+    limit: int = Query(50, description="Number of aggregated trades"),
+):
+    """Get aggregated trades for a symbol."""
+    limit = min(max(limit, 1), 1000)
+    url = f"{BASE}/api/v3/aggTrades"
+    return await fetch_json(
+        url, params={"symbol": symbol.upper(), "limit": limit}, ttl=5
+    )
