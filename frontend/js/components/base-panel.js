@@ -80,7 +80,13 @@ export class BasePanel extends HTMLElement {
     this._loading = true;
     const body = this.querySelector('.panel-body');
     try {
+      // On first load, show AI animation for at least 800ms
+      const t0 = this._firstLoad ? Date.now() : 0;
       const data = await this.fetchData();
+      if (t0) {
+        const elapsed = Date.now() - t0;
+        if (elapsed < 800) await new Promise(r => setTimeout(r, 800 - elapsed));
+      }
       this._data = data;
       this._error = null;
       this._firstLoad = false;
@@ -88,7 +94,6 @@ export class BasePanel extends HTMLElement {
       this.afterRender(body);
     } catch (e) {
       this._error = e;
-      // If we have previous data, keep showing it instead of error
       if (this._data && !this._firstLoad) {
         // Silent fail — keep existing content
       } else {
