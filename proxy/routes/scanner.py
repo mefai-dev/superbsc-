@@ -46,7 +46,9 @@ async def _run_scanner():
                 hype = await fetch_json(hype_url, params={"page": 1, "size": 50}, ttl=0)
 
                 # Fetch smart money signals
-                smart_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money"
+                smart_url = (
+                    f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money"
+                )
                 smart = await post_json(smart_url, body={}, ttl=0)
 
                 _scanner_results = [

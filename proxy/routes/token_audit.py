@@ -29,8 +29,16 @@ async def token_audit_check(request: Request):
         )
 
     # Map chain field to binanceChainId — accept all naming conventions
-    _CHAIN_MAP = {"bsc": "56", "eth": "1", "sol": "CT_501", "base": "8453", "arb": "42161"}
-    raw_chain = body.get("binanceChainId") or body.get("chainId") or body.get("chain") or "56"
+    _CHAIN_MAP = {
+        "bsc": "56",
+        "eth": "1",
+        "sol": "CT_501",
+        "base": "8453",
+        "arb": "42161",
+    }
+    raw_chain = (
+        body.get("binanceChainId") or body.get("chainId") or body.get("chain") or "56"
+    )
     binance_chain_id = _CHAIN_MAP.get(raw_chain.lower(), raw_chain)
     request_id = body.get("requestId") or str(uuid.uuid4())
 
