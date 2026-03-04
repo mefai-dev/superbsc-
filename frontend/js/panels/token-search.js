@@ -88,8 +88,9 @@ export class TokenSearchPanel extends BasePanel {
       const changeHtml = item.change24h ? ` ${formatPercent(item.change24h)}` : '';
       html += `<div class="search-result" data-index="${i}" style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer">`;
       html += `<div style="display:flex;align-items:center;gap:6px">`;
-      if (item.icon) {
-        html += `<img src="${((u) => u && u.startsWith("http") ? u : "https://bin.bnbstatic.com" + (u || ""))(item.icon)}" style="width:18px;height:18px;border-radius:50%" onerror="this.style.display='none'">`;
+      const iconUrl = window.mefaiUtils.tokenIcon(item.icon);
+      if (iconUrl) {
+        html += `<img src="${iconUrl}" style="width:18px;height:18px;border-radius:50%" onerror="this.style.display='none'">`;
       }
       html += `<div>`;
       html += `<span style="font-weight:600">${escapeHtml(item.name)}</span>`;

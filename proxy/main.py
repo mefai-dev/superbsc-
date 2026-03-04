@@ -1,11 +1,14 @@
 import asyncio
 import logging
+import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-import os
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 from proxy.routes import (
     spot,
@@ -22,12 +25,18 @@ from proxy.config import settings
 
 logger = logging.getLogger("mefai")
 
-app = FastAPI(title="MEFAI Terminal Proxy", version="1.0.0")
+# Rate limiter — 60 requests/minute per IP
+limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
 
+app = FastAPI(title="MEFAI Terminal Proxy", version="1.0.0")
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# CORS — no credentials needed (no cookies/auth), so use wildcard safely
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -183,9 +192,16 @@ async def warmup_cache():
 async def _periodic_refresh():
     """Background task: refresh all cached data every 45s so users always get instant responses."""
     while True:
-        await asyncio.sleep(45)
+        try:
+            await asyncio.sleep(45)
+        except asyncio.CancelledError:
+            logger.info("Periodic refresh task cancelled")
+            return
         try:
             tasks = [fn(*args, **kwargs) for fn, args, kwargs in _warmup_tasks()]
             await asyncio.gather(*tasks, return_exceptions=True)
-        except Exception:
-            pass
+        except asyncio.CancelledError:
+            logger.info("Periodic refresh task cancelled")
+            return
+        except Exception as e:
+            logger.debug(f"Periodic refresh error: {e}")

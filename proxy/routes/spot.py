@@ -120,6 +120,7 @@ async def depth(
     limit: int = Query(20, description="Order book depth limit"),
 ):
     """Get order book depth for a symbol."""
+    limit = min(max(limit, 1), 1000)
     url = f"{BASE}/api/v3/depth"
     params = {"symbol": symbol.upper(), "limit": limit}
     return await fetch_json(url, params=params, ttl=5)
@@ -132,6 +133,7 @@ async def klines(
     limit: int = Query(100, description="Number of klines to return"),
 ):
     """Get kline/candlestick data for a symbol."""
+    limit = min(max(limit, 1), 1000)
     url = f"{BASE}/api/v3/klines"
     params = {"symbol": symbol.upper(), "interval": interval, "limit": limit}
     return await fetch_json(url, params=params, ttl=60)
@@ -177,6 +179,12 @@ async def place_order(
         raise HTTPException(
             status_code=400, detail="symbol, side, and type are required"
         )
+    if not params.get("quantity"):
+        raise HTTPException(status_code=400, detail="quantity is required")
+    # Validate side is BUY or SELL
+    if params["side"].upper() not in ("BUY", "SELL"):
+        raise HTTPException(status_code=400, detail="side must be BUY or SELL")
+    params["side"] = params["side"].upper()
     params["symbol"] = params["symbol"].upper()
     path = "/api/v3/order/test" if test else "/api/v3/order"
     return await _signed_post(path, params)

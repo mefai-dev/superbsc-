@@ -24,6 +24,7 @@ async def social_hype(
     targetLanguage: str = Query("en"),
     timeRange: int = Query(1),
 ):
+    size = min(max(size, 1), 100)
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard"
     params = {
         "chainId": chainId,
@@ -41,6 +42,7 @@ async def trending(request: Request):
     body = _sanitize(raw, _TRENDING_FIELDS)
     body.setdefault("page", 1)
     body.setdefault("size", 20)
+    body["size"] = min(max(int(body.get("size", 20)), 1), 100)
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list"
     return await post_json(url, body=body, ttl=60)
 
@@ -61,6 +63,7 @@ async def meme_rank(
     page: int = Query(1),
     size: int = Query(50),
 ):
+    size = min(max(size, 1), 100)
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/exclusive/rank/list"
     return await fetch_json(
         url, params={"chainId": chainId, "page": page, "size": size}, ttl=60
@@ -72,7 +75,7 @@ async def top_traders(
     chainId: str = Query("56"),
     tag: str = Query("ALL"),
     pageNo: int = Query(1),
-    pageSize: int = Query(25),
+    pageSize: int = Query(25, le=100),
     sortBy: int = Query(0),
     orderBy: int = Query(0),
     period: str = Query("7d"),

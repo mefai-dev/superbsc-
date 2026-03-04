@@ -35,40 +35,73 @@ async def _run_scanner():
     try:
         while _scanner_state["running"]:
             try:
-                # Fetch trending tokens
-                trending_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list"
-                trending = await post_json(
-                    trending_url, body={"page": 1, "size": 50}, ttl=0
-                )
+                results = []
 
-                # Fetch social hype
-                hype_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard"
-                hype = await fetch_json(hype_url, params={"page": 1, "size": 50}, ttl=0)
+                # Fetch trending tokens (isolated)
+                try:
+                    trending_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/unified/rank/list"
+                    trending = await post_json(
+                        trending_url, body={"page": 1, "size": 50}, ttl=0
+                    )
+                    results.append(
+                        {
+                            "source": "trending",
+                            "data": trending,
+                            "fetched_at": time.time(),
+                        }
+                    )
+                except Exception as e:
+                    results.append(
+                        {
+                            "source": "trending",
+                            "data": {"error": str(e)},
+                            "fetched_at": time.time(),
+                        }
+                    )
 
-                # Fetch smart money signals
-                smart_url = (
-                    f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money"
-                )
-                smart = await post_json(smart_url, body={}, ttl=0)
+                # Fetch social hype (isolated)
+                try:
+                    hype_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/pulse/social/hype/rank/leaderboard"
+                    hype = await fetch_json(
+                        hype_url, params={"page": 1, "size": 50}, ttl=0
+                    )
+                    results.append(
+                        {
+                            "source": "social_hype",
+                            "data": hype,
+                            "fetched_at": time.time(),
+                        }
+                    )
+                except Exception as e:
+                    results.append(
+                        {
+                            "source": "social_hype",
+                            "data": {"error": str(e)},
+                            "fetched_at": time.time(),
+                        }
+                    )
 
-                _scanner_results = [
-                    {
-                        "source": "trending",
-                        "data": trending,
-                        "fetched_at": time.time(),
-                    },
-                    {
-                        "source": "social_hype",
-                        "data": hype,
-                        "fetched_at": time.time(),
-                    },
-                    {
-                        "source": "smart_money",
-                        "data": smart,
-                        "fetched_at": time.time(),
-                    },
-                ]
+                # Fetch smart money signals (isolated)
+                try:
+                    smart_url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money"
+                    smart = await post_json(smart_url, body={}, ttl=0)
+                    results.append(
+                        {
+                            "source": "smart_money",
+                            "data": smart,
+                            "fetched_at": time.time(),
+                        }
+                    )
+                except Exception as e:
+                    results.append(
+                        {
+                            "source": "smart_money",
+                            "data": {"error": str(e)},
+                            "fetched_at": time.time(),
+                        }
+                    )
 
+                _scanner_results = results
                 _scanner_state["cycles"] += 1
                 _scanner_state["last_scan_at"] = time.time()
                 _scanner_state["error"] = None
@@ -116,7 +149,7 @@ async def scanner_start(
         raise HTTPException(status_code=409, detail="Scanner is already running")
 
     if interval is not None and interval > 0:
-        _scanner_state["interval"] = interval
+        _scanner_state["interval"] = min(max(interval, 10), 600)
 
     _scanner_state["started_at"] = time.time()
     _scanner_state["cycles"] = 0

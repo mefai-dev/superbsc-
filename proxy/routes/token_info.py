@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 
 from fastapi import APIRouter, Query, HTTPException
@@ -5,10 +6,21 @@ from fastapi import APIRouter, Query, HTTPException
 from proxy.cache import fetch_json
 from proxy.config import settings
 
+logger = logging.getLogger("mefai.token_info")
+
 router = APIRouter()
 
 WEB3 = settings.WEB3_BASE
 DQUERY = settings.DQUERY_BASE
+SPOT_BASE = settings.SPOT_BASE
+
+# Common DEX token addresses → Binance CEX symbol mappings for kline fallback
+_ADDR_TO_SYMBOL = {
+    "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": "BNBUSDT",
+    "0x2170ed0880ac9a755fd29b2688956bd959f933f8": "ETHUSDT",
+    "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c": "BTCUSDT",
+    "0x55d398326f99059ff775485246999027b3197955": "USDTUSDT",
+}
 
 
 @router.get("/search")
@@ -104,6 +116,7 @@ async def token_kline(
     limit: int = Query(100, description="Number of candles"),
 ):
     """Get token kline/candlestick data from DQuery."""
+    limit = min(max(limit, 1), 1000)
     if not address:
         raise HTTPException(status_code=400, detail="address is required")
     # Resolve platform from chain
@@ -115,4 +128,17 @@ async def token_kline(
         "interval": interval,
         "limit": limit,
     }
-    return await fetch_json(url, params=params, ttl=60)
+    result = await fetch_json(url, params=params, ttl=60)
+
+    # Fallback to Binance spot klines for common pairs if DQuery fails
+    if isinstance(result, dict) and result.get("error"):
+        symbol = _ADDR_TO_SYMBOL.get(address.lower())
+        if symbol:
+            logger.debug(
+                f"DQuery failed for {address}, falling back to Binance spot klines ({symbol})"
+            )
+            fallback_url = f"{SPOT_BASE}/api/v3/klines"
+            fallback_params = {"symbol": symbol, "interval": interval, "limit": limit}
+            return await fetch_json(fallback_url, params=fallback_params, ttl=60)
+
+    return result

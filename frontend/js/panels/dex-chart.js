@@ -109,8 +109,8 @@ export class DexChartPanel extends BasePanel {
     const container = body.querySelector('#dex-chart-c');
     if (!container || !window.mefaiChart) return;
     this._destroyChart();
-    requestAnimationFrame(() => {
-      this._chart = window.mefaiChart.createChart(container, this._data);
+    requestAnimationFrame(async () => {
+      this._chart = await window.mefaiChart.createChart(container, this._data);
     });
   }
 

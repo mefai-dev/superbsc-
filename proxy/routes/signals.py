@@ -20,7 +20,7 @@ async def smart_money_signals(request: Request):
     url = f"{WEB3}/v1/public/wallet-direct/buw/wallet/web/signal/smart-money"
     payload = {
         "page": body.get("page", 1),
-        "pageSize": body.get("pageSize", 20),
+        "pageSize": min(max(int(body.get("pageSize", 20)), 1), 100),
         "smartSignalType": body.get("smartSignalType", ""),
         "chainId": body.get("chainId", "56"),
     }

@@ -11,6 +11,7 @@ export class BasePanel extends HTMLElement {
     this._loading = false;
     this._data = null;
     this._error = null;
+    this._unsubs = [];
   }
 
   connectedCallback() {
@@ -21,6 +22,14 @@ export class BasePanel extends HTMLElement {
 
   disconnectedCallback() {
     this.stopAutoRefresh();
+    this._unsubs.forEach(fn => fn());
+    this._unsubs = [];
+  }
+
+  /** Register a store subscription for automatic cleanup on disconnect. */
+  trackSub(unsub) {
+    this._unsubs.push(unsub);
+    return unsub;
   }
 
   render() {
@@ -55,7 +64,8 @@ export class BasePanel extends HTMLElement {
       this.afterRender(body);
     } catch (e) {
       this._error = e;
-      body.innerHTML = `<div class="panel-error">Error: ${e.message}</div>`;
+      const msg = (window.mefaiUtils?.escapeHtml || ((s) => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }))(e.message || 'Unknown error');
+      body.innerHTML = `<div class="panel-error">Error: ${msg}</div>`;
     }
     this._loading = false;
   }

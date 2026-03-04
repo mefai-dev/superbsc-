@@ -94,8 +94,9 @@ export class TokenProfilePanel extends BasePanel {
     // Header section
     html += `<div class="profile-section">`;
     html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">`;
-    if (logo) {
-      html += `<img src="${((u) => u && u.startsWith("http") ? u : "https://bin.bnbstatic.com" + (u || ""))(logo)}" class="token-icon" style="width:24px;height:24px;border-radius:50%" onerror="this.style.display='none'">`;
+    const logoUrl = window.mefaiUtils.tokenIcon(logo);
+    if (logoUrl) {
+      html += `<img src="${logoUrl}" class="token-icon" style="width:24px;height:24px;border-radius:50%" onerror="this.style.display='none'">`;
     }
     html += `<div>`;
     html += `<span style="font-weight:700;font-size:14px">${escapeHtml(name || symbol || 'Unknown')}</span>`;

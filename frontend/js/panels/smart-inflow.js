@@ -33,7 +33,8 @@ export class SmartInflowPanel extends BasePanel {
     h += '<th>Token</th><th>Price</th><th>MCap</th><th>Volume</th><th>24h%</th>';
     h += '</tr></thead><tbody>';
     for (const t of data) {
-      const icon = t.icon ? `<img src="${t.icon.startsWith('http') ? t.icon : 'https://bin.bnbstatic.com' + t.icon}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
+      const iconUrl = u.tokenIcon(t.icon);
+      const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
       const cls = t.change >= 0 ? 'val-up' : 'val-down';
       h += `<tr data-a="${t.address}">`;
       h += `<td>${icon}<span style="font-weight:600">${u.escapeHtml(t.symbol)}</span></td>`;

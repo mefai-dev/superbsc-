@@ -5,7 +5,15 @@ const BASE_URI = document.baseURI || window.location.href;
 // ── Client Cache (avoids repeated requests) ──────────────────────────
 const _c = new Map();
 function _cg(k, ttl) { const e = _c.get(k); return e && Date.now() - e.t < ttl ? e.d : null; }
-function _cs(k, d) { _c.set(k, { d, t: Date.now() }); if (_c.size > 300) _c.delete(_c.keys().next().value); }
+function _cs(k, d) {
+  _c.set(k, { d, t: Date.now() });
+  if (_c.size > 300) {
+    // Evict expired entries first (older than 60s), then oldest
+    const now = Date.now();
+    for (const [ek, ev] of _c) { if (now - ev.t > 60000) { _c.delete(ek); if (_c.size <= 250) break; } }
+    if (_c.size > 300) _c.delete(_c.keys().next().value);
+  }
+}
 
 function _url(path, params = {}) {
   const u = new URL(path.replace(/^\//, ''), BASE_URI);
@@ -14,14 +22,26 @@ function _url(path, params = {}) {
   return u.href;
 }
 
+// In-flight request dedup (3.2)
+const _inflight = new Map();
+
 async function get(path, params = {}, ttl = 30000) {
   const url = _url(path, params);
   const cached = _cg(url, ttl);
   if (cached) return cached;
-  const r = await fetch(url);
-  const d = await r.json();
-  if (r.ok && !d?.error) _cs(url, d);
-  return d;
+  // Dedup concurrent identical requests
+  if (_inflight.has(url)) return _inflight.get(url);
+  const p = (async () => {
+    try {
+      const r = await fetch(url);
+      let d;
+      try { d = await r.json(); } catch { return { error: true, status: r.status }; }
+      if (r.ok && !d?.error) _cs(url, d);
+      return d;
+    } finally { _inflight.delete(url); }
+  })();
+  _inflight.set(url, p);
+  return p;
 }
 
 async function post(path, body = {}, ttl = 30000) {
@@ -29,10 +49,18 @@ async function post(path, body = {}, ttl = 30000) {
   const key = url + JSON.stringify(body);
   const cached = _cg(key, ttl);
   if (cached) return cached;
-  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  const d = await r.json();
-  if (r.ok && !d?.error) _cs(key, d);
-  return d;
+  if (_inflight.has(key)) return _inflight.get(key);
+  const p = (async () => {
+    try {
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      let d;
+      try { d = await r.json(); } catch { return { error: true, status: r.status }; }
+      if (r.ok && !d?.error) _cs(key, d);
+      return d;
+    } finally { _inflight.delete(key); }
+  })();
+  _inflight.set(key, p);
+  return p;
 }
 
 // ── Public API ───────────────────────────────────────────────────────

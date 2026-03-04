@@ -94,9 +94,12 @@ export function riskClass(level) {
 }
 
 export function tokenIcon(iconPath) {
-  if (!iconPath) return '';
-  if (iconPath.startsWith('http')) return iconPath;
-  return `https://bin.bnbstatic.com${iconPath}`;
+  if (!iconPath || typeof iconPath !== 'string') return '';
+  const lower = iconPath.toLowerCase().trim();
+  if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) return '';
+  if (iconPath.startsWith('https://')) return iconPath;
+  if (iconPath.startsWith('http://')) return iconPath.replace('http://', 'https://');
+  return `https://bin.bnbstatic.com${iconPath.startsWith('/') ? '' : '/'}${iconPath}`;
 }
 
 window.mefaiUtils = { formatCurrency, formatPrice, formatPercent, formatNumber, formatAddress, formatTime, formatAge, copyToClipboard, debounce, escapeHtml, riskClass, tokenIcon };

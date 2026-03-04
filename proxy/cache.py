@@ -16,13 +16,14 @@ import time
 import hashlib
 import json
 import logging
+from collections import OrderedDict
 from typing import Any
 
 import httpx
 
 logger = logging.getLogger("mefai.cache")
 
-_cache: dict[str, tuple[float, Any]] = {}
+_cache: OrderedDict[str, tuple[float, Any]] = OrderedDict()
 _refreshing: set[str] = set()  # keys currently being refreshed in background
 _client: httpx.AsyncClient | None = None
 
@@ -51,6 +52,7 @@ def get_cached(
         ts, data = _cache[k]
         age = time.time() - ts
         if age < ttl:
+            _cache.move_to_end(k)  # LRU: mark as recently used
             return data, True  # fresh
         if age < STALE_TTL:
             return data, False  # stale but usable
@@ -63,11 +65,10 @@ def set_cached(
 ) -> None:
     k = _key(url, params, body)
     _cache[k] = (time.time(), data)
-    if len(_cache) > 1000:
-        # Evict oldest 100 entries
-        sorted_keys = sorted(_cache, key=lambda x: _cache[x][0])
-        for old_k in sorted_keys[:100]:
-            del _cache[old_k]
+    _cache.move_to_end(k)
+    # O(1) LRU eviction — pop from front (oldest access)
+    while len(_cache) > 1000:
+        _cache.popitem(last=False)
 
 
 def _extra_headers(url: str) -> dict[str, str]:
@@ -79,23 +80,37 @@ def _extra_headers(url: str) -> dict[str, str]:
 async def get_client() -> httpx.AsyncClient:
     global _client
     if _client is None or _client.is_closed:
+        pool_limits = httpx.Limits(max_connections=50, max_keepalive_connections=20)
         _client = httpx.AsyncClient(
             timeout=12.0,
             follow_redirects=True,
-            limits=httpx.Limits(max_connections=50, max_keepalive_connections=20),
+            limits=pool_limits,
         )
+        logger.info("HTTP client created: max_connections=50, max_keepalive=20")
     return _client
+
+
+_RETRYABLE_STATUSES = {429, 503}
 
 
 async def _do_fetch(url: str, params: dict | None, headers: dict) -> Any:
     client = await get_client()
     resp = await client.get(url, params=params, headers=headers)
+    if resp.status_code in _RETRYABLE_STATUSES:
+        # Don't cache rate-limit / unavailable — retry after brief delay
+        logger.debug(f"Got {resp.status_code} from {url}, will retry once")
+        await asyncio.sleep(1)
+        resp = await client.get(url, params=params, headers=headers)
     if resp.status_code >= 400:
         try:
             err = resp.json()
         except Exception:
             err = {"error": resp.text, "status": resp.status_code}
-        return {"error": True, "status": resp.status_code, "detail": err}
+        result = {"error": True, "status": resp.status_code, "detail": err}
+        # Mark retryable errors so they don't get cached
+        if resp.status_code in _RETRYABLE_STATUSES:
+            result["_no_cache"] = True
+        return result
     return resp.json()
 
 
@@ -104,12 +119,19 @@ async def _do_post(
 ) -> Any:
     client = await get_client()
     resp = await client.post(url, json=body, params=params, headers=headers)
+    if resp.status_code in _RETRYABLE_STATUSES:
+        logger.debug(f"Got {resp.status_code} from {url}, will retry once")
+        await asyncio.sleep(1)
+        resp = await client.post(url, json=body, params=params, headers=headers)
     if resp.status_code >= 400:
         try:
             err = resp.json()
         except Exception:
             err = {"error": resp.text, "status": resp.status_code}
-        return {"error": True, "status": resp.status_code, "detail": err}
+        result = {"error": True, "status": resp.status_code, "detail": err}
+        if resp.status_code in _RETRYABLE_STATUSES:
+            result["_no_cache"] = True
+        return result
     return resp.json()
 
 
@@ -166,6 +188,8 @@ async def fetch_json(url: str, params: dict | None = None, ttl: int = FRESH_TTL)
 
     # Nothing cached — must fetch (blocking)
     data = await _do_fetch(url, params, headers)
+    if isinstance(data, dict) and data.get("_no_cache"):
+        return data  # don't cache retryable errors (429/503)
     if isinstance(data, dict) and data.get("error") and data.get("status") == 451:
         set_cached(url, data, params=params)  # cache geo-block
     elif not (isinstance(data, dict) and data.get("error")):
@@ -187,6 +211,8 @@ async def post_json(
         return cached
 
     data = await _do_post(url, body, params, headers)
+    if isinstance(data, dict) and data.get("_no_cache"):
+        return data  # don't cache retryable errors (429/503)
     if isinstance(data, dict) and data.get("error") and data.get("status") == 451:
         set_cached(url, data, params=params, body=body)
     elif not (isinstance(data, dict) and data.get("error")):

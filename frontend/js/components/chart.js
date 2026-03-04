@@ -1,8 +1,25 @@
 // MEFAI Chart — TradingView lightweight-charts wrapper
 
-export function createChart(container, data, options = {}) {
-  // Check if lightweight-charts is loaded
-  if (typeof LightweightCharts === 'undefined') {
+let _loadPromise = null;
+
+/** Lazy-load lightweight-charts on first use (~158KB saved on non-chart layouts) */
+async function ensureChartLib() {
+  if (typeof LightweightCharts !== 'undefined') return true;
+  if (_loadPromise) return _loadPromise;
+  _loadPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = (document.baseURI || '') + 'static/vendor/lightweight-charts.js';
+    s.onload = () => resolve(true);
+    s.onerror = () => { _loadPromise = null; reject(new Error('Chart library failed to load')); };
+    document.head.appendChild(s);
+  });
+  return _loadPromise;
+}
+
+export async function createChart(container, data, options = {}) {
+  try {
+    await ensureChartLib();
+  } catch {
     container.innerHTML = '<div class="panel-loading">Charts library not loaded</div>';
     return null;
   }

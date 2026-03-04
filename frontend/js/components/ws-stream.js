@@ -10,6 +10,7 @@ class BinanceStream {
     this._prices = new Map();   // symbol → {price, change, volume, high, low}
     this._reconnectTimer = null;
     this._connected = false;
+    this._reconnectDelay = 1000; // exponential backoff: 1s → 2s → 4s → 8s → max 30s
   }
 
   // Subscribe to a ticker stream
@@ -80,6 +81,7 @@ class BinanceStream {
 
     this._ws.onopen = () => {
       this._connected = true;
+      this._reconnectDelay = 1000; // reset backoff on successful connect
       console.info('[WS] Connected to Binance stream');
     };
 
@@ -126,10 +128,12 @@ class BinanceStream {
 
   _scheduleReconnect() {
     if (this._reconnectTimer) return;
+    const delay = this._reconnectDelay;
+    this._reconnectDelay = Math.min(this._reconnectDelay * 2, 30000);
     this._reconnectTimer = setTimeout(() => {
       this._reconnectTimer = null;
       if (this._subs.size > 0) this._connect();
-    }, 3000);
+    }, delay);
   }
 
   disconnect() {

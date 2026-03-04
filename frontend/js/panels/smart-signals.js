@@ -43,7 +43,8 @@ export class SmartSignalsPanel extends BasePanel {
     h += '<th data-k="status">Status</th></tr></thead><tbody>';
 
     for (const s of sorted) {
-      const icon = s.logo ? `<img src="${s.logo.startsWith('http') ? s.logo : 'https://bin.bnbstatic.com' + s.logo}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
+      const iconUrl = window.mefaiUtils.tokenIcon(s.logo);
+      const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
       const dirCls = s.direction === 'buy' ? 'val-up' : s.direction === 'sell' ? 'val-down' : '';
       const dirText = s.direction === 'buy' ? 'BUY ↑' : s.direction === 'sell' ? 'SELL ↓' : '—';
       const gainCls = s.maxGain > 0 ? 'val-up' : s.maxGain < 0 ? 'val-down' : '';
