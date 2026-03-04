@@ -25,7 +25,9 @@ async def protocols():
 @router.get("/stablecoins")
 async def stablecoins():
     """All stablecoins with chain circulating supply."""
-    return await fetch_json(f"{STABLES}/stablecoins", params={"includePrices": "true"}, ttl=300)
+    return await fetch_json(
+        f"{STABLES}/stablecoins", params={"includePrices": "true"}, ttl=300
+    )
 
 
 @router.get("/stablecoin-chains")
