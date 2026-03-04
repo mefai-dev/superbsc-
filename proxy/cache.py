@@ -73,7 +73,11 @@ def set_cached(
 
 def _extra_headers(url: str) -> dict[str, str]:
     if "web3.binance.com" in url:
-        return {"Accept-Encoding": "identity"}
+        return {
+            "Accept-Encoding": "identity",
+            "clienttype": "web",
+            "clientversion": "1.2.0",
+        }
     return {}
 
 
