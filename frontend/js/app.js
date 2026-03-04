@@ -74,7 +74,7 @@ async function loadPanels() {
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=18`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=19`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -217,4 +217,5 @@ async function init() {
 
 document.addEventListener('DOMContentLoaded', init);
 
+window.setLayout = setLayout;
 export { setLayout, layouts, panelRegistry };
