@@ -46,7 +46,7 @@ export class EarnComparatorPanel extends BasePanel {
       const res = this._tab === 'flexible'
         ? await window.mefaiApi.earn.flexibleList()
         : await window.mefaiApi.earn.lockedList();
-      if (res?.status === 403 || res?.error) return { _authRequired: true };
+      if (!res || res?.error || res?.status === 403 || res?.detail) return { _authRequired: true };
       return res;
     } catch (e) {
       return { _authRequired: true };
@@ -55,10 +55,10 @@ export class EarnComparatorPanel extends BasePanel {
 
   renderContent(data) {
     if (!data) return '<div class="panel-loading">Loading earn products...</div>';
-    if (data?._authRequired) return this._renderAuthCard();
+    if (data?._authRequired || data?._fetchError || data?.detail) return this._renderAuthCard();
 
     const rows = data?.rows || [];
-    if (!rows.length) return '<div class="panel-loading">No earn products available</div>';
+    if (!rows.length) return this._renderAuthCard();
 
     let h = '<style scoped>';
     h += '.earn-row{display:grid;grid-template-columns:60px 70px 60px 60px 1fr;gap:4px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;align-items:center}';
