@@ -1,4 +1,4 @@
-// MEFAI Order Book Panel — Binance-style depth view with full-width colored bars
+// MEFAI Order Book — Professional Binance-style depth view
 import { BasePanel } from '../components/base-panel.js';
 
 export class OrderBookPanel extends BasePanel {
@@ -7,9 +7,10 @@ export class OrderBookPanel extends BasePanel {
 
   constructor() {
     super();
-    this._refreshRate = 2000;
+    this._refreshRate = 1500;
     this._symbol = 'BTCUSDT';
     this._unsubscribe = null;
+    this._precision = 2;
   }
 
   connectedCallback() {
@@ -48,8 +49,15 @@ export class OrderBookPanel extends BasePanel {
       return `<div class="panel-loading">Waiting for ${u.escapeHtml(this._symbol)} depth…</div>`;
     }
 
-    const bids = data.bids.slice(0, 18).map(b => ({ p: parseFloat(b[0]), q: parseFloat(b[1]) }));
-    const asks = data.asks.slice(0, 18).map(a => ({ p: parseFloat(a[0]), q: parseFloat(a[1]) }));
+    const bids = data.bids.slice(0, 15).map(b => ({ p: parseFloat(b[0]), q: parseFloat(b[1]) }));
+    const asks = data.asks.slice(0, 15).map(a => ({ p: parseFloat(a[0]), q: parseFloat(a[1]) }));
+
+    // Determine price precision
+    if (bids[0]) {
+      const ps = bids[0].p.toString();
+      const dot = ps.indexOf('.');
+      this._precision = dot >= 0 ? ps.length - dot - 1 : 2;
+    }
 
     // Cumulative totals
     let ct = 0; bids.forEach(b => { ct += b.q; b.t = ct; });
@@ -65,61 +73,76 @@ export class OrderBookPanel extends BasePanel {
     // Ask rows — reversed so lowest ask is nearest to spread
     const askHTML = asks.slice().reverse().map(a => {
       const w = (a.t / maxT * 100).toFixed(1);
-      return `<tr class="ob-r">
-        <td class="ob-c ob-bg"><div class="ob-bar ob-bar-ask" style="width:${w}%"></div></td>
-        <td class="ob-c ob-p ask-c">${u.formatPrice(a.p)}</td>
-        <td class="ob-c ob-q">${this._fmtQty(a.q)}</td>
-        <td class="ob-c ob-t">${this._fmtQty(a.t)}</td>
+      return `<tr class="ob-row">
+        <td class="ob-price ask-price">${this._fmtPrice(a.p)}</td>
+        <td class="ob-qty">${this._fmtQty(a.q)}</td>
+        <td class="ob-total">${this._fmtQty(a.t)}</td>
+        <div class="ob-depth ob-depth-ask" style="width:${w}%"></div>
       </tr>`;
     }).join('');
 
     // Bid rows
     const bidHTML = bids.map(b => {
       const w = (b.t / maxT * 100).toFixed(1);
-      return `<tr class="ob-r">
-        <td class="ob-c ob-bg"><div class="ob-bar ob-bar-bid" style="width:${w}%"></div></td>
-        <td class="ob-c ob-p bid-c">${u.formatPrice(b.p)}</td>
-        <td class="ob-c ob-q">${this._fmtQty(b.q)}</td>
-        <td class="ob-c ob-t">${this._fmtQty(b.t)}</td>
+      return `<tr class="ob-row">
+        <td class="ob-price bid-price">${this._fmtPrice(b.p)}</td>
+        <td class="ob-qty">${this._fmtQty(b.q)}</td>
+        <td class="ob-total">${this._fmtQty(b.t)}</td>
+        <div class="ob-depth ob-depth-bid" style="width:${w}%"></div>
       </tr>`;
     }).join('');
 
+    const midDir = bp >= mid;
+    const midColor = midDir ? '#0ecb81' : '#f6465d';
+    const midArrow = midDir ? '▲' : '▼';
+
     return `<style>
-.ob-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;font-variant-numeric:tabular-nums}
-.ob-head{display:flex;justify-content:space-between;padding:4px 8px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);flex-shrink:0}
-.ob-cols{display:flex;padding:2px 8px;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;font-weight:600;border-bottom:1px solid var(--border);flex-shrink:0}
-.ob-cols span{flex:1;text-align:right}.ob-cols span:first-child{text-align:left}
-.ob-scroll{flex:1;overflow-y:auto;overflow-x:hidden}
+.ob-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;font-variant-numeric:tabular-nums;font-size:11px}
+.ob-header{display:flex;justify-content:space-between;align-items:center;padding:4px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
+.ob-header-left{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.ob-header-right{font-size:9px;display:flex;align-items:center;gap:4px}
+.ob-live{width:5px;height:5px;border-radius:50%;background:#0ecb81;display:inline-block;animation:ob-blink 2s infinite}
+@keyframes ob-blink{0%,100%{opacity:1}50%{opacity:.4}}
+.ob-cols{display:grid;grid-template-columns:1fr 1fr 1fr;padding:3px 10px;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;font-weight:700;border-bottom:1px solid var(--border);flex-shrink:0}
+.ob-cols span:nth-child(2),.ob-cols span:nth-child(3){text-align:right}
+.ob-scroll{flex:1;overflow-y:auto;overflow-x:hidden;min-height:0}
 .ob-tbl{width:100%;border-collapse:collapse;table-layout:fixed}
-.ob-r{position:relative;height:22px}
-.ob-r:hover{background:rgba(255,255,255,.04)}
-.ob-c{padding:0 8px;font-size:11px;line-height:22px;text-align:right;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ob-bg{position:absolute;inset:0;padding:0;z-index:0;pointer-events:none;width:100%}
-.ob-bar{position:absolute;top:0;right:0;height:100%;pointer-events:none}
-.ob-bar-ask{background:rgba(246,70,93,.15)}
-.ob-bar-bid{background:rgba(14,203,129,.15)}
-.ob-p{font-weight:600;width:35%}
-.ob-q{width:25%;color:var(--text-secondary)}
-.ob-t{width:25%;color:var(--text-muted);font-size:10px}
-.ask-c{color:#f6465d}
-.bid-c{color:#0ecb81}
-.ob-mid{display:flex;justify-content:space-between;align-items:center;padding:8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0}
-.ob-mid-p{font-size:16px;font-weight:800;letter-spacing:.5px}
-.ob-mid-s{font-size:10px;color:var(--text-muted)}
-.ob-mid-arr{font-size:12px;margin-right:4px}
+.ob-row{position:relative;height:20px;transition:background .1s}
+.ob-row:hover{background:rgba(255,255,255,.03)}
+.ob-price,.ob-qty,.ob-total{padding:0 10px;line-height:20px;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ob-price{font-weight:700;width:38%}
+.ob-qty{text-align:right;width:32%;color:var(--text-secondary)}
+.ob-total{text-align:right;width:30%;color:var(--text-muted);font-size:10px}
+.ask-price{color:#f6465d}
+.bid-price{color:#0ecb81}
+.ob-depth{position:absolute;top:0;right:0;height:100%;pointer-events:none;z-index:0;transition:width .3s ease}
+.ob-depth-ask{background:rgba(246,70,93,.12)}
+.ob-depth-bid{background:rgba(14,203,129,.12)}
+.ob-mid{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
+.ob-mid-price{font-size:18px;font-weight:900;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.ob-mid-arrow{font-size:14px}
+.ob-mid-info{display:flex;flex-direction:column;align-items:flex-end}
+.ob-mid-spread{font-size:9px;color:var(--text-muted)}
+.ob-mid-usd{font-size:9px;color:var(--text-secondary)}
 </style>
 <div class="ob-wrap">
-  <div class="ob-head">
-    <span>${u.escapeHtml(sym)}/USDT Order Book</span>
-    <span style="color:#0ecb81">● Live</span>
+  <div class="ob-header">
+    <span class="ob-header-left">${u.escapeHtml(sym)}/USDT</span>
+    <span class="ob-header-right"><span class="ob-live"></span> Live Depth</span>
   </div>
-  <div class="ob-cols"><span>Price</span><span>Amount</span><span>Total</span></div>
+  <div class="ob-cols"><span>Price(USDT)</span><span>Amount(${u.escapeHtml(sym)})</span><span>Total</span></div>
   <div class="ob-scroll">
     <table class="ob-tbl"><tbody>${askHTML}</tbody></table>
   </div>
   <div class="ob-mid">
-    <span class="ob-mid-p"><span class="ob-mid-arr" style="color:${bp >= mid ? '#0ecb81' : '#f6465d'}">${bp >= mid ? '▲' : '▼'}</span>${u.formatPrice(mid)}</span>
-    <span class="ob-mid-s">Spread ${u.formatPrice(spr)} (${sprP.toFixed(3)}%)</span>
+    <span class="ob-mid-price">
+      <span class="ob-mid-arrow" style="color:${midColor}">${midArrow}</span>
+      <span style="color:${midColor}">${u.formatPrice(mid)}</span>
+    </span>
+    <div class="ob-mid-info">
+      <span class="ob-mid-usd">≈ $${u.formatPrice(mid)}</span>
+      <span class="ob-mid-spread">Spread: ${u.formatPrice(spr)} (${sprP.toFixed(3)}%)</span>
+    </div>
   </div>
   <div class="ob-scroll">
     <table class="ob-tbl"><tbody>${bidHTML}</tbody></table>
@@ -127,7 +150,12 @@ export class OrderBookPanel extends BasePanel {
 </div>`;
   }
 
+  _fmtPrice(n) {
+    return n.toFixed(this._precision);
+  }
+
   _fmtQty(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(2) + 'M';
     if (n >= 1000) return (n / 1000).toFixed(2) + 'K';
     if (n >= 1) return n.toFixed(4);
     return n.toFixed(6);
