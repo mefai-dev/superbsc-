@@ -118,7 +118,7 @@ export class TokenGradPanel extends BasePanel {
     h += '<div class="grad-summary">';
     for (let i = 0; i < STAGES.length; i++) {
       const s = STAGES[i];
-      h += `<div class="grad-stage"><div class="grad-stage-icon">${s.icon}</div><div class="grad-stage-count" style="color:${s.color}">${stageCounts[i]}</div><div class="grad-stage-label">${s.label}</div></div>`;
+      h += `<div class="grad-stage"><div class="grad-stage-count" style="color:${s.color}">${stageCounts[i]}</div><div class="grad-stage-label">${s.label}</div></div>`;
     }
     h += '</div>';
 

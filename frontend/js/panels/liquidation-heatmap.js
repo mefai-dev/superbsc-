@@ -135,7 +135,7 @@ export class LiquidationHeatmapPanel extends BasePanel {
 
     for (const r of sorted) {
       const tierCls = r.riskScore >= 70 ? 'liq-critical' : r.riskScore >= 45 ? 'liq-high' : r.riskScore >= 25 ? 'liq-medium' : 'liq-low';
-      const barColor = r.riskScore >= 70 ? '#f6465d' : r.riskScore >= 45 ? '#f0b90b' : r.riskScore >= 25 ? '#0ecb81' : '#474d57';
+      const barColor = '#636a76';
       const pct = Math.min(100, r.riskScore);
       const dirCls = r.direction === 'LONG' ? 'liq-long' : r.direction === 'SHORT' ? 'liq-short' : 'liq-neutral';
       const rateCls = r.fundingRate > 0.05 ? 'liq-critical' : r.fundingRate > 0.02 ? 'liq-high' : r.fundingRate < 0 ? 'val-down' : 'liq-medium';
