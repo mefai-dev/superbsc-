@@ -33,6 +33,9 @@ const panelRegistry = {
   'token-scout': 'token-scout-panel',
   'funding-arb': 'funding-arb-panel',
   'social-divergence': 'social-divergence-panel',
+  'whale-intel': 'whale-intel-panel',
+  'order-book-intel': 'order-book-intel-panel',
+  'token-grad': 'token-grad-panel',
 };
 
 // Layout presets
@@ -55,7 +58,7 @@ const layouts = {
   'whale-watcher': {
     name: 'Whale Watcher',
     grid: 'grid-2x2',
-    panels: ['top-traders', 'smart-flow', 'smart-signals', 'smart-inflow'],
+    panels: ['whale-intel', 'smart-flow', 'smart-signals', 'smart-inflow'],
   },
   'deep-dive': {
     name: 'Deep Dive',
@@ -87,6 +90,11 @@ const layouts = {
     grid: 'grid-2x3',
     panels: ['token-scout', 'sm-acceleration', 'social-divergence', 'alpha-radar', 'trending-tokens', 'meme-rank'],
   },
+  'intel': {
+    name: 'Intel',
+    grid: 'grid-2x3',
+    panels: ['whale-intel', 'order-book-intel', 'token-grad', 'top-traders', 'smart-signals', 'alpha-radar'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -101,6 +109,7 @@ async function loadPanels() {
     'dex-chart', 'auto-scanner', 'smart-flow', 'all-skills',
     'alpha-radar', 'signal-pnl',
     'futures-pulse', 'sm-acceleration', 'token-scout', 'funding-arb', 'social-divergence',
+    'whale-intel', 'order-book-intel', 'token-grad',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
