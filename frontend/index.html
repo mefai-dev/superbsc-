@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#0b0e11">
   <title>Binance Skills Terminal</title>
   <base href="/superbsc/">
-  <link rel="stylesheet" href="static/css/main.css?v=1709570000">
+  <link rel="stylesheet" href="static/css/main.css?v=1709580000">
 </head>
 <body>
   <!-- Inline fallback: ensures globals are available before modules load -->
@@ -150,19 +150,46 @@
       </span>
       <nav id="layout-nav">
         <button class="layout-btn active" data-layout="mefai" data-i18n="nav.mefai">MEFAI</button>
-        <button class="layout-btn" data-layout="overview" data-i18n="nav.overview">Overview</button>
-        <button class="layout-btn" data-layout="meme-hunter" data-i18n="nav.memeHunter">Meme Hunter</button>
-        <button class="layout-btn" data-layout="whale-watcher" data-i18n="nav.whaleWatcher">Whale Watcher</button>
-        <button class="layout-btn" data-layout="deep-dive" data-i18n="nav.deepDive">Deep Dive</button>
-        <button class="layout-btn" data-layout="trader" data-i18n="nav.trader">Trader</button>
-        <button class="layout-btn" data-layout="scanner" data-i18n="nav.scanner">Scanner</button>
-        <button class="layout-btn" data-layout="alpha" data-i18n="nav.alpha">Alpha</button>
-        <button class="layout-btn" data-layout="futures" data-i18n="nav.futures">Futures</button>
-        <button class="layout-btn" data-layout="discovery" data-i18n="nav.discovery">Discovery</button>
-        <button class="layout-btn" data-layout="intel" data-i18n="nav.intel">Intel</button>
-        <button class="layout-btn" data-layout="defi" data-i18n="nav.defi">DeFi</button>
-        <button class="layout-btn" data-layout="risk" data-i18n="nav.risk">Risk</button>
-        <button class="layout-btn" data-layout="security" data-i18n="nav.security">Security</button>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger" data-i18n="nav.markets">Markets &#9662;</button>
+          <div class="nav-dropdown-menu">
+            <button class="nav-dropdown-item" data-layout="overview" data-i18n="nav.overview">Overview</button>
+            <button class="nav-dropdown-item" data-layout="trader" data-i18n="nav.trader">Trader</button>
+            <button class="nav-dropdown-item" data-layout="futures" data-i18n="nav.futures">Futures</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger" data-i18n="nav.signals">Signals &#9662;</button>
+          <div class="nav-dropdown-menu">
+            <button class="nav-dropdown-item" data-layout="alpha" data-i18n="nav.alpha">Alpha</button>
+            <button class="nav-dropdown-item" data-layout="discovery" data-i18n="nav.discovery">Discovery</button>
+            <button class="nav-dropdown-item" data-layout="intel" data-i18n="nav.intel">Intel</button>
+            <button class="nav-dropdown-item" data-layout="whale-watcher" data-i18n="nav.whaleWatcher">Whale Watcher</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger" data-i18n="nav.memeGroup">Meme &#9662;</button>
+          <div class="nav-dropdown-menu">
+            <button class="nav-dropdown-item" data-layout="meme-hunter" data-i18n="nav.memeHunter">Meme Hunter</button>
+            <button class="nav-dropdown-item" data-layout="scanner" data-i18n="nav.scanner">Scanner</button>
+            <button class="nav-dropdown-item" data-layout="deep-dive" data-i18n="nav.deepDive">Deep Dive</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger" data-i18n="nav.defiGroup">DeFi &#9662;</button>
+          <div class="nav-dropdown-menu">
+            <button class="nav-dropdown-item" data-layout="defi" data-i18n="nav.defi">DeFi</button>
+            <button class="nav-dropdown-item" data-layout="security" data-i18n="nav.security">Security</button>
+            <button class="nav-dropdown-item" data-layout="risk" data-i18n="nav.risk">Risk</button>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-trigger" data-i18n="nav.analyticsGroup">Analytics &#9662;</button>
+          <div class="nav-dropdown-menu">
+            <button class="nav-dropdown-item" data-layout="analytics" data-i18n="nav.analytics">Analytics</button>
+            <button class="nav-dropdown-item" data-layout="launch" data-i18n="nav.launch">Launch</button>
+          </div>
+        </div>
       </nav>
     </div>
     <div class="header-right">
@@ -220,6 +247,8 @@
         <button class="hamburger-item" data-layout="defi"><span data-i18n="nav.defi">DeFi</span></button>
         <button class="hamburger-item" data-layout="risk"><span data-i18n="nav.risk">Risk</span></button>
         <button class="hamburger-item" data-layout="security"><span data-i18n="nav.security">Security</span></button>
+        <button class="hamburger-item" data-layout="analytics"><span data-i18n="nav.analytics">Analytics</span></button>
+        <button class="hamburger-item" data-layout="launch"><span data-i18n="nav.launch">Launch</span></button>
       </div>
       <div class="hamburger-actions">
         <button class="hamburger-action" id="mobile-search" data-i18n="btn.search">Search</button>
@@ -301,6 +330,8 @@
             <button class="settings-option" data-value="intel">Intel</button>
             <button class="settings-option" data-value="defi">DeFi</button>
             <button class="settings-option" data-value="risk">Risk</button>
+            <button class="settings-option" data-value="analytics">Analytics</button>
+            <button class="settings-option" data-value="launch">Launch</button>
           </div>
         </div>
         <div class="settings-group">
@@ -327,22 +358,22 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
-  <script type="module" src="static/js/store.js?v=1709570000"></script>
-  <script type="module" src="static/js/api.js?v=1709570000"></script>
-  <script type="module" src="static/js/utils.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/base-panel.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/data-table.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/status-bar.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/search-bar.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/command-palette.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/context-menu.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/toast.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/risk-badge.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/mini-chart.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/chart.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/ws-stream.js?v=1709570000"></script>
-  <script type="module" src="static/js/components/settings.js?v=1709570000"></script>
-  <script type="module" src="static/js/i18n.js?v=1709570000"></script>
-  <script type="module" src="static/js/app.js?v=1709570000"></script>
+  <script type="module" src="static/js/store.js?v=1709580000"></script>
+  <script type="module" src="static/js/api.js?v=1709580000"></script>
+  <script type="module" src="static/js/utils.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/base-panel.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/data-table.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/status-bar.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/search-bar.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/command-palette.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/context-menu.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/toast.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/risk-badge.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/mini-chart.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/chart.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/ws-stream.js?v=1709580000"></script>
+  <script type="module" src="static/js/components/settings.js?v=1709580000"></script>
+  <script type="module" src="static/js/i18n.js?v=1709580000"></script>
+  <script type="module" src="static/js/app.js?v=1709580000"></script>
 </body>
 </html>

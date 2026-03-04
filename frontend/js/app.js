@@ -43,6 +43,11 @@ const panelRegistry = {
   'liquidity-lifecycle': 'liquidity-lifecycle-panel',
   'capital-rotation': 'capital-rotation-panel',
   'contract-mutation': 'contract-mutation-panel',
+  'yield-radar': 'yield-radar-panel',
+  'stablecoin-flow': 'stablecoin-flow-panel',
+  'protocol-tvl': 'protocol-tvl-panel',
+  'market-pulse': 'market-pulse-panel',
+  'launch-scanner': 'launch-scanner-panel',
 };
 
 // Layout presets
@@ -117,6 +122,16 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['contract-mutation', 'liquidity-lifecycle', 'goplus-scanner', 'capital-rotation'],
   },
+  'analytics': {
+    name: 'Analytics',
+    grid: 'grid-2x2',
+    panels: ['market-pulse', 'protocol-tvl', 'stablecoin-flow', 'yield-radar'],
+  },
+  'launch': {
+    name: 'Launch',
+    grid: 'grid-2x2',
+    panels: ['launch-scanner', 'goplus-scanner', 'dex-intel', 'liquidity-lifecycle'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -134,10 +149,11 @@ async function loadPanels() {
     'whale-intel', 'order-book-intel', 'token-grad',
     'liquidation-heatmap', 'dex-intel', 'goplus-scanner', 'multi-chain-wallet',
     'liquidity-lifecycle', 'capital-rotation', 'contract-mutation',
+    'yield-radar', 'stablecoin-flow', 'protocol-tvl', 'market-pulse', 'launch-scanner',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709570000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709580000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -172,9 +188,18 @@ function setLayout(layoutKey) {
     }
   });
 
-  // Update nav (desktop + mobile + hamburger)
-  document.querySelectorAll('.layout-btn').forEach(btn => {
+  // Update nav (desktop + dropdown items + mobile + hamburger)
+  document.querySelectorAll('.layout-btn[data-layout]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.layout === layoutKey);
+  });
+  document.querySelectorAll('.nav-dropdown-item[data-layout]').forEach(item => {
+    item.classList.toggle('active', item.dataset.layout === layoutKey);
+  });
+  // Highlight dropdown trigger if any child layout is active
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    const items = dd.querySelectorAll('.nav-dropdown-item[data-layout]');
+    const hasActive = Array.from(items).some(i => i.dataset.layout === layoutKey);
+    dd.querySelector('.nav-dropdown-trigger')?.classList.toggle('active', hasActive);
   });
   document.querySelectorAll('.mobile-nav-btn[data-layout]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.layout === layoutKey);
@@ -219,13 +244,14 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // Escape — close overlays
+  // Escape — close overlays + dropdowns
   if (e.key === 'Escape') {
     closeSearch();
     closePalette();
     document.getElementById('help-overlay')?.classList.add('hidden');
     document.getElementById('settings-overlay')?.classList.add('hidden');
     document.getElementById('hamburger-drawer')?.classList.add('hidden');
+    document.querySelectorAll('.nav-dropdown-menu').forEach(m => m.classList.remove('open'));
     return;
   }
 
@@ -266,9 +292,37 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Layout nav clicks (desktop)
-document.querySelectorAll('.layout-btn').forEach(btn => {
+// Layout nav clicks (desktop — direct buttons and dropdown items)
+document.querySelectorAll('.layout-btn[data-layout]').forEach(btn => {
   btn.addEventListener('click', () => setLayout(btn.dataset.layout));
+});
+
+// Dropdown nav handlers
+document.querySelectorAll('.nav-dropdown').forEach(dd => {
+  const trigger = dd.querySelector('.nav-dropdown-trigger');
+  const menu = dd.querySelector('.nav-dropdown-menu');
+  if (!trigger || !menu) return;
+
+  // Hover open/close
+  dd.addEventListener('mouseenter', () => {
+    document.querySelectorAll('.nav-dropdown-menu').forEach(m => m.classList.remove('open'));
+    menu.classList.add('open');
+  });
+  dd.addEventListener('mouseleave', () => menu.classList.remove('open'));
+
+  // Click on dropdown items → select layout + close
+  menu.querySelectorAll('[data-layout]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setLayout(item.dataset.layout);
+      document.querySelectorAll('.nav-dropdown-menu').forEach(m => m.classList.remove('open'));
+    });
+  });
+});
+
+// Click outside closes all dropdowns
+document.addEventListener('click', () => {
+  document.querySelectorAll('.nav-dropdown-menu').forEach(m => m.classList.remove('open'));
 });
 
 // Mobile bottom nav clicks (quick tabs)

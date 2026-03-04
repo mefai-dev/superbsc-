@@ -23,6 +23,7 @@ from proxy.routes import (
     dexscreener,
     coingecko,
     etherscan,
+    defillama,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -65,6 +66,9 @@ app.include_router(
 )
 app.include_router(
     etherscan.router, prefix="/api/etherscan", tags=["Skill 12: Etherscan"]
+)
+app.include_router(
+    defillama.router, prefix="/api/defillama", tags=["Skill 13: DefiLlama"]
 )
 
 # Serve frontend
@@ -195,6 +199,15 @@ def _warmup_tasks():
             fetch_json,
             ("https://api.coingecko.com/api/v3/coins/categories",),
             {"params": {"order": "market_cap_desc"}, "ttl": 120},
+        ),
+        # CoinGecko global
+        (fetch_json, ("https://api.coingecko.com/api/v3/global",), {"ttl": 60}),
+        # DefiLlama protocols + stablecoins
+        (fetch_json, ("https://api.llama.fi/protocols",), {"ttl": 300}),
+        (
+            fetch_json,
+            ("https://stablecoins.llama.fi/stablecoins",),
+            {"params": {"includePrices": "true"}, "ttl": 300},
         ),
     ]
 

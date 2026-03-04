@@ -29,3 +29,15 @@ async def category_coins(
         },
         ttl=120,
     )
+
+
+@router.get("/global")
+async def global_data():
+    """Global crypto market data — total mcap, volume, dominance."""
+    return await fetch_json(f"{CG}/global", ttl=60)
+
+
+@router.get("/global-defi")
+async def global_defi():
+    """Global DeFi market data — DeFi mcap, ratio, top coin."""
+    return await fetch_json(f"{CG}/global/decentralized_finance_defi", ttl=60)
