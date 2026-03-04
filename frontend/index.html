@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#0b0e11">
   <title>Binance Skills Terminal</title>
   <base href="/superbsc/">
-  <link rel="stylesheet" href="static/css/main.css?v=1709520000">
+  <link rel="stylesheet" href="static/css/main.css?v=1709530000">
 </head>
 <body>
   <!-- Inline fallback: ensures globals are available before modules load -->
@@ -178,36 +178,22 @@
     <status-bar></status-bar>
   </footer>
 
-  <!-- Mobile bottom navigation with icons -->
+  <!-- Mobile action buttons (search, theme, settings) -->
+  <div id="mobile-actions">
+    <button class="mobile-action-btn" id="mobile-search">Search</button>
+    <button class="mobile-action-btn" id="mobile-theme">Theme</button>
+    <button class="mobile-action-btn" id="mobile-settings">Settings</button>
+  </div>
+
+  <!-- Mobile bottom navigation — text only, no icons -->
   <nav id="mobile-nav">
-    <button class="mobile-nav-btn active" data-layout="mefai">
-      <span class="nav-icon">&#9733;</span>
-      <span class="nav-label">MEFAI</span>
-    </button>
-    <button class="mobile-nav-btn" data-layout="overview">
-      <span class="nav-icon">&#9632;</span>
-      <span class="nav-label">Overview</span>
-    </button>
-    <button class="mobile-nav-btn" data-layout="meme-hunter">
-      <span class="nav-icon">&#9733;</span>
-      <span class="nav-label">Meme</span>
-    </button>
-    <button class="mobile-nav-btn" data-layout="whale-watcher">
-      <span class="nav-icon">&#9830;</span>
-      <span class="nav-label">Whale</span>
-    </button>
-    <button class="mobile-nav-btn" data-layout="trader">
-      <span class="nav-icon">&#8657;</span>
-      <span class="nav-label">Trade</span>
-    </button>
-    <button class="mobile-nav-btn" data-layout="scanner">
-      <span class="nav-icon">&#8982;</span>
-      <span class="nav-label">Scan</span>
-    </button>
-    <button class="mobile-nav-btn" data-layout="deep-dive">
-      <span class="nav-icon">&#128269;</span>
-      <span class="nav-label">Research</span>
-    </button>
+    <button class="mobile-nav-btn active" data-layout="mefai">MEFAI</button>
+    <button class="mobile-nav-btn" data-layout="overview">Overview</button>
+    <button class="mobile-nav-btn" data-layout="meme-hunter">Meme</button>
+    <button class="mobile-nav-btn" data-layout="whale-watcher">Whale</button>
+    <button class="mobile-nav-btn" data-layout="trader">Trade</button>
+    <button class="mobile-nav-btn" data-layout="scanner">Scan</button>
+    <button class="mobile-nav-btn" data-layout="deep-dive">Research</button>
   </nav>
 
   <!-- Search overlay -->
@@ -295,21 +281,21 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
-  <script type="module" src="static/js/store.js?v=1709520000"></script>
-  <script type="module" src="static/js/api.js?v=1709520000"></script>
-  <script type="module" src="static/js/utils.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/base-panel.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/data-table.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/status-bar.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/search-bar.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/command-palette.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/context-menu.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/toast.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/risk-badge.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/mini-chart.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/chart.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/ws-stream.js?v=1709520000"></script>
-  <script type="module" src="static/js/components/settings.js?v=1709520000"></script>
-  <script type="module" src="static/js/app.js?v=1709520000"></script>
+  <script type="module" src="static/js/store.js?v=1709530000"></script>
+  <script type="module" src="static/js/api.js?v=1709530000"></script>
+  <script type="module" src="static/js/utils.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/base-panel.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/data-table.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/status-bar.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/search-bar.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/command-palette.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/context-menu.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/toast.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/risk-badge.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/mini-chart.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/chart.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/ws-stream.js?v=1709530000"></script>
+  <script type="module" src="static/js/components/settings.js?v=1709530000"></script>
+  <script type="module" src="static/js/app.js?v=1709530000"></script>
 </body>
 </html>

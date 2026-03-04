@@ -80,7 +80,7 @@ async function loadPanels() {
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709520000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709530000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -218,6 +218,16 @@ document.getElementById('theme-toggle')?.addEventListener('click', () => {
 document.getElementById('search-trigger')?.addEventListener('click', () => openSearch());
 document.getElementById('help-btn')?.addEventListener('click', () => {
   document.getElementById('help-overlay')?.classList.toggle('hidden');
+});
+
+// Mobile action buttons (search, theme, settings moved to bottom on mobile)
+document.getElementById('mobile-search')?.addEventListener('click', () => openSearch());
+document.getElementById('mobile-theme')?.addEventListener('click', () => {
+  const current = store.get('theme');
+  store.set('theme', current === 'dark' ? 'light' : 'dark');
+});
+document.getElementById('mobile-settings')?.addEventListener('click', () => {
+  document.getElementById('settings-overlay')?.classList.toggle('hidden');
 });
 
 // Init

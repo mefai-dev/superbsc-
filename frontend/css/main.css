@@ -747,28 +747,33 @@ status-bar {
 }
 .settings-toggle .toggle-switch.on::after { transform: translateX(18px); }
 
-/* Mobile bottom nav — hidden on desktop */
-#mobile-nav {
-  display: none;
-}
+/* Mobile bottom nav + actions — hidden on desktop */
+#mobile-nav { display: none; }
+#mobile-actions { display: none; }
 
-/* Nav icon */
-.nav-icon {
-  display: block;
-  font-size: 16px;
-  line-height: 1;
-  margin-bottom: 2px;
+.mobile-action-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  flex: 1;
+  text-align: center;
+  transition: all 0.15s;
 }
-.nav-label {
-  display: block;
-  font-size: 9px;
+.mobile-action-btn:active {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ========================================
    MOBILE RESPONSIVE
    ======================================== */
 
-/* Tablet: stack 2x2 grid vertically in 2 cols */
+/* Tablet */
 @media (max-width: 1024px) {
   #layout-nav { display: none; }
   .header-left { gap: var(--sp); }
@@ -776,46 +781,97 @@ status-bar {
   .data-table td { max-width: 120px; }
 }
 
-/* Mobile: single column, premium look */
+/* Mobile: premium trading terminal */
 @media (max-width: 768px) {
   html, body {
-    overflow: auto;
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100%;
+    overflow: hidden;
     font-size: 11px;
     touch-action: manipulation;
+    overscroll-behavior: none;
   }
 
   body {
-    display: block;
-    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
-    padding-top: env(safe-area-inset-top, 0px);
+    display: flex;
+    flex-direction: column;
   }
 
+  /* Header — compact, logo only (action buttons moved to bottom) */
   #header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    flex-shrink: 0;
     height: 40px;
     padding: 0 12px;
+    z-index: 100;
+  }
+  .header-left { gap: 4px; }
+  .header-right { display: none; }
+  #layout-nav { display: none; }
+  .logo { font-size: 13px; }
+  .logo svg { width: 18px; height: 18px; }
+
+  /* Grid — scrollable panel container, fills remaining space */
+  .grid {
+    flex: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    gap: 4px;
+    padding: 4px 8px;
+    min-height: 0;
   }
 
-  /* Mobile bottom nav — premium */
+  .grid > * {
+    height: 320px;
+    flex-shrink: 0;
+  }
+
+  /* Premium panels — rounded, elevated, accent border */
+  .panel {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    border-left: 2px solid var(--accent);
+  }
+  .panel-header { padding: 8px 12px; }
+  .panel-title { font-size: 11px; }
+  .panel-skill { font-size: 9px; }
+  .panel-body { padding: 6px; overflow: auto; }
+
+  /* Touch-friendly targets */
+  .data-table tr { min-height: 36px; }
+  .data-table td { min-height: 36px; line-height: 28px; }
+  .btn { min-height: 32px; font-size: 11px; padding: 6px 10px; }
+
+  /* Tables */
+  .data-table { min-width: 400px; }
+  .data-table th, .data-table td { padding: 4px 6px; font-size: 10px; }
+  .data-table td { max-width: 100px; }
+
+  /* Status bar hidden */
+  #status-bar { display: none; }
+
+  /* Mobile actions bar — Search, Theme, Settings */
+  #mobile-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 4px;
+    padding: 4px 8px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  /* Mobile bottom nav — text only, no icons */
   #mobile-nav {
     display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+    flex-shrink: 0;
     background: var(--bg-panel);
     border-top: 1px solid var(--border);
-    padding: 0;
     padding-bottom: env(safe-area-inset-bottom, 0px);
     justify-content: stretch;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
   .mobile-nav-btn {
     background: none;
@@ -824,22 +880,13 @@ status-bar {
     color: var(--text-muted);
     font-family: var(--font-mono);
     font-size: 9px;
-    padding: 6px 2px 4px;
+    padding: 8px 2px 6px;
     cursor: pointer;
     flex: 1;
     text-align: center;
     letter-spacing: 0.3px;
     text-transform: uppercase;
     transition: all 0.15s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    min-height: 48px;
-    justify-content: center;
-  }
-  .mobile-nav-btn:hover, .mobile-nav-btn.active {
-    color: var(--text);
   }
   .mobile-nav-btn.active {
     border-top-color: var(--accent);
@@ -848,81 +895,11 @@ status-bar {
     background: rgba(240,185,11,0.06);
   }
 
-  .header-left { flex-wrap: wrap; gap: 4px; }
-  .header-right { gap: 4px; }
-
-  #layout-nav {
-    display: flex;
-    overflow-x: auto;
-    gap: 1px;
-    -webkit-overflow-scrolling: touch;
-  }
-  .layout-btn { font-size: 10px; padding: 3px 6px; white-space: nowrap; }
-
-  #header button { font-size: 10px; padding: 3px 6px; }
-
-  .logo { font-size: 13px; }
-  .logo svg { width: 18px; height: 18px; }
-
-  /* Premium panels — rounded, elevated */
-  .grid {
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: auto;
-    gap: 4px;
-    padding: 4px 8px;
-  }
-
-  .grid > * {
-    min-height: 300px;
-    max-height: 50vh;
-    flex-shrink: 0;
-  }
-
-  .panel {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    border-left: 2px solid var(--accent);
-  }
-
-  .panel-header {
-    padding: 8px 12px;
-  }
-  .panel-title { font-size: 11px; }
-  .panel-skill { font-size: 9px; }
-
-  .panel-body { padding: 6px; }
-
-  /* Touch-friendly targets */
-  .data-table tr { min-height: 40px; }
-  .data-table td { min-height: 40px; line-height: 32px; }
-  .btn { min-height: 36px; font-size: 12px; padding: 8px 12px; }
-
-  /* Tables: horizontal scroll */
-  .panel-body { overflow-x: auto; }
-  .data-table { min-width: 500px; }
-  .data-table th, .data-table td { padding: 4px 6px; font-size: 10px; }
-  .data-table td { max-width: 100px; }
-
-  /* Status bar — hide on mobile for cleaner look */
-  #status-bar {
-    display: none;
-  }
-
-  /* Overlays - full width */
+  /* Overlays */
   .overlay { padding-top: 5vh; }
-  .overlay-content {
-    width: 95vw;
-    max-height: 70vh;
-  }
+  .overlay-content { width: 95vw; max-height: 70vh; }
   .overlay-content input { font-size: 16px; padding: 12px; }
-
-  /* Settings on mobile */
   .settings-panel { width: 95vw; max-width: 400px; }
-
-  /* Context menu */
   .context-menu { min-width: 160px; font-size: 11px; }
 
   /* Filter bar */
@@ -933,7 +910,7 @@ status-bar {
   .form-input { font-size: 14px; padding: 8px; min-height: 36px; }
   .form-select { font-size: 14px; padding: 8px; min-height: 36px; }
 
-  /* Tabs - horizontal scroll */
+  /* Tabs */
   .panel-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .panel-tab { white-space: nowrap; font-size: 10px; padding: 6px 10px; }
 
@@ -948,22 +925,16 @@ status-bar {
   .help-content { padding: 12px; }
   .help-content td { font-size: 11px; padding: 3px 6px; }
 
-  /* Toast */
-  #toast-container { bottom: 64px; right: 8px; left: 8px; }
+  /* Toast — above bottom bars */
+  #toast-container { bottom: 100px; right: 8px; left: 8px; }
   .toast { font-size: 11px; }
 
-  /* Score bar wider on mobile */
   .score-bar { width: 40px; }
-
-  /* Search trigger compact */
-  #search-trigger { min-width: 80px; }
-  #search-trigger::after { display: none; }
 }
 
 /* Small phone */
 @media (max-width: 380px) {
-  .header-right { display: none; }
-  .data-table { min-width: 400px; }
-  .grid > * { min-height: 250px; }
-  .overlay-content input { font-size: 16px; } /* prevent iOS zoom */
+  .data-table { min-width: 350px; }
+  .grid > * { height: 280px; }
+  .overlay-content input { font-size: 16px; }
 }
