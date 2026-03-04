@@ -163,11 +163,14 @@ function setLayout(layoutKey) {
     }
   });
 
-  // Update nav (desktop + mobile)
+  // Update nav (desktop + mobile + hamburger)
   document.querySelectorAll('.layout-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.layout === layoutKey);
   });
-  document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+  document.querySelectorAll('.mobile-nav-btn[data-layout]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.layout === layoutKey);
+  });
+  document.querySelectorAll('.hamburger-item[data-layout]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.layout === layoutKey);
   });
 
@@ -213,6 +216,7 @@ document.addEventListener('keydown', (e) => {
     closePalette();
     document.getElementById('help-overlay')?.classList.add('hidden');
     document.getElementById('settings-overlay')?.classList.add('hidden');
+    document.getElementById('hamburger-drawer')?.classList.add('hidden');
     return;
   }
 
@@ -258,10 +262,32 @@ document.querySelectorAll('.layout-btn').forEach(btn => {
   btn.addEventListener('click', () => setLayout(btn.dataset.layout));
 });
 
-// Mobile bottom nav clicks
-document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+// Mobile bottom nav clicks (quick tabs)
+document.querySelectorAll('#mobile-nav .mobile-nav-btn[data-layout]').forEach(btn => {
   btn.addEventListener('click', () => setLayout(btn.dataset.layout));
 });
+
+// Hamburger menu
+const hamburgerDrawer = document.getElementById('hamburger-drawer');
+function openHamburger() { hamburgerDrawer?.classList.remove('hidden'); }
+function closeHamburger() { hamburgerDrawer?.classList.add('hidden'); }
+
+document.getElementById('hamburger-btn')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  openHamburger();
+});
+document.getElementById('hamburger-close')?.addEventListener('click', closeHamburger);
+document.querySelector('.hamburger-backdrop')?.addEventListener('click', closeHamburger);
+
+// Hamburger layout items
+document.querySelectorAll('.hamburger-item[data-layout]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    setLayout(btn.dataset.layout);
+    closeHamburger();
+  });
+});
+
+// (hamburger active state is updated inside setLayout via .mobile-nav-btn selector)
 
 // Header buttons
 document.getElementById('theme-toggle')?.addEventListener('click', () => {
@@ -273,13 +299,14 @@ document.getElementById('help-btn')?.addEventListener('click', () => {
   document.getElementById('help-overlay')?.classList.toggle('hidden');
 });
 
-// Mobile action buttons (search, theme, settings moved to bottom on mobile)
-document.getElementById('mobile-search')?.addEventListener('click', () => openSearch());
+// Mobile action buttons (inside hamburger drawer)
+document.getElementById('mobile-search')?.addEventListener('click', () => { closeHamburger(); openSearch(); });
 document.getElementById('mobile-theme')?.addEventListener('click', () => {
   const current = store.get('theme');
   store.set('theme', current === 'dark' ? 'light' : 'dark');
 });
 document.getElementById('mobile-settings')?.addEventListener('click', () => {
+  closeHamburger();
   document.getElementById('settings-overlay')?.classList.toggle('hidden');
 });
 
