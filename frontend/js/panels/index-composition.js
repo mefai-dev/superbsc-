@@ -20,10 +20,8 @@ export class IndexCompositionPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data || (!Array.isArray(data) && !data?.length)) return '<div class="panel-loading">Unable to load index data</div>';
-
     const indices = Array.isArray(data) ? data : [];
-    if (!indices.length) return '<div class="panel-loading">No index data available</div>';
+    if (!indices.length) return '<div class="panel-loading">Loading index data...</div>';
 
     // Index tabs
     let h = '<style scoped>';
