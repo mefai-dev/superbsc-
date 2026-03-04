@@ -61,6 +61,16 @@ const panelRegistry = {
   'convert-best-rate': 'convert-best-rate-panel',
   'swap-router': 'swap-router-panel',
   'alpha-airdrop': 'alpha-airdrop-panel',
+  'margin-optimizer': 'margin-optimizer-panel',
+  'basis-spread': 'basis-spread-panel',
+  'market-dominance': 'market-dominance-panel',
+  'trading-rules': 'trading-rules-panel',
+  'trader-divergence': 'trader-divergence-panel',
+  'airdrop-calendar': 'airdrop-calendar-panel',
+  'api-monitor': 'api-monitor-panel',
+  'product-explorer': 'product-explorer-panel',
+  'funding-heatmap': 'funding-heatmap-panel',
+  'ath-tracker': 'ath-tracker-panel',
 };
 
 // Layout presets
@@ -160,6 +170,16 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['trade-journal', 'tax-report', 'swap-router', 'alpha-airdrop'],
   },
+  'pro-tools': {
+    name: 'Pro Tools',
+    grid: 'grid-2x3',
+    panels: ['margin-optimizer', 'basis-spread', 'funding-heatmap', 'trader-divergence', 'trading-rules', 'ath-tracker'],
+  },
+  'explorer': {
+    name: 'Explorer',
+    grid: 'grid-2x2',
+    panels: ['product-explorer', 'market-dominance', 'airdrop-calendar', 'api-monitor'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -182,10 +202,13 @@ async function loadPanels() {
     'p2p-scanner', 'wallet-risk-score', 'grid-analyzer', 'announcement-monitor',
     'earn-comparator', 'tax-report', 'trade-journal', 'convert-best-rate',
     'swap-router', 'alpha-airdrop',
+    'margin-optimizer', 'basis-spread', 'market-dominance', 'trading-rules',
+    'trader-divergence', 'airdrop-calendar', 'api-monitor', 'product-explorer',
+    'funding-heatmap', 'ath-tracker',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1709600000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709700000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }

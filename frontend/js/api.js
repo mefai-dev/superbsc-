@@ -141,6 +141,7 @@ export const api = {
     placeOrder: (p) => post('/api/spot/order', p, 0),
     trades: (s, l) => get('/api/spot/trades', { symbol: s, limit: l || 50 }, 5000),
     aggTrades: (s, l) => get('/api/spot/aggTrades', { symbol: s, limit: l || 50 }, 5000),
+    exchangeInfo: (s) => get('/api/spot/exchangeInfo', s ? { symbol: s } : {}, 300000),
   },
   // Skill 2: Meme Rush
   meme: {
@@ -188,6 +189,9 @@ export const api = {
     openInterest: (s) => get('/api/futures/openInterest', { symbol: s || 'BTCUSDT' }, 30000),
     longShortRatio: (s, p) => get('/api/futures/longShortRatio', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
     fundingHistory: (s, l) => get('/api/futures/fundingHistory', { symbol: s || 'BTCUSDT', limit: l || 10 }, 60000),
+    topLongShortAccount: (s, p) => get('/api/futures/topLongShortAccount', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
+    topLongShortPosition: (s, p) => get('/api/futures/topLongShortPosition', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
+    takerBuySellRatio: (s, p) => get('/api/futures/takerBuySellRatio', { symbol: s || 'BTCUSDT', period: p || '1h', limit: 1 }, 60000),
   },
   // Skill 9: GoPlus Security
   goplus: {
@@ -237,6 +241,15 @@ export const api = {
   earn: {
     flexibleList: (p) => get('/api/earn/flexible-list', p || {}, 120000),
     lockedList: (p) => get('/api/earn/locked-list', p || {}, 120000),
+  },
+  // Skill 18: Margin
+  margin: {
+    vipRates: () => get('/api/margin/vip-rates', {}, 300000),
+  },
+  // Skill 19: Products
+  products: {
+    symbols: () => get('/api/products/symbols', {}, 120000),
+    list: () => get('/api/products/list', {}, 120000),
   },
   health: () => get('/health', {}, 30000),
 };

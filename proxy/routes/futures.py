@@ -57,6 +57,20 @@ async def funding_history(
     )
 
 
+@router.get("/topLongShortAccount")
+async def top_ls_account(
+    symbol: str = Query("BTCUSDT"),
+    period: str = Query("1h"),
+    limit: int = Query(1, le=500),
+):
+    """Top trader long/short account ratio."""
+    return await fetch_json(
+        f"{FAPI}/futures/data/topLongShortAccountRatio",
+        params={"symbol": symbol.upper(), "period": period, "limit": limit},
+        ttl=60,
+    )
+
+
 @router.get("/topLongShortPosition")
 async def top_ls_position(
     symbol: str = Query("BTCUSDT"),

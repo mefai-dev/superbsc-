@@ -27,6 +27,8 @@ from proxy.routes import (
     p2p,
     announcements,
     earn,
+    margin,
+    products,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -78,6 +80,10 @@ app.include_router(
     announcements.router, prefix="/api/announcements", tags=["Skill 15: Announcements"]
 )
 app.include_router(earn.router, prefix="/api/earn", tags=["Skill 17: Earn"])
+app.include_router(margin.router, prefix="/api/margin", tags=["Skill 18: Margin"])
+app.include_router(
+    products.router, prefix="/api/products", tags=["Skill 19: Products"]
+)
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")

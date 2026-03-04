@@ -57,6 +57,15 @@ async def _signed_post(path: str, params: dict) -> dict:
     return resp.json()
 
 
+@router.get("/exchangeInfo")
+async def exchange_info(symbol: str = Query(None)):
+    """Exchange info with trading rules and filters."""
+    params = {}
+    if symbol:
+        params["symbol"] = symbol.upper()
+    return await fetch_json(f"{BASE}/api/v3/exchangeInfo", params=params or None, ttl=300)
+
+
 _tickers_cache = {"data": None, "ts": 0}
 
 
