@@ -14,7 +14,9 @@ DQUERY = settings.DQUERY_BASE
 @router.get("/search")
 async def token_search(
     keyword: str = Query(..., description="Search keyword, e.g. BTC, PEPE, ethereum"),
-    chain_ids: str = Query(None, alias="chainIds", description="Chain IDs filter, e.g. 56,1"),
+    chain_ids: str = Query(
+        None, alias="chainIds", description="Chain IDs filter, e.g. 56,1"
+    ),
 ):
     """Search for tokens by keyword.
 
@@ -75,13 +77,21 @@ async def token_dynamic(
 
 # chainId → DQuery platform mapping
 _CHAIN_TO_PLATFORM = {
-    "56": "bsc", "bsc": "bsc",
-    "1": "eth", "eth": "eth",
-    "CT_501": "solana", "solana": "solana", "sol": "solana",
-    "8453": "base", "base": "base",
-    "42161": "arbitrum", "arb": "arbitrum",
-    "137": "polygon", "polygon": "polygon",
-    "43114": "avalanche", "avax": "avalanche",
+    "56": "bsc",
+    "bsc": "bsc",
+    "1": "eth",
+    "eth": "eth",
+    "CT_501": "solana",
+    "solana": "solana",
+    "sol": "solana",
+    "8453": "base",
+    "base": "base",
+    "42161": "arbitrum",
+    "arb": "arbitrum",
+    "137": "polygon",
+    "polygon": "polygon",
+    "43114": "avalanche",
+    "avax": "avalanche",
 }
 
 
@@ -99,5 +109,10 @@ async def token_kline(
     # Resolve platform from chain
     plat = platform or _CHAIN_TO_PLATFORM.get(chain or "56", "bsc")
     url = f"{DQUERY}/k-line/candles"
-    params = {"address": address, "platform": plat, "interval": interval, "limit": limit}
+    params = {
+        "address": address,
+        "platform": plat,
+        "interval": interval,
+        "limit": limit,
+    }
     return await fetch_json(url, params=params, ttl=60)
