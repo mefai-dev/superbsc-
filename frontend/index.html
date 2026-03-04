@@ -2,17 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEFAI SuperBSC Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0b0e11">
+  <title>Binance Skills Terminal</title>
   <base href="/superbsc/">
-  <link rel="stylesheet" href="static/css/main.css?v=21">
+  <link rel="stylesheet" href="static/css/main.css?v=1709512000">
 </head>
 <body>
+  <!-- Inline fallback: ensures globals are available before modules load -->
+  <script>
+    window.mefaiTable = window.mefaiTable || {
+      renderTable: function(cols, rows, opts) {
+        opts = opts || {};
+        var ths = cols.map(function(c) {
+          var s = opts.sortKey === c.key;
+          var cls = s ? 'sorted ' + (opts.sortDir === 'asc' ? 'asc' : '') : '';
+          return '<th data-key="'+c.key+'" class="'+cls+'" style="'+(c.width?'width:'+c.width:'')+'">' + c.label + '</th>';
+        }).join('');
+        var trs = rows.map(function(row, i) {
+          var tds = cols.map(function(c) {
+            var v = c.render ? c.render(row[c.key], row) : (row[c.key] != null ? row[c.key] : '—');
+            var a = c.align === 'right' ? 'text-align:right' : '';
+            return '<td style="'+a+'" data-key="'+c.key+'">'+v+'</td>';
+          }).join('');
+          return '<tr data-index="'+i+'">'+tds+'</tr>';
+        }).join('');
+        return '<table class="data-table"><thead><tr>'+ths+'</tr></thead><tbody>'+trs+'</tbody></table>';
+      },
+      bindTableEvents: function(container, cols, rows, opts) {
+        opts = opts || {};
+        var table = container.querySelector('.data-table');
+        if (!table) return;
+        if (opts.onSort) table.querySelectorAll('th').forEach(function(th) { th.addEventListener('click', function() { opts.onSort(th.dataset.key); }); });
+        if (opts.onRowClick) table.querySelectorAll('tbody tr').forEach(function(tr) { tr.addEventListener('click', function() { var idx = parseInt(tr.dataset.index); if (rows[idx]) opts.onRowClick(rows[idx]); }); });
+      },
+      sortRows: function(rows, key, dir) {
+        dir = dir || 'desc';
+        return rows.slice().sort(function(a, b) {
+          var va = a[key], vb = b[key];
+          if (typeof va === 'string') va = va.toLowerCase();
+          if (typeof vb === 'string') vb = vb.toLowerCase();
+          var na = Number(va), nb = Number(vb);
+          if (!isNaN(na) && !isNaN(nb)) { va = na; vb = nb; }
+          if (va < vb) return dir === 'asc' ? -1 : 1;
+          if (va > vb) return dir === 'asc' ? 1 : -1;
+          return 0;
+        });
+      }
+    };
+    window.mefaiUtils = window.mefaiUtils || {};
+    if (!window.mefaiUtils.tokenIcon) {
+      window.mefaiUtils.tokenIcon = function(p) {
+        if (!p || typeof p !== 'string') return '';
+        if (p.startsWith('https://')) return p;
+        if (p.startsWith('http://')) return p.replace('http://','https://');
+        return 'https://bin.bnbstatic.com' + (p.startsWith('/') ? '' : '/') + p;
+      };
+    }
+    if (!window.mefaiUtils.escapeHtml) {
+      window.mefaiUtils.escapeHtml = function(s) {
+        var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+      };
+    }
+    if (!window.mefaiUtils.formatPrice) {
+      window.mefaiUtils.formatPrice = function(n) {
+        n = Number(n); if (isNaN(n)) return '—';
+        if (n >= 1) return n.toFixed(2);
+        if (n >= 0.01) return n.toFixed(4);
+        if (n >= 0.0001) return n.toFixed(6);
+        return n.toFixed(8);
+      };
+    }
+    if (!window.mefaiUtils.formatCurrency) {
+      window.mefaiUtils.formatCurrency = function(n) {
+        n = Number(n); if (isNaN(n)) return '—';
+        if (Math.abs(n) >= 1e9) return '$'+(n/1e9).toFixed(2)+'B';
+        if (Math.abs(n) >= 1e6) return '$'+(n/1e6).toFixed(2)+'M';
+        if (Math.abs(n) >= 1e3) return '$'+(n/1e3).toFixed(2)+'K';
+        return '$'+n.toFixed(2);
+      };
+    }
+    if (!window.mefaiUtils.formatPercent) {
+      window.mefaiUtils.formatPercent = function(n) {
+        n = Number(n); if (isNaN(n)) return '—';
+        var cls = n >= 0 ? 'val-up' : 'val-down';
+        var a = n >= 0 ? '↑' : '↓';
+        return '<span class="'+cls+'">'+a+Math.abs(n).toFixed(2)+'%</span>';
+      };
+    }
+    if (!window.mefaiUtils.formatNumber) {
+      window.mefaiUtils.formatNumber = function(n) {
+        n = Number(n); if (isNaN(n)) return '—';
+        if (Math.abs(n) >= 1e9) return (n/1e9).toFixed(2)+'B';
+        if (Math.abs(n) >= 1e6) return (n/1e6).toFixed(2)+'M';
+        if (Math.abs(n) >= 1e3) return (n/1e3).toFixed(1)+'K';
+        return n.toLocaleString();
+      };
+    }
+    if (!window.mefaiUtils.formatAddress) {
+      window.mefaiUtils.formatAddress = function(a) { return a ? a.slice(0,6)+'...'+a.slice(-4) : '—'; };
+    }
+    if (!window.mefaiUtils.formatTime) {
+      window.mefaiUtils.formatTime = function(ts) {
+        if (!ts) return '—';
+        return new Date(typeof ts==='number' && ts<1e12 ? ts*1000 : ts).toLocaleTimeString('en-US',{hour12:false});
+      };
+    }
+    if (!window.mefaiUtils.formatAge) {
+      window.mefaiUtils.formatAge = function(ts) {
+        if (!ts) return '—';
+        var m = Math.floor((Date.now()-(typeof ts==='number'&&ts<1e12?ts*1000:ts))/60000);
+        if (m<60) return m+'m'; var h=Math.floor(m/60);
+        if (h<24) return h+'h'; return Math.floor(h/24)+'d';
+      };
+    }
+    if (!window.mefaiUtils.copyToClipboard) {
+      window.mefaiUtils.copyToClipboard = function(t) { navigator.clipboard.writeText(t).catch(function(){}); };
+    }
+    if (!window.mefaiUtils.debounce) {
+      window.mefaiUtils.debounce = function(fn, ms) { var t; ms=ms||300; return function() { var a=arguments; clearTimeout(t); t=setTimeout(function(){fn.apply(null,a)},ms); }; };
+    }
+    if (!window.mefaiUtils.riskClass) {
+      window.mefaiUtils.riskClass = function(l) {
+        if (!l) return 'risk-low'; l=String(l).toLowerCase();
+        if (l==='high'||l==='danger') return 'risk-high';
+        if (l==='medium'||l==='med') return 'risk-medium';
+        return 'risk-low';
+      };
+    }
+  </script>
+
   <header id="header">
     <div class="header-left">
-      <span class="logo">MEFAI</span>
+      <span class="logo">
+        <svg width="20" height="20" viewBox="0 0 126.61 126.61" xmlns="http://www.w3.org/2000/svg">
+          <g fill="#f0b90b">
+            <polygon points="38.73,53.2 63.3,28.63 87.88,53.21 102.13,38.96 63.3,0.14 24.48,38.96"/>
+            <polygon points="0.14,63.31 14.39,49.06 28.63,63.31 14.39,77.55"/>
+            <polygon points="38.73,73.41 63.3,97.98 87.88,73.4 102.14,87.64 102.13,87.66 63.3,126.48 24.48,87.66 24.46,87.64"/>
+            <polygon points="97.98,63.31 112.23,49.07 126.47,63.31 112.23,77.56"/>
+            <polygon points="77.83,63.3 63.3,48.78 52.94,59.14 51.79,60.29 48.78,63.3 63.3,77.83 77.84,63.31 77.83,63.3"/>
+          </g>
+        </svg>
+        Binance Skills
+      </span>
       <nav id="layout-nav">
-        <button class="layout-btn active" data-layout="overview">Overview</button>
+        <button class="layout-btn active" data-layout="mefai">MEFAI</button>
+        <button class="layout-btn" data-layout="overview">Overview</button>
         <button class="layout-btn" data-layout="meme-hunter">Meme Hunter</button>
         <button class="layout-btn" data-layout="whale-watcher">Whale Watcher</button>
         <button class="layout-btn" data-layout="deep-dive">Deep Dive</button>
@@ -23,6 +161,7 @@
     <div class="header-right">
       <button id="search-trigger" title="Search (Cmd+K)">Search</button>
       <button id="theme-toggle" title="Toggle theme (d)">Theme</button>
+      <button id="settings-btn" title="Settings">&#9881;</button>
       <button id="help-btn" title="Shortcuts (?)">?</button>
     </div>
   </header>
@@ -33,14 +172,36 @@
     <status-bar></status-bar>
   </footer>
 
-  <!-- Mobile bottom navigation -->
+  <!-- Mobile bottom navigation with icons -->
   <nav id="mobile-nav">
-    <button class="mobile-nav-btn active" data-layout="overview">Overview</button>
-    <button class="mobile-nav-btn" data-layout="meme-hunter">Meme</button>
-    <button class="mobile-nav-btn" data-layout="whale-watcher">Whale</button>
-    <button class="mobile-nav-btn" data-layout="trader">Trade</button>
-    <button class="mobile-nav-btn" data-layout="scanner">Scan</button>
-    <button class="mobile-nav-btn" data-layout="deep-dive">Research</button>
+    <button class="mobile-nav-btn active" data-layout="mefai">
+      <span class="nav-icon">&#9733;</span>
+      <span class="nav-label">MEFAI</span>
+    </button>
+    <button class="mobile-nav-btn" data-layout="overview">
+      <span class="nav-icon">&#9632;</span>
+      <span class="nav-label">Overview</span>
+    </button>
+    <button class="mobile-nav-btn" data-layout="meme-hunter">
+      <span class="nav-icon">&#9733;</span>
+      <span class="nav-label">Meme</span>
+    </button>
+    <button class="mobile-nav-btn" data-layout="whale-watcher">
+      <span class="nav-icon">&#9830;</span>
+      <span class="nav-label">Whale</span>
+    </button>
+    <button class="mobile-nav-btn" data-layout="trader">
+      <span class="nav-icon">&#8657;</span>
+      <span class="nav-label">Trade</span>
+    </button>
+    <button class="mobile-nav-btn" data-layout="scanner">
+      <span class="nav-icon">&#8982;</span>
+      <span class="nav-label">Scan</span>
+    </button>
+    <button class="mobile-nav-btn" data-layout="deep-dive">
+      <span class="nav-icon">&#128269;</span>
+      <span class="nav-label">Research</span>
+    </button>
   </nav>
 
   <!-- Search overlay -->
@@ -76,29 +237,72 @@
     </div>
   </div>
 
+  <!-- Settings overlay -->
+  <div id="settings-overlay" class="settings-overlay hidden">
+    <div class="settings-panel">
+      <div class="settings-header">
+        <h2>Settings</h2>
+        <button class="settings-close" id="settings-close">&times;</button>
+      </div>
+      <div class="settings-body">
+        <div class="settings-group">
+          <label>Theme</label>
+          <div class="settings-options" data-setting="theme">
+            <button class="settings-option" data-value="dark">Dark</button>
+            <button class="settings-option" data-value="light">Light</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label>Font Size</label>
+          <div class="settings-options" data-setting="fontSize">
+            <button class="settings-option" data-value="normal">Normal</button>
+            <button class="settings-option" data-value="large">Large</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label>Default Layout</label>
+          <div class="settings-options" data-setting="defaultLayout">
+            <button class="settings-option" data-value="overview">Overview</button>
+            <button class="settings-option" data-value="meme-hunter">Meme</button>
+            <button class="settings-option" data-value="whale-watcher">Whale</button>
+            <button class="settings-option" data-value="trader">Trader</button>
+            <button class="settings-option" data-value="scanner">Scanner</button>
+            <button class="settings-option" data-value="deep-dive">Research</button>
+          </div>
+        </div>
+        <div class="settings-group">
+          <label>Compact Mode</label>
+          <div class="settings-toggle" data-setting="compactMode">
+            <span class="settings-toggle-label">Compact tables</span>
+            <div class="toggle-switch" id="compact-toggle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Context menu -->
   <div id="context-menu" class="context-menu hidden"></div>
 
   <!-- Toast container -->
   <div id="toast-container"></div>
 
-  <!-- Vendor: lightweight-charts loaded lazily by chart.js when needed -->
-
   <!-- Scripts -->
-  <script type="module" src="static/js/store.js?v=21"></script>
-  <script type="module" src="static/js/api.js?v=21"></script>
-  <script type="module" src="static/js/utils.js?v=21"></script>
-  <script type="module" src="static/js/components/base-panel.js?v=21"></script>
-  <script type="module" src="static/js/components/data-table.js?v=21"></script>
-  <script type="module" src="static/js/components/status-bar.js?v=21"></script>
-  <script type="module" src="static/js/components/search-bar.js?v=21"></script>
-  <script type="module" src="static/js/components/command-palette.js?v=21"></script>
-  <script type="module" src="static/js/components/context-menu.js?v=21"></script>
-  <script type="module" src="static/js/components/toast.js?v=21"></script>
-  <script type="module" src="static/js/components/risk-badge.js?v=21"></script>
-  <script type="module" src="static/js/components/mini-chart.js?v=21"></script>
-  <script type="module" src="static/js/components/chart.js?v=21"></script>
-  <script type="module" src="static/js/components/ws-stream.js?v=21"></script>
-  <script type="module" src="static/js/app.js?v=21"></script>
+  <script type="module" src="static/js/store.js?v=1709512000"></script>
+  <script type="module" src="static/js/api.js?v=1709512000"></script>
+  <script type="module" src="static/js/utils.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/base-panel.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/data-table.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/status-bar.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/search-bar.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/command-palette.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/context-menu.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/toast.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/risk-badge.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/mini-chart.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/chart.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/ws-stream.js?v=1709512000"></script>
+  <script type="module" src="static/js/components/settings.js?v=1709512000"></script>
+  <script type="module" src="static/js/app.js?v=1709512000"></script>
 </body>
 </html>

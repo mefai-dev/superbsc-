@@ -63,7 +63,10 @@ async def health():
 
 @app.get("/")
 async def index():
-    return FileResponse(os.path.join(frontend_dir, "index.html"))
+    return FileResponse(
+        os.path.join(frontend_dir, "index.html"),
+        headers={"Cache-Control": "no-cache, must-revalidate"},
+    )
 
 
 # All warmup URLs

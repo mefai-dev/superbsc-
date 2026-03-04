@@ -25,10 +25,16 @@ const panelRegistry = {
   'dex-chart': 'dex-chart-panel',
   'auto-scanner': 'auto-scanner-panel',
   'smart-flow': 'smart-flow-panel',
+  'all-skills': 'all-skills-panel',
 };
 
 // Layout presets
 const layouts = {
+  'mefai': {
+    name: 'MEFAI',
+    grid: 'grid-2x3',
+    panels: ['all-skills', 'auto-scanner', 'market-overview', 'smart-signals', 'trending-tokens', 'meme-rank'],
+  },
   'overview': {
     name: 'Overview',
     grid: 'grid-2x2',
@@ -70,11 +76,11 @@ async function loadPanels() {
     'meme-rush', 'topic-rush', 'wallet-tracker', 'smart-signals',
     'social-hype', 'trending-tokens', 'smart-inflow', 'meme-rank',
     'top-traders', 'token-audit', 'token-search', 'token-profile',
-    'dex-chart', 'auto-scanner', 'smart-flow',
+    'dex-chart', 'auto-scanner', 'smart-flow', 'all-skills',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=21`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1709512000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
@@ -122,6 +128,9 @@ function setLayout(layoutKey) {
   if (sb?.setLayout) sb.setLayout(layout.name);
 
   store.set('layout', layoutKey);
+
+  // Persist last layout as default
+  store.savePref('defaultLayout', layoutKey);
 }
 
 // Keyboard shortcuts
@@ -132,6 +141,7 @@ document.addEventListener('keydown', (e) => {
       closeSearch();
       closePalette();
       document.getElementById('help-overlay')?.classList.add('hidden');
+      document.getElementById('settings-overlay')?.classList.add('hidden');
     }
     return;
   }
@@ -149,6 +159,7 @@ document.addEventListener('keydown', (e) => {
     closeSearch();
     closePalette();
     document.getElementById('help-overlay')?.classList.add('hidden');
+    document.getElementById('settings-overlay')?.classList.add('hidden');
     return;
   }
 
@@ -180,9 +191,9 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // 1-6 — switch layout
+  // 1-7 — switch layout
   const num = parseInt(e.key);
-  if (num >= 1 && num <= 6) {
+  if (num >= 1 && num <= 7) {
     const keys = Object.keys(layouts);
     if (keys[num - 1]) setLayout(keys[num - 1]);
     return;
@@ -212,7 +223,10 @@ document.getElementById('help-btn')?.addEventListener('click', () => {
 // Init
 async function init() {
   await loadPanels();
-  setLayout('overview');
+
+  // Restore saved layout from preferences
+  const savedLayout = store.getPref('defaultLayout');
+  setLayout(savedLayout && layouts[savedLayout] ? savedLayout : 'mefai');
 }
 
 document.addEventListener('DOMContentLoaded', init);
