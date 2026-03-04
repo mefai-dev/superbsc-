@@ -15,27 +15,35 @@ export class MarketDominancePanel extends BasePanel {
   }
 
   async fetchData() {
-    const res = await window.mefaiApi.products.symbols();
-    if (!res || res?.error) return { _fetchError: true };
-    return res;
+    const [symbolsRes, globalRes] = await Promise.all([
+      window.mefaiApi.products.symbols(),
+      window.mefaiApi.coingecko.global(),
+    ]);
+    if (!symbolsRes || symbolsRes?.error) return { _fetchError: true };
+    return { symbols: symbolsRes, global: globalRes };
   }
 
   renderContent(data) {
     if (data?._fetchError) return '<div class="panel-loading">Unable to load market data</div>';
 
-    const list = data?.data || data;
+    const list = data?.symbols?.data || data?.data || data;
     if (!Array.isArray(list) || !list.length) return '<div class="panel-loading">No market data</div>';
+
+    // Get CoinGecko dominance data
+    const cgGlobal = data?.global?.data || {};
+    const cgDominance = cgGlobal.market_cap_percentage || {};
+    const cgTotalMcap = cgGlobal.total_market_cap?.usd || 0;
 
     // Parse coins with market cap
     let coins = [];
     let totalMcap = 0;
     for (const item of list) {
-      const name = item.name || item.symbol || '';
-      const symbol = item.symbol || '';
-      const mcap = parseFloat(item.marketCap || item.circulatingMarketCap || 0);
-      const price = parseFloat(item.price || item.lastPrice || 0);
-      const change24h = parseFloat(item.priceChangePercent24h || item.priceChange || 0);
-      const dominance = parseFloat(item.dominance || 0);
+      const name = item.name || '';
+      const symbol = item.symbol || item.name || '';
+      const mcap = parseFloat(item.marketCap || 0);
+      const price = parseFloat(item.price || 0);
+      const change24h = parseFloat(item.dayChange || 0);
+      const dominance = cgDominance[name.toLowerCase()] || 0;
       if (mcap > 0) {
         coins.push({ name, symbol, mcap, price, change24h, dominance });
         totalMcap += mcap;
@@ -58,18 +66,30 @@ export class MarketDominancePanel extends BasePanel {
     h += '.md-total{font-size:10px;color:var(--text-muted);text-align:right;padding:0 0 6px}';
     h += '</style>';
 
-    h += `<div class="md-total">Total Market Cap: ${formatCurrency(totalMcap)}</div>`;
+    h += `<div class="md-total">Total Market Cap: ${formatCurrency(cgTotalMcap || totalMcap)}</div>`;
 
-    // Dominance bar
-    const colors = ['#f0b90b', '#627eea', '#f3ba2f', '#26a17b', '#e84142'];
+    // Dominance bar — use CoinGecko global percentages
+    const domColors = { btc: '#f0b90b', eth: '#627eea', usdt: '#26a17b', bnb: '#f3ba2f', xrp: '#23292f', sol: '#9945ff' };
+    const domEntries = Object.entries(cgDominance).filter(([, v]) => v > 1).slice(0, 6);
     h += '<div class="md-bar">';
-    for (let i = 0; i < top5.length; i++) {
-      const pct = totalMcap > 0 ? (top5[i].mcap / totalMcap * 100) : 0;
-      if (pct < 1) continue;
-      h += `<div class="md-seg" style="width:${pct}%;background:${colors[i % colors.length]}" title="${top5[i].symbol}: ${pct.toFixed(1)}%">${top5[i].symbol} ${pct.toFixed(1)}%</div>`;
+    if (domEntries.length) {
+      let used = 0;
+      for (const [key, pct] of domEntries) {
+        const color = domColors[key] || '#555';
+        h += `<div class="md-seg" style="width:${pct}%;background:${color}" title="${key.toUpperCase()}: ${pct.toFixed(1)}%">${key.toUpperCase()} ${pct.toFixed(1)}%</div>`;
+        used += pct;
+      }
+      const otherPct = 100 - used;
+      if (otherPct > 1) h += `<div class="md-seg" style="width:${otherPct}%;background:#555">Other ${otherPct.toFixed(1)}%</div>`;
+    } else {
+      // Fallback: compute from Binance market caps
+      for (let i = 0; i < top5.length; i++) {
+        const pct = totalMcap > 0 ? (top5[i].mcap / totalMcap * 100) : 0;
+        if (pct < 1) continue;
+        const fallbackColors = ['#f0b90b', '#627eea', '#f3ba2f', '#26a17b', '#e84142'];
+        h += `<div class="md-seg" style="width:${pct}%;background:${fallbackColors[i % 5]}" title="${top5[i].name}: ${pct.toFixed(1)}%">${top5[i].name} ${pct.toFixed(1)}%</div>`;
+      }
     }
-    const otherPct = 100 - top5.reduce((s, c) => s + (totalMcap > 0 ? c.mcap / totalMcap * 100 : 0), 0);
-    if (otherPct > 1) h += `<div class="md-seg" style="width:${otherPct}%;background:#555">Other ${otherPct.toFixed(1)}%</div>`;
     h += '</div>';
 
     // Table

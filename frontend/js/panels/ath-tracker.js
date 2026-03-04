@@ -1,4 +1,4 @@
-// ATH Distance Tracker — How far each coin is from its all-time high/low
+// ATH Tracker — Distance from 24h high/low + market cap recovery analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatPercent, escapeHtml } = window.mefaiUtils;
@@ -9,39 +9,53 @@ export class AthTrackerPanel extends BasePanel {
 
   constructor() {
     super();
-    this._refreshRate = 120000;
-    this._sortKey = 'athDist';
+    this._refreshRate = 30000;
+    this._sortKey = 'highDist';
     this._sortDir = 'asc';
     this._search = '';
-    this._view = 'ath'; // ath | atl
   }
 
   async fetchData() {
-    const res = await window.mefaiApi.products.symbols();
-    if (!res || res?.error) return { _fetchError: true };
-    return res;
+    // Use spot tickers (24h high/low) + products symbols (market cap, issue price)
+    const [tickers, symbols] = await Promise.all([
+      window.mefaiApi.spot.tickers(),
+      window.mefaiApi.products.symbols(),
+    ]);
+    if (!tickers || tickers?.error) return { _fetchError: true };
+    return { tickers, symbols };
   }
 
   renderContent(data) {
-    if (data?._fetchError) return '<div class="panel-loading">Unable to load ATH data</div>';
+    if (data?._fetchError) return '<div class="panel-loading">Unable to load tracker data</div>';
 
-    const list = data?.data || data;
-    if (!Array.isArray(list) || !list.length) return '<div class="panel-loading">No ATH data available</div>';
+    const tickerArr = Array.isArray(data.tickers) ? data.tickers : [];
+    const symList = data.symbols?.data || [];
+
+    // Build issue price map
+    const issueMap = {};
+    for (const s of symList) {
+      if (s.issuePrice && s.name) issueMap[s.name] = parseFloat(s.issuePrice);
+    }
 
     let rows = [];
-    for (const item of list) {
-      const symbol = item.symbol || item.name || '';
-      if (!symbol) continue;
-      const price = parseFloat(item.price || item.lastPrice || 0);
-      const ath = parseFloat(item.allTimeHigh || item.athPrice || 0);
-      const atl = parseFloat(item.allTimeLow || item.atlPrice || 0);
-      const mcap = parseFloat(item.marketCap || item.circulatingMarketCap || 0);
-      if (!price || !ath) continue;
+    for (const t of tickerArr) {
+      const sym = t.symbol || '';
+      if (!sym.endsWith('USDT')) continue;
+      const short = sym.replace('USDT', '');
+      const price = parseFloat(t.lastPrice || 0);
+      const high = parseFloat(t.highPrice || 0);
+      const low = parseFloat(t.lowPrice || 0);
+      const volume = parseFloat(t.quoteVolume || 0);
+      const change = parseFloat(t.priceChangePercent || 0);
+      if (!price || !high) continue;
 
-      const athDist = ((price - ath) / ath) * 100; // negative = below ATH
-      const atlDist = atl > 0 ? ((price - atl) / atl) * 100 : 0; // positive = above ATL
+      const highDist = ((price - high) / high) * 100;
+      const lowDist = low > 0 ? ((price - low) / low) * 100 : 0;
+      const range = high > 0 && low > 0 ? ((high - low) / low) * 100 : 0;
+      const issuePrice = issueMap[short] || 0;
+      const issueGain = issuePrice > 0 ? ((price - issuePrice) / issuePrice) * 100 : null;
 
-      rows.push({ symbol, price, ath, atl, athDist, atlDist, mcap });
+      rows.push({ symbol: short, price, high, low, highDist, lowDist, range, change, volume, issueGain });
     }
 
     // Search
@@ -51,17 +65,16 @@ export class AthTrackerPanel extends BasePanel {
     }
 
     // Sort
-    const sortKey = this._view === 'atl' ? 'atlDist' : this._sortKey;
     const dir = this._sortDir === 'asc' ? 1 : -1;
     rows.sort((a, b) => {
-      if (sortKey === 'symbol') return a.symbol.localeCompare(b.symbol) * dir;
-      return ((a[sortKey] || 0) - (b[sortKey] || 0)) * dir;
+      if (this._sortKey === 'symbol') return a.symbol.localeCompare(b.symbol) * dir;
+      return ((a[this._sortKey] || 0) - (b[this._sortKey] || 0)) * dir;
     });
 
     // Stats
-    const nearATH = rows.filter(r => r.athDist > -10).length;
-    const crashed = rows.filter(r => r.athDist < -90).length;
-    const avgDist = rows.length ? rows.reduce((s, r) => s + r.athDist, 0) / rows.length : 0;
+    const nearHigh = rows.filter(r => r.highDist > -1).length;
+    const nearLow = rows.filter(r => r.lowDist < 1).length;
+    const avgRange = rows.length ? rows.reduce((s, r) => s + r.range, 0) / rows.length : 0;
 
     let h = '<style scoped>';
     h += '.at-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:0 0 8px}';
@@ -74,40 +87,29 @@ export class AthTrackerPanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="at-stats">';
-    h += `<div class="at-stat"><div class="at-stat-label">Near ATH (&lt;10%)</div><div class="at-stat-value val-up">${nearATH}</div></div>`;
-    h += `<div class="at-stat"><div class="at-stat-label">Avg Distance</div><div class="at-stat-value val-down">${avgDist.toFixed(1)}%</div></div>`;
-    h += `<div class="at-stat"><div class="at-stat-label">Crashed (&gt;90%)</div><div class="at-stat-value val-down">${crashed}</div></div>`;
+    h += `<div class="at-stat"><div class="at-stat-label">Near 24h High</div><div class="at-stat-value val-up">${nearHigh}</div></div>`;
+    h += `<div class="at-stat"><div class="at-stat-label">Avg 24h Range</div><div class="at-stat-value">${avgRange.toFixed(1)}%</div></div>`;
+    h += `<div class="at-stat"><div class="at-stat-label">Near 24h Low</div><div class="at-stat-value val-down">${nearLow}</div></div>`;
     h += '</div>';
 
     h += '<div class="at-bar">';
     h += `<input type="text" class="at-search form-input" placeholder="Filter..." value="${escapeHtml(this._search)}" style="width:100px">`;
-    h += '<select class="at-view form-select">';
-    h += `<option value="ath"${this._view === 'ath' ? ' selected' : ''}>From ATH</option>`;
-    h += `<option value="atl"${this._view === 'atl' ? ' selected' : ''}>From ATL</option>`;
-    h += '</select>';
     h += `<span style="font-size:10px;color:var(--text-muted)">${rows.length} coins</span>`;
     h += '</div>';
 
     const top30 = rows.slice(0, 30);
     const { renderTable } = window.mefaiTable;
-
-    const cols = this._view === 'atl' ? [
-      { key: 'symbol', label: 'Symbol', width: '60px' },
+    const cols = [
+      { key: 'symbol', label: 'Symbol', width: '55px' },
       { key: 'price', label: 'Price', align: 'right', render: v => '$' + formatPrice(v) },
-      { key: 'atl', label: 'ATL', align: 'right', render: v => v > 0 ? '$' + formatPrice(v) : '—' },
-      { key: 'atlDist', label: 'From ATL', align: 'right', render: v => {
-        return `<span class="val-up">+${v.toFixed(1)}%</span>`;
-      }},
-    ] : [
-      { key: 'symbol', label: 'Symbol', width: '60px' },
-      { key: 'price', label: 'Price', align: 'right', render: v => '$' + formatPrice(v) },
-      { key: 'ath', label: 'ATH', align: 'right', render: v => '$' + formatPrice(v) },
-      { key: 'athDist', label: 'From ATH', align: 'right', render: v => {
+      { key: 'highDist', label: 'From High', align: 'right', render: v => {
         const pct = Math.abs(v);
         const fillPct = Math.min(100, 100 - pct);
-        const color = pct < 20 ? '#0ecb81' : pct < 50 ? '#f0b90b' : '#f6465d';
-        return `<div class="at-dist-bar"><div class="at-dist-fill" style="width:${fillPct}%;background:${color}"></div></div> <span class="val-down">${v.toFixed(1)}%</span>`;
+        const color = pct < 1 ? '#0ecb81' : pct < 3 ? '#f0b90b' : '#f6465d';
+        return `<div class="at-dist-bar"><div class="at-dist-fill" style="width:${fillPct}%;background:${color}"></div></div> <span class="${v > -1 ? 'val-up' : 'val-down'}">${v.toFixed(2)}%</span>`;
       }},
+      { key: 'range', label: '24h Range', align: 'right', render: v => v.toFixed(1) + '%' },
+      { key: 'change', label: '24h%', align: 'right', render: v => formatPercent(v) },
     ];
     h += renderTable(cols, top30, { sortKey: this._sortKey, sortDir: this._sortDir });
     return h;
@@ -118,10 +120,6 @@ export class AthTrackerPanel extends BasePanel {
     if (!body) return;
     body.querySelector('.at-search')?.addEventListener('input', e => {
       this._search = e.target.value;
-      this._renderBody();
-    });
-    body.querySelector('.at-view')?.addEventListener('change', e => {
-      this._view = e.target.value;
       this._renderBody();
     });
     const { bindTableEvents } = window.mefaiTable;

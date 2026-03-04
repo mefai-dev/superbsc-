@@ -73,8 +73,8 @@ export class TraderDivergencePanel extends BasePanel {
 
     // Summary
     const maxDiv = rows[0];
-    const bullish = rows.filter(r => r.divergence > 5).length;
-    const bearish = rows.filter(r => r.divergence < -5).length;
+    const bullish = rows.filter(r => r.divergence > 2).length;
+    const bearish = rows.filter(r => r.divergence < -2).length;
     h += '<div class="td-cards">';
     h += `<div class="td-card"><div class="td-card-label">Top Bias Bullish</div><div class="td-card-value val-up">${bullish} coins</div></div>`;
     h += `<div class="td-card"><div class="td-card-label">Top Bias Bearish</div><div class="td-card-value val-down">${bearish} coins</div></div>`;
