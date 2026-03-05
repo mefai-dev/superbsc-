@@ -1,6 +1,6 @@
 # MEFAI Terminal
 
-**The most comprehensive open source crypto intelligence terminal for Binance: 48 analytical skills, 83 panels, real time AI market intelligence, and a conversational market assistant.**
+**The most comprehensive open source crypto intelligence terminal for Binance: 51 analytical skills + Market DNA 3D visualization, 86 panels, real time AI market intelligence, and a conversational market assistant.**
 
 A Bloomberg Terminal inspired, keyboard driven, multi panel interface that unifies Binance CEX, DeFi, derivatives, and on chain analytics into one coherent workflow. Zero framework. One command deploy.
 
@@ -172,12 +172,24 @@ From basic market data to advanced composite analysis: every skill runs independ
 | **Skill 46: Intelligence** | **AI Intelligence Feed** | **Real time natural language market analysis. Synthesizes all data streams into prioritized, human readable intelligence events.** |
 | **Skill 47: AI Assistant** | **Speak to Binance** | **Conversational AI chat: ask any question about any asset and get real time analysis from 9+ API endpoints. Commands: analyze, compare, summary, risk, opportunities, funding, health.** |
 
+### Insider Intelligence (48-50)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 48: Whale Footprint** | **Whale Footprint** | **Real-time $50K+ trade detection across 10 pairs. Dolphin/Whale/Mega classification, net pressure, live feed.** |
+| **Skill 49: Market Impact** | **Market Impact Simulator** | **Order book walk-through: enter trade size, see levels consumed, avg fill, slippage %, impact cost.** |
+| **Skill 50: Accumulation** | **Smart Accumulation** | **4-factor stealth buying detector (Volume Surge + OI Buildup + Stealth Mode + Buyer Aggression). Composite 0-100 score across 12 pairs.** |
+
+### 3D Visualization (51)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 51: Market DNA** | **[Market DNA Helix](/superbsc/dna)** | **3D double-helix visualization encoding 5 intelligence data sources into an interactive DNA structure. ~50 nodes with smart money, funding, regime, basis, and accumulation encoding. Three.js WebGL.** |
+
 ### Meta Skills
 | Skill | Panels | Description |
 |-------|--------|-------------|
 | All Skills | Auto Scanner, Smart Flow, All Skills | Automated multi API intelligence pipeline |
 
-## 24 Layout Presets
+## 25 Layout Presets
 
 | Layout | Panels | Use Case |
 |--------|--------|----------|
@@ -205,6 +217,7 @@ From basic market data to advanced composite analysis: every skill runs independ
 | Convergence | Sentiment + Cross Arb + Term + Anomaly + Cascade + Health | Convergence analysis |
 | **Smart Money** | **Intelligence Feed + Smart Money Radar + Taker + Divergence + OI + Sentiment** | **Institutional intelligence** |
 | **Speak to Binance** | **AI Market Assistant (full page)** | **Conversational AI analysis** |
+| **Insider** | **Whale Footprint + Market Impact Simulator + Smart Accumulation** | **Institutional-grade intelligence** |
 | Screener | Momentum + Volatility + Volume + ATH | Market screening |
 | Explorer | Product Explorer + Dominance + Airdrop Calendar + API Monitor | Exploration |
 
@@ -230,10 +243,10 @@ Open `http://localhost:8000`
 ```
 Browser (Vanilla JS + Web Components, zero dependencies)
     │
-    ├── 83 Panels (one file each, auto-registered)
-    ├── 48 Skills (independent analytical engines)
+    ├── 86 Panels (one file each, auto-registered)
+    ├── 51 Skills (independent analytical engines)
     ├── Intelligence Feed (cross-skill synthesis)
-    ├── 22 Layout Presets
+    ├── 25 Layout Presets
     ├── 10 Language Support (EN/ZH/TR/VI/HI/FA/DE/FR/AR/ES)
     └── Keyboard first UX (Command Palette, Search, Shortcuts)
     │
@@ -318,7 +331,9 @@ mefai-terminal/
 │       └── products.py        # Binance Products
 ├── frontend/
 │   ├── index.html             # Single page shell
+│   ├── dna.html               # Market DNA 3D visualization page
 │   ├── css/main.css           # All styles (responsive)
+│   ├── css/dna.css            # Market DNA standalone styles
 │   └── js/
 │       ├── app.js             # Panel registry, layouts, keyboard
 │       ├── api.js             # API client with cache
@@ -363,6 +378,10 @@ MEFAI Terminal's SKILL.md contributions to [binance-skills-hub](https://github.c
 | Cross Exchange Arbitrage Monitor | Arbitrage Intelligence | PR Ready |
 | Derivatives Sentiment Convergence | Sentiment Fusion | PR Ready |
 | Futures Term Structure Analyzer | Derivatives Analytics | PR Ready |
+| Whale Footprint Scanner | Real Time Trade Intelligence | PR Ready |
+| Market Impact Simulator | Order Book Analytics | PR Ready |
+| Smart Accumulation Detector | Institutional Flow Detection | PR Ready |
+| Market DNA Helix | 3D Market Intelligence Visualization | PR Ready |
 
 ## License
 
