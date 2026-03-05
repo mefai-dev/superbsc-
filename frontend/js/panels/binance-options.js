@@ -19,12 +19,14 @@ export class BinanceOptionsPanel extends BasePanel {
       window.mefaiApi.binanceOptions.openInterest('BTC'),
     ]);
 
-    const marks = markRes.status === 'fulfilled' && Array.isArray(markRes.value) ? markRes.value : [];
-    const oiData = oiRes.status === 'fulfilled' && Array.isArray(oiRes.value) ? oiRes.value : [];
-
-    if (marks.length === 0 && markRes.status === 'fulfilled' && markRes.value?.code) {
-      return { error: true, msg: 'Binance Options API geo-restricted' };
+    // Detect geo-restriction: proxy returns {error:true, status:451, detail:{code:0, msg:"..."}}
+    const markVal = markRes.status === 'fulfilled' ? markRes.value : null;
+    if (markVal && markVal.error === true && (markVal.status === 451 || markVal.detail?.code === 0)) {
+      return { geoBlocked: true };
     }
+
+    const marks = Array.isArray(markVal) ? markVal : [];
+    const oiData = oiRes.status === 'fulfilled' && Array.isArray(oiRes.value) ? oiRes.value : [];
 
     // Parse greeks from mark data
     let totalCallOI = 0, totalPutOI = 0;
@@ -75,7 +77,7 @@ export class BinanceOptionsPanel extends BasePanel {
 
   renderContent(data) {
     if (!data) return '<div class="panel-loading">No data</div>';
-    if (data.error) return `<div class="panel-loading" style="font-size:11px;color:var(--text-muted)">${escapeHtml(data.msg)}<br><br>This endpoint requires access from a non-restricted region.</div>`;
+    if (data.geoBlocked) return this._renderGeoBlocked();
     if (data.totalContracts === 0) return '<div class="panel-loading">No Binance options data available</div>';
 
     let h = '<style scoped>';
@@ -125,6 +127,34 @@ export class BinanceOptionsPanel extends BasePanel {
       h += '</tbody></table>';
     }
 
+    return h;
+  }
+
+  _renderGeoBlocked() {
+    let h = '<style scoped>';
+    h += '.bo-geo{text-align:center;padding:12px}';
+    h += '.bo-geo-icon{font-size:28px;margin-bottom:8px}';
+    h += '.bo-geo-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}';
+    h += '.bo-geo-sub{font-size:10px;color:var(--text-muted);margin-bottom:12px;line-height:1.5}';
+    h += '.bo-features{display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:left}';
+    h += '.bo-feat{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px}';
+    h += '.bo-feat-title{font-size:10px;font-weight:700;color:var(--accent)}';
+    h += '.bo-feat-desc{font-size:9px;color:var(--text-muted);margin-top:2px}';
+    h += '.bo-alt{margin-top:10px;padding:8px;background:rgba(0,200,83,.08);border:1px solid rgba(0,200,83,.2);border-radius:6px;font-size:10px;color:var(--text-muted)}';
+    h += '.bo-alt a{color:var(--accent);cursor:pointer;text-decoration:underline}';
+    h += '</style>';
+    h += '<div class="bo-geo">';
+    h += '<div class="bo-geo-icon">&#127760;</div>';
+    h += '<div class="bo-geo-title">Binance Options — Region Restricted</div>';
+    h += '<div class="bo-geo-sub">Binance European Options API (eapi.binance.com) is not available in this server region.<br>When accessible, this panel provides:</div>';
+    h += '<div class="bo-features">';
+    h += '<div class="bo-feat"><div class="bo-feat-title">Options Greeks</div><div class="bo-feat-desc">Delta, Gamma, Theta, Vega, IV for all BTC/ETH contracts</div></div>';
+    h += '<div class="bo-feat"><div class="bo-feat-title">Put/Call Ratio</div><div class="bo-feat-desc">Aggregate OI ratio to gauge market sentiment</div></div>';
+    h += '<div class="bo-feat"><div class="bo-feat-title">OI by Expiry</div><div class="bo-feat-desc">Open interest distribution across expiration dates</div></div>';
+    h += '<div class="bo-feat"><div class="bo-feat-title">Max Pain</div><div class="bo-feat-desc">Strike price where most options expire worthless</div></div>';
+    h += '</div>';
+    h += '<div class="bo-alt">For live options data, use the <a onclick="document.querySelector(\'[data-layout=bitcoin]\')?.click()">Deribit Options</a> panel which covers BTC &amp; ETH options globally.</div>';
+    h += '</div>';
     return h;
   }
 
