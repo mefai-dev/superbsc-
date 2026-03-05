@@ -86,6 +86,7 @@ const panelRegistry = {
   'anomaly-composite': 'anomaly-composite-panel',
   'momentum-cascade': 'momentum-cascade-panel',
   'microstructure-health': 'microstructure-health-panel',
+  'smart-money-radar': 'smart-money-radar-panel',
 };
 
 // Layout presets
@@ -205,6 +206,11 @@ const layouts = {
     grid: 'grid-2x3',
     panels: ['sentiment-convergence', 'cross-exchange-arb', 'term-structure', 'anomaly-composite', 'momentum-cascade', 'microstructure-health'],
   },
+  'smart-money': {
+    name: 'Smart Money',
+    grid: 'grid-2x3',
+    panels: ['smart-money-radar', 'taker-pressure', 'trader-divergence', 'funding-scanner', 'oi-surge', 'sentiment-convergence'],
+  },
   'screener': {
     name: 'Screener',
     grid: 'grid-2x2',
@@ -240,6 +246,7 @@ async function loadPanels() {
     'whale-tracker',
     'cross-exchange-arb', 'sentiment-convergence', 'term-structure',
     'anomaly-composite', 'momentum-cascade', 'microstructure-health',
+    'smart-money-radar',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
