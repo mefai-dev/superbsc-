@@ -88,6 +88,7 @@ const panelRegistry = {
   'microstructure-health': 'microstructure-health-panel',
   'smart-money-radar': 'smart-money-radar-panel',
   'intelligence-feed': 'intelligence-feed-panel',
+  'intelligence-chat': 'intelligence-chat-panel',
 };
 
 // Layout presets
@@ -207,6 +208,11 @@ const layouts = {
     grid: 'grid-2x3',
     panels: ['sentiment-convergence', 'cross-exchange-arb', 'term-structure', 'anomaly-composite', 'momentum-cascade', 'microstructure-health'],
   },
+  'speak': {
+    name: 'Speak to Binance',
+    grid: 'grid-1x2',
+    panels: ['intelligence-chat', 'smart-money-radar'],
+  },
   'smart-money': {
     name: 'Smart Money',
     grid: 'grid-2x3',
@@ -247,7 +253,7 @@ async function loadPanels() {
     'whale-tracker',
     'cross-exchange-arb', 'sentiment-convergence', 'term-structure',
     'anomaly-composite', 'momentum-cascade', 'microstructure-health',
-    'smart-money-radar', 'intelligence-feed',
+    'smart-money-radar', 'intelligence-feed', 'intelligence-chat',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
