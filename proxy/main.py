@@ -4,6 +4,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -29,6 +30,7 @@ from proxy.routes import (
     earn,
     margin,
     products,
+    bnbchain,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -36,12 +38,15 @@ from proxy.config import settings
 
 logger = logging.getLogger("mefai")
 
-# Rate limiter — 60 requests/minute per IP
-limiter = Limiter(key_func=get_remote_address, default_limits=["60/minute"])
+# Rate limiter — 200 requests/minute per IP (generous for active trading)
+limiter = Limiter(key_func=get_remote_address, default_limits=["200/minute"])
 
 app = FastAPI(title="MEFAI Terminal Proxy", version="1.0.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# GZip — compress responses > 500 bytes (huge savings on JSON)
+app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # CORS — no credentials needed (no cookies/auth), so use wildcard safely
 app.add_middleware(
@@ -82,6 +87,9 @@ app.include_router(
 app.include_router(earn.router, prefix="/api/earn", tags=["Skill 17: Earn"])
 app.include_router(margin.router, prefix="/api/margin", tags=["Skill 18: Margin"])
 app.include_router(products.router, prefix="/api/products", tags=["Skill 19: Products"])
+app.include_router(
+    bnbchain.router, prefix="/api/bnbchain", tags=["Skill 20: BNB Chain"]
+)
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")

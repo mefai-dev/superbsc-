@@ -89,6 +89,9 @@ const panelRegistry = {
   'smart-money-radar': 'smart-money-radar-panel',
   'intelligence-feed': 'intelligence-feed-panel',
   'intelligence-chat': 'intelligence-chat-panel',
+  'tx-explorer': 'tx-explorer-panel',
+  'nft-portfolio': 'nft-portfolio-panel',
+  'greenfield-explorer': 'greenfield-explorer-panel',
 };
 
 // Layout presets
@@ -223,6 +226,11 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['momentum-screener', 'volatility-rank', 'volume-profile', 'ath-tracker'],
   },
+  'bnb-chain': {
+    name: 'BNB Chain',
+    grid: 'grid-2x2',
+    panels: ['tx-explorer', 'nft-portfolio', 'greenfield-explorer', 'wallet-risk-score'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -254,6 +262,7 @@ async function loadPanels() {
     'cross-exchange-arb', 'sentiment-convergence', 'term-structure',
     'anomaly-composite', 'momentum-cascade', 'microstructure-health',
     'smart-money-radar', 'intelligence-feed', 'intelligence-chat',
+    'tx-explorer', 'nft-portfolio', 'greenfield-explorer',
   ];
   await Promise.allSettled(
     panelModules.map(name =>

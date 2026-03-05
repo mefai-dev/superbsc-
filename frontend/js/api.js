@@ -87,13 +87,18 @@ async function get(path, params = {}, ttl = 30000) {
 }
 
 async function _fetchGet(url) {
+  const ac = new AbortController();
+  const tid = setTimeout(() => ac.abort(), 15000);
   try {
-    const r = await fetch(url);
+    const r = await fetch(url, { signal: ac.signal });
     let d;
     try { d = await r.json(); } catch { return { error: true, status: r.status }; }
     if (r.ok && !d?.error) _cs(url, d);
     return d;
-  } finally { _inflight.delete(url); }
+  } catch(e) {
+    if (e.name === 'AbortError') return { error: true, status: 408, detail: 'timeout' };
+    throw e;
+  } finally { clearTimeout(tid); _inflight.delete(url); }
 }
 
 async function post(path, body = {}, ttl = 30000) {
@@ -119,13 +124,18 @@ async function post(path, body = {}, ttl = 30000) {
 }
 
 async function _fetchPost(url, body, key) {
+  const ac = new AbortController();
+  const tid = setTimeout(() => ac.abort(), 15000);
   try {
-    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ac.signal });
     let d;
     try { d = await r.json(); } catch { return { error: true, status: r.status }; }
     if (r.ok && !d?.error) _cs(key, d);
     return d;
-  } finally { _inflight.delete(key); }
+  } catch(e) {
+    if (e.name === 'AbortError') return { error: true, status: 408, detail: 'timeout' };
+    throw e;
+  } finally { clearTimeout(tid); _inflight.delete(key); }
 }
 
 // ── Public API ───────────────────────────────────────────────────────
@@ -261,6 +271,19 @@ export const api = {
   products: {
     symbols: () => get('/api/products/symbols', {}, 120000),
     list: () => get('/api/products/list', {}, 120000),
+  },
+  // Skill 20: BNB Chain
+  bnbchain: {
+    blockNumber: () => get('/api/bnbchain/block-number', {}, 5000),
+    block: (n) => get('/api/bnbchain/block', { number: n || 'latest' }, 15000),
+    tx: (hash) => get('/api/bnbchain/tx', { hash }, 60000),
+    receipt: (hash) => get('/api/bnbchain/receipt', { hash }, 60000),
+    balance: (addr) => get('/api/bnbchain/balance', { address: addr }, 15000),
+    gasPrice: () => get('/api/bnbchain/gas-price', {}, 10000),
+    nftBalance: (owner, contract) => get('/api/bnbchain/nft-balance', { owner, contract }, 30000),
+    nftTokens: (owner, contract, count) => get('/api/bnbchain/nft-tokens', { owner, contract, count: count || 10 }, 60000),
+    greenfieldStatus: () => get('/api/bnbchain/greenfield/status', {}, 30000),
+    greenfieldBuckets: (addr) => get('/api/bnbchain/greenfield/buckets', { address: addr }, 60000),
   },
   health: () => get('/health', {}, 30000),
 };
