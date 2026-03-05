@@ -1,6 +1,6 @@
 """Bitcoin macro cycle indicators — Pi Cycle, Rainbow, Golden Ratio, M2."""
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter
 from proxy.cache import fetch_json
 
 router = APIRouter()
