@@ -125,6 +125,14 @@ async def index():
     )
 
 
+@app.get("/dna")
+async def dna_page():
+    return FileResponse(
+        os.path.join(frontend_dir, "dna.html"),
+        headers={"Cache-Control": "no-cache, must-revalidate"},
+    )
+
+
 # All warmup URLs
 def _warmup_tasks():
     WEB3 = settings.WEB3_BASE

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0e11">
+  <title>Market DNA — Binance Skills Terminal</title>
+  <base href="/superbsc/">
+  <link rel="stylesheet" href="static/css/dna.css?v=7">
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="hdr">
+    <div class="hdr-l">
+      <a href="/superbsc/" class="logo">
+        <svg width="20" height="20" viewBox="0 0 126.61 126.61"><g fill="#f0b90b"><polygon points="38.73,53.2 63.3,28.63 87.88,53.21 102.13,38.96 63.3,0.14 24.48,38.96"/><polygon points="0.14,63.31 14.39,49.06 28.63,63.31 14.39,77.55"/><polygon points="38.73,73.41 63.3,97.98 87.88,73.4 102.14,87.64 102.13,87.66 63.3,126.48 24.48,87.66 24.46,87.64"/><polygon points="97.98,63.31 112.23,49.07 126.47,63.31 112.23,77.56"/><polygon points="77.83,63.3 63.3,48.78 52.94,59.14 51.79,60.29 48.78,63.3 63.3,77.83 77.84,63.31 77.83,63.3"/></g></svg>
+        Binance Skills
+      </a>
+      <span class="hdr-nav active">MARKET DNA</span>
+      <a href="/superbsc/" class="hdr-nav">Terminal</a>
+    </div>
+    <div class="hdr-r">
+      <span class="hdr-meta" id="sym-count">—</span>
+      <span class="hdr-meta" id="last-update">—</span>
+      <span class="dot ok" id="data-dot"></span>
+      <a href="/superbsc/" class="hdr-btn">Back to Terminal</a>
+    </div>
+  </header>
+
+  <!-- Metrics -->
+  <div id="metrics">
+    <div class="met"><span class="met-k">COMPOSITE</span><span class="met-v" id="v-comp">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">FUNDING</span><span class="met-v" id="v-fund">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">BULL</span><span class="met-v up" id="v-bull">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">BEAR</span><span class="met-v dn" id="v-bear">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">REGIME</span><span class="met-v" id="v-regime">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">RSI</span><span class="met-v" id="v-rsi">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">MACD</span><span class="met-v" id="v-macd">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">ATR</span><span class="met-v" id="v-atr">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">VOL</span><span class="met-v" id="v-vol">—</span></div>
+    <i class="sep"></i>
+    <div class="met"><span class="met-k">BASIS</span><span class="met-v" id="v-basis">—</span></div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+    <!-- Left Panel -->
+    <div class="side-panel" id="sp-left">
+      <div class="sp-head"><span class="sp-title">SMART MONEY FLOW</span><span class="sp-badge">LIVE</span></div>
+      <div class="sp-body sp-half" id="feed-left"></div>
+      <div class="sp-head"><span class="sp-title">BUY / SELL SIGNALS</span><span class="sp-badge sig-badge">SCAN</span></div>
+      <div class="sp-body sp-half" id="feed-signals"></div>
+    </div>
+
+    <!-- Canvas -->
+    <div id="canvas-wrap">
+      <div id="loader" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;background:var(--bg)">
+        <svg width="40" height="40" viewBox="0 0 126.61 126.61" style="animation:spin 2s linear infinite"><g fill="#f0b90b"><polygon points="38.73,53.2 63.3,28.63 87.88,53.21 102.13,38.96 63.3,0.14 24.48,38.96"/><polygon points="0.14,63.31 14.39,49.06 28.63,63.31 14.39,77.55"/><polygon points="38.73,73.41 63.3,97.98 87.88,73.4 102.14,87.64 102.13,87.66 63.3,126.48 24.48,87.66 24.46,87.64"/><polygon points="97.98,63.31 112.23,49.07 126.47,63.31 112.23,77.56"/><polygon points="77.83,63.3 63.3,48.78 52.94,59.14 51.79,60.29 48.78,63.3 63.3,77.83 77.84,63.31 77.83,63.3"/></g></svg>
+        <div style="margin-top:16px;font-size:11px;color:var(--txm);letter-spacing:1px">LOADING MARKET DNA...</div>
+      </div>
+      <style>@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}</style>
+      <canvas id="cv"></canvas>
+      <div id="tip" class="tip hidden"></div>
+      <!-- Data stream lines -->
+      <div class="streams">
+        <div class="stl stl1"></div><div class="stl stl2"></div><div class="stl stl3"></div>
+        <div class="stl stl4"></div><div class="stl stl5"></div><div class="stl stl6"></div>
+      </div>
+      <!-- Corner overlays -->
+      <div class="cov cov-tl"><div class="cov-h">REGIME</div><div class="cov-b" id="cov-reg"></div></div>
+      <div class="cov cov-tr"><div class="cov-h">FUNDING</div><div class="cov-b" id="cov-fund"></div></div>
+      <div class="cov cov-bl"><div class="cov-h">BASIS</div><div class="cov-b" id="cov-bas"></div></div>
+      <div class="cov cov-br"><div class="cov-h">RSI / MACD</div><div class="cov-b" id="cov-rsi"></div></div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="side-panel" id="sp-right">
+      <div class="sp-head"><span class="sp-title">ACCUMULATION</span><span class="sp-badge">SCAN</span></div>
+      <div class="sp-body" id="feed-right"></div>
+    </div>
+  </div>
+
+  <!-- Detail Sidebar -->
+  <div id="detail" class="detail-panel">
+    <div class="sp-head"><span class="sp-title" id="det-title">—</span><button class="det-x" id="det-close">&times;</button></div>
+    <div class="sp-body" id="det-body"></div>
+  </div>
+
+  <!-- Mobile -->
+  <div id="mob" class="hidden"></div>
+
+  <!-- Status Bar -->
+  <footer id="sbar">
+    <div class="sb-l"><span class="dot ok"></span><span>Market DNA</span><span class="sb-sep">|</span><span id="sb-sym">0 symbols</span><span class="sb-sep">|</span><span>30s refresh</span></div>
+    <div class="sb-r"><span id="sb-time">—</span></div>
+  </footer>
+
+  <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.162.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.162.0/examples/jsm/"}}</script>
+  <script type="module" src="static/js/dna.js?v=7"></script>
+</body>
+</html>
