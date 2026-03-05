@@ -240,7 +240,7 @@ export class SmartMoneyRadarPanel extends BasePanel {
         render: v => `<span class="smr-dir smr-${v}">${v}</span>` },
       { key: 'smartScore', label: 'Score', align: 'center', width: '85px',
         render: (v, row) => {
-          const color = v >= 60 ? '#0ecb81' : v >= 40 ? '#3b82f6' : v >= 25 ? '#f0b90b' : '#555';
+          const color = v >= 60 ? '#0ecb81' : v >= 40 ? '#3b82f6' : v >= 25 ? '#f0b90b' : '#f6465d';
           return `<div class="smr-score-bar"><div class="smr-score-fill" style="width:${v}%;background:${color}"></div></div><span class="smr-score-num" style="color:${color}">${v}</span>`;
         }},
       { key: 'regime', label: 'Regime', align: 'center', width: '70px',
