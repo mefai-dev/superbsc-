@@ -179,7 +179,7 @@ export class AlphaRadarPanel extends BasePanel {
     h += `.alpha-gold{color:#f0b90b;text-shadow:0 0 8px rgba(240,185,11,0.5)}`;
     h += `.alpha-green{color:#0ecb81}`;
     h += `.alpha-yellow{color:#f0b90b}`;
-    h += `.alpha-gray{color:var(--text-muted)}`;
+    h += `.alpha-gray{color:#f6465d}`;
     h += `.src-badge{display:inline-block;font-size:9px;font-weight:700;padding:1px 4px;border-radius:3px;margin-right:2px;color:#0b0e11}`;
     h += '</style>';
 

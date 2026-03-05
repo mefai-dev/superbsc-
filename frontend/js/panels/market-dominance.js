@@ -75,12 +75,12 @@ export class MarketDominancePanel extends BasePanel {
     if (domEntries.length) {
       let used = 0;
       for (const [key, pct] of domEntries) {
-        const color = domColors[key] || '#555';
+        const color = domColors[key] || '#6366f1';
         h += `<div class="md-seg" style="width:${pct}%;background:${color}" title="${key.toUpperCase()}: ${pct.toFixed(1)}%">${key.toUpperCase()} ${pct.toFixed(1)}%</div>`;
         used += pct;
       }
       const otherPct = 100 - used;
-      if (otherPct > 1) h += `<div class="md-seg" style="width:${otherPct}%;background:#555">Other ${otherPct.toFixed(1)}%</div>`;
+      if (otherPct > 1) h += `<div class="md-seg" style="width:${otherPct}%;background:#6366f1">Other ${otherPct.toFixed(1)}%</div>`;
     } else {
       // Fallback: compute from Binance market caps
       for (let i = 0; i < top5.length; i++) {

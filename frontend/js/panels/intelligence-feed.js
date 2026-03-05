@@ -268,7 +268,7 @@ export class IntelligenceFeedPanel extends BasePanel {
     h += '.if-event-CRITICAL{border-left-color:#f6465d;background:linear-gradient(90deg,#f6465d08,var(--bg-secondary))}';
     h += '.if-event-HIGH{border-left-color:#f0b90b;background:linear-gradient(90deg,#f0b90b08,var(--bg-secondary))}';
     h += '.if-event-MEDIUM{border-left-color:#3b82f6}';
-    h += '.if-event-LOW{border-left-color:#555}';
+    h += '.if-event-LOW{border-left-color:#3b82f6}';
 
     h += '.if-event-header{display:flex;align-items:center;gap:6px;margin-bottom:4px}';
     h += '.if-sev{font-size:7px;font-weight:800;padding:1px 5px;border-radius:2px;text-transform:uppercase}';

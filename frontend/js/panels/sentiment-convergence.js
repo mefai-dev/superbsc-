@@ -155,7 +155,7 @@ export class SentimentConvergencePanel extends BasePanel {
         const sigs = [row.retailSignal, row.topAcctSignal, row.topPosSignal, row.takerSignal, row.fundingSignal, row.oiSignal];
         let dots = '<div class="sc-dots">';
         for (const s of sigs) {
-          const c = s > 0.05 ? '#0ecb81' : s < -0.05 ? '#f6465d' : '#555';
+          const c = s > 0.05 ? '#0ecb81' : s < -0.05 ? '#f6465d' : '#f0b90b';
           dots += `<div class="sc-dot" style="background:${c}" title="${s.toFixed(2)}"></div>`;
         }
         dots += '</div>';
