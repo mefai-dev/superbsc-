@@ -2,6 +2,18 @@
 // Interactive chat interface with token sidebar, 14 commands, and natural language routing
 import { BasePanel } from '../components/base-panel.js';
 
+// Chat translations per language
+const chatLang = {
+  en: { title: 'Speak to Binance', sub: 'AI Market Intelligence powered by real time Binance data', desc: 'I analyze <b>6 Binance exclusive data streams</b> that no other exchange provides: institutional positioning, retail sentiment, taker pressure, funding rates, open interest, and microstructure health.', analysis: 'Analysis', strategy: 'Strategy', intelligence: 'Intelligence', education: 'Education', markets: 'Markets', filter: 'Filter tokens...', placeholder: 'Ask anything... analyze BTC, portfolio, dca ETH, learn funding', ask: 'Ask', analyzing: 'Analyzing live Binance data...', price: 'Price', change24h: '24h Change', high_low: '24h High/Low', volume: 'Volume', smart_money: 'Smart Money Analysis', top_traders: 'Top Traders', retail: 'Retail', divergence_label: 'Divergence', factors: 'Factors Aligned', regime: 'Regime', derivatives: 'Derivatives', funding_rate: 'Funding Rate', taker_ratio: 'Taker Ratio', oi_change: 'OI Change', oi_value: 'OI Value', microstructure: 'Microstructure', spread: 'Spread', sf_gap: 'Spot/Futures Gap', anomalies: 'Active Anomalies', verdict: 'AI Verdict', deep_analysis: 'Deep Analysis', overview: 'Overview', market_bias: 'Market Bias', avg_score: 'Avg Smart Score', bullish: 'Bullish', bearish: 'Bearish', strongest: 'Strongest Signals', high_risk: 'High Risk', safe: 'Safe', no_risk: 'No high risk assets detected. Market structure is healthy.', top_opps: 'Top Opportunities', no_opps: 'No strong signals right now. Market is indecisive. Wait for factor alignment.', funding_overview: 'Funding Rate Overview', funding_sort: 'Sorted by Funding Rate (lowest = contrarian bullish)', health_title: 'Microstructure Health', portfolio_title: 'AI Portfolio Builder', allocation: 'Recommended Allocation', portfolio_metrics: 'Portfolio Metrics', risk_level: 'Risk Level', diversification: 'Diversification', avg_health: 'Avg Health', bull_assets: 'Bullish Assets', dca_title: 'DCA Analysis', dca_range: '24h Range', range_pos: 'Range Position', dca_factors: 'DCA Factors', dca_strategy: 'Strategy', whale_title: 'Whale Activity Scanner', whale_sub: 'Highest Institutional Activity', oi_surges: 'OI Surges (Position Building)', momentum_title: 'Momentum Scanner', bull_momentum: 'Strongest Bullish', bear_momentum: 'Strongest Bearish', div_title: 'Smart vs Retail Divergence', div_sub: 'Biggest Disagreements', div_desc: 'When top traders and retail disagree, top traders historically win. Large gaps = high conviction.', academy: 'Crypto Academy', lessons: 'Available Lessons', lesson_desc: 'Each lesson explains the concept and shows you how to apply it with live data.', all_commands: 'All Commands', summary_cmd: 'Market Summary', risk_check: 'Risk Check', strong_buy: 'STRONG BUY ZONE', acceptable: 'ACCEPTABLE ENTRY', wait: 'WAIT IF POSSIBLE', avoid: 'AVOID FOR NOW', buyers_dom: 'buyers dominant', sellers_dom: 'sellers dominant', balanced: 'balanced', near_low: 'near low', near_high: 'near high', mid_range: 'mid range', long: 'Long', short: 'Short', risk_assessment: 'Risk Assessment', no_data: 'Could not find data for', smart_score: 'Smart Score', signal_label: 'Signal', error_retry: 'Please try again.', try_symbols: 'Try: BTC, ETH, SOL, BNB...', type_any: 'Or just type any symbol name for analysis. You can also click any token in the sidebar.', health: 'Health', dca_buy_verdict: 'Multiple factors align for a favorable entry. Consider adding to your position.', dca_ok_verdict: 'Conditions are acceptable but not ideal. A smaller position with reserves for dips would be prudent.', dca_wait_verdict: 'Warning signals active. Use smaller than normal size if you must enter. Better entries may come soon.', dca_avoid_verdict: 'Conditions unfavorable. Smart money, funding, and/or microstructure suggest elevated risk. Wait for improvement.', compare_verdict: 'shows stronger institutional interest with a Smart Score of', v_strong: 'Strong', v_moderate: 'Moderate', v_no_signal: 'No clear signal: factors are mixed. Wait for better alignment before positioning.', v_not_high: 'Not high conviction yet.', v_smart_lead: 'Top traders are more bullish than retail. Smart money is leading.', v_neg_fund: 'Negative funding means longs are getting paid to hold.', v_rising_oi: 'Rising OI confirms new positions with conviction.', v_bear_lead: 'Top traders are more bearish than retail. Potential squeeze incoming.', v_crowded: 'Elevated funding suggests crowded longs.', v_exec_good: 'Execution environment is excellent', v_exec_poor: 'Caution: poor microstructure. Use smaller size.', v_anomalies: 'anomaly signals active. Elevated market activity.' },
+  tr: { title: 'Binance ile Konus', sub: 'Gercek zamanli Binance verisiyle yapay zeka piyasa analizi', desc: '<b>6 Binance\'a ozel veri akisi</b> ile analiz yapiyorum: kurumsal pozisyonlama, perakende duyarlilik, alici baskisi, fonlama oranlari, acik pozisyon ve mikroyapi sagligi.', analysis: 'Analiz', strategy: 'Strateji', intelligence: 'Istihbarat', education: 'Egitim', markets: 'Piyasalar', filter: 'Token ara...', placeholder: 'Herhangi bir sey sorun... analyze BTC, portfolio, dca ETH, learn funding', ask: 'Sor', analyzing: 'Canli Binance verileri analiz ediliyor...', price: 'Fiyat', change24h: '24s Degisim', high_low: '24s Yuksek/Dusuk', volume: 'Hacim', smart_money: 'Akilli Para Analizi', top_traders: 'Ust Traderlar', retail: 'Perakende', divergence_label: 'Sapma', factors: 'Faktor Uyumu', regime: 'Rejim', derivatives: 'Turevler', funding_rate: 'Fonlama Orani', taker_ratio: 'Alici Orani', oi_change: 'OI Degisim', oi_value: 'OI Deger', microstructure: 'Mikroyapi', spread: 'Spread', sf_gap: 'Spot/Vadeli Farki', anomalies: 'Aktif Anomaliler', verdict: 'Yapay Zeka Yorumu', deep_analysis: 'Derin Analiz', overview: 'Genel Bakis', market_bias: 'Piyasa Yonelimi', avg_score: 'Ort. Akilli Para Skoru', bullish: 'Yukselis', bearish: 'Dusus', strongest: 'En Guclu Sinyaller', high_risk: 'Yuksek Risk', safe: 'Guvenli', no_risk: 'Yuksek riskli varlik tespit edilmedi. Piyasa yapisi saglikli.', top_opps: 'En Iyi Firsatlar', no_opps: 'Su an guclu sinyal yok. Piyasa kararsiz. Faktor uyumu bekleyin.', funding_overview: 'Fonlama Orani Tablosu', funding_sort: 'Fonlama oranina gore sirali (en dusuk = kontrarian yukselis)', health_title: 'Mikroyapi Sagligi', portfolio_title: 'Yapay Zeka Portfoy Olusturucu', allocation: 'Onerilen Dagilim', portfolio_metrics: 'Portfoy Metrikleri', risk_level: 'Risk Seviyesi', diversification: 'Cesitlendirme', avg_health: 'Ort. Saglik', bull_assets: 'Yukselis Varliklari', dca_title: 'DCA Analizi', dca_range: '24s Aralik', range_pos: 'Aralik Pozisyonu', dca_factors: 'DCA Faktorleri', dca_strategy: 'Strateji', whale_title: 'Balina Aktivite Tarayicisi', whale_sub: 'En Yuksek Kurumsal Aktivite', oi_surges: 'OI Artislari (Pozisyon Olusturma)', momentum_title: 'Momentum Tarayici', bull_momentum: 'En Guclu Yukselis', bear_momentum: 'En Guclu Dusus', div_title: 'Akilli Para vs Perakende Sapmasi', div_sub: 'En Buyuk Uyumsuzluklar', div_desc: 'Ust traderlar ve perakende ayrildiginda, ust traderlar tarihsel olarak kazanir. Buyuk farklar = yuksek guven.', academy: 'Kripto Akademi', lessons: 'Mevcut Dersler', lesson_desc: 'Her ders konuyu aciklar ve canli verilerle nasil uygulanacagini gosterir.', all_commands: 'Tum Komutlar', summary_cmd: 'Piyasa Ozeti', risk_check: 'Risk Kontrolu', strong_buy: 'GUCLU ALIS BOLGESI', acceptable: 'KABUL EDILEBILIR GIRIS', wait: 'MUMKUNSE BEKLEYIN', avoid: 'SIMDILIK KAÇININ', buyers_dom: 'alicilar baskin', sellers_dom: 'saticilar baskin', balanced: 'dengeli', near_low: 'dusuge yakin', near_high: 'yuksege yakin', mid_range: 'orta aralik', long: 'Uzun', short: 'Kisa', risk_assessment: 'Risk Degerlendirmesi', no_data: 'Veri bulunamadi', smart_score: 'Akilli Skor', signal_label: 'Sinyal', error_retry: 'Tekrar deneyin.', try_symbols: 'Deneyin: BTC, ETH, SOL, BNB...', type_any: 'Herhangi bir sembol yazarak analiz yapabilirsiniz. Yan panelden token secebilirsiniz.', health: 'Saglik', dca_buy_verdict: 'Birden fazla faktor olumlu girise isaret ediyor. Pozisyon eklemeyi dusunebilirsiniz.', dca_ok_verdict: 'Kosullar kabul edilebilir ama ideal degil. Dususler icin rezerv birakarak kucuk pozisyon almak akillica olur.', dca_wait_verdict: 'Uyari sinyalleri aktif. Giris yapmak zorundaysaniz normalden kucuk boy kullanin.', dca_avoid_verdict: 'Kosullar olumsuz. Akilli para, fonlama ve/veya mikroyapi yuksek risk isaret ediyor. Iyilesme bekleyin.', compare_verdict: 'daha guclu kurumsal ilgi gosteriyor, Akilli Skor:', v_strong: 'Guclu', v_moderate: 'Orta', v_no_signal: 'Net sinyal yok: faktorler karisik. Pozisyon almadan once daha iyi uyum bekleyin.', v_not_high: 'Henuz yuksek guvenilirlik yok.', v_smart_lead: 'Ust traderlar perakendeden daha yukselisci. Akilli para liderlik ediyor.', v_neg_fund: 'Negatif fonlama long pozisyonlarin odeme aldigini gosteriyor.', v_rising_oi: 'Artan OI yeni pozisyonlarin guvenle acildigini dogruluyor.', v_bear_lead: 'Ust traderlar perakendeden daha dususcu. Potansiyel sikistirma riski.', v_crowded: 'Yuksek fonlama kalabalik long pozisyon oldugunu gosteriyor.', v_exec_good: 'Islem ortami mukemmel', v_exec_poor: 'Dikkat: zayif mikroyapi. Daha kucuk boyut kullanin.', v_anomalies: 'anomali sinyali aktif. Yuksek piyasa aktivitesi.' },
+  zh: { title: 'Speak to Binance', sub: '由实时币安数据驱动的AI市场情报', markets: 'Markets', filter: 'Filter...', placeholder: 'Ask anything...', ask: 'Ask', analyzing: 'Analyzing...', price: '价格', change24h: '24h变化', volume: '成交量', smart_money: '聪明钱分析', verdict: 'AI判断', deep_analysis: '深度分析', overview: '概览', strongest: '最强信号', portfolio_title: 'AI投资组合', academy: '加密学院' },
+};
+// Fallback getter
+function _cl(key) {
+  const lang = window.mefaiI18n?.getLang?.() || 'en';
+  return chatLang[lang]?.[key] || chatLang.en[key] || key;
+}
+
 export class IntelligenceChatPanel extends BasePanel {
   static skill = 'Skill 47';
   static defaultTitle = 'Speak to Binance';
@@ -26,23 +38,23 @@ export class IntelligenceChatPanel extends BasePanel {
     this._messages.push({
       role: 'ai',
       text: `<div class="ic-welcome">
-<div class="ic-welcome-title">Speak to Binance</div>
-<div class="ic-welcome-sub">AI Market Intelligence powered by real time Binance data</div>
-<div class="ic-welcome-desc">I analyze <b>6 Binance exclusive data streams</b> that no other exchange provides: institutional positioning, retail sentiment, taker pressure, funding rates, open interest, and microstructure health.</div>
+<div class="ic-welcome-title">${_cl('title')}</div>
+<div class="ic-welcome-sub">${_cl('sub')}</div>
+<div class="ic-welcome-desc">${_cl('desc')}</div>
 <div class="ic-welcome-cats">
-<div class="ic-cat"><div class="ic-cat-title">Analysis</div><div class="ic-cat-items">analyze, compare, summary</div></div>
-<div class="ic-cat"><div class="ic-cat-title">Strategy</div><div class="ic-cat-items">portfolio, dca, momentum</div></div>
-<div class="ic-cat"><div class="ic-cat-title">Intelligence</div><div class="ic-cat-items">whale, divergence, risk</div></div>
-<div class="ic-cat"><div class="ic-cat-title">Education</div><div class="ic-cat-items">learn funding, learn oi</div></div>
+<div class="ic-cat"><div class="ic-cat-title">${_cl('analysis')}</div><div class="ic-cat-items">analyze, compare, summary</div></div>
+<div class="ic-cat"><div class="ic-cat-title">${_cl('strategy')}</div><div class="ic-cat-items">portfolio, dca, momentum</div></div>
+<div class="ic-cat"><div class="ic-cat-title">${_cl('intelligence')}</div><div class="ic-cat-items">whale, divergence, risk</div></div>
+<div class="ic-cat"><div class="ic-cat-title">${_cl('education')}</div><div class="ic-cat-items">learn funding, learn oi</div></div>
 </div>
 </div>`,
       actions: [
         { label: 'Analyze BTC', cmd: 'analyze BTC' },
-        { label: 'Market Summary', cmd: 'summary' },
-        { label: 'Portfolio Builder', cmd: 'portfolio' },
+        { label: _cl('summary_cmd'), cmd: 'summary' },
+        { label: _cl('portfolio_title'), cmd: 'portfolio' },
         { label: 'DCA Bitcoin', cmd: 'dca BTC' },
-        { label: 'Whale Scanner', cmd: 'whale' },
-        { label: 'Crypto Academy', cmd: 'learn' },
+        { label: _cl('whale_title'), cmd: 'whale' },
+        { label: _cl('academy'), cmd: 'learn' },
       ],
     });
   }
@@ -236,7 +248,7 @@ export class IntelligenceChatPanel extends BasePanel {
 
       this._messages.push(response);
     } catch (e) {
-      this._messages.push({ role: 'ai', text: `Error: ${e.message}. Please try again.` });
+      this._messages.push({ role: 'ai', text: `Error: ${e.message}. ${_cl('error_retry')}` });
     }
 
     this._isThinking = false;
@@ -247,84 +259,84 @@ export class IntelligenceChatPanel extends BasePanel {
   async _cmdAnalyze(sym) {
     const data = await this._fetchSymbolData([sym]);
     const d = data[0];
-    if (!d || !d.price) return { role: 'ai', text: `Could not find data for <b>${sym.toUpperCase()}</b>. Try: BTC, ETH, SOL, BNB...` };
+    if (!d || !d.price) return { role: 'ai', text: `${_cl('no_data')} <b>${sym.toUpperCase()}</b>. ${_cl('try_symbols')}` };
 
     const scoreColor = d.smartScore >= 60 ? '#0ecb81' : d.smartScore >= 40 ? '#3b82f6' : d.smartScore >= 25 ? '#f0b90b' : '#f6465d';
     const scoreBar = '█'.repeat(Math.round(d.smartScore / 10)) + '░'.repeat(10 - Math.round(d.smartScore / 10));
 
     let t = `<div class="ic-analysis">`;
-    t += `<div class="ic-title">${d.name}/USDT Deep Analysis <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-title">${d.name}/USDT ${_cl('deep_analysis')} <span class="ic-live">LIVE</span></div>`;
 
-    t += `<div class="ic-section"><div class="ic-section-title">Price</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('price')}</div>`;
     t += `<div class="ic-grid">`;
-    t += `<span>Price:</span><span><b>$${d.price.toLocaleString()}</b></span>`;
-    t += `<span>24h Change:</span><span class="${d.change24h >= 0 ? 'val-up' : 'val-down'}"><b>${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(2)}%</b></span>`;
-    t += `<span>24h High/Low:</span><span>$${d.high.toLocaleString()} / $${d.low.toLocaleString()}</span>`;
+    t += `<span>${_cl('price')}:</span><span><b>$${d.price.toLocaleString()}</b></span>`;
+    t += `<span>${_cl('change24h')}:</span><span class="${d.change24h >= 0 ? 'val-up' : 'val-down'}"><b>${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(2)}%</b></span>`;
+    t += `<span>${_cl('high_low')}:</span><span>$${d.high.toLocaleString()} / $${d.low.toLocaleString()}</span>`;
     t += `<span>VWAP:</span><span>$${d.vwap.toLocaleString()} (${d.vwapDev >= 0 ? '+' : ''}${d.vwapDev.toFixed(2)}%)</span>`;
-    t += `<span>Volume:</span><span>$${(d.volume / 1e6).toFixed(1)}M</span>`;
+    t += `<span>${_cl('volume')}:</span><span>$${(d.volume / 1e6).toFixed(1)}M</span>`;
     t += `</div></div>`;
 
-    t += `<div class="ic-section"><div class="ic-section-title">Smart Money Analysis</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('smart_money')}</div>`;
     t += `<div class="ic-score"><span style="color:${scoreColor}">${scoreBar} ${d.smartScore}/100</span> <b>${d.direction}</b></div>`;
     t += `<div class="ic-grid">`;
-    t += `<span>Top Traders:</span><span>${d.topPosRatio > 1 ? 'Long' : 'Short'} (${d.topPosRatio.toFixed(3)})</span>`;
-    t += `<span>Retail:</span><span>${d.retailRatio > 1 ? 'Long' : 'Short'} (${d.retailRatio.toFixed(3)})</span>`;
-    t += `<span>Divergence:</span><span>${Math.abs(d.topPosRatio - d.retailRatio) > 0.2 ? 'Active ' : ''}${(d.topPosRatio - d.retailRatio).toFixed(3)} gap</span>`;
-    t += `<span>Factors Aligned:</span><span>${d.agreeing}/6</span>`;
-    t += `<span>Regime:</span><span><b>${d.regime}</b></span>`;
+    t += `<span>${_cl('top_traders')}:</span><span>${d.topPosRatio > 1 ? _cl('long') : _cl('short')} (${d.topPosRatio.toFixed(3)})</span>`;
+    t += `<span>${_cl('retail')}:</span><span>${d.retailRatio > 1 ? _cl('long') : _cl('short')} (${d.retailRatio.toFixed(3)})</span>`;
+    t += `<span>${_cl('divergence_label')}:</span><span>${(d.topPosRatio - d.retailRatio).toFixed(3)} gap</span>`;
+    t += `<span>${_cl('factors')}:</span><span>${d.agreeing}/6</span>`;
+    t += `<span>${_cl('regime')}:</span><span><b>${d.regime}</b></span>`;
     t += `</div></div>`;
 
-    t += `<div class="ic-section"><div class="ic-section-title">Derivatives</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('derivatives')}</div>`;
     t += `<div class="ic-grid">`;
-    t += `<span>Funding Rate:</span><span>${d.fundingBps >= 0 ? '+' : ''}${d.fundingBps.toFixed(2)} bps</span>`;
-    t += `<span>Taker Ratio:</span><span>${d.takerRatio.toFixed(3)} ${d.takerRatio > 1.1 ? '(buyers dominant)' : d.takerRatio < 0.9 ? '(sellers dominant)' : '(balanced)'}</span>`;
-    t += `<span>OI Change:</span><span>${d.oiChange >= 0 ? '+' : ''}${d.oiChange.toFixed(2)}%</span>`;
-    t += `<span>OI Value:</span><span>$${(d.oiValue / 1e6).toFixed(0)}M</span>`;
+    t += `<span>${_cl('funding_rate')}:</span><span>${d.fundingBps >= 0 ? '+' : ''}${d.fundingBps.toFixed(2)} bps</span>`;
+    t += `<span>${_cl('taker_ratio')}:</span><span>${d.takerRatio.toFixed(3)} (${d.takerRatio > 1.1 ? _cl('buyers_dom') : d.takerRatio < 0.9 ? _cl('sellers_dom') : _cl('balanced')})</span>`;
+    t += `<span>${_cl('oi_change')}:</span><span>${d.oiChange >= 0 ? '+' : ''}${d.oiChange.toFixed(2)}%</span>`;
+    t += `<span>${_cl('oi_value')}:</span><span>$${(d.oiValue / 1e6).toFixed(0)}M</span>`;
     t += `</div></div>`;
 
     const hColor = d.healthScore >= 80 ? '#0ecb81' : d.healthScore >= 60 ? '#3b82f6' : d.healthScore >= 40 ? '#f0b90b' : '#f6465d';
-    t += `<div class="ic-section"><div class="ic-section-title">Microstructure</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('microstructure')}</div>`;
     t += `<div class="ic-score"><span style="color:${hColor}">Grade ${d.grade} (${d.healthScore}/100)</span></div>`;
     t += `<div class="ic-grid">`;
-    t += `<span>Spread:</span><span>${d.spreadBps.toFixed(2)} bps</span>`;
-    t += `<span>Spot/Futures Gap:</span><span>${d.sfGap.toFixed(1)} bps</span>`;
+    t += `<span>${_cl('spread')}:</span><span>${d.spreadBps.toFixed(2)} bps</span>`;
+    t += `<span>${_cl('sf_gap')}:</span><span>${d.sfGap.toFixed(1)} bps</span>`;
     t += `</div></div>`;
 
     if (d.anomalies.length > 0) {
-      t += `<div class="ic-section ic-alert"><div class="ic-section-title">Active Anomalies (${d.anomalies.length}/5)</div>`;
+      t += `<div class="ic-section ic-alert"><div class="ic-section-title">${_cl('anomalies')} (${d.anomalies.length}/5)</div>`;
       t += `<div>${d.anomalies.join(' &middot; ')}</div></div>`;
     }
 
-    t += `<div class="ic-section ic-verdict"><div class="ic-section-title">AI Verdict</div>`;
+    t += `<div class="ic-section ic-verdict"><div class="ic-section-title">${_cl('verdict')}</div>`;
     t += `<div>${this._generateVerdict(d)}</div></div></div>`;
 
     return { role: 'ai', text: t, actions: [
       { label: `DCA ${d.name}`, cmd: `dca ${d.name}` },
-      { label: 'Summary', cmd: 'summary' },
-      { label: 'Risk Check', cmd: 'risk' },
+      { label: _cl('summary_cmd'), cmd: 'summary' },
+      { label: _cl('risk_check'), cmd: 'risk' },
     ]};
   }
 
   _generateVerdict(d) {
     const parts = [];
     if (d.smartScore >= 70) {
-      parts.push(`<b>Strong ${d.direction} signal</b>: ${d.agreeing}/6 factors aligned.`);
+      parts.push(`<b>${_cl('v_strong')} ${d.direction} signal</b>: ${d.agreeing}/6 ${_cl('factors').toLowerCase()}.`);
       if (d.direction === 'LONG') {
-        if (d.topPosRatio > d.retailRatio + 0.2) parts.push('Top traders are more bullish than retail. Smart money is leading.');
-        if (d.fundingBps < -2) parts.push(`Negative funding (${d.fundingBps.toFixed(1)}bps) means longs are getting paid to hold.`);
-        if (d.oiChange > 2) parts.push('Rising OI confirms new positions with conviction.');
+        if (d.topPosRatio > d.retailRatio + 0.2) parts.push(_cl('v_smart_lead'));
+        if (d.fundingBps < -2) parts.push(_cl('v_neg_fund'));
+        if (d.oiChange > 2) parts.push(_cl('v_rising_oi'));
       } else {
-        if (d.topPosRatio < d.retailRatio - 0.2) parts.push('Top traders are more bearish than retail. Potential squeeze incoming.');
-        if (d.fundingBps > 5) parts.push(`Elevated funding (+${d.fundingBps.toFixed(1)}bps) suggests crowded longs.`);
+        if (d.topPosRatio < d.retailRatio - 0.2) parts.push(_cl('v_bear_lead'));
+        if (d.fundingBps > 5) parts.push(_cl('v_crowded'));
       }
     } else if (d.smartScore >= 40) {
-      parts.push(`<b>Moderate ${d.direction} lean</b>: ${d.agreeing}/6 factors aligned. Not high conviction yet.`);
+      parts.push(`<b>${_cl('v_moderate')} ${d.direction}</b>: ${d.agreeing}/6 ${_cl('factors').toLowerCase()}. ${_cl('v_not_high')}`);
     } else {
-      parts.push('<b>No clear signal</b>: factors are mixed. Wait for better alignment before positioning.');
+      parts.push(`<b>${_cl('v_no_signal')}</b>`);
     }
-    if (d.healthScore >= 80) parts.push(`Execution environment is excellent (Grade ${d.grade}).`);
-    else if (d.healthScore < 40) parts.push(`Caution: poor microstructure (Grade ${d.grade}). Use smaller size.`);
-    if (d.anomalies.length >= 3) parts.push(`${d.anomalies.length} anomaly signals active. Elevated market activity.`);
+    if (d.healthScore >= 80) parts.push(`${_cl('v_exec_good')} (Grade ${d.grade}).`);
+    else if (d.healthScore < 40) parts.push(`${_cl('v_exec_poor')} (Grade ${d.grade}).`);
+    if (d.anomalies.length >= 3) parts.push(`${d.anomalies.length} ${_cl('v_anomalies')}`);
     return parts.join(' ');
   }
 
@@ -339,21 +351,21 @@ export class IntelligenceChatPanel extends BasePanel {
 
     let t = `<div class="ic-analysis"><div class="ic-title">${a.name} vs ${b.name} <span class="ic-live">LIVE</span></div>`;
     t += `<table class="ic-compare"><thead><tr><th></th><th>${a.name}</th><th>${b.name}</th></tr></thead><tbody>`;
-    t += `<tr><td>Price</td><td>$${a.price.toLocaleString()}</td><td>$${b.price.toLocaleString()}</td></tr>`;
-    t += `<tr><td>24h</td><td class="${a.change24h >= 0 ? 'val-up' : 'val-down'}">${a.change24h >= 0 ? '+' : ''}${a.change24h.toFixed(2)}%</td><td class="${b.change24h >= 0 ? 'val-up' : 'val-down'}">${b.change24h >= 0 ? '+' : ''}${b.change24h.toFixed(2)}%</td></tr>`;
-    t += `<tr><td>Smart Score</td><td style="color:${aColor}"><b>${a.smartScore}</b></td><td style="color:${bColor}"><b>${b.smartScore}</b></td></tr>`;
-    t += `<tr><td>Signal</td><td><b>${a.direction}</b></td><td><b>${b.direction}</b></td></tr>`;
-    t += `<tr><td>Top Traders</td><td>${a.topPosRatio.toFixed(3)}</td><td>${b.topPosRatio.toFixed(3)}</td></tr>`;
-    t += `<tr><td>Retail</td><td>${a.retailRatio.toFixed(3)}</td><td>${b.retailRatio.toFixed(3)}</td></tr>`;
-    t += `<tr><td>Funding</td><td>${a.fundingBps.toFixed(1)}bps</td><td>${b.fundingBps.toFixed(1)}bps</td></tr>`;
-    t += `<tr><td>Taker</td><td>${a.takerRatio.toFixed(3)}</td><td>${b.takerRatio.toFixed(3)}</td></tr>`;
-    t += `<tr><td>OI Change</td><td>${a.oiChange >= 0 ? '+' : ''}${a.oiChange.toFixed(2)}%</td><td>${b.oiChange >= 0 ? '+' : ''}${b.oiChange.toFixed(2)}%</td></tr>`;
-    t += `<tr><td>Health</td><td>Grade ${a.grade} (${a.healthScore})</td><td>Grade ${b.grade} (${b.healthScore})</td></tr>`;
+    t += `<tr><td>${_cl('price')}</td><td>$${a.price.toLocaleString()}</td><td>$${b.price.toLocaleString()}</td></tr>`;
+    t += `<tr><td>${_cl('change24h')}</td><td class="${a.change24h >= 0 ? 'val-up' : 'val-down'}">${a.change24h >= 0 ? '+' : ''}${a.change24h.toFixed(2)}%</td><td class="${b.change24h >= 0 ? 'val-up' : 'val-down'}">${b.change24h >= 0 ? '+' : ''}${b.change24h.toFixed(2)}%</td></tr>`;
+    t += `<tr><td>${_cl('smart_score')}</td><td style="color:${aColor}"><b>${a.smartScore}</b></td><td style="color:${bColor}"><b>${b.smartScore}</b></td></tr>`;
+    t += `<tr><td>${_cl('signal_label')}</td><td><b>${a.direction}</b></td><td><b>${b.direction}</b></td></tr>`;
+    t += `<tr><td>${_cl('top_traders')}</td><td>${a.topPosRatio.toFixed(3)}</td><td>${b.topPosRatio.toFixed(3)}</td></tr>`;
+    t += `<tr><td>${_cl('retail')}</td><td>${a.retailRatio.toFixed(3)}</td><td>${b.retailRatio.toFixed(3)}</td></tr>`;
+    t += `<tr><td>${_cl('funding_rate')}</td><td>${a.fundingBps.toFixed(1)}bps</td><td>${b.fundingBps.toFixed(1)}bps</td></tr>`;
+    t += `<tr><td>${_cl('taker_ratio')}</td><td>${a.takerRatio.toFixed(3)}</td><td>${b.takerRatio.toFixed(3)}</td></tr>`;
+    t += `<tr><td>${_cl('oi_change')}</td><td>${a.oiChange >= 0 ? '+' : ''}${a.oiChange.toFixed(2)}%</td><td>${b.oiChange >= 0 ? '+' : ''}${b.oiChange.toFixed(2)}%</td></tr>`;
+    t += `<tr><td>${_cl('health')}</td><td>Grade ${a.grade} (${a.healthScore})</td><td>Grade ${b.grade} (${b.healthScore})</td></tr>`;
     t += `</tbody></table>`;
-    t += `<div class="ic-section ic-verdict"><div class="ic-section-title">AI Verdict</div>`;
-    t += `<div><b>${better.name}</b> shows stronger institutional interest with a Smart Score of ${better.smartScore}/100 (${better.direction}).`;
-    if (better.fundingBps < -2) t += ` Funding is favorable for the position.`;
-    if (better.oiChange > 2) t += ` Rising OI confirms conviction.`;
+    t += `<div class="ic-section ic-verdict"><div class="ic-section-title">${_cl('verdict')}</div>`;
+    t += `<div><b>${better.name}</b> ${_cl('compare_verdict')} ${better.smartScore}/100 (${better.direction}).`;
+    if (better.fundingBps < -2) t += ` ${_cl('v_neg_fund')}`;
+    if (better.oiChange > 2) t += ` ${_cl('v_rising_oi')}`;
     t += `</div></div></div>`;
     return { role: 'ai', text: t };
   }
@@ -365,17 +377,17 @@ export class IntelligenceChatPanel extends BasePanel {
     const avgScore = Math.round(data.reduce((s, d) => s + d.smartScore, 0) / data.length);
     const bias = bullish.length > bearish.length + 2 ? 'BULLISH' : bearish.length > bullish.length + 2 ? 'BEARISH' : 'MIXED';
 
-    let t = `<div class="ic-analysis"><div class="ic-title">Market Summary <span class="ic-live">LIVE</span></div>`;
-    t += `<div class="ic-section"><div class="ic-section-title">Overview</div>`;
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('summary_cmd')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('overview')}</div>`;
     t += `<div class="ic-grid">`;
-    t += `<span>Market Bias:</span><span><b>${bias}</b></span>`;
-    t += `<span>Avg Smart Score:</span><span>${avgScore}/100</span>`;
-    t += `<span>Bullish:</span><span class="val-up">${bullish.length} assets</span>`;
-    t += `<span>Bearish:</span><span class="val-down">${bearish.length} assets</span>`;
+    t += `<span>${_cl('market_bias')}:</span><span><b>${bias}</b></span>`;
+    t += `<span>${_cl('avg_score')}:</span><span>${avgScore}/100</span>`;
+    t += `<span>${_cl('bullish')}:</span><span class="val-up">${bullish.length}</span>`;
+    t += `<span>${_cl('bearish')}:</span><span class="val-down">${bearish.length}</span>`;
     t += `</div></div>`;
 
     const sorted = [...data].sort((a, b) => b.smartScore - a.smartScore);
-    t += `<div class="ic-section"><div class="ic-section-title">Strongest Signals</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('strongest')}</div>`;
     for (const d of sorted.slice(0, 6)) {
       const c = d.smartScore >= 60 ? '#0ecb81' : d.smartScore >= 40 ? '#3b82f6' : '#f0b90b';
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> <span class="ic-dir ic-dir-${d.direction}">${d.direction}</span> <span style="color:${c};font-weight:700">${d.smartScore}</span> <span class="ic-regime">${d.regime}</span> <span class="${d.change24h >= 0 ? 'val-up' : 'val-down'}">${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(1)}%</span></div>`;
@@ -383,8 +395,8 @@ export class IntelligenceChatPanel extends BasePanel {
     t += `</div></div>`;
     return { role: 'ai', text: t, actions: [
       { label: `Analyze ${sorted[0].name}`, cmd: `analyze ${sorted[0].name}` },
-      { label: 'Risk Check', cmd: 'risk' },
-      { label: 'Opportunities', cmd: 'opportunities' },
+      { label: _cl('risk_check'), cmd: 'risk' },
+      { label: _cl('top_opps'), cmd: 'opportunities' },
     ]};
   }
 
@@ -393,16 +405,16 @@ export class IntelligenceChatPanel extends BasePanel {
     const risky = data.filter(d => d.healthScore < 50 || d.anomalies.length >= 3).sort((a, b) => a.healthScore - b.healthScore);
     const safe = data.filter(d => d.healthScore >= 80 && d.anomalies.length === 0).sort((a, b) => b.healthScore - a.healthScore);
 
-    let t = `<div class="ic-analysis"><div class="ic-title">Risk Assessment <span class="ic-live">LIVE</span></div>`;
-    t += `<div class="ic-section"><div class="ic-section-title">High Risk (${risky.length})</div>`;
-    if (risky.length === 0) t += `<div>No high risk assets detected. Market structure is healthy.</div>`;
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('risk_assessment')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('high_risk')} (${risky.length})</div>`;
+    if (risky.length === 0) t += `<div>${_cl('no_risk')}</div>`;
     for (const d of risky) {
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> Grade ${d.grade} (${d.healthScore}/100)`;
       if (d.anomalies.length > 0) t += ` &middot; ${d.anomalies.length} anomalies`;
       t += `</div>`;
     }
     t += `</div>`;
-    t += `<div class="ic-section"><div class="ic-section-title">Safe (${safe.length})</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('safe')} (${safe.length})</div>`;
     for (const d of safe.slice(0, 5)) {
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> Grade ${d.grade} (${d.healthScore}/100) &middot; Score ${d.smartScore} ${d.direction}</div>`;
     }
@@ -413,15 +425,15 @@ export class IntelligenceChatPanel extends BasePanel {
   async _cmdOpportunities() {
     const data = await this._fetchSymbolData(this._allSymbols.slice(0, 12));
     const sorted = [...data].filter(d => d.smartScore >= 40).sort((a, b) => b.smartScore - a.smartScore);
-    let t = `<div class="ic-analysis"><div class="ic-title">Top Opportunities <span class="ic-live">LIVE</span></div>`;
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('top_opps')} <span class="ic-live">LIVE</span></div>`;
     if (sorted.length === 0) {
-      t += `<div class="ic-section">No strong signals right now. Market is indecisive. Wait for factor alignment.</div>`;
+      t += `<div class="ic-section">${_cl('no_opps')}</div>`;
     } else {
       for (const d of sorted.slice(0, 5)) {
         const c = d.smartScore >= 60 ? '#0ecb81' : '#3b82f6';
-        t += `<div class="ic-section"><div class="ic-section-title" style="color:${c}">${d.name} ${d.direction} (Score: ${d.smartScore}/100)</div>`;
-        t += `<div class="ic-grid"><span>Price:</span><span>$${d.price.toLocaleString()} (${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(2)}%)</span>`;
-        t += `<span>Factors:</span><span>${d.agreeing}/6 aligned</span><span>Regime:</span><span>${d.regime}</span><span>Health:</span><span>Grade ${d.grade}</span></div></div>`;
+        t += `<div class="ic-section"><div class="ic-section-title" style="color:${c}">${d.name} ${d.direction} (${_cl('smart_score')}: ${d.smartScore}/100)</div>`;
+        t += `<div class="ic-grid"><span>${_cl('price')}:</span><span>$${d.price.toLocaleString()} (${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(2)}%)</span>`;
+        t += `<span>${_cl('factors')}:</span><span>${d.agreeing}/6</span><span>${_cl('regime')}:</span><span>${d.regime}</span><span>${_cl('health')}:</span><span>Grade ${d.grade}</span></div></div>`;
       }
     }
     t += `</div>`;
@@ -431,8 +443,8 @@ export class IntelligenceChatPanel extends BasePanel {
   async _cmdFunding() {
     const data = await this._fetchSymbolData(this._allSymbols.slice(0, 12));
     const sorted = [...data].sort((a, b) => a.fundingBps - b.fundingBps);
-    let t = `<div class="ic-analysis"><div class="ic-title">Funding Rate Overview <span class="ic-live">LIVE</span></div>`;
-    t += `<div class="ic-section"><div class="ic-section-title">Sorted by Funding Rate (lowest = contrarian bullish)</div>`;
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('funding_overview')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('funding_sort')}</div>`;
     for (const d of sorted) {
       const fc = d.fundingBps < -3 ? '#0ecb81' : d.fundingBps > 5 ? '#f6465d' : 'var(--text-secondary)';
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> <span style="color:${fc};font-weight:700">${d.fundingBps >= 0 ? '+' : ''}${d.fundingBps.toFixed(2)}bps</span> <span class="ic-dir ic-dir-${d.direction}">${d.direction}</span> <span class="${d.change24h >= 0 ? 'val-up' : 'val-down'}">${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(1)}%</span></div>`;
@@ -444,7 +456,7 @@ export class IntelligenceChatPanel extends BasePanel {
   async _cmdHealth() {
     const data = await this._fetchSymbolData(this._allSymbols.slice(0, 12));
     const sorted = [...data].sort((a, b) => b.healthScore - a.healthScore);
-    let t = `<div class="ic-analysis"><div class="ic-title">Microstructure Health <span class="ic-live">LIVE</span></div>`;
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('health_title')} <span class="ic-live">LIVE</span></div>`;
     for (const d of sorted) {
       const hc = d.healthScore >= 80 ? '#0ecb81' : d.healthScore >= 60 ? '#3b82f6' : d.healthScore >= 40 ? '#f0b90b' : '#f6465d';
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> <span style="color:${hc};font-weight:700">Grade ${d.grade} (${d.healthScore})</span> <span>Spread: ${d.spreadBps.toFixed(1)}bps</span></div>`;
@@ -468,25 +480,25 @@ export class IntelligenceChatPanel extends BasePanel {
     const avgHealth = Math.round(allocations.reduce((s, a) => s + a.healthScore, 0) / allocations.length);
     const riskLevel = avgHealth >= 75 ? 'LOW' : avgHealth >= 50 ? 'MODERATE' : 'HIGH';
 
-    let t = '<div class="ic-analysis"><div class="ic-title">AI Portfolio Builder <span class="ic-live">LIVE</span></div>';
-    t += '<div class="ic-section"><div class="ic-section-title">Recommended Allocation</div>';
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('portfolio_title')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('allocation')}</div>`;
     for (const a of allocations) {
       const c = a.direction === 'LONG' ? '#0ecb81' : a.direction === 'SHORT' ? '#f6465d' : 'var(--text-muted)';
       const bar = '█'.repeat(Math.round(a.weight / 5)) + '░'.repeat(20 - Math.round(a.weight / 5));
       t += `<div class="ic-row"><span class="ic-sym">${a.name}</span> <span style="font-family:var(--font-mono);font-size:8px;color:${c}">${bar}</span> <span style="font-weight:700">${a.weight}%</span> <span class="ic-dir ic-dir-${a.direction}">${a.direction}</span></div>`;
     }
     t += '</div>';
-    t += `<div class="ic-section"><div class="ic-section-title">Portfolio Metrics</div><div class="ic-grid">`;
-    t += `<span>Risk Level:</span><span style="color:${riskLevel === 'LOW' ? '#0ecb81' : riskLevel === 'MODERATE' ? '#f0b90b' : '#f6465d'};font-weight:700">${riskLevel}</span>`;
-    t += `<span>Diversification:</span><span>${diversification}/100</span>`;
-    t += `<span>Avg Health:</span><span>Grade ${avgHealth >= 80 ? 'A' : avgHealth >= 60 ? 'B' : avgHealth >= 40 ? 'C' : 'D'} (${avgHealth})</span>`;
-    t += `<span>Avg Smart Score:</span><span>${Math.round(allocations.reduce((s, a) => s + a.smartScore, 0) / allocations.length)}/100</span>`;
-    t += `<span>Bullish Assets:</span><span>${allocations.filter(a => a.direction === 'LONG').length}/${allocations.length}</span>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('portfolio_metrics')}</div><div class="ic-grid">`;
+    t += `<span>${_cl('risk_level')}:</span><span style="color:${riskLevel === 'LOW' ? '#0ecb81' : riskLevel === 'MODERATE' ? '#f0b90b' : '#f6465d'};font-weight:700">${riskLevel}</span>`;
+    t += `<span>${_cl('diversification')}:</span><span>${diversification}/100</span>`;
+    t += `<span>${_cl('avg_health')}:</span><span>Grade ${avgHealth >= 80 ? 'A' : avgHealth >= 60 ? 'B' : avgHealth >= 40 ? 'C' : 'D'} (${avgHealth})</span>`;
+    t += `<span>${_cl('avg_score')}:</span><span>${Math.round(allocations.reduce((s, a) => s + a.smartScore, 0) / allocations.length)}/100</span>`;
+    t += `<span>${_cl('bull_assets')}:</span><span>${allocations.filter(a => a.direction === 'LONG').length}/${allocations.length}</span>`;
     t += '</div></div></div>';
     return { role: 'ai', text: t, actions: [
       { label: `Analyze ${allocations[0].name}`, cmd: `analyze ${allocations[0].name}` },
       { label: `DCA ${allocations[0].name}`, cmd: `dca ${allocations[0].name}` },
-      { label: 'Risk Check', cmd: 'risk' },
+      { label: _cl('risk_check'), cmd: 'risk' },
     ]};
   }
 
@@ -517,32 +529,32 @@ export class IntelligenceChatPanel extends BasePanel {
     else if (d.oiChange < -3) { dcaScore -= 5; reasons.push({ good: false, text: 'OI declining. Positions closing' }); }
 
     dcaScore = Math.max(0, Math.min(100, dcaScore));
-    const timing = dcaScore >= 70 ? 'STRONG BUY ZONE' : dcaScore >= 50 ? 'ACCEPTABLE ENTRY' : dcaScore >= 30 ? 'WAIT IF POSSIBLE' : 'AVOID FOR NOW';
+    const timing = dcaScore >= 70 ? _cl('strong_buy') : dcaScore >= 50 ? _cl('acceptable') : dcaScore >= 30 ? _cl('wait') : _cl('avoid');
     const tc = dcaScore >= 70 ? '#0ecb81' : dcaScore >= 50 ? '#3b82f6' : dcaScore >= 30 ? '#f0b90b' : '#f6465d';
 
-    let t = `<div class="ic-analysis"><div class="ic-title">${d.name} DCA Analysis <span class="ic-live">LIVE</span></div>`;
-    t += `<div class="ic-section"><div class="ic-section-title" style="color:${tc}">${timing} (Score: ${dcaScore}/100)</div>`;
-    t += `<div class="ic-grid"><span>Price:</span><span>$${d.price.toLocaleString()}</span>`;
-    t += `<span>24h Range:</span><span>$${d.low.toLocaleString()} / $${d.high.toLocaleString()}</span>`;
-    t += `<span>Range Position:</span><span>${rangePos.toFixed(0)}% (${rangePos < 30 ? 'near low' : rangePos > 70 ? 'near high' : 'mid range'})</span>`;
+    let t = `<div class="ic-analysis"><div class="ic-title">${d.name} ${_cl('dca_title')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title" style="color:${tc}">${timing} (${_cl('smart_score')}: ${dcaScore}/100)</div>`;
+    t += `<div class="ic-grid"><span>${_cl('price')}:</span><span>$${d.price.toLocaleString()}</span>`;
+    t += `<span>${_cl('dca_range')}:</span><span>$${d.low.toLocaleString()} / $${d.high.toLocaleString()}</span>`;
+    t += `<span>${_cl('range_pos')}:</span><span>${rangePos.toFixed(0)}% (${rangePos < 30 ? _cl('near_low') : rangePos > 70 ? _cl('near_high') : _cl('mid_range')})</span>`;
     t += `</div></div>`;
 
-    t += '<div class="ic-section"><div class="ic-section-title">DCA Factors</div>';
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('dca_factors')}</div>`;
     for (const r of reasons) {
       t += `<div class="ic-row"><span style="color:${r.good ? '#0ecb81' : '#f6465d'};font-weight:700">${r.good ? '+' : '-'}</span> <span>${r.text}</span></div>`;
     }
     t += '</div>';
 
-    t += '<div class="ic-section ic-verdict"><div class="ic-section-title">Strategy</div>';
-    if (dcaScore >= 70) t += '<div>Multiple factors align for a favorable entry. Consider adding to your position. Negative funding and smart money support suggest limited downside.</div>';
-    else if (dcaScore >= 50) t += '<div>Conditions are acceptable but not ideal. A smaller position with reserves for dips would be prudent.</div>';
-    else if (dcaScore >= 30) t += '<div>Warning signals active. Use smaller than normal size if you must enter. Better entries may come soon.</div>';
-    else t += '<div>Conditions unfavorable. Smart money, funding, and/or microstructure suggest elevated risk. Wait for improvement.</div>';
+    t += `<div class="ic-section ic-verdict"><div class="ic-section-title">${_cl('dca_strategy')}</div>`;
+    if (dcaScore >= 70) t += `<div>${_cl('dca_buy_verdict')}</div>`;
+    else if (dcaScore >= 50) t += `<div>${_cl('dca_ok_verdict')}</div>`;
+    else if (dcaScore >= 30) t += `<div>${_cl('dca_wait_verdict')}</div>`;
+    else t += `<div>${_cl('dca_avoid_verdict')}</div>`;
     t += '</div></div>';
 
     return { role: 'ai', text: t, actions: [
-      { label: `Full Analysis ${d.name}`, cmd: `analyze ${d.name}` },
-      { label: 'Portfolio', cmd: 'portfolio' },
+      { label: `${_cl('deep_analysis')} ${d.name}`, cmd: `analyze ${d.name}` },
+      { label: _cl('portfolio_title'), cmd: 'portfolio' },
     ]};
   }
 
@@ -553,8 +565,8 @@ export class IntelligenceChatPanel extends BasePanel {
       whaleScore: Math.abs(d.oiChange) * 3 + Math.abs(d.takerRatio - 1) * 50 + Math.abs(d.topPosRatio - d.retailRatio) * 20,
     })).sort((a, b) => b.whaleScore - a.whaleScore);
 
-    let t = '<div class="ic-analysis"><div class="ic-title">Whale Activity Scanner <span class="ic-live">LIVE</span></div>';
-    t += '<div class="ic-section"><div class="ic-section-title">Highest Institutional Activity</div>';
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('whale_title')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('whale_sub')}</div>`;
     for (const d of whaleActivity.slice(0, 8)) {
       const signals = [];
       if (Math.abs(d.oiChange) > 2) signals.push(`OI ${d.oiChange > 0 ? '+' : ''}${d.oiChange.toFixed(1)}%`);
@@ -568,7 +580,7 @@ export class IntelligenceChatPanel extends BasePanel {
 
     const oiSurges = data.filter(d => Math.abs(d.oiChange) > 2).sort((a, b) => Math.abs(b.oiChange) - Math.abs(a.oiChange));
     if (oiSurges.length > 0) {
-      t += '<div class="ic-section"><div class="ic-section-title">OI Surges (Position Building)</div>';
+      t += `<div class="ic-section"><div class="ic-section-title">${_cl('oi_surges')}</div>`;
       for (const d of oiSurges) {
         const c = d.oiChange > 0 ? '#0ecb81' : '#f6465d';
         t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> <span style="color:${c};font-weight:700">${d.oiChange > 0 ? '+' : ''}${d.oiChange.toFixed(1)}%</span> <span>$${(d.oiValue / 1e6).toFixed(0)}M OI</span></div>`;
@@ -589,20 +601,20 @@ export class IntelligenceChatPanel extends BasePanel {
       momentumScore: d.change24h * 2 + (d.takerRatio - 1) * 100 + d.oiChange * 3 + (d.direction === 'LONG' ? 10 : d.direction === 'SHORT' ? -10 : 0),
     })).sort((a, b) => b.momentumScore - a.momentumScore);
 
-    let t = '<div class="ic-analysis"><div class="ic-title">Momentum Scanner <span class="ic-live">LIVE</span></div>';
-    t += '<div class="ic-section"><div class="ic-section-title">Strongest Bullish</div>';
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('momentum_title')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('bull_momentum')}</div>`;
     for (const d of ranked.slice(0, 5)) {
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> <span class="${d.change24h >= 0 ? 'val-up' : 'val-down'}">${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(1)}%</span> <span>Taker ${d.takerRatio.toFixed(2)}</span> <span>OI ${d.oiChange >= 0 ? '+' : ''}${d.oiChange.toFixed(1)}%</span> <span class="ic-dir ic-dir-${d.direction}">${d.direction}</span></div>`;
     }
     t += '</div>';
-    t += '<div class="ic-section"><div class="ic-section-title">Strongest Bearish</div>';
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('bear_momentum')}</div>`;
     for (const d of ranked.slice(-5).reverse()) {
       t += `<div class="ic-row"><span class="ic-sym">${d.name}</span> <span class="${d.change24h >= 0 ? 'val-up' : 'val-down'}">${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(1)}%</span> <span>Taker ${d.takerRatio.toFixed(2)}</span> <span>OI ${d.oiChange >= 0 ? '+' : ''}${d.oiChange.toFixed(1)}%</span> <span class="ic-dir ic-dir-${d.direction}">${d.direction}</span></div>`;
     }
     t += '</div></div>';
     return { role: 'ai', text: t, actions: [
       { label: `Analyze ${ranked[0].name}`, cmd: `analyze ${ranked[0].name}` },
-      { label: 'Opportunities', cmd: 'opportunities' },
+      { label: _cl('top_opps'), cmd: 'opportunities' },
     ]};
   }
 
@@ -612,9 +624,9 @@ export class IntelligenceChatPanel extends BasePanel {
       ...d, divGap: d.topPosRatio - d.retailRatio, divMagnitude: Math.abs(d.topPosRatio - d.retailRatio),
     })).sort((a, b) => b.divMagnitude - a.divMagnitude);
 
-    let t = '<div class="ic-analysis"><div class="ic-title">Smart vs Retail Divergence <span class="ic-live">LIVE</span></div>';
-    t += '<div class="ic-section"><div class="ic-section-title">Biggest Disagreements</div>';
-    t += '<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px">When top traders and retail disagree, top traders historically win. Large gaps = high conviction.</div>';
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('div_title')} <span class="ic-live">LIVE</span></div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('div_sub')}</div>`;
+    t += `<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px">${_cl('div_desc')}</div>`;
     for (const d of divergent.slice(0, 8)) {
       const smartSide = d.topPosRatio > 1 ? 'LONG' : 'SHORT';
       const retailSide = d.retailRatio > 1 ? 'LONG' : 'SHORT';
@@ -630,7 +642,7 @@ export class IntelligenceChatPanel extends BasePanel {
     t += '</div></div>';
     return { role: 'ai', text: t, actions: divergent.length > 0 ? [
       { label: `Analyze ${divergent[0].name}`, cmd: `analyze ${divergent[0].name}` },
-      { label: 'Whale Activity', cmd: 'whale' },
+      { label: _cl('whale_title'), cmd: 'whale' },
     ] : [] };
   }
 
@@ -656,9 +668,9 @@ export class IntelligenceChatPanel extends BasePanel {
       };
     }
 
-    let t = '<div class="ic-analysis"><div class="ic-title">Crypto Academy</div>';
-    t += '<div class="ic-section"><div class="ic-section-title">Available Lessons</div>';
-    t += '<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px">Each lesson explains the concept and shows you how to apply it with live data.</div>';
+    let t = `<div class="ic-analysis"><div class="ic-title">${_cl('academy')}</div>`;
+    t += `<div class="ic-section"><div class="ic-section-title">${_cl('lessons')}</div>`;
+    t += `<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px">${_cl('lesson_desc')}</div>`;
     for (const [k, val] of Object.entries(topics)) {
       t += `<div class="ic-row"><span class="ic-sym" style="min-width:90px">${k}</span> <span>${val.title}</span></div>`;
     }
@@ -669,18 +681,18 @@ export class IntelligenceChatPanel extends BasePanel {
   _cmdHelp() {
     return {
       role: 'ai',
-      text: `<div class="ic-analysis"><div class="ic-title">All Commands</div>
-<div class="ic-section"><div class="ic-section-title">Analysis</div><div class="ic-grid">
+      text: `<div class="ic-analysis"><div class="ic-title">${_cl('all_commands')}</div>
+<div class="ic-section"><div class="ic-section-title">${_cl('analysis')}</div><div class="ic-grid">
 <span><b>analyze BTC</b></span><span>Full asset analysis with all metrics</span>
 <span><b>compare ETH SOL</b></span><span>Side by side comparison</span>
-<span><b>summary</b></span><span>Market overview with top signals</span>
+<span><b>summary</b></span><span>${_cl('summary_cmd')}</span>
 </div></div>
-<div class="ic-section"><div class="ic-section-title">Strategy</div><div class="ic-grid">
+<div class="ic-section"><div class="ic-section-title">${_cl('strategy')}</div><div class="ic-grid">
 <span><b>portfolio</b></span><span>AI portfolio builder with risk scoring</span>
 <span><b>dca BTC</b></span><span>DCA timing analysis for any asset</span>
 <span><b>momentum</b></span><span>Momentum scanner across all assets</span>
 </div></div>
-<div class="ic-section"><div class="ic-section-title">Intelligence</div><div class="ic-grid">
+<div class="ic-section"><div class="ic-section-title">${_cl('intelligence')}</div><div class="ic-grid">
 <span><b>whale</b></span><span>Whale and institutional activity</span>
 <span><b>divergence</b></span><span>Smart money vs retail disagreements</span>
 <span><b>risk</b></span><span>Risk assessment and red flags</span>
@@ -688,18 +700,18 @@ export class IntelligenceChatPanel extends BasePanel {
 <span><b>funding</b></span><span>Funding rate overview</span>
 <span><b>health</b></span><span>Microstructure quality check</span>
 </div></div>
-<div class="ic-section"><div class="ic-section-title">Education</div><div class="ic-grid">
+<div class="ic-section"><div class="ic-section-title">${_cl('education')}</div><div class="ic-grid">
 <span><b>learn funding</b></span><span>How funding rates work</span>
 <span><b>learn smartmoney</b></span><span>Smart money vs retail</span>
 <span><b>learn oi</b></span><span>Open interest explained</span>
 <span><b>learn dca</b></span><span>DCA strategy guide</span>
 </div></div>
-<div class="ic-section">Or just type any symbol name (e.g., <b>SOL</b>) for analysis. You can also click any token in the sidebar.</div></div>`,
+<div class="ic-section">${_cl('type_any')}</div></div>`,
       actions: [
         { label: 'Analyze BTC', cmd: 'analyze BTC' },
-        { label: 'Summary', cmd: 'summary' },
-        { label: 'Portfolio', cmd: 'portfolio' },
-        { label: 'Academy', cmd: 'learn' },
+        { label: _cl('summary_cmd'), cmd: 'summary' },
+        { label: _cl('portfolio_title'), cmd: 'portfolio' },
+        { label: _cl('academy'), cmd: 'learn' },
       ],
     };
   }
@@ -799,18 +811,18 @@ export class IntelligenceChatPanel extends BasePanel {
 
     // Sidebar
     h += '<div class="ic-sidebar">';
-    h += '<div class="ic-sidebar-header">Markets</div>';
-    h += '<input class="ic-filter" id="ic-filter-input" type="text" placeholder="Filter tokens..." autocomplete="off">';
+    h += `<div class="ic-sidebar-header">${_cl('markets')}</div>`;
+    h += `<input class="ic-filter" id="ic-filter-input" type="text" placeholder="${_cl('filter')}" autocomplete="off">`;
     h += '<div class="ic-token-list" id="ic-token-list">';
     const filter = this._tokenFilter.toUpperCase();
     for (const t of this._tokenList) {
       const sym = t.symbol;
       const name = sym.replace('USDT', '');
-      if (filter && !name.includes(filter)) continue;
+      const hidden = filter && !name.includes(filter);
       const price = parseFloat(t.lastPrice);
       const pct = parseFloat(t.priceChangePercent);
       const priceStr = price >= 1000 ? price.toLocaleString(undefined, {maximumFractionDigits: 0}) : price >= 1 ? price.toFixed(2) : price.toFixed(4);
-      h += `<div class="ic-token" data-sym="${name}">`;
+      h += `<div class="ic-token" data-sym="${name}"${hidden ? ' style="display:none"' : ''}>`;
       h += `<span class="ic-token-name">${name}</span>`;
       h += `<span class="ic-token-price">$${priceStr}</span>`;
       h += `<span class="ic-token-change ${pct >= 0 ? 'val-up' : 'val-down'}">${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%</span>`;
@@ -831,13 +843,13 @@ export class IntelligenceChatPanel extends BasePanel {
       h += '</div>';
     }
     if (this._isThinking) {
-      h += '<div class="ic-thinking"><div class="ic-dots"><div class="ic-dot"></div><div class="ic-dot"></div><div class="ic-dot"></div></div>Analyzing live Binance data...</div>';
+      h += `<div class="ic-thinking"><div class="ic-dots"><div class="ic-dot"></div><div class="ic-dot"></div><div class="ic-dot"></div></div>${_cl('analyzing')}</div>`;
     }
     h += '</div>';
 
     h += '<div class="ic-input-area">';
-    h += '<input class="ic-input" id="ic-input" type="text" placeholder="Ask anything... analyze BTC, portfolio, dca ETH, learn funding" autocomplete="off">';
-    h += '<button class="ic-send" id="ic-send">Ask</button>';
+    h += `<input class="ic-input" id="ic-input" type="text" placeholder="${_cl('placeholder')}" autocomplete="off">`;
+    h += `<button class="ic-send" id="ic-send">${_cl('ask')}</button>`;
     h += '</div></div></div>';
 
     return h;
