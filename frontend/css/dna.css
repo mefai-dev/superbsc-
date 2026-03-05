@@ -1,0 +1,150 @@
+/* Market DNA — Standalone (superbsc theme colors, NO main.css import) */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e11;--bgp:#1e2329;--bgh:#2b3139;--bgi:#1e2329;
+  --tx:#eaecef;--tx2:#848e9c;--txm:#5e6673;--brd:#2b3139;
+  --acc:#f0b90b;--up:#0ecb81;--dn:#f6465d;
+  --ubg:rgba(14,203,129,.08);--dbg:rgba(246,70,93,.08);
+  --f:'SF Mono','Cascadia Code','JetBrains Mono','Fira Code',monospace;
+  --fs:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+}
+html,body{height:100%;font-family:var(--f);font-size:12px;background:var(--bg);color:var(--tx);overflow:hidden;-webkit-tap-highlight-color:transparent}
+body{display:flex;flex-direction:column}
+.up{color:var(--up)!important;font-weight:600}.dn{color:var(--dn)!important}
+.warn{color:var(--acc)!important}
+.hidden{display:none!important}
+
+/* ── Header 44px ── */
+#hdr{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 16px;background:var(--bgp);border-bottom:1px solid var(--brd);flex-shrink:0;z-index:100}
+.hdr-l{display:flex;align-items:center;gap:0}
+.hdr-r{display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--fs);font-size:14px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);text-decoration:none;padding-right:16px;border-right:1px solid var(--brd)}
+.logo svg{flex-shrink:0}
+.hdr-nav{background:none;border:none;border-bottom:2px solid transparent;color:var(--txm);font-family:var(--f);font-size:11px;padding:12px 12px 10px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:color .15s}
+.hdr-nav:hover{color:var(--acc)}
+.hdr-nav.active{color:var(--acc);border-bottom-color:var(--acc);font-weight:700}
+.hdr-meta{font-size:10px;color:var(--txm);letter-spacing:.3px}
+.hdr-btn{font-size:10px;padding:4px 10px;border:1px solid var(--acc);color:var(--acc);text-decoration:none;font-family:var(--f);border-radius:4px;font-weight:600;transition:all .15s}
+.hdr-btn:hover{background:var(--acc);color:#0b0e11}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:var(--txm)}
+.dot.ok{background:var(--up)}.dot.err{background:var(--dn)}
+
+/* ── Metrics 28px ── */
+#metrics{display:flex;align-items:center;height:28px;padding:0 16px;background:var(--bg);border-bottom:1px solid var(--brd);flex-shrink:0;overflow-x:auto}
+.met{display:flex;align-items:center;gap:6px;padding:0 10px;white-space:nowrap}
+.met-k{font-size:10px;font-weight:600;color:var(--txm);text-transform:uppercase;letter-spacing:.5px}
+.met-v{font-size:11px;font-weight:600;color:var(--tx);font-variant-numeric:tabular-nums}
+.sep{width:1px;height:14px;background:var(--brd);flex-shrink:0;font-style:normal}
+
+/* ── Main 3-col ── */
+#main{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* ── Side Panels ── */
+.side-panel{width:210px;flex-shrink:0;display:flex;flex-direction:column;background:var(--bgp);overflow:hidden}
+#sp-left{border-right:1px solid var(--brd)}
+#sp-right{border-left:1px solid var(--brd)}
+.sp-head{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-bottom:1px solid var(--brd);background:var(--bg);min-height:32px;flex-shrink:0}
+.sp-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx)}
+.sp-badge{font-size:8px;color:var(--acc);border:1px solid var(--acc);padding:1px 5px;border-radius:3px;letter-spacing:.3px}
+.sp-body{flex:1;overflow-y:auto;padding:0}
+.sp-half{flex:1;min-height:0}
+.sig-badge{color:var(--up)!important;border-color:var(--up)!important}
+
+/* Signal rows */
+.sr{display:flex;align-items:center;padding:3px 8px;border-bottom:1px solid var(--brd);font-size:10px;gap:4px;animation:sr-flash .6s ease}
+.sr-tag{font-size:8px;font-weight:800;padding:1px 4px;border-radius:2px;letter-spacing:.4px;flex-shrink:0}
+.sr-buy{background:var(--ubg);color:var(--up);border:1px solid rgba(14,203,129,.3)}
+.sr-sell{background:var(--dbg);color:var(--dn);border:1px solid rgba(246,70,93,.3)}
+.sr-sym{font-weight:600;color:var(--tx);min-width:40px}
+.sr-p{color:var(--tx2);font-variant-numeric:tabular-nums;margin-left:auto}
+.sr-t{color:var(--txm);font-size:9px;flex-shrink:0}
+@keyframes sr-flash{0%{background:rgba(240,185,11,.12)}100%{background:transparent}}
+
+/* Feed rows */
+.fr{display:flex;align-items:center;padding:3px 8px;border-bottom:1px solid var(--brd);cursor:pointer;font-size:11px;gap:5px;transition:background .1s}
+.fr:hover{background:var(--bgh)}
+.fr-s{font-weight:600;color:var(--tx);min-width:46px;white-space:nowrap}
+.fr-v{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.bar{width:36px;height:3px;background:var(--bg);border-radius:1.5px;overflow:hidden;flex-shrink:0}
+.bar-f{height:100%;border-radius:1.5px;min-width:2px;transition:width .3s}
+.bar-lg{width:100%;height:3px;background:var(--bg);border-radius:1.5px;overflow:hidden;margin-top:3px}
+
+/* ── Canvas ── */
+#canvas-wrap{flex:1;position:relative;overflow:hidden;cursor:grab;background:var(--bg);min-width:0}
+#canvas-wrap:active{cursor:grabbing}
+#cv{width:100%!important;height:100%!important;display:block}
+
+/* ── Streams (data flowing in CSS) ── */
+.streams{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+.stl{position:absolute;height:1px;opacity:0}
+.stl1{top:12%;width:50%;left:-50%;background:linear-gradient(90deg,transparent,var(--up) 40%,var(--acc) 70%,transparent);animation:sfl 3.5s linear infinite}
+.stl2{top:28%;width:40%;right:-40%;background:linear-gradient(270deg,transparent,var(--dn) 40%,var(--acc) 70%,transparent);animation:sfr 4s linear infinite;animation-delay:.6s}
+.stl3{top:48%;width:55%;left:-55%;background:linear-gradient(90deg,transparent,var(--acc) 50%,transparent);animation:sfl 3s linear infinite;animation-delay:1.2s}
+.stl4{top:65%;width:35%;right:-35%;background:linear-gradient(270deg,transparent,var(--up) 50%,transparent);animation:sfr 3.8s linear infinite;animation-delay:1.8s}
+.stl5{top:80%;width:45%;left:-45%;background:linear-gradient(90deg,transparent,var(--dn) 40%,var(--up) 70%,transparent);animation:sfl 4.2s linear infinite;animation-delay:2.5s}
+.stl6{top:92%;width:30%;right:-30%;background:linear-gradient(270deg,transparent,var(--acc) 50%,transparent);animation:sfr 3.2s linear infinite;animation-delay:3s}
+@keyframes sfl{0%{transform:translateX(0);opacity:0}5%{opacity:.6}50%{opacity:.3}95%{opacity:.5}100%{transform:translateX(200vw);opacity:0}}
+@keyframes sfr{0%{transform:translateX(0);opacity:0}5%{opacity:.6}50%{opacity:.3}95%{opacity:.5}100%{transform:translateX(-200vw);opacity:0}}
+
+/* ── Corner overlays ── */
+.cov{position:absolute;width:160px;background:rgba(11,14,17,.9);border:1px solid var(--brd);font-size:10px;z-index:8;pointer-events:none;max-height:32%;overflow:hidden}
+.cov-tl{top:6px;left:6px}.cov-tr{top:6px;right:6px}.cov-bl{bottom:6px;left:6px}.cov-br{bottom:6px;right:6px}
+.cov-h{padding:3px 7px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--txm);border-bottom:1px solid var(--brd);background:rgba(30,35,41,.95)}
+.cov-b{padding:1px 0}
+.cov-r{display:flex;justify-content:space-between;padding:1px 7px;font-size:10px;color:var(--tx2)}
+.cov-r .s{color:var(--tx);font-weight:500}
+
+/* ── Tooltip ── */
+.tip{position:absolute;pointer-events:none;background:var(--bgp);border:1px solid var(--brd);box-shadow:0 4px 16px rgba(0,0,0,.5);padding:8px 12px;font-size:11px;line-height:1.5;z-index:50;min-width:200px}
+.tip.hidden{opacity:0;display:none}
+.tip-s{font-weight:700;font-size:12px;color:var(--acc);margin-bottom:3px;letter-spacing:.5px}
+.tip-r{display:flex;justify-content:space-between;gap:14px}
+.tip-k{color:var(--txm);font-size:10px;text-transform:uppercase}.tip-v{font-variant-numeric:tabular-nums}
+
+/* ── Detail Panel ── */
+.detail-panel{position:fixed;top:0;right:0;bottom:0;width:320px;background:var(--bgp);border-left:1px solid var(--brd);z-index:200;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .2s ease}
+.detail-panel.open{transform:translateX(0)}
+.det-x{background:none;border:none;color:var(--txm);font-size:18px;cursor:pointer;padding:2px 6px;line-height:1}
+.det-x:hover{color:var(--tx)}
+.det-s{padding:6px 10px;border-bottom:1px solid var(--brd)}
+.det-st{font-size:10px;font-weight:600;color:var(--txm);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.det-r{display:flex;justify-content:space-between;padding:2px 0;font-size:11px}
+.det-r .l{color:var(--tx2)}.det-r .v{font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ── Mobile ── */
+#mob{flex:1;overflow-y:auto}
+.mc{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:1px solid var(--brd);cursor:pointer}
+.mc:hover{background:var(--bgh)}
+.mc-d{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.mc-i{flex:1;min-width:0}.mc-s{font-weight:600;font-size:11px}.mc-m{font-size:10px;color:var(--txm)}
+.mc-v{text-align:right;font-size:10px;line-height:1.5}
+
+/* ── Data Fly Particles ── */
+.dfly{position:absolute;font-size:15px;font-weight:800;font-family:var(--f);pointer-events:none;z-index:12;white-space:nowrap;text-shadow:0 0 10px currentColor,0 0 20px currentColor;opacity:0;letter-spacing:.5px}
+
+/* ── Status Bar 26px ── */
+#sbar{display:flex;align-items:center;justify-content:space-between;height:26px;padding:0 16px;background:var(--bgp);border-top:1px solid var(--brd);font-size:10px;color:var(--txm);letter-spacing:.3px;flex-shrink:0;z-index:100}
+.sb-l,.sb-r{display:flex;align-items:center;gap:8px}
+.sb-sep{color:var(--brd)}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--brd);border-radius:1.5px}
+::-webkit-scrollbar-thumb:hover{background:var(--txm)}
+::selection{background:rgba(240,185,11,.3)}
+
+/* ── Responsive ── */
+@media(max-width:1100px){.side-panel{width:170px}.cov{width:140px}}
+@media(max-width:900px){.side-panel{display:none!important}.cov{display:none}#canvas-wrap{border:none}}
+@media(max-width:768px){
+  #hdr{height:38px;padding:0 10px}
+  .logo{font-size:11px;padding-right:10px;gap:5px}
+  .logo svg{width:16px;height:16px}
+  .hdr-nav{display:none}
+  .hdr-meta{display:none}
+  .hdr-btn{font-size:9px;padding:3px 8px}
+  #metrics{height:24px;padding:0 6px}.met{padding:0 5px}.met-k{font-size:8px}.met-v{font-size:9px}
+  .detail-panel{width:100%}
+  #sbar{height:22px;font-size:9px;padding:0 10px}
+}
