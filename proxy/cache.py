@@ -92,7 +92,9 @@ async def get_client() -> httpx.AsyncClient:
             limits=pool_limits,
             http2=True,
         )
-        logger.info("HTTP client created: max_connections=200, max_keepalive=60, http2=True")
+        logger.info(
+            "HTTP client created: max_connections=200, max_keepalive=60, http2=True"
+        )
     return _client
 
 
