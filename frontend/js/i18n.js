@@ -1478,6 +1478,8 @@ function applyTranslations() {
     const key = el.dataset.i18n;
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
       el.placeholder = t(key);
+    } else if (el.classList.contains('nav-dropdown-trigger')) {
+      el.textContent = t(key) + ' \u25BE';
     } else {
       el.textContent = t(key);
     }
