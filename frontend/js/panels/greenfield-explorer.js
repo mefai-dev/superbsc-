@@ -112,7 +112,7 @@ export class GreenfieldExplorerPanel extends BasePanel {
         this._bucketData.forEach(b => {
           const name = b.bucket_info?.bucket_name || b.BucketName || b.name || 'Unknown';
           h += `<div class="gf-feature">`;
-          h += `<div class="gf-icon">&#128193;</div>`;
+          h += `<div class="gf-icon">-</div>`;
           h += `<div><div class="gf-feat-title">${escapeHtml(String(name))}</div></div>`;
           h += '</div>';
         });
@@ -129,18 +129,17 @@ export class GreenfieldExplorerPanel extends BasePanel {
 
   _renderFeatures() {
     const features = [
-      { icon: '&#128230;', title: 'Decentralized Object Storage', desc: 'Store files, images, videos with full ownership. Data is erasure-coded across multiple SPs.' },
-      { icon: '&#128279;', title: 'Cross-Chain Programmability', desc: 'Mirror storage objects to BSC smart contracts. Manage data via DeFi and dApps.' },
-      { icon: '&#128274;', title: 'Permission & Access Control', desc: 'Fine-grained bucket/object permissions. Group-based access control for collaboration.' },
-      { icon: '&#9889;', title: 'High Performance', desc: 'Fast data retrieval via Storage Provider network. Low-latency reads for dApp frontends.' },
-      { icon: '&#128176;', title: 'Data Marketplace', desc: 'Monetize data by listing on-chain. Buy/sell datasets, models, and digital assets.' },
-      { icon: '&#127760;', title: 'BNB Ecosystem Integration', desc: 'Tight integration with BSC, opBNB, and BNB Beacon Chain. Pay storage fees with BNB.' },
+      { title: 'Decentralized Object Storage', desc: 'Store files, images, videos with full ownership. Data is erasure-coded across multiple SPs.' },
+      { title: 'Cross-Chain Programmability', desc: 'Mirror storage objects to BSC smart contracts. Manage data via DeFi and dApps.' },
+      { title: 'Permission & Access Control', desc: 'Fine-grained bucket/object permissions. Group-based access control for collaboration.' },
+      { title: 'High Performance', desc: 'Fast data retrieval via Storage Provider network. Low-latency reads for dApp frontends.' },
+      { title: 'Data Marketplace', desc: 'Monetize data by listing on-chain. Buy/sell datasets, models, and digital assets.' },
+      { title: 'BNB Ecosystem Integration', desc: 'Tight integration with BSC, opBNB, and BNB Beacon Chain. Pay storage fees with BNB.' },
     ];
 
     let h = '<div class="gf-info">';
     features.forEach(f => {
       h += `<div class="gf-feature">`;
-      h += `<div class="gf-icon">${f.icon}</div>`;
       h += `<div><div class="gf-feat-title">${f.title}</div><div class="gf-feat-desc">${f.desc}</div></div>`;
       h += '</div>';
     });
