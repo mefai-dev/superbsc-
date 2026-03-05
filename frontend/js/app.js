@@ -83,6 +83,9 @@ const panelRegistry = {
   'cross-exchange-arb': 'cross-exchange-arb-panel',
   'sentiment-convergence': 'sentiment-convergence-panel',
   'term-structure': 'term-structure-panel',
+  'anomaly-composite': 'anomaly-composite-panel',
+  'momentum-cascade': 'momentum-cascade-panel',
+  'microstructure-health': 'microstructure-health-panel',
 };
 
 // Layout presets
@@ -199,8 +202,8 @@ const layouts = {
   },
   'convergence': {
     name: 'Convergence',
-    grid: 'grid-1x3',
-    panels: ['sentiment-convergence', 'cross-exchange-arb', 'term-structure'],
+    grid: 'grid-2x3',
+    panels: ['sentiment-convergence', 'cross-exchange-arb', 'term-structure', 'anomaly-composite', 'momentum-cascade', 'microstructure-health'],
   },
   'screener': {
     name: 'Screener',
@@ -236,6 +239,7 @@ async function loadPanels() {
     'funding-scanner', 'momentum-screener', 'volatility-rank', 'volume-profile',
     'whale-tracker',
     'cross-exchange-arb', 'sentiment-convergence', 'term-structure',
+    'anomaly-composite', 'momentum-cascade', 'microstructure-health',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
