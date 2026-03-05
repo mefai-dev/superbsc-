@@ -19,6 +19,7 @@ export class TradeSetupPanel extends BasePanel {
     );
 
     const setups = [];
+    const readings = [];
     results.forEach((res, i) => {
       if (res.status !== 'fulfilled' || !Array.isArray(res.value) || res.value.length < 26) return;
       const klines = res.value;
@@ -32,6 +33,10 @@ export class TradeSetupPanel extends BasePanel {
       const bb = this._calcBB(closes, 20, 2);
       const avgVol = volumes.slice(-21, -1).reduce((a, b) => a + b, 0) / 20;
       const volSpike = avgVol > 0 ? volumes[volumes.length - 1] / avgVol : 1;
+      const bbWidth = bb.middle > 0 ? (bb.upper - bb.lower) / bb.middle * 100 : 0;
+      const chg = closes.length > 1 ? ((price - closes[closes.length - 2]) / closes[closes.length - 2] * 100) : 0;
+
+      readings.push({ symbol, price, rsi, macdHist: macd.histogram, bbWidth, volSpike, chg });
 
       if (rsi <= 30) {
         setups.push({ symbol, price, type: 'RSI Oversold', signal: 'BUY', strength: Math.min(100, Math.round((30 - rsi) * 5 + 60)), detail: `RSI: ${rsi.toFixed(1)}`, rsi, volSpike });
@@ -51,19 +56,26 @@ export class TradeSetupPanel extends BasePanel {
         setups.push({ symbol, price, type: 'BB Upper Touch', signal: 'SELL', strength: 65, detail: `Band: ${formatCurrency(bb.upper)}`, rsi, volSpike });
       }
 
-      const bbWidth = bb.middle > 0 ? (bb.upper - bb.lower) / bb.middle : 0;
-      if (bbWidth < 0.02) {
-        setups.push({ symbol, price, type: 'BB Squeeze', signal: 'WATCH', strength: 55, detail: `Width: ${(bbWidth * 100).toFixed(2)}%`, rsi, volSpike });
+      if (bbWidth < 2) {
+        setups.push({ symbol, price, type: 'BB Squeeze', signal: 'WATCH', strength: 55, detail: `Width: ${bbWidth.toFixed(2)}%`, rsi, volSpike });
       }
 
-      if (volSpike > 3) {
+      if (volSpike > 2.5) {
         const dir = closes[closes.length - 1] > closes[closes.length - 2] ? 'BUY' : 'SELL';
         setups.push({ symbol, price, type: 'Volume Spike', signal: dir, strength: Math.min(90, Math.round(volSpike * 15)), detail: `${volSpike.toFixed(1)}x avg`, rsi, volSpike });
+      }
+
+      // Near-threshold setups (approaching oversold/overbought)
+      if (rsi <= 35 && rsi > 30) {
+        setups.push({ symbol, price, type: 'RSI Approaching Oversold', signal: 'WATCH', strength: 45, detail: `RSI: ${rsi.toFixed(1)}`, rsi, volSpike });
+      } else if (rsi >= 65 && rsi < 70) {
+        setups.push({ symbol, price, type: 'RSI Approaching Overbought', signal: 'WATCH', strength: 45, detail: `RSI: ${rsi.toFixed(1)}`, rsi, volSpike });
       }
     });
 
     setups.sort((a, b) => b.strength - a.strength);
-    return { setups, scanned: this._scanPairs.length };
+    readings.sort((a, b) => Math.abs(b.rsi - 50) - Math.abs(a.rsi - 50));
+    return { setups, readings, scanned: this._scanPairs.length };
   }
 
   _calcRSI(closes, period) {
@@ -111,7 +123,7 @@ export class TradeSetupPanel extends BasePanel {
   }
 
   renderContent(data) {
-    if (!data || data.setups.length === 0) return '<div class="panel-loading">No active trade setups detected<br><span style="font-size:10px;color:var(--text-muted)">Scanning ' + (data?.scanned || 0) + ' pairs for RSI, MACD, BB, Volume signals</span></div>';
+    if (!data) return '<div class="panel-loading">Loading trade setups...</div>';
 
     let h = '<style scoped>';
     h += '.ts-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}';
@@ -129,23 +141,46 @@ export class TradeSetupPanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="ts-header">';
-    h += `<div><span class="ts-count">${data.setups.length} Active Setups</span><br><span class="ts-sub">${data.scanned} pairs · RSI · MACD · BB · Volume</span></div>`;
+    if (data.setups.length > 0) {
+      h += `<div><span class="ts-count">${data.setups.length} Active Setups</span><br><span class="ts-sub">${data.scanned} pairs · RSI · MACD · BB · Volume</span></div>`;
+    } else {
+      h += `<div><span class="ts-count">Market Readings</span><br><span class="ts-sub">${data.scanned} pairs scanned · No strong setups right now</span></div>`;
+    }
     h += '</div>';
 
-    data.setups.slice(0, 12).forEach(s => {
-      const sigCls = s.signal === 'BUY' ? 'ts-buy' : s.signal === 'SELL' ? 'ts-sell' : 'ts-watch';
-      h += '<div class="ts-card">';
-      h += '<div style="display:flex;flex-direction:column;gap:2px">';
-      h += `<div class="ts-sym">${escapeHtml(s.symbol.replace('USDT', ''))}<span style="color:var(--text-muted);font-weight:400;font-size:10px">/USDT</span></div>`;
-      h += `<div class="ts-type">${escapeHtml(s.type)}</div>`;
-      h += `<div class="ts-detail">${escapeHtml(s.detail)}${s.volSpike > 1.5 ? ' · Vol ' + s.volSpike.toFixed(1) + 'x' : ''}</div>`;
-      h += '</div>';
-      h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">';
-      h += `<span class="ts-signal ${sigCls}">${s.signal}</span>`;
-      h += `<div class="ts-price">${formatCurrency(s.price)}</div>`;
-      h += `<div style="font-size:8px;color:var(--text-muted)">Strength: ${s.strength}%</div>`;
-      h += '</div></div>';
-    });
+    if (data.setups.length > 0) {
+      data.setups.slice(0, 12).forEach(s => {
+        const sigCls = s.signal === 'BUY' ? 'ts-buy' : s.signal === 'SELL' ? 'ts-sell' : 'ts-watch';
+        h += '<div class="ts-card">';
+        h += '<div style="display:flex;flex-direction:column;gap:2px">';
+        h += `<div class="ts-sym">${escapeHtml(s.symbol.replace('USDT', ''))}<span style="color:var(--text-muted);font-weight:400;font-size:10px">/USDT</span></div>`;
+        h += `<div class="ts-type">${escapeHtml(s.type)}</div>`;
+        h += `<div class="ts-detail">${escapeHtml(s.detail)}${s.volSpike > 1.5 ? ' · Vol ' + s.volSpike.toFixed(1) + 'x' : ''}</div>`;
+        h += '</div>';
+        h += '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">';
+        h += `<span class="ts-signal ${sigCls}">${s.signal}</span>`;
+        h += `<div class="ts-price">${formatCurrency(s.price)}</div>`;
+        h += `<div style="font-size:8px;color:var(--text-muted)">Strength: ${s.strength}%</div>`;
+        h += '</div></div>';
+      });
+    }
+
+    // Always show current readings table
+    if (data.readings && data.readings.length > 0) {
+      h += '<div style="font-size:10px;font-weight:600;color:var(--text-muted);margin:8px 0 4px">Current Indicators (1H)</div>';
+      h += '<table class="data-table" style="font-size:9px"><thead><tr><th>Pair</th><th style="text-align:right">Price</th><th style="text-align:right">RSI</th><th style="text-align:right">MACD</th><th style="text-align:right">BB%</th><th style="text-align:right">Vol</th></tr></thead><tbody>';
+      data.readings.forEach(r => {
+        const rsiCls = r.rsi <= 30 ? 'val-up' : r.rsi >= 70 ? 'val-down' : '';
+        const macdCls = r.macdHist > 0 ? 'val-up' : r.macdHist < 0 ? 'val-down' : '';
+        h += `<tr><td style="font-weight:600">${r.symbol.replace('USDT', '')}</td>`;
+        h += `<td style="text-align:right">${formatCurrency(r.price)}</td>`;
+        h += `<td style="text-align:right" class="${rsiCls}">${r.rsi.toFixed(0)}</td>`;
+        h += `<td style="text-align:right" class="${macdCls}">${r.macdHist >= 0 ? '+' : ''}${r.macdHist.toFixed(2)}</td>`;
+        h += `<td style="text-align:right">${r.bbWidth.toFixed(1)}%</td>`;
+        h += `<td style="text-align:right">${r.volSpike.toFixed(1)}x</td></tr>`;
+      });
+      h += '</tbody></table>';
+    }
 
     return h;
   }

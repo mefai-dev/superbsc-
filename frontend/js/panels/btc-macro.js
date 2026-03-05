@@ -1,4 +1,4 @@
-// MEFAI BTC Macro Indicators — Pi Cycle, Rainbow, Golden Ratio, M2
+// MEFAI BTC Macro Indicators — Pi Cycle, Rainbow, Golden Ratio
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -9,7 +9,7 @@ export class BtcMacroPanel extends BasePanel {
 
   constructor() {
     super();
-    this._refreshRate = 3600000; // 1 hour
+    this._refreshRate = 3600000;
     this._tab = 'pi-cycle';
   }
 
@@ -20,9 +20,9 @@ export class BtcMacroPanel extends BasePanel {
       window.mefaiApi.btcMacro.goldenRatio(),
     ]);
 
-    const pi = piRes.status === 'fulfilled' && piRes.value?.dataPoints ? piRes.value : null;
-    const rainbow = rainbowRes.status === 'fulfilled' && rainbowRes.value?.dataPoints ? rainbowRes.value : null;
-    const golden = goldenRes.status === 'fulfilled' && goldenRes.value?.dataPoints ? goldenRes.value : null;
+    const pi = piRes.status === 'fulfilled' && piRes.value?.data ? piRes.value : null;
+    const rainbow = rainbowRes.status === 'fulfilled' && rainbowRes.value?.data ? rainbowRes.value : null;
+    const golden = goldenRes.status === 'fulfilled' && goldenRes.value?.data ? goldenRes.value : null;
 
     return { pi, rainbow, golden };
   }
@@ -45,7 +45,6 @@ export class BtcMacroPanel extends BasePanel {
     h += '.bm-signal{display:inline-block;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;text-transform:uppercase}';
     h += '.bm-signal-bull{background:rgba(0,200,83,.15);color:#00c853}';
     h += '.bm-signal-bear{background:rgba(255,82,82,.15);color:#ff5252}';
-    h += '.bm-signal-neutral{background:rgba(255,193,7,.15);color:#ffc107}';
     h += '</style>';
 
     h += '<div class="bm-tabs">';
@@ -61,18 +60,21 @@ export class BtcMacroPanel extends BasePanel {
     return h;
   }
 
-  _renderPiCycle(data) {
-    if (!data?.dataPoints) return '<div class="bm-desc">Pi Cycle data unavailable</div>';
+  _renderPiCycle(apiData) {
+    if (!apiData?.data?.price) return '<div class="bm-desc">Pi Cycle data unavailable</div>';
 
+    const d = apiData.data;
     let h = '<div class="bm-desc">Pi Cycle Top: When the 111-day MA crosses above the 350-day MA x2, it has historically signaled cycle tops within 3 days.</div>';
 
-    const points = Object.values(data.dataPoints);
-    const last = points[points.length - 1];
-    if (!last) return h;
+    const prices = d.price || [];
+    const ma111Arr = d.ma111 || [];
+    const ma350x2Arr = d.ma350x2 || [];
+    const lastPrice = prices.length > 0 ? prices[prices.length - 1] : null;
+    if (!lastPrice) return h;
 
-    const price = last.price || last.y || 0;
-    const ma111 = last.ma111 || last.line1 || 0;
-    const ma350x2 = last.ma350x2 || last.line2 || 0;
+    const price = lastPrice.price || 0;
+    const ma111 = ma111Arr.length > 0 ? (ma111Arr[ma111Arr.length - 1].value || ma111Arr[ma111Arr.length - 1]) : 0;
+    const ma350x2 = ma350x2Arr.length > 0 ? (ma350x2Arr[ma350x2Arr.length - 1].value || ma350x2Arr[ma350x2Arr.length - 1]) : 0;
     const gap = ma350x2 > 0 ? ((ma350x2 - ma111) / ma350x2 * 100) : 0;
     const crossed = ma111 >= ma350x2;
 
@@ -87,10 +89,9 @@ export class BtcMacroPanel extends BasePanel {
     h += `<div class="bm-card"><div class="bm-label">Signal</div><div class="bm-val"><span class="bm-signal ${crossed ? 'bm-signal-bear' : 'bm-signal-bull'}">${crossed ? 'TOP SIGNAL' : 'No Top Signal'}</span></div></div>`;
     h += '</div>';
 
-    // Sparkline of recent prices
-    const recent = points.slice(-60);
+    const recent = prices.slice(-60);
     if (recent.length > 1) {
-      const vals = recent.map(p => p.price || p.y || 0).filter(v => v > 0);
+      const vals = recent.map(p => p.price || 0).filter(v => v > 0);
       if (vals.length > 1) {
         const max = Math.max(...vals);
         const min = Math.min(...vals);
@@ -107,44 +108,60 @@ export class BtcMacroPanel extends BasePanel {
     return h;
   }
 
-  _renderRainbow(data) {
-    if (!data?.dataPoints) return '<div class="bm-desc">Rainbow data unavailable</div>';
+  _renderRainbow(apiData) {
+    if (!apiData?.data?.price) return '<div class="bm-desc">Rainbow data unavailable</div>';
 
-    const bands = ['Maximum Bubble', 'Sell. Seriously.', 'FOMO Intensifies', 'Is This a Bubble?', 'HODL!', 'Still Cheap', 'Accumulate', 'BUY!', 'Fire Sale'];
-    const colors = ['#ff0000', '#ff4400', '#ff8800', '#ffbb00', '#ffff00', '#88ff00', '#00cc00', '#0088cc', '#0044ff'];
+    const d = apiData.data;
+    const currentZone = Array.isArray(d.currentZone) && d.currentZone.length > 0 ? d.currentZone[d.currentZone.length - 1] : null;
+    const zones = d.zones || [];
 
     let h = '<div class="bm-desc">Rainbow Chart: Logarithmic regression bands showing which market phase BTC is in. Historically, buying in blue/green zones outperforms.</div>';
 
+    const bandColors = {
+      'Maximum Bubble': '#ff0000', 'Sell. Seriously.': '#ff4400', 'FOMO Intensifies': '#ff8800',
+      'Is This a Bubble?': '#ffbb00', 'HODL!': '#ffff00', 'Still Cheap': '#88ff00',
+      'Accumulate': '#00cc00', 'BUY!': '#0088cc', 'Fire Sale': '#0044ff',
+    };
+
+    const bandOrder = ['Maximum Bubble', 'Sell. Seriously.', 'FOMO Intensifies', 'Is This a Bubble?', 'HODL!', 'Still Cheap', 'Accumulate', 'BUY!', 'Fire Sale'];
     h += '<div style="display:flex;flex-direction:column;gap:2px;margin-bottom:10px">';
-    bands.forEach((name, i) => {
-      h += `<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:3px;background:${colors[i]}22">`;
-      h += `<div style="width:10px;height:10px;border-radius:2px;background:${colors[i]}"></div>`;
-      h += `<span style="font-size:10px;color:var(--text)">${name}</span>`;
+    bandOrder.forEach(name => {
+      const color = bandColors[name] || '#888';
+      const isCurrent = currentZone && currentZone.name === name;
+      h += `<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:3px;background:${color}${isCurrent ? '44' : '22'};${isCurrent ? 'border:1px solid ' + color : ''}">`;
+      h += `<div style="width:10px;height:10px;border-radius:2px;background:${color}"></div>`;
+      h += `<span style="font-size:10px;color:var(--text);${isCurrent ? 'font-weight:700' : ''}">${name}${isCurrent ? ' ← Current' : ''}</span>`;
       h += '</div>';
     });
     h += '</div>';
 
-    const points = Object.values(data.dataPoints);
-    const last = points[points.length - 1];
-    if (last) {
-      const price = last.price || last.y || 0;
-      h += `<div class="bm-cards" style="grid-template-columns:1fr"><div class="bm-card"><div class="bm-label">Current BTC</div><div class="bm-val">${formatCurrency(price)}</div><div class="bm-sub">${points.length} days of data</div></div></div>`;
+    const prices = d.price || [];
+    const lastPrice = prices.length > 0 ? prices[prices.length - 1] : null;
+    if (lastPrice) {
+      const price = lastPrice.price || 0;
+      const zoneName = currentZone ? currentZone.name : 'Unknown';
+      const zoneDesc = currentZone ? currentZone.description : '';
+      h += '<div class="bm-cards" style="grid-template-columns:1fr 1fr">';
+      h += `<div class="bm-card"><div class="bm-label">BTC Price</div><div class="bm-val">${formatCurrency(price)}</div></div>`;
+      h += `<div class="bm-card"><div class="bm-label">Zone</div><div class="bm-val" style="font-size:11px">${escapeHtml(zoneName)}</div><div class="bm-sub">${escapeHtml(zoneDesc)}</div></div>`;
+      h += '</div>';
     }
     return h;
   }
 
-  _renderGolden(data) {
-    if (!data?.dataPoints) return '<div class="bm-desc">Golden Ratio data unavailable</div>';
+  _renderGolden(apiData) {
+    if (!apiData?.data?.goldenRatioData) return '<div class="bm-desc">Golden Ratio data unavailable</div>';
 
-    let h = '<div class="bm-desc">Golden Ratio Multiplier: Fibonacci multiples (1.6x, 2x, 3x, 5x, 8x, 13x, 21x) of the 350-day MA create key support/resistance levels.</div>';
+    const d = apiData.data;
+    let h = '<div class="bm-desc">Golden Ratio Multiplier: Fibonacci multiples of the 350-day MA create key support/resistance levels.</div>';
 
-    const points = Object.values(data.dataPoints);
-    const last = points[points.length - 1];
+    const grData = d.goldenRatioData || [];
+    const last = grData.length > 0 ? grData[grData.length - 1] : null;
     if (!last) return h;
 
-    const price = last.price || last.y || 0;
-    const fibs = [1.6, 2, 3, 5, 8, 13, 21];
-    const ma350 = last.ma350 || last.line1 || 0;
+    const price = last.price || 0;
+    const ma350 = last.dma350 || 0;
+    const levels = last.levels || {};
 
     if (ma350 > 0) {
       h += '<div class="bm-cards" style="grid-template-columns:1fr 1fr">';
@@ -152,12 +169,18 @@ export class BtcMacroPanel extends BasePanel {
       h += `<div class="bm-card"><div class="bm-label">350d MA</div><div class="bm-val">${formatCurrency(ma350)}</div></div>`;
       h += '</div>';
 
+      const fibs = [
+        { name: '1.6x', key: 'level_1_6' }, { name: '2x', key: 'level_2' },
+        { name: '3x', key: 'level_3' }, { name: '5x', key: 'level_5' },
+        { name: '8x', key: 'level_8' }, { name: '13x', key: 'level_13' },
+        { name: '21x', key: 'level_21' },
+      ];
       h += '<table class="data-table"><thead><tr><th>Fib</th><th style="text-align:right">Level</th><th style="text-align:right">Distance</th></tr></thead><tbody>';
       fibs.forEach(f => {
-        const level = ma350 * f;
+        const level = levels[f.key] || ma350 * parseFloat(f.name);
         const dist = price > 0 ? ((level - price) / price * 100) : 0;
         const cls = dist > 0 ? 'val-up' : 'val-down';
-        h += `<tr><td style="font-weight:600">${f}x</td><td style="text-align:right">${formatCurrency(level)}</td><td style="text-align:right" class="${cls}">${dist > 0 ? '+' : ''}${dist.toFixed(1)}%</td></tr>`;
+        h += `<tr><td style="font-weight:600">${f.name}</td><td style="text-align:right">${formatCurrency(level)}</td><td style="text-align:right" class="${cls}">${dist > 0 ? '+' : ''}${dist.toFixed(1)}%</td></tr>`;
       });
       h += '</tbody></table>';
     }
