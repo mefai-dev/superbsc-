@@ -134,6 +134,25 @@ body {
   border-bottom-color: var(--accent);
   font-weight: 700;
 }
+.nav-highlight {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #0ecb81;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 12px 14px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  text-shadow: 0 0 8px rgba(14,203,129,0.3);
+}
+.nav-highlight:hover {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(14,203,129,0.5);
+  border-bottom-color: #0ecb81;
+}
 .nav-dropdown-menu {
   display: none;
   position: absolute;
