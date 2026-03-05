@@ -1,8 +1,8 @@
 # MEFAI Terminal
 
-**The most comprehensive open source crypto intelligence terminal for Binance: 48 analytical skills, 83 panels, real time AI market intelligence, and a conversational market assistant.**
+**The most comprehensive open source crypto intelligence terminal for Binance: 58 analytical skills + Market DNA 3D visualization, 97 panels, 31 layout presets, real time AI market intelligence, and a conversational market assistant.**
 
-A Bloomberg Terminal inspired, keyboard driven, multi panel interface that unifies Binance CEX, DeFi, derivatives, and on chain analytics into one coherent workflow. Zero framework. One command deploy.
+A Bloomberg Terminal inspired, keyboard driven, multi panel interface that unifies Binance CEX, DeFi, derivatives, options, BNB Chain, and on chain analytics into one coherent workflow. Zero framework. One command deploy.
 
 **Live Demo:** [mefai.io/superbsc](https://mefai.io/superbsc/)
 
@@ -98,8 +98,8 @@ Market Data (Binance CEX + Futures + DeFi)
     → AI Market Assistant (conversational interface)
 ```
 
-### 48 Analytical Skills
-From basic market data to advanced composite analysis: every skill runs independently but contributes to the unified intelligence layer.
+### 58 Analytical Skills
+From basic market data to Bitcoin macro, options analytics, BNB Chain, and advanced composite analysis: every skill runs independently but contributes to the unified intelligence layer.
 
 ## Skills & Panels
 
@@ -172,12 +172,43 @@ From basic market data to advanced composite analysis: every skill runs independ
 | **Skill 46: Intelligence** | **AI Intelligence Feed** | **Real time natural language market analysis. Synthesizes all data streams into prioritized, human readable intelligence events.** |
 | **Skill 47: AI Assistant** | **Speak to Binance** | **Conversational AI chat: ask any question about any asset and get real time analysis from 9+ API endpoints. Commands: analyze, compare, summary, risk, opportunities, funding, health.** |
 
+### Insider Intelligence (48-50)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 48: Whale Footprint** | **Whale Footprint** | **Real-time $50K+ trade detection across 10 pairs. Dolphin/Whale/Mega classification, net pressure, live feed.** |
+| **Skill 49: Market Impact** | **Market Impact Simulator** | **Order book walk-through: enter trade size, see levels consumed, avg fill, slippage %, impact cost.** |
+| **Skill 50: Accumulation** | **Smart Accumulation** | **4-factor stealth buying detector (Volume Surge + OI Buildup + Stealth Mode + Buyer Aggression). Composite 0-100 score across 12 pairs.** |
+
+### 3D Visualization (51)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 51: Market DNA** | **[Market DNA Helix](/superbsc/dna)** | **3D double-helix visualization encoding 5 intelligence data sources into an interactive DNA structure. ~50 nodes with smart money, funding, regime, basis, and accumulation encoding. Three.js WebGL.** |
+
+### Bitcoin & Options Analytics (52-53)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 52: Bitcoin Macro** | **BTC Macro, On-Chain Stats** | **Bitcoin macroeconomic analysis: on-chain metrics (MVRV, SOPR, NVT), miner flows, exchange reserves, hash rate, halving cycles.** |
+| **Skill 53: Options** | **Binance Options, Deribit Options** | **Options chain analytics across Binance and Deribit. IV surface, put/call ratios, max pain, notable flows, gamma exposure.** |
+
+### BNB Chain (54-56)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 54: BNB Explorer** | **TX Explorer** | **BNB Chain transaction explorer: real-time block scanner, transaction decoder, gas analytics.** |
+| **Skill 55: NFT** | **NFT Portfolio** | **NFT portfolio tracker: collection holdings, floor price history, P&L, rarity scoring.** |
+| **Skill 56: Greenfield** | **Greenfield Explorer** | **BNB Greenfield decentralized storage explorer: bucket/object browser, storage provider stats, pricing.** |
+
+### Trade Signal Intelligence (57-58)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 57: Trade Setup** | **Trade Setup, Funding Alert** | **Multi-factor trade setup analyzer with entry/exit scoring. Real-time funding rate alerting with threshold triggers.** |
+| **Skill 58: Liquidation Intel** | **Liquidation Magnet, Intelligence Dashboard** | **Liquidation price cluster detector: identifies liquidation magnet zones. Unified intelligence dashboard combining all signal streams.** |
+
 ### Meta Skills
 | Skill | Panels | Description |
 |-------|--------|-------------|
 | All Skills | Auto Scanner, Smart Flow, All Skills | Automated multi API intelligence pipeline |
 
-## 24 Layout Presets
+## 31 Layout Presets
 
 | Layout | Panels | Use Case |
 |--------|--------|----------|
@@ -205,8 +236,13 @@ From basic market data to advanced composite analysis: every skill runs independ
 | Convergence | Sentiment + Cross Arb + Term + Anomaly + Cascade + Health | Convergence analysis |
 | **Smart Money** | **Intelligence Feed + Smart Money Radar + Taker + Divergence + OI + Sentiment** | **Institutional intelligence** |
 | **Speak to Binance** | **AI Market Assistant (full page)** | **Conversational AI analysis** |
+| **Insider** | **Whale Footprint + Market Impact Simulator + Smart Accumulation** | **Institutional-grade intelligence** |
 | Screener | Momentum + Volatility + Volume + ATH | Market screening |
 | Explorer | Product Explorer + Dominance + Airdrop Calendar + API Monitor | Exploration |
+| **BNB Chain** | **TX Explorer + NFT Portfolio + Greenfield Explorer + Wallet Risk** | **BNB Chain ecosystem** |
+| **Bitcoin** | **BTC Macro + Deribit Options + On-Chain Stats + Binance Options** | **Bitcoin focused analysis** |
+| **Trade Signals** | **Trade Setup + Funding Alert + Liquidation Magnet + Futures Pulse** | **Active signal generation** |
+| **Intelligence** | **Intelligence Dashboard (full page)** | **Unified intelligence hub** |
 
 ## Quick Start
 
@@ -230,10 +266,10 @@ Open `http://localhost:8000`
 ```
 Browser (Vanilla JS + Web Components, zero dependencies)
     │
-    ├── 83 Panels (one file each, auto-registered)
-    ├── 48 Skills (independent analytical engines)
+    ├── 97 Panels (one file each, auto-registered)
+    ├── 58 Skills (independent analytical engines)
     ├── Intelligence Feed (cross-skill synthesis)
-    ├── 22 Layout Presets
+    ├── 31 Layout Presets
     ├── 10 Language Support (EN/ZH/TR/VI/HI/FA/DE/FR/AR/ES)
     └── Keyboard first UX (Command Palette, Search, Shortcuts)
     │
@@ -251,6 +287,7 @@ FastAPI Proxy (Python, async, in-memory cache + startup warmup)
 ```
 
 - **Frontend**: Vanilla JS, Web Components, zero dependencies, no build step
+- **3D Engine**: Three.js v0.162.0 (Market DNA Helix — ES module via CDN)
 - **Backend**: Python FastAPI with async httpx client and in-memory TTL cache
 - **Charts**: TradingView lightweight-charts (vendored, MIT license)
 - **Cache**: Server-side TTL + client-side localStorage + startup warmup
@@ -303,7 +340,7 @@ mefai-terminal/
 │   ├── cache.py               # Async HTTP client + TTL cache
 │   ├── config.py              # Environment settings
 │   ├── scanner.py             # Auto scan engine
-│   └── routes/                # 12 route modules
+│   └── routes/                # 26 route modules
 │       ├── spot.py            # Binance Spot CEX
 │       ├── futures.py         # Binance Futures (4 proxy sources)
 │       ├── web3.py            # Web3 Skills Hub
@@ -315,10 +352,24 @@ mefai-terminal/
 │       ├── announcements.py   # Binance Announcements
 │       ├── earn.py            # Binance Earn
 │       ├── margin.py          # Margin Trading
-│       └── products.py        # Binance Products
+│       ├── products.py        # Binance Products
+│       ├── binance_options.py # Binance Options Chain
+│       ├── deribit.py         # Deribit Options Analytics
+│       ├── btc_macro.py       # Bitcoin Macro & On-Chain
+│       ├── bnbchain.py        # BNB Chain Explorer
+│       ├── onchain.py         # On-Chain Statistics
+│       ├── etherscan.py       # Etherscan Integration
+│       ├── signals.py         # Trade Signal Engine
+│       ├── market_rank.py     # Market Rankings
+│       ├── token_audit.py     # Token Security Audit
+│       ├── token_info.py      # Token Information
+│       ├── address.py         # Address Analytics
+│       └── scanner.py         # Background Scanner Engine
 ├── frontend/
 │   ├── index.html             # Single page shell
+│   ├── dna.html               # Market DNA 3D visualization page
 │   ├── css/main.css           # All styles (responsive)
+│   ├── css/dna.css            # Market DNA standalone styles
 │   └── js/
 │       ├── app.js             # Panel registry, layouts, keyboard
 │       ├── api.js             # API client with cache
@@ -326,7 +377,7 @@ mefai-terminal/
 │       ├── i18n.js            # 10 language translations
 │       ├── utils.js           # Formatting utilities
 │       ├── components/        # Reusable Web Components
-│       └── panels/            # 83 panel files (one each)
+│       └── panels/            # 97 panel files (one each)
 ├── Dockerfile + docker-compose.yml
 └── Makefile
 ```
@@ -363,6 +414,10 @@ MEFAI Terminal's SKILL.md contributions to [binance-skills-hub](https://github.c
 | Cross Exchange Arbitrage Monitor | Arbitrage Intelligence | PR Ready |
 | Derivatives Sentiment Convergence | Sentiment Fusion | PR Ready |
 | Futures Term Structure Analyzer | Derivatives Analytics | PR Ready |
+| Whale Footprint Scanner | Real Time Trade Intelligence | PR Ready |
+| Market Impact Simulator | Order Book Analytics | PR Ready |
+| Smart Accumulation Detector | Institutional Flow Detection | PR Ready |
+| Market DNA Helix | 3D Market Intelligence Visualization | PR Ready |
 
 ## License
 
