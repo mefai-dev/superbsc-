@@ -87,6 +87,7 @@ const panelRegistry = {
   'momentum-cascade': 'momentum-cascade-panel',
   'microstructure-health': 'microstructure-health-panel',
   'smart-money-radar': 'smart-money-radar-panel',
+  'intelligence-feed': 'intelligence-feed-panel',
 };
 
 // Layout presets
@@ -209,7 +210,7 @@ const layouts = {
   'smart-money': {
     name: 'Smart Money',
     grid: 'grid-2x3',
-    panels: ['smart-money-radar', 'taker-pressure', 'trader-divergence', 'funding-scanner', 'oi-surge', 'sentiment-convergence'],
+    panels: ['intelligence-feed', 'smart-money-radar', 'taker-pressure', 'trader-divergence', 'oi-surge', 'sentiment-convergence'],
   },
   'screener': {
     name: 'Screener',
@@ -246,7 +247,7 @@ async function loadPanels() {
     'whale-tracker',
     'cross-exchange-arb', 'sentiment-convergence', 'term-structure',
     'anomaly-composite', 'momentum-cascade', 'microstructure-health',
-    'smart-money-radar',
+    'smart-money-radar', 'intelligence-feed',
   ];
   await Promise.allSettled(
     panelModules.map(name =>

@@ -1,61 +1,166 @@
-# SuperBSC
+# MEFAI Terminal
 
-**The first open-source crypto intelligence terminal powered by all 7 Binance Skills Hub APIs.**
+**The most comprehensive open-source crypto intelligence terminal for Binance — 47 analytical skills, 82 panels, real-time AI market intelligence.**
 
-A Bloomberg Terminal-inspired, keyboard-driven, multi-panel interface that unifies every Binance Skills Hub skill into one coherent workflow. Dark mode. Zero framework. One command deploy.
+A Bloomberg Terminal-inspired, keyboard-driven, multi-panel interface that unifies Binance CEX, DeFi, derivatives, and on-chain analytics into one coherent workflow. Zero framework. One command deploy.
 
-```
-+-----------------------+----------------------+---------------------+
-| MARKET OVERVIEW       | SMART SIGNALS        | TOKEN PROFILE       |
-| BTC   68,520  +2.1%  | BUY  PEPE   SM:12   | BNB                 |
-| ETH    1,986  -0.3%  | SELL DOGE   SM:8    | MCap: $86.8B        |
-| BNB      634  +1.2%  | BUY  WIF    SM:24   | Risk: SAFE          |
-+-----------------------+----------------------+---------------------+
-| TRENDING TOKENS                              | MEME RUSH           |
-| #1 QUQ    $0.0019  +342%                    | AI gent   $0.012    |
-| #2 BTW    $0.0102  +128%                    | GIRAFFES  $0.008    |
-| #3 PUMP   $0.0019  +89%                     | 龙虾       $0.003    |
-+-----------------------+----------------------+---------------------+
-```
-
-## Why SuperBSC
-
-**Cross-Skill Intelligence Pipeline** — No other project connects all 7 APIs into a single workflow:
+**Live Demo:** [mefai.io/superbsc](https://mefai.io/superbsc/)
 
 ```
-New token detected (Skill 2) -> Audit security (Skill 6) -> Check smart money (Skill 5)
--> View full profile (Skill 7) -> Track signals (Skill 4) -> Monitor wallet (Skill 3)
--> Execute trade (Skill 1)
++---------------------------+---------------------------+
+| 🔴 CRITICAL | BTC         | SMART MONEY RADAR         |
+| Smart Money Score 85/100  | BTC  LONG  ████████░ 85   |
+| Top traders going long    | ETH  SHORT ████░░░░░ 52   |
+| aggressively while retail | SOL  LONG  ██████░░░ 71   |
+| is short. 5/6 factors     | BNB  NEUTRAL ███░░░░ 38   |
+| aligned. Funding -4.2bps  +---------------------------+
+| — longs getting paid.     | ANOMALY COMPOSITE         |
++---------------------------+ BTC: 4/6 signals firing   |
+| 🟡 HIGH | ETH             | ETH: CRITICAL severity    |
+| Smart-Retail Divergence   | SOL: NORMAL               |
+| Top traders long (1.82)   +---------------------------+
+| retail short (0.74).      | MICROSTRUCTURE HEALTH     |
+| Gap: 1.08 — smart money   | BTC: A (92) ████████████ |
+| historically wins.        | ETH: B (71) █████████░░░ |
++---------------------------+---------------------------+
 ```
 
-**Auto-Scanner Engine** — A background process that continuously pulls new tokens, audits them, checks smart money flow, and surfaces the most promising opportunities. Automated multi-API intelligence that no other tool offers.
+## Flagship Feature: AI Market Intelligence Feed
 
-**Terminal-First UX** — Every action has a keyboard shortcut. Command palette, global search, layout presets. No mouse required for power users.
+The Intelligence Feed is the "brain" of MEFAI Terminal. It synthesizes data from all analytical engines and generates **real-time, natural language market intelligence** — like having a Bloomberg analyst watching the market 24/7.
 
-## Skills Hub Integration
+Every 30 seconds, it scans 12 assets across 6 signal dimensions and produces prioritized, human-readable events:
 
-Every panel maps directly to a Binance Skills Hub API. Full attribution throughout.
+- **Smart Money Signals** — "Top traders going long aggressively while retail is short. 5/6 factors aligned."
+- **Anomaly Alerts** — "4/6 anomaly signals firing: VWAP +1.8%, OI spike +4.2%, taker 1.38, funding extreme."
+- **Divergence Detection** — "Smart-Retail Divergence: Top traders long (1.82) while retail short (0.74)."
+- **Funding Extremes** — "Funding rate extreme: -15.2bps. Contrarian LONG signal."
+- **OI Surges** — "Open Interest surged +7.3% in recent hours. Significant position buildup."
+- **Microstructure Stress** — "Microstructure degraded to Grade D (28/100). Poor execution environment."
 
-| Panel | Skill | API Endpoint |
-|-------|-------|-------------|
-| Market Overview | Skill 1: Spot CEX | `GET /api/v3/ticker/24hr` |
-| Order Book | Skill 1: Spot CEX | `GET /api/v3/depth` |
-| Price Chart | Skill 1: Spot CEX | `GET /api/v3/klines` |
-| Spot Trading | Skill 1: Spot CEX | `POST /api/v3/order` |
-| Meme Rush | Skill 2: Meme Rush | `POST pulse/rank/list` |
-| Topic Rush | Skill 2: Topic Rush | `GET social-rush/rank/list` |
-| Wallet Tracker | Skill 3: Address Info | `GET active-position-list` |
-| Smart Signals | Skill 4: Trading Signal | `POST signal/smart-money` |
-| Social Hype | Skill 5.1: Social Rank | `GET social/hype/rank/leaderboard` |
-| Trending Tokens | Skill 5.2: Unified Rank | `POST unified/rank/list` |
-| Smart Inflow | Skill 5.3: Inflow Rank | `POST inflow/rank/query` |
-| Meme Rank | Skill 5.4: Exclusive Rank | `GET exclusive/rank/list` |
-| Top Traders | Skill 5.5: Leaderboard | `GET leaderboard/query` |
-| Token Audit | Skill 6: Security Audit | `POST security/token/audit` |
-| Token Search | Skill 7.1: Search | `GET token/search` |
-| Token Profile | Skill 7.2+3: Meta+Dynamic | `GET token/meta/info` + `dynamic/info` |
-| DEX Chart | Skill 7.4: K-Line | `GET k-line/candles` |
-| **Auto-Scanner** | **All 7 Skills** | **Automated pipeline** |
+## Why MEFAI Terminal
+
+### Binance-Exclusive Intelligence
+MEFAI uses **4 data signals that only Binance publishes** — no other exchange provides top trader L/S ratios, taker buy/sell ratios, or position-level data at this granularity. This creates intelligence that literally cannot be replicated on Bybit, OKX, or any competitor.
+
+### Cross-Skill Intelligence Pipeline
+No other project connects this many APIs into a single workflow:
+```
+Market Data (Binance CEX + Futures + DeFi)
+    → Smart Money Analysis (top trader positioning)
+    → Anomaly Detection (6-signal composite)
+    → Microstructure Health (5-metric scoring)
+    → Momentum Cascade (cross-asset propagation)
+    → AI Intelligence Feed (natural language synthesis)
+```
+
+### 47 Analytical Skills
+From basic market data to advanced composite analysis — every skill runs independently but contributes to the unified intelligence layer.
+
+## Skills & Panels
+
+### Core CEX Skills (1-7)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| Skill 1: Spot CEX | Market Overview, Order Book, Price Chart, Spot Trading | Real-time CEX market data and trading |
+| Skill 2: Meme Rush | Meme Rush, Topic Rush | Trending meme tokens and AI-detected topics |
+| Skill 3: Address Info | Wallet Tracker | Portfolio viewer for any wallet address |
+| Skill 4: Trading Signal | Smart Signals | Real-time smart money buy/sell signals |
+| Skill 5: Rankings | Social Hype, Trending, Smart Inflow, Meme Rank, Top Traders | 5 ranking sub-APIs |
+| Skill 6: Security | Token Audit, GoPlus Scanner | Contract security analysis |
+| Skill 7: Token Info | Token Search, Token Profile, DEX Chart | Token metadata and DEX charts |
+
+### Advanced Analytics (8-13)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| Skill 8: Alpha | Alpha Radar, Signal PnL, Futures Pulse, SM Acceleration, Token Scout | Multi-source convergence scoring |
+| Skill 9: Contrarian | Funding Arb, Social Divergence | Contrarian signal engines |
+| Skill 10: Launch | Launch Scanner | New token safety scoring via DexScreener + GoPlus |
+| Skill 11: Global | Market Pulse, Whale Intel | Global crypto market overview + whale tracking |
+| Skill 12: Risk | Liquidation Heatmap, Order Book Intel | Liquidation cascade data and order book clusters |
+| Skill 13: DeFi | Protocol TVL, Yield Radar, Stablecoin Flow, Token Grad, Chain Growth, DEX Intel, DEX Volume | Comprehensive DeFi analytics |
+
+### CEX Tools (14-23)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| Skill 14: P2P + Security | P2P Scanner, Multi-Chain Wallet, Liquidity Lifecycle | P2P markets and on-chain analysis |
+| Skill 15: News | Announcement Monitor | Real-time Binance announcements |
+| Skill 16: Sectors | Capital Rotation, Wallet Risk Score | Sector rotation and address risk profiling |
+| Skill 17: Earn | Earn Comparator, Contract Mutation | Staking/earn products and contract monitoring |
+| Skill 18: Grid | Grid Analyzer | Grid trading strategy optimization |
+| Skill 19: Convert | Convert Best Rate | Cross-market rate comparison |
+| Skill 20: Margin | Margin Optimizer, Tax Report | Leverage analysis and tax reporting |
+| Skill 21: Basis | Basis Spread, Trade Journal | Cash & carry spread tracking |
+| Skill 22: Market | Market Dominance, Swap Router | BTC dominance tracking and DEX routing |
+| Skill 23: Rules | Trading Rules, Alpha Airdrop | Rule engine and airdrop scanning |
+
+### Pro Derivatives (24-38)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| Skill 24: Divergence | Trader Divergence | Top vs retail trader comparison |
+| Skill 25-27: Tools | Airdrop Calendar, API Monitor, Product Explorer | Utility and exploration tools |
+| Skill 28: Funding | Funding Heatmap | Funding rate visualization across all pairs |
+| Skill 29: ATH | ATH Tracker | All-time high distance tracking |
+| Skill 30: Taker | Taker Pressure | Taker buy/sell volume ratio analysis |
+| Skill 31: OI | OI Surge Detector | Open interest spike detection |
+| Skill 32: Spread | Spread Monitor | Bid-ask spread analysis |
+| Skill 33: Index | Index Composition | Binance index constituent tracking |
+| Skill 34: Funding | Funding Scanner | Extreme funding rate scanner |
+| Skill 35: Momentum | Momentum Screener | Price momentum ranking |
+| Skill 36: Volatility | Volatility Rank | Volatility scoreboard |
+| Skill 37: Volume | Volume Profile | Volume distribution analysis |
+| Skill 38: Whale | Whale Tracker | Major holder activity detection |
+
+### Convergence Intelligence (39-44)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| Skill 39: Arbitrage | Cross-Exchange Arb | 8-exchange price comparison via index constituents |
+| Skill 40: Sentiment | Sentiment Convergence | 6-source sentiment fusion engine |
+| Skill 41: Term | Term Structure Analyzer | Futures basis curve and contango/backwardation |
+| Skill 42: Anomaly | Anomaly Composite | 6-signal anomaly detection system |
+| Skill 43: Cascade | Momentum Cascade | Cross-asset momentum propagation tracking |
+| Skill 44: Health | Microstructure Health | 5-metric market quality scoring (A-F grades) |
+
+### Flagship Intelligence (45-46)
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| **Skill 45: Smart Money** | **Smart Money Radar** | **6-factor institutional positioning engine using Binance-exclusive data. Composite Score 0-100, market regime classification, divergence detection.** |
+| **Skill 46: Intelligence** | **AI Intelligence Feed** | **Real-time natural language market analysis. Synthesizes all data streams into prioritized, human-readable intelligence events.** |
+
+### Meta Skills
+| Skill | Panels | Description |
+|-------|--------|-------------|
+| All Skills | Auto-Scanner, Smart Flow, All Skills | Automated multi-API intelligence pipeline |
+
+## 22 Layout Presets
+
+| Layout | Panels | Use Case |
+|--------|--------|----------|
+| MEFAI | All Skills + Auto-Scanner + Market + Signals + Trending + Meme | Default dashboard |
+| Overview | Market + Trending + Signals + Profile | General monitoring |
+| Meme Hunter | Meme Rush + Topics + Meme Rank + Scanner | Meme token discovery |
+| Whale Watcher | Whale Intel + Smart Flow + Signals + Inflow | Smart money tracking |
+| Deep Dive | Profile + DEX Chart + Audit + Hype + Signals + Wallet | Token research |
+| Trader | Market + Order Book + Chart + Trading | Active CEX trading |
+| Scanner | Auto-Scanner + Audit + Profile + Signals | Automated intelligence |
+| Alpha | Alpha Radar + Signal PnL + Signals + Trending | Alpha signal tracking |
+| Futures | Futures Pulse + Funding Arb + Market + Signals | Futures trading |
+| Discovery | Token Scout + SM Accel + Social Div + Alpha + Trending + Meme | Token discovery |
+| Intel | Whale Intel + OB Intel + Token Grad + Top Traders + Signals + Alpha | Intelligence gathering |
+| DeFi | DEX Intel + GoPlus + Token Audit + Multi-Chain Wallet | DeFi analytics |
+| Risk | Liquidation Heatmap + Futures Pulse + Funding Arb + OB Intel | Risk management |
+| Security | Contract Mutation + Liquidity Lifecycle + GoPlus + Capital Rotation | Security monitoring |
+| Analytics | Market Pulse + Protocol TVL + Stablecoin Flow + Yield Radar | DeFi analytics |
+| Launch | Launch Scanner + GoPlus + DEX Intel + Liquidity Lifecycle | New token analysis |
+| Ecosystem | Chain Growth + DEX Volume + Protocol Revenue + Protocol TVL | Blockchain ecosystem |
+| CEX Tools | P2P + Earn + Grid + Convert + Announcements + Risk Score | Binance CEX features |
+| Journal | Trade Journal + Tax Report + Swap Router + Alpha Airdrop | Trading journal |
+| Pro Tools | Margin + Basis + Funding Heatmap + Divergence + Rules + ATH | Professional trading |
+| Derivatives | Taker + OI + Funding + Spread + Index + Whale | Derivatives analytics |
+| Convergence | Sentiment + Cross-Arb + Term + Anomaly + Cascade + Health | Convergence analysis |
+| **Smart Money** | **Intelligence Feed + Smart Money Radar + Taker + Divergence + OI + Sentiment** | **Institutional intelligence** |
+| Screener | Momentum + Volatility + Volume + ATH | Market screening |
+| Explorer | Product Explorer + Dominance + Airdrop Calendar + API Monitor | Exploration |
 
 ## Quick Start
 
@@ -74,54 +179,37 @@ make dev
 
 Open `http://localhost:8000`
 
-## 18 Panels
+## Architecture
 
-### Skill 1: Spot CEX
-- **Market Overview** — Real-time ticker table for all USDT pairs. Price, 24h change, volume. Sortable columns, auto-refresh.
-- **Order Book** — Bid/ask depth visualization with green/red depth bars. Mid-price and spread display.
-- **Price Chart** — Candlestick chart powered by TradingView lightweight-charts. Multiple timeframes (1m to 1d).
-- **Spot Trading** — Order entry form with market/limit orders. Requires Binance API key.
+```
+Browser (Vanilla JS + Web Components, zero dependencies)
+    │
+    ├── 82 Panels (one file each, auto-registered)
+    ├── 47 Skills (independent analytical engines)
+    ├── Intelligence Feed (cross-skill synthesis)
+    ├── 22 Layout Presets
+    ├── 10 Language Support (EN/ZH/TR/VI/HI/FA/DE/FR/AR/ES)
+    └── Keyboard-first UX (Command Palette, Search, Shortcuts)
+    │
+    v
+FastAPI Proxy (Python, async, in-memory cache + startup warmup)
+    │
+    ├── Spot CEX: data-api.binance.vision
+    ├── Futures: fapi.binance.com (via geo-unblocking proxies)
+    ├── Web3 Skills: web3.binance.com/bapi/defi/
+    ├── DeFi: DeFi Llama, DexScreener, GoPlus
+    ├── Global: CoinGecko
+    ├── P2P: p2p.binance.com/bapi/c2c
+    ├── BAPI: binance.com/bapi/composite
+    └── Scanner Engine (background asyncio task)
+```
 
-### Skill 2: Meme Rush
-- **Meme Rush Board** — Live meme token launches. Three tabs: New, Finalizing, Migrated. BSC and Solana chains.
-- **Topic Rush** — AI-detected trending crypto topics with associated tokens. Latest, Rising, Viral tabs.
-
-### Skill 3: Address Info
-- **Wallet Tracker** — Portfolio viewer for any wallet address. Token holdings with price, value, and 24h changes.
-
-### Skill 4: Trading Signal
-- **Smart Signals** — Real-time smart money signal feed. Buy/sell direction, signal price, max gain percentage.
-
-### Skill 5: Market Rankings
-- **Social Hype** — Tokens ranked by social media hype with AI sentiment analysis.
-- **Trending Tokens** — Unified ranking across multiple data sources.
-- **Smart Money Inflow** — Tokens ranked by smart money net inflow amounts.
-- **Meme Rank** — Top meme tokens scored by breakout potential algorithm.
-- **Top Traders** — Wallet-level PnL leaderboard with win rates and volume.
-
-### Skill 6: Token Security
-- **Token Audit** — Security report card with risk level, buy/sell tax, verification status, and risk item breakdown.
-
-### Skill 7: Token Info
-- **Token Search** — Global search by name, symbol, or contract address across all chains.
-- **Token Profile** — Comprehensive single-token view: metadata, price, market cap, supply, holders, embedded audit.
-- **DEX Chart** — DEX candlestick chart for any token with multiple timeframes.
-
-### All Skills Combined
-- **Auto-Scanner** — The unique panel. Background engine that pulls new tokens, audits each one, checks smart money, cross-references signals, and surfaces top opportunities with composite scores.
-
-## 6 Layout Presets
-
-| # | Layout | Panels | Use Case |
-|---|--------|--------|----------|
-| 1 | Overview | Market + Trending + Signals + Profile | General monitoring |
-| 2 | Meme Hunter | Meme Rush + Topics + Meme Rank + Scanner | Meme token discovery |
-| 3 | Whale Watcher | Top Traders + Inflow + Signals + Wallet | Smart money tracking |
-| 4 | Deep Dive | Profile + DEX Chart + Audit + Hype + Signals + Wallet | Token research |
-| 5 | Trader | Market + Order Book + Chart + Trading | Active CEX trading |
-| 6 | Scanner | Auto-Scanner + Audit + Profile + Signals | Automated intelligence |
-
-Switch layouts with keyboard shortcuts `1` through `6`.
+- **Frontend**: Vanilla JS, Web Components, zero dependencies, no build step
+- **Backend**: Python FastAPI with async httpx client and in-memory TTL cache
+- **Charts**: TradingView lightweight-charts (vendored, MIT license)
+- **Cache**: Server-side TTL + client-side localStorage + startup warm-up
+- **i18n**: 10 languages with runtime switching
+- **Deploy**: Docker Compose or systemd service
 
 ## Keyboard Shortcuts
 
@@ -129,31 +217,11 @@ Switch layouts with keyboard shortcuts `1` through `6`.
 |-----|--------|
 | `Cmd+K` / `Ctrl+K` | Search tokens |
 | `/` | Command palette |
-| `1-6` | Switch layout |
+| `1-9` | Switch layout |
 | `d` | Toggle dark/light theme |
 | `r` | Refresh all panels |
 | `Esc` | Close overlay |
 | `?` | Show all shortcuts |
-
-## Architecture
-
-```
-Browser (Vanilla JS + Web Components)
-    |
-    v
-FastAPI Proxy (Python, async, in-memory cache)
-    |
-    +-- Spot CEX: data-api.binance.vision
-    +-- Web3 Skills: web3.binance.com/bapi/defi/
-    +-- K-Line: dquery.sintral.io
-    +-- Scanner Engine (background asyncio task)
-```
-
-- **Frontend**: Vanilla JS, Web Components, zero dependencies, no build step
-- **Backend**: Python FastAPI with async httpx client and in-memory TTL cache
-- **Charts**: TradingView lightweight-charts (vendored, MIT license)
-- **Cache**: Server-side 60s TTL + client-side 30s TTL + startup warm-up
-- **Deploy**: Docker Compose, single command
 
 ## Adding a Panel
 
@@ -163,7 +231,7 @@ Create one file in `frontend/js/panels/`:
 import { BasePanel } from '../components/base-panel.js';
 
 export class MyPanel extends BasePanel {
-  static skill = 'Skill X: Name';
+  static skill = 'Skill X';
   static defaultTitle = 'My Panel';
 
   async fetchData() {
@@ -178,33 +246,43 @@ export class MyPanel extends BasePanel {
 customElements.define('my-panel', MyPanel);
 ```
 
-Register it in `app.js` panel registry. No build step needed.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+Register in `app.js` panel registry. No build step needed.
 
 ## Project Structure
 
 ```
-superbsc/
-├── proxy/                  # Python FastAPI proxy + cache + scanner
-│   ├── main.py             # App entry, CORS, routes, cache warm-up
-│   ├── cache.py            # In-memory TTL cache with httpx async client
-│   ├── config.py           # Environment settings
-│   ├── scanner.py          # Auto-scan engine (all 7 skills)
-│   └── routes/             # 8 route modules (one per skill + scanner)
+mefai-terminal/
+├── proxy/                     # Python FastAPI backend
+│   ├── main.py                # App entry, CORS, routes, warmup
+│   ├── cache.py               # Async HTTP client + TTL cache
+│   ├── config.py              # Environment settings
+│   ├── scanner.py             # Auto-scan engine
+│   └── routes/                # 12 route modules
+│       ├── spot.py            # Binance Spot CEX
+│       ├── futures.py         # Binance Futures (4 proxy sources)
+│       ├── web3.py            # Web3 Skills Hub
+│       ├── dex.py             # DexScreener
+│       ├── goplus.py          # GoPlus Security
+│       ├── coingecko.py       # CoinGecko Global
+│       ├── defillama.py       # DeFi Llama
+│       ├── p2p.py             # P2P Market
+│       ├── announcements.py   # Binance Announcements
+│       ├── earn.py            # Binance Earn
+│       ├── margin.py          # Margin Trading
+│       └── products.py        # Binance Products
 ├── frontend/
-│   ├── index.html          # Single page shell
-│   ├── css/main.css        # All styles (~650 lines, responsive)
+│   ├── index.html             # Single page shell
+│   ├── css/main.css           # All styles (responsive)
 │   └── js/
-│       ├── app.js          # Panel registry, layout engine, keyboard
-│       ├── api.js           # API client with cache
-│       ├── store.js        # Pub/sub state (cross-panel intelligence)
-│       ├── components/     # 10 reusable Web Components
-│       ├── panels/         # 18 panels (one file each)
-│       └── layouts/        # 6 layout presets
+│       ├── app.js             # Panel registry, layouts, keyboard
+│       ├── api.js             # API client with cache
+│       ├── store.js           # Pub/sub state management
+│       ├── i18n.js            # 10 language translations
+│       ├── utils.js           # Formatting utilities
+│       ├── components/        # Reusable Web Components
+│       └── panels/            # 82 panel files (one each)
 ├── Dockerfile + docker-compose.yml
-├── Makefile
-└── docs/                   # Submission materials
+└── Makefile
 ```
 
 ## Configuration
@@ -212,7 +290,7 @@ superbsc/
 Copy `.env.example` to `.env`:
 
 ```bash
-# Optional: Only needed for Spot Trading panel
+# Optional: Only needed for authenticated panels (Earn, Trade)
 BINANCE_API_KEY=
 BINANCE_API_SECRET=
 
@@ -222,7 +300,21 @@ CACHE_TTL=60
 SCANNER_INTERVAL=30
 ```
 
-Without an API key, 17 of 18 panels work. The Spot Trading panel activates with a key.
+Most panels work without an API key. Authenticated panels show professional "Configure API Key" guidance.
+
+## Binance Skills Hub Integration
+
+MEFAI Terminal's SKILL.md contributions to [binance-skills-hub](https://github.com/binance/binance-skills-hub):
+
+| Skill | Category | Status |
+|-------|----------|--------|
+| Smart Money Radar | Derivatives Intelligence | PR Ready |
+| Composite Anomaly Detector | Multi-Signal Analytics | PR Ready |
+| Momentum Cascade Tracker | Cross-Asset Analysis | PR Ready |
+| Market Microstructure Health | Market Quality Scoring | PR Ready |
+| Cross-Exchange Arbitrage Monitor | Arbitrage Intelligence | PR Ready |
+| Derivatives Sentiment Convergence | Sentiment Fusion | PR Ready |
+| Futures Term Structure Analyzer | Derivatives Analytics | PR Ready |
 
 ## License
 

@@ -1,40 +1,39 @@
 # MEFAI Skills Map
 
-Complete mapping of Binance Skills Hub APIs to MEFAI panels.
+Complete mapping of all 47 skills to panels and API endpoints.
 
-## Skill 1: Binance Spot CEX API
+## Core CEX Skills (1-7)
 
+### Skill 1: Binance Spot CEX API
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `/api/v3/ticker/24hr` | Market Overview | GET |
 | `/api/v3/ticker/price` | Market Overview | GET |
 | `/api/v3/depth` | Order Book | GET |
 | `/api/v3/klines` | Price Chart | GET |
+| `/api/v3/ticker` (window) | Momentum Cascade | GET |
+| `/api/v3/ticker/bookTicker` | Microstructure Health, Anomaly Composite | GET |
 | `/api/v3/order` | Spot Trading | POST |
 | `/api/v3/openOrders` | Spot Trading | GET |
 | `/api/v3/account` | Spot Trading | GET |
 
-## Skill 2: Meme Rush + Topic Rush
-
+### Skill 2: Meme Rush + Topic Rush
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `pulse/rank/list` | Meme Rush Board | POST |
 | `social-rush/rank/list` | Topic Rush | GET |
 
-## Skill 3: Query Address Info
-
+### Skill 3: Query Address Info
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `active-position-list` | Wallet Tracker | GET |
 
-## Skill 4: Trading Signal
-
+### Skill 4: Trading Signal
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `signal/smart-money` | Smart Money Signals | POST |
 
-## Skill 5: Market Rankings (5 sub-APIs)
-
+### Skill 5: Market Rankings (5 sub-APIs)
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `social/hype/rank/leaderboard` | Social Hype | GET |
@@ -43,14 +42,14 @@ Complete mapping of Binance Skills Hub APIs to MEFAI panels.
 | `exclusive/rank/list` | Meme Rank | GET |
 | `leaderboard/query` | Top Traders | GET |
 
-## Skill 6: Token Security Audit
-
+### Skill 6: Token Security Audit
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `security/token/audit` | Token Audit | POST |
+| GoPlus `address_security` | Wallet Risk Score | GET |
+| GoPlus `token_security` | GoPlus Scanner | GET |
 
-## Skill 7: Token Info (4 sub-APIs)
-
+### Skill 7: Token Info (4 sub-APIs)
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `token/search` | Token Search | GET |
@@ -58,14 +57,76 @@ Complete mapping of Binance Skills Hub APIs to MEFAI panels.
 | `token/dynamic/info` | Token Profile | GET |
 | `k-line/candles` | DEX Chart | GET |
 
-## Auto-Scanner (ALL 7 SKILLS)
+## Derivatives Skills (28-38)
 
-The Auto-Scanner is MEFAI's unique feature. It uses ALL 7 skills in a pipeline:
+### Binance Futures Exclusive APIs
+| Endpoint | Panels Using It | Exclusive? |
+|----------|----------------|------------|
+| `/fapi/v1/ticker/24hr` | Taker Pressure, OI Surge, Spread Monitor, Smart Money Radar, Intelligence Feed, + 8 more | No |
+| `/fapi/v1/premiumIndex` | Funding Scanner, Funding Heatmap, Smart Money Radar, Intelligence Feed, + 5 more | Partial |
+| `/fapi/v1/ticker/bookTicker` | Spread Monitor, Microstructure Health, Anomaly Composite, Intelligence Feed | No |
+| `/futures/data/globalLongShortAccountRatio` | Trader Divergence, Sentiment Convergence, Smart Money Radar, Intelligence Feed | **BINANCE ONLY** |
+| `/futures/data/topLongShortAccountRatio` | Trader Divergence, Sentiment Convergence, Smart Money Radar, Intelligence Feed | **BINANCE ONLY** |
+| `/futures/data/topLongShortPositionRatio` | Trader Divergence, Sentiment Convergence, Smart Money Radar, Intelligence Feed | **BINANCE ONLY** |
+| `/futures/data/takerlongshortRatio` | Taker Pressure, Sentiment Convergence, Smart Money Radar, Intelligence Feed | **BINANCE ONLY** |
+| `/futures/data/openInterestHist` | OI Surge, Anomaly Composite, Microstructure Health, Smart Money Radar, Intelligence Feed | Partial |
+| `/fapi/v1/fundingInfo` | Funding Scanner | No |
+| `/fapi/v1/indexInfo` | Index Composition | Partial |
+| `/fapi/v1/constituents` | Cross-Exchange Arb | **BINANCE ONLY** |
+| `/futures/data/basis` | Basis Spread, Term Structure | **BINANCE ONLY** |
+| `/futures/data/delivery-price` | Term Structure | Partial |
 
-1. **Skill 2** — Pull new tokens from Meme Rush
-2. **Skill 6** — Audit each token for security
-3. **Skill 5.3** — Check smart money inflow
-4. **Skill 4** — Check for trading signals
-5. **Skill 7.3** — Get dynamic market data
-6. Compute composite opportunity score
-7. Surface top opportunities with all data pre-loaded
+## Convergence Intelligence (39-44)
+
+### Skill 39: Cross-Exchange Arb
+Uses `/fapi/v1/constituents` — 8-exchange composite weights for price comparison.
+
+### Skill 40: Sentiment Convergence
+Combines 6 sources: retail L/S, top account L/S, top position L/S, taker B/S, funding rate, OI change.
+
+### Skill 41: Term Structure Analyzer
+Uses basis history + delivery prices + exchange info for contango/backwardation analysis.
+
+### Skill 42: Anomaly Composite
+6 anomaly signals: VWAP deviation, large move, funding extreme, OI spike, spot-futures gap, taker flow.
+
+### Skill 43: Momentum Cascade
+Uses `api/v3/ticker` with custom `windowSize` (1h, 4h) — underutilized Binance API feature.
+
+### Skill 44: Microstructure Health
+5 metrics → single health score (0-100): spread, spot-futures gap, funding, taker balance, OI stability.
+
+## Flagship Intelligence (45-46)
+
+### Skill 45: Smart Money Radar
+**6-factor model using Binance-exclusive data:**
+1. Smart Money Direction (`topLongShortPositionRatio`) — **BINANCE ONLY**
+2. Retail Contrarian (`globalLongShortAccountRatio`)
+3. Smart vs Retail Divergence (computed)
+4. Taker Pressure (`takerlongshortRatio`) — **BINANCE ONLY**
+5. Funding Signal (`premiumIndex`, contrarian)
+6. OI Momentum (`openInterestHist`)
+
+**Output:** Smart Money Score (0-100), Direction (LONG/SHORT/NEUTRAL), Market Regime (ACCUMULATION/DISTRIBUTION/POSITIONING/NEUTRAL)
+
+### Skill 46: AI Intelligence Feed
+**Synthesizes all engines into natural language events:**
+- Smart Money alerts (score + direction + factor analysis)
+- Anomaly detection (multi-signal firing)
+- Divergence alerts (smart vs retail disagreement)
+- Funding extremes (contrarian signals)
+- OI surges (position buildup detection)
+- Microstructure stress (execution environment warnings)
+
+**Output:** Prioritized, timestamped, severity-ranked intelligence feed with human-readable market analysis.
+
+## Meta Skills
+
+### Auto-Scanner (All 7 Core Skills)
+Pipeline: Skill 2 → Skill 6 → Skill 5.3 → Skill 4 → Skill 7.3 → Composite Score
+
+### Smart Flow (Skill 4 + 5)
+Hybrid smart money + market ranking analysis.
+
+### Alpha Radar (Skill 8.1)
+5-source convergence scoring across smart money, social, trending, meme, and inflow data.
