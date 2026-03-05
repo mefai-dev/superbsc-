@@ -5,8 +5,8 @@ from proxy.cache import fetch_json
 
 router = APIRouter()
 
-# Geo-restricted — use Frankfurt proxy
-EAPI = "http://46.101.148.181:9500/eapi/v1"
+# Geo-restricted in some regions
+EAPI = "https://eapi.binance.com/eapi/v1"
 
 
 @router.get("/mark")

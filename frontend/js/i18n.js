@@ -177,6 +177,7 @@ const T = {
     'nav.bnbChainGroup': 'BNB Chain', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Chain', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Explorer', 'panel.nftPortfolio': 'NFT Portfolio', 'panel.greenfieldExplorer': 'Greenfield Explorer',
     'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Deribit Options', 'panel.onchainStats': 'On-Chain Stats', 'panel.binanceOptions': 'Binance Options',
+    'nav.tradeSignals': 'Trade Signals', 'panel.tradeSetup': 'Trade Setup Scanner', 'panel.fundingAlert': 'Funding Alert', 'panel.liquidationMagnet': 'Liquidation Magnet',
   },
   zh: {
     'nav.mefai': 'MEFAI', 'nav.overview': '概览', 'nav.meme': 'Meme',
@@ -311,6 +312,7 @@ const T = {
     'nav.bnbChainGroup': 'BNB链', 'nav.blockchainGroup': '区块链', 'nav.bnbChain': 'BNB链', 'nav.bitcoin': '比特币',
     'panel.txExplorer': '交易浏览器', 'panel.nftPortfolio': 'NFT资产', 'panel.greenfieldExplorer': 'Greenfield浏览器',
     'panel.btcMacro': 'BTC宏观', 'panel.deribitOptions': 'Deribit期权', 'panel.onchainStats': '链上数据', 'panel.binanceOptions': '币安期权',
+    'nav.tradeSignals': '交易信号', 'panel.tradeSetup': '交易设置扫描', 'panel.fundingAlert': '资金费率警报', 'panel.liquidationMagnet': '清算磁铁',
   },
   tr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Genel', 'nav.meme': 'Meme',
@@ -445,6 +447,7 @@ const T = {
     'nav.bnbChainGroup': 'BNB Zinciri', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Zinciri', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Gezgini', 'panel.nftPortfolio': 'NFT Portföy', 'panel.greenfieldExplorer': 'Greenfield Gezgini',
     'panel.btcMacro': 'BTC Makro', 'panel.deribitOptions': 'Deribit Opsiyonlar', 'panel.onchainStats': 'Zincir Verileri', 'panel.binanceOptions': 'Binance Opsiyonlar',
+    'nav.tradeSignals': 'Trade Sinyalleri', 'panel.tradeSetup': 'Trade Setup Tarayici', 'panel.fundingAlert': 'Fonlama Alarmi', 'panel.liquidationMagnet': 'Likidasyon Miknatisi',
   },
   vi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Tổng quan', 'nav.meme': 'Meme',
@@ -579,6 +582,7 @@ const T = {
     'nav.bnbChainGroup': 'BNB Chain', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Chain', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Explorer', 'panel.nftPortfolio': 'NFT Portfolio', 'panel.greenfieldExplorer': 'Greenfield Explorer',
     'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Deribit Options', 'panel.onchainStats': 'On-Chain Stats', 'panel.binanceOptions': 'Binance Options',
+    'nav.tradeSignals': 'Trade Signals', 'panel.tradeSetup': 'Trade Setup Scanner', 'panel.fundingAlert': 'Funding Alert', 'panel.liquidationMagnet': 'Liquidation Magnet',
   },
   hi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'अवलोकन', 'nav.meme': 'Meme',
@@ -713,6 +717,7 @@ const T = {
     'nav.bnbChainGroup': 'BNB चेन', 'nav.blockchainGroup': 'ब्लॉकचेन', 'nav.bnbChain': 'BNB चेन', 'nav.bitcoin': 'बिटकॉइन',
     'panel.txExplorer': 'TX एक्सप्लोरर', 'panel.nftPortfolio': 'NFT पोर्टफोलियो', 'panel.greenfieldExplorer': 'Greenfield एक्सप्लोरर',
     'panel.btcMacro': 'BTC मैक्रो', 'panel.deribitOptions': 'Deribit ऑप्शन', 'panel.onchainStats': 'ऑन-चेन डेटा', 'panel.binanceOptions': 'Binance ऑप्शन',
+    'nav.tradeSignals': 'ट्रेड सिग्नल', 'panel.tradeSetup': 'ट्रेड सेटअप स्कैनर', 'panel.fundingAlert': 'फंडिंग अलर्ट', 'panel.liquidationMagnet': 'लिक्विडेशन मैग्नेट',
   },
   fa: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نمای کلی', 'nav.meme': 'Meme',
@@ -847,6 +852,7 @@ const T = {
     'nav.bnbChainGroup': 'زنجیره BNB', 'nav.blockchainGroup': 'بلاکچین', 'nav.bnbChain': 'زنجیره BNB', 'nav.bitcoin': 'بیت‌کوین',
     'panel.txExplorer': 'جستجوی تراکنش', 'panel.nftPortfolio': 'پورتفوی NFT', 'panel.greenfieldExplorer': 'مرورگر Greenfield',
     'panel.btcMacro': 'BTC کلان', 'panel.deribitOptions': 'آپشن Deribit', 'panel.onchainStats': 'آمار زنجیره', 'panel.binanceOptions': 'آپشن بایننس',
+    'nav.tradeSignals': 'سیگنال معامله', 'panel.tradeSetup': 'اسکنر ستاپ معامله', 'panel.fundingAlert': 'هشدار فاندینگ', 'panel.liquidationMagnet': 'آهنربای لیکوئید',
   },
   de: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Übersicht', 'nav.meme': 'Meme',
@@ -981,6 +987,7 @@ const T = {
     'nav.bnbChainGroup': 'BNB Chain', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Chain', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Explorer', 'panel.nftPortfolio': 'NFT Portfolio', 'panel.greenfieldExplorer': 'Greenfield Explorer',
     'panel.btcMacro': 'BTC Makro', 'panel.deribitOptions': 'Deribit Optionen', 'panel.onchainStats': 'On-Chain Daten', 'panel.binanceOptions': 'Binance Optionen',
+    'nav.tradeSignals': 'Handelssignale', 'panel.tradeSetup': 'Trade Setup Scanner', 'panel.fundingAlert': 'Funding Alarm', 'panel.liquidationMagnet': 'Liquidation Magnet',
   },
   fr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Aperçu', 'nav.meme': 'Meme',
@@ -1115,6 +1122,7 @@ const T = {
     'nav.bnbChainGroup': 'Chaîne BNB', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'Chaîne BNB', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'Explorateur TX', 'panel.nftPortfolio': 'Portfolio NFT', 'panel.greenfieldExplorer': 'Explorateur Greenfield',
     'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Options Deribit', 'panel.onchainStats': 'Stats On-Chain', 'panel.binanceOptions': 'Options Binance',
+    'nav.tradeSignals': 'Signaux de Trade', 'panel.tradeSetup': 'Scanner de Setup', 'panel.fundingAlert': 'Alerte Funding', 'panel.liquidationMagnet': 'Aimant Liquidation',
   },
   ar: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نظرة عامة', 'nav.meme': 'Meme',
@@ -1249,6 +1257,7 @@ const T = {
     'nav.bnbChainGroup': 'سلسلة BNB', 'nav.blockchainGroup': 'بلوكتشين', 'nav.bnbChain': 'سلسلة BNB', 'nav.bitcoin': 'بيتكوين',
     'panel.txExplorer': 'مستكشف المعاملات', 'panel.nftPortfolio': 'محفظة NFT', 'panel.greenfieldExplorer': 'مستكشف Greenfield',
     'panel.btcMacro': 'BTC كلي', 'panel.deribitOptions': 'خيارات Deribit', 'panel.onchainStats': 'إحصائيات السلسلة', 'panel.binanceOptions': 'خيارات Binance',
+    'nav.tradeSignals': 'إشارات التداول', 'panel.tradeSetup': 'ماسح إعداد التداول', 'panel.fundingAlert': 'تنبيه التمويل', 'panel.liquidationMagnet': 'مغناطيس التصفية',
   },
   es: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'General', 'nav.meme': 'Meme',
@@ -1383,6 +1392,7 @@ const T = {
     'nav.bnbChainGroup': 'Cadena BNB', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'Cadena BNB', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'Explorador TX', 'panel.nftPortfolio': 'Portafolio NFT', 'panel.greenfieldExplorer': 'Explorador Greenfield',
     'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Opciones Deribit', 'panel.onchainStats': 'Datos On-Chain', 'panel.binanceOptions': 'Opciones Binance',
+    'nav.tradeSignals': 'Senales de Trade', 'panel.tradeSetup': 'Escaner de Setup', 'panel.fundingAlert': 'Alerta Funding', 'panel.liquidationMagnet': 'Iman de Liquidacion',
   },
 };
 
@@ -1465,6 +1475,9 @@ const _tagToKey = {
   'deribit-options-panel': 'panel.deribitOptions',
   'onchain-stats-panel': 'panel.onchainStats',
   'binance-options-panel': 'panel.binanceOptions',
+  'trade-setup-panel': 'panel.tradeSetup',
+  'funding-alert-panel': 'panel.fundingAlert',
+  'liquidation-magnet-panel': 'panel.liquidationMagnet',
 };
 
 let _lang = 'en';
