@@ -16,16 +16,17 @@ export class OiSurgePanel extends BasePanel {
   }
 
   async fetchData() {
-    const results = await Promise.all(
-      this._symbols.map(async sym => {
-        const [hist, ticker] = await Promise.all([
-          window.mefaiApi.futures.openInterestHist(sym, '1h', 5),
-          window.mefaiApi.futures.ticker24hr(sym),
-        ]);
-        return { symbol: sym, hist, ticker };
-      })
-    );
-    return results;
+    const [tickers, ...histResults] = await Promise.all([
+      window.mefaiApi.futures.ticker24hr(),
+      ...this._symbols.map(sym => window.mefaiApi.futures.openInterestHist(sym, '1h', 5)),
+    ]);
+    const tickerMap = {};
+    if (Array.isArray(tickers)) tickers.forEach(t => { tickerMap[t.symbol] = t; });
+    return this._symbols.map((sym, i) => ({
+      symbol: sym,
+      hist: histResults[i],
+      ticker: tickerMap[sym] || {},
+    }));
   }
 
   renderContent(data) {
@@ -35,7 +36,7 @@ export class OiSurgePanel extends BasePanel {
     for (const item of data) {
       const sym = item.symbol.replace('USDT', '');
       const hist = Array.isArray(item.hist) ? item.hist : [];
-      const tk = Array.isArray(item.ticker) ? item.ticker[0] : item.ticker;
+      const tk = item.ticker;
 
       if (hist.length < 2) continue;
 
@@ -124,7 +125,7 @@ export class OiSurgePanel extends BasePanel {
 
   _renderBody() {
     const body = this.querySelector('.panel-body');
-    if (body && this._lastData) body.innerHTML = this.renderContent(this._lastData);
+    if (body && this._data) body.innerHTML = this.renderContent(this._data);
     this.afterRender();
   }
 }

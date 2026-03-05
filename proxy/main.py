@@ -105,6 +105,7 @@ async def index():
 def _warmup_tasks():
     WEB3 = settings.WEB3_BASE
     SPOT = settings.SPOT_BASE
+    FAPI2 = "http://46.101.148.181:9500"
     return [
         # Spot
         (fetch_json, (f"{SPOT}/api/v3/ticker/24hr",), {}),
@@ -205,6 +206,25 @@ def _warmup_tasks():
                 f"{WEB3}/v1/public/wallet-direct/buw/wallet/market/token/social-rush/rank/list",
             ),
             {"params": {"chainId": "56", "rankType": 10, "sort": 10}},
+        ),
+        # FAPI2 (Frankfurt proxy — futures endpoints)
+        (fetch_json, (f"{FAPI2}/fapi/v1/indexInfo",), {"ttl": 120}),
+        (fetch_json, (f"{FAPI2}/fapi/v1/fundingInfo",), {"ttl": 300}),
+        (
+            fetch_json,
+            (f"{FAPI2}/futures/data/openInterestHist",),
+            {"params": {"symbol": "BTCUSDT", "period": "1h", "limit": 30}, "ttl": 60},
+        ),
+        (fetch_json, (f"{FAPI2}/fapi/v1/ticker/bookTicker",), {"ttl": 10}),
+        (
+            fetch_json,
+            (f"{FAPI2}/futures/data/takerlongshortRatio",),
+            {"params": {"symbol": "BTCUSDT", "period": "1h", "limit": 1}, "ttl": 60},
+        ),
+        (
+            fetch_json,
+            (f"{FAPI2}/futures/data/topLongShortPositionRatio",),
+            {"params": {"symbol": "BTCUSDT", "period": "1h", "limit": 1}, "ttl": 60},
         ),
         # CoinGecko categories (capital rotation)
         (

@@ -80,6 +80,9 @@ const panelRegistry = {
   'volatility-rank': 'volatility-rank-panel',
   'volume-profile': 'volume-profile-panel',
   'whale-tracker': 'whale-tracker-panel',
+  'cross-exchange-arb': 'cross-exchange-arb-panel',
+  'sentiment-convergence': 'sentiment-convergence-panel',
+  'term-structure': 'term-structure-panel',
 };
 
 // Layout presets
@@ -194,6 +197,11 @@ const layouts = {
     grid: 'grid-2x3',
     panels: ['taker-pressure', 'oi-surge', 'funding-scanner', 'spread-monitor', 'index-composition', 'whale-tracker'],
   },
+  'convergence': {
+    name: 'Convergence',
+    grid: 'grid-1x3',
+    panels: ['sentiment-convergence', 'cross-exchange-arb', 'term-structure'],
+  },
   'screener': {
     name: 'Screener',
     grid: 'grid-2x2',
@@ -227,6 +235,7 @@ async function loadPanels() {
     'taker-pressure', 'oi-surge', 'spread-monitor', 'index-composition',
     'funding-scanner', 'momentum-screener', 'volatility-rank', 'volume-profile',
     'whale-tracker',
+    'cross-exchange-arb', 'sentiment-convergence', 'term-structure',
   ];
   await Promise.allSettled(
     panelModules.map(name =>

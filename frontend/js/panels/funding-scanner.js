@@ -145,7 +145,7 @@ export class FundingScannerPanel extends BasePanel {
 
   _renderBody() {
     const body = this.querySelector('.panel-body');
-    if (body && this._lastData) body.innerHTML = this.renderContent(this._lastData);
+    if (body && this._data) body.innerHTML = this.renderContent(this._data);
     this.afterRender();
   }
 }

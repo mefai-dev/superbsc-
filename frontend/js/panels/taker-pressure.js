@@ -16,16 +16,17 @@ export class TakerPressurePanel extends BasePanel {
   }
 
   async fetchData() {
-    const results = await Promise.all(
-      this._symbols.map(async sym => {
-        const [taker, ticker] = await Promise.all([
-          window.mefaiApi.futures.takerBuySellRatio(sym, '1h'),
-          window.mefaiApi.futures.ticker24hr(sym),
-        ]);
-        return { symbol: sym, taker, ticker };
-      })
-    );
-    return results;
+    const [tickers, ...takerResults] = await Promise.all([
+      window.mefaiApi.futures.ticker24hr(),
+      ...this._symbols.map(sym => window.mefaiApi.futures.takerBuySellRatio(sym, '1h')),
+    ]);
+    const tickerMap = {};
+    if (Array.isArray(tickers)) tickers.forEach(t => { tickerMap[t.symbol] = t; });
+    return this._symbols.map((sym, i) => ({
+      symbol: sym,
+      taker: takerResults[i],
+      ticker: tickerMap[sym] || {},
+    }));
   }
 
   renderContent(data) {
@@ -35,7 +36,7 @@ export class TakerPressurePanel extends BasePanel {
     for (const item of data) {
       const sym = item.symbol.replace('USDT', '');
       const t = Array.isArray(item.taker) ? item.taker[0] : item.taker;
-      const tk = Array.isArray(item.ticker) ? item.ticker[0] : item.ticker;
+      const tk = item.ticker;
       const ratio = parseFloat(t?.buySellRatio || 1);
       const buyVol = parseFloat(t?.buyVol || 0);
       const sellVol = parseFloat(t?.sellVol || 0);
@@ -107,7 +108,7 @@ export class TakerPressurePanel extends BasePanel {
 
   _renderBody() {
     const body = this.querySelector('.panel-body');
-    if (body && this._lastData) body.innerHTML = this.renderContent(this._lastData);
+    if (body && this._data) body.innerHTML = this.renderContent(this._data);
     this.afterRender();
   }
 }

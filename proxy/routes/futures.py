@@ -7,6 +7,10 @@ router = APIRouter()
 # Direct access is geo-blocked; use Frankfurt proxy which has unrestricted access
 FAPI = "http://134.122.77.171:9500"
 FAPI2 = "http://46.101.148.181:9500"
+# Testnet returns production data and bypasses geo-blocking for /fapi/v1/ endpoints
+FAPI_TESTNET = "https://testnet.binancefuture.com"
+# www.binance.com bypasses geo-blocking for /futures/data/ endpoints
+FAPI_WWW = "https://www.binance.com"
 
 
 @router.get("/premiumIndex")
@@ -79,7 +83,7 @@ async def top_ls_position(
     limit: int = Query(1, le=500),
 ):
     return await fetch_json(
-        f"{FAPI}/futures/data/topLongShortPositionRatio",
+        f"{FAPI2}/futures/data/topLongShortPositionRatio",
         params={"symbol": symbol.upper(), "period": period, "limit": limit},
         ttl=60,
     )
@@ -92,7 +96,7 @@ async def taker_ratio(
     limit: int = Query(1, le=500),
 ):
     return await fetch_json(
-        f"{FAPI}/futures/data/takerlongshortRatio",
+        f"{FAPI2}/futures/data/takerlongshortRatio",
         params={"symbol": symbol.upper(), "period": period, "limit": limit},
         ttl=60,
     )
@@ -138,3 +142,49 @@ async def index_info(symbol: str = Query(None)):
     return await fetch_json(
         f"{FAPI2}/fapi/v1/indexInfo", params=params or None, ttl=120
     )
+
+
+@router.get("/constituents")
+async def constituents(symbol: str = Query("BTCUSDT")):
+    """Cross-exchange index price constituents (8 exchanges with weights)."""
+    return await fetch_json(
+        f"{FAPI_TESTNET}/fapi/v1/constituents",
+        params={"symbol": symbol.upper()},
+        ttl=30,
+    )
+
+
+@router.get("/basis")
+async def basis(
+    pair: str = Query("BTCUSDT"),
+    contractType: str = Query("PERPETUAL"),
+    period: str = Query("1h"),
+    limit: int = Query(30, le=500),
+):
+    """Futures basis rate history."""
+    return await fetch_json(
+        f"{FAPI_WWW}/futures/data/basis",
+        params={
+            "pair": pair.upper(),
+            "contractType": contractType,
+            "period": period,
+            "limit": limit,
+        },
+        ttl=60,
+    )
+
+
+@router.get("/deliveryPrice")
+async def delivery_price(pair: str = Query("BTCUSDT")):
+    """Historical quarterly futures settlement prices."""
+    return await fetch_json(
+        f"{FAPI_WWW}/futures/data/delivery-price",
+        params={"pair": pair.upper()},
+        ttl=300,
+    )
+
+
+@router.get("/exchangeInfo")
+async def exchange_info():
+    """Futures exchange info — symbols, contract types, filters."""
+    return await fetch_json(f"{FAPI_TESTNET}/fapi/v1/exchangeInfo", ttl=600)

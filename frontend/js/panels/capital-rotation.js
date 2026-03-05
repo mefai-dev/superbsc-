@@ -136,7 +136,7 @@ export class CapitalRotationPanel extends BasePanel {
         if (this._sortCol === col) this._sortDir *= -1;
         else { this._sortCol = col; this._sortDir = -1; }
         const body = this.querySelector('.panel-body');
-        if (body && this._lastData) body.innerHTML = this.renderContent(this._lastData);
+        if (body && this._data) body.innerHTML = this.renderContent(this._data);
         this.afterRender();
       });
     });

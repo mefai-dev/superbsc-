@@ -171,7 +171,8 @@ const T = {
     'panel.fundingScanner': 'Funding Scanner', 'panel.momentumScreener': 'Momentum Screener',
     'panel.volatilityRank': 'Volatility Rank', 'panel.volumeProfile': 'Volume Profile',
     'panel.whaleTracker': 'Whale Tracker',
-    'nav.derivatives': 'Derivatives', 'nav.screener': 'Screener',
+    'nav.derivatives': 'Derivatives', 'nav.screener': 'Screener', 'nav.convergence': 'Convergence',
+    'panel.crossExchangeArb': 'Cross-Exchange Arb', 'panel.sentimentConvergence': 'Sentiment Convergence', 'panel.termStructure': 'Term Structure',
   },
   zh: {
     'nav.mefai': 'MEFAI', 'nav.overview': '概览', 'nav.meme': 'Meme',
@@ -300,7 +301,8 @@ const T = {
     'panel.apiMonitor': 'API监控', 'panel.productExplorer': '产品浏览',
     'panel.fundingHeatmap': '资金费率', 'panel.athTracker': 'ATH追踪',
     'nav.proTools': '专业工具', 'nav.explorer': '浏览器',
-    'panel.takerPressure': '吃单压力', 'panel.oiSurge': 'OI异动', 'panel.spreadMonitor': '价差监控', 'panel.indexComposition': '指数成分', 'panel.fundingScanner': '资金费扫描', 'panel.momentumScreener': '动量筛选', 'panel.volatilityRank': '波动排名', 'panel.volumeProfile': '成交量画像', 'panel.whaleTracker': '鲸鱼追踪', 'nav.derivatives': '衍生品', 'nav.screener': '筛选器',
+    'panel.takerPressure': '吃单压力', 'panel.oiSurge': 'OI异动', 'panel.spreadMonitor': '价差监控', 'panel.indexComposition': '指数成分', 'panel.fundingScanner': '资金费扫描', 'panel.momentumScreener': '动量筛选', 'panel.volatilityRank': '波动排名', 'panel.volumeProfile': '成交量画像', 'panel.whaleTracker': '鲸鱼追踪', 'nav.derivatives': '衍生品', 'nav.screener': '筛选器', 'nav.convergence': '收敛分析',
+    'panel.crossExchangeArb': '跨交易所套利', 'panel.sentimentConvergence': '情绪收敛', 'panel.termStructure': '期限结构',
   },
   tr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Genel', 'nav.meme': 'Meme',
@@ -429,7 +431,8 @@ const T = {
     'panel.apiMonitor': 'API İzleme', 'panel.productExplorer': 'Ürün Keşfi',
     'panel.fundingHeatmap': 'Fonlama Haritası', 'panel.athTracker': 'ATH Takip',
     'nav.proTools': 'Pro Araçlar', 'nav.explorer': 'Keşif',
-    'panel.takerPressure': 'Alıcı Baskısı', 'panel.oiSurge': 'OI Artış', 'panel.spreadMonitor': 'Spread İzleme', 'panel.indexComposition': 'Endeks Bileşimi', 'panel.fundingScanner': 'Fonlama Tarama', 'panel.momentumScreener': 'Momentum Tarama', 'panel.volatilityRank': 'Volatilite Sırala', 'panel.volumeProfile': 'Hacim Profili', 'panel.whaleTracker': 'Balina Takip', 'nav.derivatives': 'Türevler', 'nav.screener': 'Tarayıcı',
+    'panel.takerPressure': 'Alıcı Baskısı', 'panel.oiSurge': 'OI Artış', 'panel.spreadMonitor': 'Spread İzleme', 'panel.indexComposition': 'Endeks Bileşimi', 'panel.fundingScanner': 'Fonlama Tarama', 'panel.momentumScreener': 'Momentum Tarama', 'panel.volatilityRank': 'Volatilite Sırala', 'panel.volumeProfile': 'Hacim Profili', 'panel.whaleTracker': 'Balina Takip', 'nav.derivatives': 'Türevler', 'nav.screener': 'Tarayıcı', 'nav.convergence': 'Yakınsama',
+    'panel.crossExchangeArb': 'Borsalar Arası Arb', 'panel.sentimentConvergence': 'Duygu Yakınsaması', 'panel.termStructure': 'Vade Yapısı',
   },
   vi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Tổng quan', 'nav.meme': 'Meme',
@@ -558,7 +561,8 @@ const T = {
     'panel.apiMonitor': 'Giám sát API', 'panel.productExplorer': 'Khám phá SP',
     'panel.fundingHeatmap': 'Phí Funding', 'panel.athTracker': 'Theo dõi ATH',
     'nav.proTools': 'Chuyên nghiệp', 'nav.explorer': 'Khám phá',
-    'panel.takerPressure': 'Áp lực Taker', 'panel.oiSurge': 'OI Đột biến', 'panel.spreadMonitor': 'Giám sát Spread', 'panel.indexComposition': 'Thành phần Index', 'panel.fundingScanner': 'Quét Funding', 'panel.momentumScreener': 'Lọc Momentum', 'panel.volatilityRank': 'Xếp hạng Biến động', 'panel.volumeProfile': 'Hồ sơ Khối lượng', 'panel.whaleTracker': 'Theo dõi Cá voi', 'nav.derivatives': 'Phái sinh', 'nav.screener': 'Bộ lọc',
+    'panel.takerPressure': 'Áp lực Taker', 'panel.oiSurge': 'OI Đột biến', 'panel.spreadMonitor': 'Giám sát Spread', 'panel.indexComposition': 'Thành phần Index', 'panel.fundingScanner': 'Quét Funding', 'panel.momentumScreener': 'Lọc Momentum', 'panel.volatilityRank': 'Xếp hạng Biến động', 'panel.volumeProfile': 'Hồ sơ Khối lượng', 'panel.whaleTracker': 'Theo dõi Cá voi', 'nav.derivatives': 'Phái sinh', 'nav.screener': 'Bộ lọc', 'nav.convergence': 'Hội tụ',
+    'panel.crossExchangeArb': 'Chênh lệch Sàn', 'panel.sentimentConvergence': 'Hội tụ Tâm lý', 'panel.termStructure': 'Cấu trúc Kỳ hạn',
   },
   hi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'अवलोकन', 'nav.meme': 'Meme',
@@ -687,7 +691,8 @@ const T = {
     'panel.apiMonitor': 'API मॉनिटर', 'panel.productExplorer': 'प्रोडक्ट एक्सप्लोरर',
     'panel.fundingHeatmap': 'फंडिंग हीटमैप', 'panel.athTracker': 'ATH ट्रैकर',
     'nav.proTools': 'प्रो टूल्स', 'nav.explorer': 'एक्सप्लोरर',
-    'panel.takerPressure': 'टेकर प्रेशर', 'panel.oiSurge': 'OI सर्ज', 'panel.spreadMonitor': 'स्प्रेड मॉनिटर', 'panel.indexComposition': 'इंडेक्स संरचना', 'panel.fundingScanner': 'फंडिंग स्कैनर', 'panel.momentumScreener': 'मोमेंटम स्क्रीनर', 'panel.volatilityRank': 'वोलैटिलिटी रैंक', 'panel.volumeProfile': 'वॉल्यूम प्रोफाइल', 'panel.whaleTracker': 'व्हेल ट्रैकर', 'nav.derivatives': 'डेरिवेटिव्स', 'nav.screener': 'स्क्रीनर',
+    'panel.takerPressure': 'टेकर प्रेशर', 'panel.oiSurge': 'OI सर्ज', 'panel.spreadMonitor': 'स्प्रेड मॉनिटर', 'panel.indexComposition': 'इंडेक्स संरचना', 'panel.fundingScanner': 'फंडिंग स्कैनर', 'panel.momentumScreener': 'मोमेंटम स्क्रीनर', 'panel.volatilityRank': 'वोलैटिलिटी रैंक', 'panel.volumeProfile': 'वॉल्यूम प्रोफाइल', 'panel.whaleTracker': 'व्हेल ट्रैकर', 'nav.derivatives': 'डेरिवेटिव्स', 'nav.screener': 'स्क्रीनर', 'nav.convergence': 'कन्वर्जेंस',
+    'panel.crossExchangeArb': 'क्रॉस-एक्सचेंज आर्ब', 'panel.sentimentConvergence': 'भावना कन्वर्जेंस', 'panel.termStructure': 'अवधि संरचना',
   },
   fa: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نمای کلی', 'nav.meme': 'Meme',
@@ -816,7 +821,8 @@ const T = {
     'panel.apiMonitor': 'مانیتور API', 'panel.productExplorer': 'مرورگر محصول',
     'panel.fundingHeatmap': 'نقشه فاندینگ', 'panel.athTracker': 'ردیاب ATH',
     'nav.proTools': 'ابزار حرفه‌ای', 'nav.explorer': 'مرورگر',
-    'panel.takerPressure': 'فشار خریدار', 'panel.oiSurge': 'جهش OI', 'panel.spreadMonitor': 'مانیتور اسپرد', 'panel.indexComposition': 'ترکیب شاخص', 'panel.fundingScanner': 'اسکنر فاندینگ', 'panel.momentumScreener': 'غربال مومنتوم', 'panel.volatilityRank': 'رتبه نوسان', 'panel.volumeProfile': 'پروفایل حجم', 'panel.whaleTracker': 'ردیاب نهنگ', 'nav.derivatives': 'مشتقه', 'nav.screener': 'غربالگر',
+    'panel.takerPressure': 'فشار خریدار', 'panel.oiSurge': 'جهش OI', 'panel.spreadMonitor': 'مانیتور اسپرد', 'panel.indexComposition': 'ترکیب شاخص', 'panel.fundingScanner': 'اسکنر فاندینگ', 'panel.momentumScreener': 'غربال مومنتوم', 'panel.volatilityRank': 'رتبه نوسان', 'panel.volumeProfile': 'پروفایل حجم', 'panel.whaleTracker': 'ردیاب نهنگ', 'nav.derivatives': 'مشتقه', 'nav.screener': 'غربالگر', 'nav.convergence': 'همگرایی',
+    'panel.crossExchangeArb': 'آربیتراژ بین صرافی', 'panel.sentimentConvergence': 'همگرایی احساسات', 'panel.termStructure': 'ساختار سررسید',
   },
   de: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Übersicht', 'nav.meme': 'Meme',
@@ -945,7 +951,8 @@ const T = {
     'panel.apiMonitor': 'API-Monitor', 'panel.productExplorer': 'Produkt-Explorer',
     'panel.fundingHeatmap': 'Funding-Heatmap', 'panel.athTracker': 'ATH-Tracker',
     'nav.proTools': 'Pro-Tools', 'nav.explorer': 'Explorer',
-    'panel.takerPressure': 'Taker-Druck', 'panel.oiSurge': 'OI-Anstieg', 'panel.spreadMonitor': 'Spread-Monitor', 'panel.indexComposition': 'Index-Zusammensetzung', 'panel.fundingScanner': 'Funding-Scanner', 'panel.momentumScreener': 'Momentum-Screener', 'panel.volatilityRank': 'Volatilitätsrang', 'panel.volumeProfile': 'Volumenprofil', 'panel.whaleTracker': 'Wal-Tracker', 'nav.derivatives': 'Derivate', 'nav.screener': 'Screener',
+    'panel.takerPressure': 'Taker-Druck', 'panel.oiSurge': 'OI-Anstieg', 'panel.spreadMonitor': 'Spread-Monitor', 'panel.indexComposition': 'Index-Zusammensetzung', 'panel.fundingScanner': 'Funding-Scanner', 'panel.momentumScreener': 'Momentum-Screener', 'panel.volatilityRank': 'Volatilitätsrang', 'panel.volumeProfile': 'Volumenprofil', 'panel.whaleTracker': 'Wal-Tracker', 'nav.derivatives': 'Derivate', 'nav.screener': 'Screener', 'nav.convergence': 'Konvergenz',
+    'panel.crossExchangeArb': 'Cross-Exchange Arb', 'panel.sentimentConvergence': 'Sentiment-Konvergenz', 'panel.termStructure': 'Laufzeitstruktur',
   },
   fr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Aperçu', 'nav.meme': 'Meme',
@@ -1074,7 +1081,8 @@ const T = {
     'panel.apiMonitor': 'Moniteur API', 'panel.productExplorer': 'Explorateur',
     'panel.fundingHeatmap': 'Carte Funding', 'panel.athTracker': 'Suivi ATH',
     'nav.proTools': 'Outils Pro', 'nav.explorer': 'Explorateur',
-    'panel.takerPressure': 'Pression Taker', 'panel.oiSurge': 'Hausse OI', 'panel.spreadMonitor': 'Moniteur Spread', 'panel.indexComposition': 'Composition Index', 'panel.fundingScanner': 'Scanner Funding', 'panel.momentumScreener': 'Filtre Momentum', 'panel.volatilityRank': 'Rang Volatilité', 'panel.volumeProfile': 'Profil Volume', 'panel.whaleTracker': 'Traqueur Baleines', 'nav.derivatives': 'Dérivés', 'nav.screener': 'Filtre',
+    'panel.takerPressure': 'Pression Taker', 'panel.oiSurge': 'Hausse OI', 'panel.spreadMonitor': 'Moniteur Spread', 'panel.indexComposition': 'Composition Index', 'panel.fundingScanner': 'Scanner Funding', 'panel.momentumScreener': 'Filtre Momentum', 'panel.volatilityRank': 'Rang Volatilité', 'panel.volumeProfile': 'Profil Volume', 'panel.whaleTracker': 'Traqueur Baleines', 'nav.derivatives': 'Dérivés', 'nav.screener': 'Filtre', 'nav.convergence': 'Convergence',
+    'panel.crossExchangeArb': 'Arb Inter-Bourses', 'panel.sentimentConvergence': 'Convergence Sentiment', 'panel.termStructure': 'Structure Terme',
   },
   ar: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نظرة عامة', 'nav.meme': 'Meme',
@@ -1203,7 +1211,8 @@ const T = {
     'panel.apiMonitor': 'مراقب API', 'panel.productExplorer': 'مستكشف المنتجات',
     'panel.fundingHeatmap': 'خريطة التمويل', 'panel.athTracker': 'متتبع ATH',
     'nav.proTools': 'أدوات احترافية', 'nav.explorer': 'المستكشف',
-    'panel.takerPressure': 'ضغط المشتري', 'panel.oiSurge': 'ارتفاع OI', 'panel.spreadMonitor': 'مراقب السبريد', 'panel.indexComposition': 'تركيب المؤشر', 'panel.fundingScanner': 'ماسح التمويل', 'panel.momentumScreener': 'فرز الزخم', 'panel.volatilityRank': 'ترتيب التذبذب', 'panel.volumeProfile': 'ملف الحجم', 'panel.whaleTracker': 'متتبع الحيتان', 'nav.derivatives': 'المشتقات', 'nav.screener': 'الفرز',
+    'panel.takerPressure': 'ضغط المشتري', 'panel.oiSurge': 'ارتفاع OI', 'panel.spreadMonitor': 'مراقب السبريد', 'panel.indexComposition': 'تركيب المؤشر', 'panel.fundingScanner': 'ماسح التمويل', 'panel.momentumScreener': 'فرز الزخم', 'panel.volatilityRank': 'ترتيب التذبذب', 'panel.volumeProfile': 'ملف الحجم', 'panel.whaleTracker': 'متتبع الحيتان', 'nav.derivatives': 'المشتقات', 'nav.screener': 'الفرز', 'nav.convergence': 'التقارب',
+    'panel.crossExchangeArb': 'المراجحة بين البورصات', 'panel.sentimentConvergence': 'تقارب المشاعر', 'panel.termStructure': 'هيكل الأجل',
   },
   es: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'General', 'nav.meme': 'Meme',
@@ -1332,7 +1341,8 @@ const T = {
     'panel.apiMonitor': 'Monitor API', 'panel.productExplorer': 'Explorador',
     'panel.fundingHeatmap': 'Mapa Funding', 'panel.athTracker': 'Rastreador ATH',
     'nav.proTools': 'Herramientas Pro', 'nav.explorer': 'Explorador',
-    'panel.takerPressure': 'Presión Taker', 'panel.oiSurge': 'Aumento OI', 'panel.spreadMonitor': 'Monitor Spread', 'panel.indexComposition': 'Composición Índice', 'panel.fundingScanner': 'Escáner Funding', 'panel.momentumScreener': 'Filtro Momentum', 'panel.volatilityRank': 'Ranking Volatilidad', 'panel.volumeProfile': 'Perfil Volumen', 'panel.whaleTracker': 'Rastreador Ballenas', 'nav.derivatives': 'Derivados', 'nav.screener': 'Filtro',
+    'panel.takerPressure': 'Presión Taker', 'panel.oiSurge': 'Aumento OI', 'panel.spreadMonitor': 'Monitor Spread', 'panel.indexComposition': 'Composición Índice', 'panel.fundingScanner': 'Escáner Funding', 'panel.momentumScreener': 'Filtro Momentum', 'panel.volatilityRank': 'Ranking Volatilidad', 'panel.volumeProfile': 'Perfil Volumen', 'panel.whaleTracker': 'Rastreador Ballenas', 'nav.derivatives': 'Derivados', 'nav.screener': 'Filtro', 'nav.convergence': 'Convergencia',
+    'panel.crossExchangeArb': 'Arb Inter-Bolsas', 'panel.sentimentConvergence': 'Convergencia Sentimiento', 'panel.termStructure': 'Estructura Plazo',
   },
 };
 
@@ -1399,6 +1409,9 @@ const _tagToKey = {
   'volatility-rank-panel': 'panel.volatilityRank',
   'volume-profile-panel': 'panel.volumeProfile',
   'whale-tracker-panel': 'panel.whaleTracker',
+  'cross-exchange-arb-panel': 'panel.crossExchangeArb',
+  'sentiment-convergence-panel': 'panel.sentimentConvergence',
+  'term-structure-panel': 'panel.termStructure',
 };
 
 let _lang = 'en';

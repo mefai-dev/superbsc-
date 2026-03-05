@@ -199,6 +199,10 @@ export const api = {
     fundingInfo: () => get('/api/futures/fundingInfo', {}, 300000),
     bookTicker: (s) => get('/api/futures/bookTicker', s ? { symbol: s } : {}, 10000),
     indexInfo: (s) => get('/api/futures/indexInfo', s ? { symbol: s } : {}, 120000),
+    constituents: (s) => get('/api/futures/constituents', { symbol: s || 'BTCUSDT' }, 30000),
+    basis: (pair, type, period, limit) => get('/api/futures/basis', { pair: pair || 'BTCUSDT', contractType: type || 'PERPETUAL', period: period || '1h', limit: limit || 30 }, 60000),
+    deliveryPrice: (pair) => get('/api/futures/deliveryPrice', { pair: pair || 'BTCUSDT' }, 300000),
+    exchangeInfo: () => get('/api/futures/exchangeInfo', {}, 600000),
   },
   // Skill 9: GoPlus Security
   goplus: {
