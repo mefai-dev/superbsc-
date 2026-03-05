@@ -30,6 +30,7 @@ _client: httpx.AsyncClient | None = None
 FRESH_TTL = 60  # Serve from cache without refresh
 STALE_TTL = 300  # Serve stale + trigger background refresh
 GEO_BLOCK_TTL = 600  # Cache 451 errors for 10 minutes
+MAX_CACHE_ENTRIES = 5000  # Support 5000+ concurrent users
 
 
 def _key(url: str, params: dict | None = None, body: dict | None = None) -> str:
@@ -67,7 +68,7 @@ def set_cached(
     _cache[k] = (time.time(), data)
     _cache.move_to_end(k)
     # O(1) LRU eviction — pop from front (oldest access)
-    while len(_cache) > 1000:
+    while len(_cache) > MAX_CACHE_ENTRIES:
         _cache.popitem(last=False)
 
 
@@ -84,13 +85,14 @@ def _extra_headers(url: str) -> dict[str, str]:
 async def get_client() -> httpx.AsyncClient:
     global _client
     if _client is None or _client.is_closed:
-        pool_limits = httpx.Limits(max_connections=50, max_keepalive_connections=20)
+        pool_limits = httpx.Limits(max_connections=200, max_keepalive_connections=60)
         _client = httpx.AsyncClient(
-            timeout=12.0,
+            timeout=httpx.Timeout(15.0, connect=5.0),
             follow_redirects=True,
             limits=pool_limits,
+            http2=True,
         )
-        logger.info("HTTP client created: max_connections=50, max_keepalive=20")
+        logger.info("HTTP client created: max_connections=200, max_keepalive=60, http2=True")
     return _client
 
 
@@ -99,19 +101,27 @@ _RETRYABLE_STATUSES = {429, 503}
 
 async def _do_fetch(url: str, params: dict | None, headers: dict) -> Any:
     client = await get_client()
-    resp = await client.get(url, params=params, headers=headers)
-    if resp.status_code in _RETRYABLE_STATUSES:
-        # Don't cache rate-limit / unavailable — retry after brief delay
-        logger.debug(f"Got {resp.status_code} from {url}, will retry once")
-        await asyncio.sleep(1)
-        resp = await client.get(url, params=params, headers=headers)
+    for attempt in range(3):
+        try:
+            resp = await client.get(url, params=params, headers=headers)
+        except (httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
+            if attempt < 2:
+                await asyncio.sleep(0.5 * (attempt + 1))
+                continue
+            return {"error": True, "status": 0, "detail": str(e), "_no_cache": True}
+        if resp.status_code in _RETRYABLE_STATUSES:
+            if attempt < 2:
+                delay = float(resp.headers.get("Retry-After", 1 + attempt))
+                logger.debug(f"Got {resp.status_code} from {url}, retry in {delay}s")
+                await asyncio.sleep(delay)
+                continue
+        break
     if resp.status_code >= 400:
         try:
             err = resp.json()
         except Exception:
             err = {"error": resp.text, "status": resp.status_code}
         result = {"error": True, "status": resp.status_code, "detail": err}
-        # Mark retryable errors so they don't get cached
         if resp.status_code in _RETRYABLE_STATUSES:
             result["_no_cache"] = True
         return result
@@ -122,11 +132,20 @@ async def _do_post(
     url: str, body: dict | None, params: dict | None, headers: dict
 ) -> Any:
     client = await get_client()
-    resp = await client.post(url, json=body, params=params, headers=headers)
-    if resp.status_code in _RETRYABLE_STATUSES:
-        logger.debug(f"Got {resp.status_code} from {url}, will retry once")
-        await asyncio.sleep(1)
-        resp = await client.post(url, json=body, params=params, headers=headers)
+    for attempt in range(3):
+        try:
+            resp = await client.post(url, json=body, params=params, headers=headers)
+        except (httpx.ConnectTimeout, httpx.ReadTimeout, httpx.ConnectError) as e:
+            if attempt < 2:
+                await asyncio.sleep(0.5 * (attempt + 1))
+                continue
+            return {"error": True, "status": 0, "detail": str(e), "_no_cache": True}
+        if resp.status_code in _RETRYABLE_STATUSES:
+            if attempt < 2:
+                delay = float(resp.headers.get("Retry-After", 1 + attempt))
+                await asyncio.sleep(delay)
+                continue
+        break
     if resp.status_code >= 400:
         try:
             err = resp.json()

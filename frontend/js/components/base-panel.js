@@ -19,10 +19,17 @@ export class BasePanel extends HTMLElement {
     this.classList.add('panel');
     this.render();
     this.startAutoRefresh();
+    // Pause refresh when tab is hidden to save bandwidth
+    this._visCb = () => {
+      if (document.hidden) this.stopAutoRefresh();
+      else this.startAutoRefresh();
+    };
+    document.addEventListener('visibilitychange', this._visCb);
   }
 
   disconnectedCallback() {
     this.stopAutoRefresh();
+    if (this._visCb) document.removeEventListener('visibilitychange', this._visCb);
     this._unsubs.forEach(fn => fn());
     this._unsubs = [];
   }
