@@ -1,6 +1,6 @@
 # MEFAI Terminal
 
-**The most comprehensive open-source crypto intelligence terminal for Binance — 47 analytical skills, 82 panels, real-time AI market intelligence.**
+**The most comprehensive open-source crypto intelligence terminal for Binance — 48 analytical skills, 83 panels, real-time AI market intelligence, and a conversational market assistant.**
 
 A Bloomberg Terminal-inspired, keyboard-driven, multi-panel interface that unifies Binance CEX, DeFi, derivatives, and on-chain analytics into one coherent workflow. Zero framework. One command deploy.
 
@@ -25,9 +25,45 @@ A Bloomberg Terminal-inspired, keyboard-driven, multi-panel interface that unifi
 +---------------------------+---------------------------+
 ```
 
-## Flagship Feature: AI Market Intelligence Feed
+## Flagship Feature: Speak to Binance — AI Market Assistant
 
-The Intelligence Feed is the "brain" of MEFAI Terminal. It synthesizes data from all analytical engines and generates **real-time, natural language market intelligence** — like having a Bloomberg analyst watching the market 24/7.
+**Speak to Binance** is an interactive, conversational AI that answers questions about any Binance-listed asset using real-time data from 9+ API endpoints. Type a question, get instant analysis.
+
+```
+> analyze BTCUSDT
+
+BTC/USDT — Deep Analysis
+Price: $97,432.50  |  24h: +2.34%  |  Vol: $18.2B
+
+Smart Money Score: 78/100 — LONG bias
+  Smart Direction:  Top traders long (ratio 2.14)  [19/25]
+  Retail Contrarian: Retail going short (ratio 0.82) [13/15]
+  Divergence:        1.32 gap between smart & retail [13/20]
+  Taker Pressure:    Buyers dominating (ratio 1.28)  [10/15]
+  Funding Signal:    Neutral funding (-2.1 bps)       [8/10]
+  OI Momentum:       Rising (+3.8% in 1h)            [12/15]
+
+Health: Grade B (74/100)
+Regime: ACCUMULATION — Smart money building positions quietly
+
+Verdict: Strong institutional buying pressure detected across 5 of 6
+factors. Retail is positioned against the move, historically a
+bullish contrarian signal. Funding is neutral — longs not yet
+crowded. Monitor for continuation above $98,000.
+```
+
+### 7 Built-In Commands:
+- `analyze <SYM>` — Deep single-asset analysis with Smart Money Score
+- `compare <SYM1> <SYM2>` — Side-by-side asset comparison
+- `summary` — Market-wide overview of 10+ assets
+- `risk` — Scan for red flags (extreme funding, OI spikes, divergences)
+- `opportunities` — Find high-conviction setups
+- `funding` — Cross-asset funding rate comparison
+- `health` — Market microstructure quality assessment
+
+## AI Intelligence Feed
+
+The Intelligence Feed synthesizes data from all analytical engines and generates **real-time, natural language market intelligence** — like having a Bloomberg analyst watching the market 24/7.
 
 Every 30 seconds, it scans 12 assets across 6 signal dimensions and produces prioritized, human-readable events:
 
@@ -52,9 +88,10 @@ Market Data (Binance CEX + Futures + DeFi)
     → Microstructure Health (5-metric scoring)
     → Momentum Cascade (cross-asset propagation)
     → AI Intelligence Feed (natural language synthesis)
+    → AI Market Assistant (conversational interface)
 ```
 
-### 47 Analytical Skills
+### 48 Analytical Skills
 From basic market data to advanced composite analysis — every skill runs independently but contributes to the unified intelligence layer.
 
 ## Skills & Panels
@@ -121,18 +158,19 @@ From basic market data to advanced composite analysis — every skill runs indep
 | Skill 43: Cascade | Momentum Cascade | Cross-asset momentum propagation tracking |
 | Skill 44: Health | Microstructure Health | 5-metric market quality scoring (A-F grades) |
 
-### Flagship Intelligence (45-46)
+### Flagship Intelligence (45-47)
 | Skill | Panels | Description |
 |-------|--------|-------------|
 | **Skill 45: Smart Money** | **Smart Money Radar** | **6-factor institutional positioning engine using Binance-exclusive data. Composite Score 0-100, market regime classification, divergence detection.** |
 | **Skill 46: Intelligence** | **AI Intelligence Feed** | **Real-time natural language market analysis. Synthesizes all data streams into prioritized, human-readable intelligence events.** |
+| **Skill 47: AI Assistant** | **Speak to Binance** | **Conversational AI chat — ask any question about any asset and get real-time analysis from 9+ API endpoints. Commands: analyze, compare, summary, risk, opportunities, funding, health.** |
 
 ### Meta Skills
 | Skill | Panels | Description |
 |-------|--------|-------------|
 | All Skills | Auto-Scanner, Smart Flow, All Skills | Automated multi-API intelligence pipeline |
 
-## 22 Layout Presets
+## 24 Layout Presets
 
 | Layout | Panels | Use Case |
 |--------|--------|----------|
@@ -159,6 +197,7 @@ From basic market data to advanced composite analysis — every skill runs indep
 | Derivatives | Taker + OI + Funding + Spread + Index + Whale | Derivatives analytics |
 | Convergence | Sentiment + Cross-Arb + Term + Anomaly + Cascade + Health | Convergence analysis |
 | **Smart Money** | **Intelligence Feed + Smart Money Radar + Taker + Divergence + OI + Sentiment** | **Institutional intelligence** |
+| **Speak to Binance** | **AI Market Assistant + Smart Money Radar** | **Conversational AI analysis** |
 | Screener | Momentum + Volatility + Volume + ATH | Market screening |
 | Explorer | Product Explorer + Dominance + Airdrop Calendar + API Monitor | Exploration |
 
@@ -184,8 +223,8 @@ Open `http://localhost:8000`
 ```
 Browser (Vanilla JS + Web Components, zero dependencies)
     │
-    ├── 82 Panels (one file each, auto-registered)
-    ├── 47 Skills (independent analytical engines)
+    ├── 83 Panels (one file each, auto-registered)
+    ├── 48 Skills (independent analytical engines)
     ├── Intelligence Feed (cross-skill synthesis)
     ├── 22 Layout Presets
     ├── 10 Language Support (EN/ZH/TR/VI/HI/FA/DE/FR/AR/ES)
@@ -280,7 +319,7 @@ mefai-terminal/
 │       ├── i18n.js            # 10 language translations
 │       ├── utils.js           # Formatting utilities
 │       ├── components/        # Reusable Web Components
-│       └── panels/            # 82 panel files (one each)
+│       └── panels/            # 83 panel files (one each)
 ├── Dockerfile + docker-compose.yml
 └── Makefile
 ```
@@ -308,6 +347,8 @@ MEFAI Terminal's SKILL.md contributions to [binance-skills-hub](https://github.c
 
 | Skill | Category | Status |
 |-------|----------|--------|
+| AI Market Assistant | Conversational Intelligence | PR Ready |
+| AI Market Intelligence Feed | Real-Time Analytics | PR Ready |
 | Smart Money Radar | Derivatives Intelligence | PR Ready |
 | Composite Anomaly Detector | Multi-Signal Analytics | PR Ready |
 | Momentum Cascade Tracker | Cross-Asset Analysis | PR Ready |

@@ -1,6 +1,6 @@
 # MEFAI Skills Map
 
-Complete mapping of all 47 skills to panels and API endpoints.
+Complete mapping of all 48 skills to panels and API endpoints.
 
 ## Core CEX Skills (1-7)
 
@@ -96,7 +96,7 @@ Uses `api/v3/ticker` with custom `windowSize` (1h, 4h) — underutilized Binance
 ### Skill 44: Microstructure Health
 5 metrics → single health score (0-100): spread, spot-futures gap, funding, taker balance, OI stability.
 
-## Flagship Intelligence (45-46)
+## Flagship Intelligence (45-47)
 
 ### Skill 45: Smart Money Radar
 **6-factor model using Binance-exclusive data:**
@@ -119,6 +119,21 @@ Uses `api/v3/ticker` with custom `windowSize` (1h, 4h) — underutilized Binance
 - Microstructure stress (execution environment warnings)
 
 **Output:** Prioritized, timestamped, severity-ranked intelligence feed with human-readable market analysis.
+
+### Skill 47: AI Market Assistant (Speak to Binance)
+**Interactive conversational AI using 9 Binance API endpoints per query:**
+- `/fapi/v1/ticker/24hr` — Price, volume, 24h metrics
+- `/fapi/v1/premiumIndex` — Funding rate, mark/index price
+- `/fapi/v1/ticker/bookTicker` — Bid/ask spread
+- `/futures/data/globalLongShortAccountRatio` — Retail positioning — **BINANCE ONLY**
+- `/futures/data/topLongShortAccountRatio` — Top account positioning — **BINANCE ONLY**
+- `/futures/data/topLongShortPositionRatio` — Smart money positioning — **BINANCE ONLY**
+- `/futures/data/takerlongshortRatio` — Taker flow — **BINANCE ONLY**
+- `/futures/data/openInterestHist` — OI change
+- `/api/v3/ticker/bookTicker` — Spot price for basis
+
+**Commands:** analyze, compare, summary, risk, opportunities, funding, health
+**Output:** Natural language analysis with Smart Money Score, Health Grade, Regime, Anomaly Flags, and actionable verdict.
 
 ## Meta Skills
 
