@@ -92,6 +92,10 @@ const panelRegistry = {
   'tx-explorer': 'tx-explorer-panel',
   'nft-portfolio': 'nft-portfolio-panel',
   'greenfield-explorer': 'greenfield-explorer-panel',
+  'btc-macro': 'btc-macro-panel',
+  'deribit-options': 'deribit-options-panel',
+  'onchain-stats': 'onchain-stats-panel',
+  'binance-options': 'binance-options-panel',
 };
 
 // Layout presets
@@ -231,6 +235,11 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['tx-explorer', 'nft-portfolio', 'greenfield-explorer', 'wallet-risk-score'],
   },
+  'bitcoin': {
+    name: 'Bitcoin',
+    grid: 'grid-2x2',
+    panels: ['btc-macro', 'deribit-options', 'onchain-stats', 'binance-options'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -263,10 +272,11 @@ async function loadPanels() {
     'anomaly-composite', 'momentum-cascade', 'microstructure-health',
     'smart-money-radar', 'intelligence-feed', 'intelligence-chat',
     'tx-explorer', 'nft-portfolio', 'greenfield-explorer',
+    'btc-macro', 'deribit-options', 'onchain-stats', 'binance-options',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1710200000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1710300000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }

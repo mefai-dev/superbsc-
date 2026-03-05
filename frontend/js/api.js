@@ -285,6 +285,28 @@ export const api = {
     greenfieldStatus: () => get('/api/bnbchain/greenfield/status', {}, 30000),
     greenfieldBuckets: (addr) => get('/api/bnbchain/greenfield/buckets', { address: addr }, 60000),
   },
+  // Skill 23: BTC Macro
+  btcMacro: {
+    piCycle: () => get('/api/btc-macro/pi-cycle', {}, 3600000),
+    rainbow: () => get('/api/btc-macro/rainbow', {}, 3600000),
+    goldenRatio: () => get('/api/btc-macro/golden-ratio', {}, 3600000),
+  },
+  // Skill 24: Deribit Options
+  deribit: {
+    bookSummary: (cur, kind) => get('/api/deribit/book-summary', { currency: cur || 'BTC', kind: kind || 'option' }, 60000),
+    historicalVol: (cur) => get('/api/deribit/historical-volatility', { currency: cur || 'BTC' }, 60000),
+  },
+  // Skill 25: On-Chain Stats
+  onchain: {
+    stats: () => get('/api/onchain/stats', {}, 120000),
+    pools: (timespan) => get('/api/onchain/pools', { timespan: timespan || '4days' }, 120000),
+    chart: (name, timespan) => get('/api/onchain/chart', { name: name || 'hash-rate', timespan: timespan || '60days' }, 120000),
+  },
+  // Skill 26: Binance Options
+  binanceOptions: {
+    mark: () => get('/api/options/mark', {}, 60000),
+    openInterest: (underlying) => get('/api/options/open-interest', { underlyingAsset: underlying || 'BTC' }, 60000),
+  },
   health: () => get('/health', {}, 30000),
 };
 
