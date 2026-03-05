@@ -31,6 +31,10 @@ from proxy.routes import (
     margin,
     products,
     bnbchain,
+    btc_macro,
+    deribit,
+    onchain,
+    binance_options,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -89,6 +93,18 @@ app.include_router(margin.router, prefix="/api/margin", tags=["Skill 18: Margin"
 app.include_router(products.router, prefix="/api/products", tags=["Skill 19: Products"])
 app.include_router(
     bnbchain.router, prefix="/api/bnbchain", tags=["Skill 20: BNB Chain"]
+)
+app.include_router(
+    btc_macro.router, prefix="/api/btc-macro", tags=["Skill 23: BTC Macro"]
+)
+app.include_router(
+    deribit.router, prefix="/api/deribit", tags=["Skill 24: Deribit Options"]
+)
+app.include_router(onchain.router, prefix="/api/onchain", tags=["Skill 25: On-Chain"])
+app.include_router(
+    binance_options.router,
+    prefix="/api/options",
+    tags=["Skill 26: Binance Options"],
 )
 
 # Serve frontend

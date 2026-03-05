@@ -174,8 +174,9 @@ const T = {
     'nav.derivatives': 'Derivatives', 'nav.screener': 'Screener', 'nav.convergence': 'Convergence', 'nav.smartMoney': 'Smart Money', 'panel.smartMoneyRadar': 'Smart Money Radar', 'panel.intelligenceFeed': 'Intelligence Feed', 'nav.speak': 'Speak to Binance', 'panel.intelligenceChat': 'Speak to Binance',
     'panel.crossExchangeArb': 'Cross Exchange Arb', 'panel.sentimentConvergence': 'Sentiment Convergence', 'panel.termStructure': 'Term Structure',
     'panel.anomalyComposite': 'Anomaly Composite', 'panel.momentumCascade': 'Momentum Cascade', 'panel.microstructureHealth': 'Microstructure Health',
-    'nav.bnbChainGroup': 'BNB Chain', 'nav.bnbChain': 'BNB Chain',
+    'nav.bnbChainGroup': 'BNB Chain', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Chain', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Explorer', 'panel.nftPortfolio': 'NFT Portfolio', 'panel.greenfieldExplorer': 'Greenfield Explorer',
+    'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Deribit Options', 'panel.onchainStats': 'On-Chain Stats', 'panel.binanceOptions': 'Binance Options',
   },
   zh: {
     'nav.mefai': 'MEFAI', 'nav.overview': '概览', 'nav.meme': 'Meme',
@@ -307,8 +308,9 @@ const T = {
     'panel.takerPressure': '吃单压力', 'panel.oiSurge': 'OI异动', 'panel.spreadMonitor': '价差监控', 'panel.indexComposition': '指数成分', 'panel.fundingScanner': '资金费扫描', 'panel.momentumScreener': '动量筛选', 'panel.volatilityRank': '波动排名', 'panel.volumeProfile': '成交量画像', 'panel.whaleTracker': '鲸鱼追踪', 'nav.derivatives': '衍生品', 'nav.screener': '筛选器', 'nav.convergence': '收敛分析', 'nav.smartMoney': '聪明钱', 'panel.smartMoneyRadar': '聪明钱雷达', 'panel.intelligenceFeed': '情报流', 'nav.speak': '与币安对话', 'panel.intelligenceChat': '与币安对话',
     'panel.crossExchangeArb': '跨交易所套利', 'panel.sentimentConvergence': '情绪收敛', 'panel.termStructure': '期限结构',
     'panel.anomalyComposite': '异常复合', 'panel.momentumCascade': '动量级联', 'panel.microstructureHealth': '微观结构健康',
-    'nav.bnbChainGroup': 'BNB链', 'nav.bnbChain': 'BNB链',
+    'nav.bnbChainGroup': 'BNB链', 'nav.blockchainGroup': '区块链', 'nav.bnbChain': 'BNB链', 'nav.bitcoin': '比特币',
     'panel.txExplorer': '交易浏览器', 'panel.nftPortfolio': 'NFT资产', 'panel.greenfieldExplorer': 'Greenfield浏览器',
+    'panel.btcMacro': 'BTC宏观', 'panel.deribitOptions': 'Deribit期权', 'panel.onchainStats': '链上数据', 'panel.binanceOptions': '币安期权',
   },
   tr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Genel', 'nav.meme': 'Meme',
@@ -440,8 +442,9 @@ const T = {
     'panel.takerPressure': 'Alıcı Baskısı', 'panel.oiSurge': 'OI Artış', 'panel.spreadMonitor': 'Spread İzleme', 'panel.indexComposition': 'Endeks Bileşimi', 'panel.fundingScanner': 'Fonlama Tarama', 'panel.momentumScreener': 'Momentum Tarama', 'panel.volatilityRank': 'Volatilite Sırala', 'panel.volumeProfile': 'Hacim Profili', 'panel.whaleTracker': 'Balina Takip', 'nav.derivatives': 'Türevler', 'nav.screener': 'Tarayıcı', 'nav.convergence': 'Yakınsama', 'nav.smartMoney': 'Akıllı Para', 'panel.smartMoneyRadar': 'Akıllı Para Radarı', 'panel.intelligenceFeed': 'İstihbarat Akışı', 'nav.speak': 'Binance ile Konuş', 'panel.intelligenceChat': 'Binance ile Konuş',
     'panel.crossExchangeArb': 'Borsalar Arası Arb', 'panel.sentimentConvergence': 'Duygu Yakınsaması', 'panel.termStructure': 'Vade Yapısı',
     'panel.anomalyComposite': 'Anomali Bileşik', 'panel.momentumCascade': 'Momentum Kaskad', 'panel.microstructureHealth': 'Mikro Yapı Sağlık',
-    'nav.bnbChainGroup': 'BNB Zinciri', 'nav.bnbChain': 'BNB Zinciri',
+    'nav.bnbChainGroup': 'BNB Zinciri', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Zinciri', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Gezgini', 'panel.nftPortfolio': 'NFT Portföy', 'panel.greenfieldExplorer': 'Greenfield Gezgini',
+    'panel.btcMacro': 'BTC Makro', 'panel.deribitOptions': 'Deribit Opsiyonlar', 'panel.onchainStats': 'Zincir Verileri', 'panel.binanceOptions': 'Binance Opsiyonlar',
   },
   vi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Tổng quan', 'nav.meme': 'Meme',
@@ -573,8 +576,9 @@ const T = {
     'panel.takerPressure': 'Áp lực Taker', 'panel.oiSurge': 'OI Đột biến', 'panel.spreadMonitor': 'Giám sát Spread', 'panel.indexComposition': 'Thành phần Index', 'panel.fundingScanner': 'Quét Funding', 'panel.momentumScreener': 'Lọc Momentum', 'panel.volatilityRank': 'Xếp hạng Biến động', 'panel.volumeProfile': 'Hồ sơ Khối lượng', 'panel.whaleTracker': 'Theo dõi Cá voi', 'nav.derivatives': 'Phái sinh', 'nav.screener': 'Bộ lọc', 'nav.convergence': 'Hội tụ', 'nav.smartMoney': 'Tiền thông minh', 'panel.smartMoneyRadar': 'Radar Tiền thông minh', 'panel.intelligenceFeed': 'Bản tin Thị trường', 'nav.speak': 'Nói chuyện với Binance', 'panel.intelligenceChat': 'Nói chuyện với Binance',
     'panel.crossExchangeArb': 'Chênh lệch Sàn', 'panel.sentimentConvergence': 'Hội tụ Tâm lý', 'panel.termStructure': 'Cấu trúc Kỳ hạn',
     'panel.anomalyComposite': 'Tổng hợp Bất thường', 'panel.momentumCascade': 'Dòng chảy Momentum', 'panel.microstructureHealth': 'Sức khỏe Vi cấu trúc',
-    'nav.bnbChainGroup': 'BNB Chain', 'nav.bnbChain': 'BNB Chain',
+    'nav.bnbChainGroup': 'BNB Chain', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Chain', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Explorer', 'panel.nftPortfolio': 'NFT Portfolio', 'panel.greenfieldExplorer': 'Greenfield Explorer',
+    'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Deribit Options', 'panel.onchainStats': 'On-Chain Stats', 'panel.binanceOptions': 'Binance Options',
   },
   hi: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'अवलोकन', 'nav.meme': 'Meme',
@@ -706,8 +710,9 @@ const T = {
     'panel.takerPressure': 'टेकर प्रेशर', 'panel.oiSurge': 'OI सर्ज', 'panel.spreadMonitor': 'स्प्रेड मॉनिटर', 'panel.indexComposition': 'इंडेक्स संरचना', 'panel.fundingScanner': 'फंडिंग स्कैनर', 'panel.momentumScreener': 'मोमेंटम स्क्रीनर', 'panel.volatilityRank': 'वोलैटिलिटी रैंक', 'panel.volumeProfile': 'वॉल्यूम प्रोफाइल', 'panel.whaleTracker': 'व्हेल ट्रैकर', 'nav.derivatives': 'डेरिवेटिव्स', 'nav.screener': 'स्क्रीनर', 'nav.convergence': 'कन्वर्जेंस', 'nav.smartMoney': 'स्मार्ट मनी', 'panel.smartMoneyRadar': 'स्मार्ट मनी रडार', 'panel.intelligenceFeed': 'इंटेलिजेंस फीड', 'nav.speak': 'बायनेंस से बात करें', 'panel.intelligenceChat': 'बायनेंस से बात करें',
     'panel.crossExchangeArb': 'क्रॉस एक्सचेंज आर्ब', 'panel.sentimentConvergence': 'भावना कन्वर्जेंस', 'panel.termStructure': 'अवधि संरचना',
     'panel.anomalyComposite': 'विसंगति समग्र', 'panel.momentumCascade': 'गति कैस्केड', 'panel.microstructureHealth': 'सूक्ष्म संरचना स्वास्थ्य',
-    'nav.bnbChainGroup': 'BNB चेन', 'nav.bnbChain': 'BNB चेन',
+    'nav.bnbChainGroup': 'BNB चेन', 'nav.blockchainGroup': 'ब्लॉकचेन', 'nav.bnbChain': 'BNB चेन', 'nav.bitcoin': 'बिटकॉइन',
     'panel.txExplorer': 'TX एक्सप्लोरर', 'panel.nftPortfolio': 'NFT पोर्टफोलियो', 'panel.greenfieldExplorer': 'Greenfield एक्सप्लोरर',
+    'panel.btcMacro': 'BTC मैक्रो', 'panel.deribitOptions': 'Deribit ऑप्शन', 'panel.onchainStats': 'ऑन-चेन डेटा', 'panel.binanceOptions': 'Binance ऑप्शन',
   },
   fa: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نمای کلی', 'nav.meme': 'Meme',
@@ -839,8 +844,9 @@ const T = {
     'panel.takerPressure': 'فشار خریدار', 'panel.oiSurge': 'جهش OI', 'panel.spreadMonitor': 'مانیتور اسپرد', 'panel.indexComposition': 'ترکیب شاخص', 'panel.fundingScanner': 'اسکنر فاندینگ', 'panel.momentumScreener': 'غربال مومنتوم', 'panel.volatilityRank': 'رتبه نوسان', 'panel.volumeProfile': 'پروفایل حجم', 'panel.whaleTracker': 'ردیاب نهنگ', 'nav.derivatives': 'مشتقه', 'nav.screener': 'غربالگر', 'nav.convergence': 'همگرایی', 'nav.smartMoney': 'پول هوشمند', 'panel.smartMoneyRadar': 'رادار پول هوشمند', 'panel.intelligenceFeed': 'خبرنامه هوشمند', 'nav.speak': 'صحبت با بایننس', 'panel.intelligenceChat': 'صحبت با بایننس',
     'panel.crossExchangeArb': 'آربیتراژ بین صرافی', 'panel.sentimentConvergence': 'همگرایی احساسات', 'panel.termStructure': 'ساختار سررسید',
     'panel.anomalyComposite': 'ترکیب ناهنجاری', 'panel.momentumCascade': 'آبشار مومنتوم', 'panel.microstructureHealth': 'سلامت ریزساختار',
-    'nav.bnbChainGroup': 'زنجیره BNB', 'nav.bnbChain': 'زنجیره BNB',
+    'nav.bnbChainGroup': 'زنجیره BNB', 'nav.blockchainGroup': 'بلاکچین', 'nav.bnbChain': 'زنجیره BNB', 'nav.bitcoin': 'بیت‌کوین',
     'panel.txExplorer': 'جستجوی تراکنش', 'panel.nftPortfolio': 'پورتفوی NFT', 'panel.greenfieldExplorer': 'مرورگر Greenfield',
+    'panel.btcMacro': 'BTC کلان', 'panel.deribitOptions': 'آپشن Deribit', 'panel.onchainStats': 'آمار زنجیره', 'panel.binanceOptions': 'آپشن بایننس',
   },
   de: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Übersicht', 'nav.meme': 'Meme',
@@ -972,8 +978,9 @@ const T = {
     'panel.takerPressure': 'Taker Druck', 'panel.oiSurge': 'OI Anstieg', 'panel.spreadMonitor': 'Spread Monitor', 'panel.indexComposition': 'Index Zusammensetzung', 'panel.fundingScanner': 'Funding Scanner', 'panel.momentumScreener': 'Momentum Screener', 'panel.volatilityRank': 'Volatilitätsrang', 'panel.volumeProfile': 'Volumenprofil', 'panel.whaleTracker': 'Wal Tracker', 'nav.derivatives': 'Derivate', 'nav.screener': 'Screener', 'nav.convergence': 'Konvergenz', 'nav.smartMoney': 'Smart Money', 'panel.smartMoneyRadar': 'Smart Money Radar', 'panel.intelligenceFeed': 'Intelligence Feed',
     'panel.crossExchangeArb': 'Cross Exchange Arb', 'panel.sentimentConvergence': 'Sentiment Konvergenz', 'panel.termStructure': 'Laufzeitstruktur',
     'panel.anomalyComposite': 'Anomalie Komposit', 'panel.momentumCascade': 'Momentum Kaskade', 'panel.microstructureHealth': 'Mikrostruktur Gesundheit',
-    'nav.bnbChainGroup': 'BNB Chain', 'nav.bnbChain': 'BNB Chain',
+    'nav.bnbChainGroup': 'BNB Chain', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'BNB Chain', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'TX Explorer', 'panel.nftPortfolio': 'NFT Portfolio', 'panel.greenfieldExplorer': 'Greenfield Explorer',
+    'panel.btcMacro': 'BTC Makro', 'panel.deribitOptions': 'Deribit Optionen', 'panel.onchainStats': 'On-Chain Daten', 'panel.binanceOptions': 'Binance Optionen',
   },
   fr: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'Aperçu', 'nav.meme': 'Meme',
@@ -1105,8 +1112,9 @@ const T = {
     'panel.takerPressure': 'Pression Taker', 'panel.oiSurge': 'Hausse OI', 'panel.spreadMonitor': 'Moniteur Spread', 'panel.indexComposition': 'Composition Index', 'panel.fundingScanner': 'Scanner Funding', 'panel.momentumScreener': 'Filtre Momentum', 'panel.volatilityRank': 'Rang Volatilité', 'panel.volumeProfile': 'Profil Volume', 'panel.whaleTracker': 'Traqueur Baleines', 'nav.derivatives': 'Dérivés', 'nav.screener': 'Filtre', 'nav.convergence': 'Convergence', 'nav.smartMoney': 'Smart Money', 'panel.smartMoneyRadar': 'Smart Money Radar',
     'panel.crossExchangeArb': 'Arb Inter Bourses', 'panel.sentimentConvergence': 'Convergence Sentiment', 'panel.termStructure': 'Structure Terme',
     'panel.anomalyComposite': 'Composite Anomalies', 'panel.momentumCascade': 'Cascade Momentum', 'panel.microstructureHealth': 'Santé Microstructure',
-    'nav.bnbChainGroup': 'Chaîne BNB', 'nav.bnbChain': 'Chaîne BNB',
+    'nav.bnbChainGroup': 'Chaîne BNB', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'Chaîne BNB', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'Explorateur TX', 'panel.nftPortfolio': 'Portfolio NFT', 'panel.greenfieldExplorer': 'Explorateur Greenfield',
+    'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Options Deribit', 'panel.onchainStats': 'Stats On-Chain', 'panel.binanceOptions': 'Options Binance',
   },
   ar: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'نظرة عامة', 'nav.meme': 'Meme',
@@ -1238,8 +1246,9 @@ const T = {
     'panel.takerPressure': 'ضغط المشتري', 'panel.oiSurge': 'ارتفاع OI', 'panel.spreadMonitor': 'مراقب السبريد', 'panel.indexComposition': 'تركيب المؤشر', 'panel.fundingScanner': 'ماسح التمويل', 'panel.momentumScreener': 'فرز الزخم', 'panel.volatilityRank': 'ترتيب التذبذب', 'panel.volumeProfile': 'ملف الحجم', 'panel.whaleTracker': 'متتبع الحيتان', 'nav.derivatives': 'المشتقات', 'nav.screener': 'الفرز', 'nav.convergence': 'التقارب', 'nav.smartMoney': 'المال الذكي', 'panel.smartMoneyRadar': 'رادار المال الذكي', 'panel.intelligenceFeed': 'تغذية الاستخبارات', 'nav.speak': 'تحدث إلى بينانس', 'panel.intelligenceChat': 'تحدث إلى بينانس',
     'panel.crossExchangeArb': 'المراجحة بين البورصات', 'panel.sentimentConvergence': 'تقارب المشاعر', 'panel.termStructure': 'هيكل الأجل',
     'panel.anomalyComposite': 'مركب الشذوذ', 'panel.momentumCascade': 'تتابع الزخم', 'panel.microstructureHealth': 'صحة البنية الدقيقة',
-    'nav.bnbChainGroup': 'سلسلة BNB', 'nav.bnbChain': 'سلسلة BNB',
+    'nav.bnbChainGroup': 'سلسلة BNB', 'nav.blockchainGroup': 'بلوكتشين', 'nav.bnbChain': 'سلسلة BNB', 'nav.bitcoin': 'بيتكوين',
     'panel.txExplorer': 'مستكشف المعاملات', 'panel.nftPortfolio': 'محفظة NFT', 'panel.greenfieldExplorer': 'مستكشف Greenfield',
+    'panel.btcMacro': 'BTC كلي', 'panel.deribitOptions': 'خيارات Deribit', 'panel.onchainStats': 'إحصائيات السلسلة', 'panel.binanceOptions': 'خيارات Binance',
   },
   es: {
     'nav.mefai': 'MEFAI', 'nav.overview': 'General', 'nav.meme': 'Meme',
@@ -1371,8 +1380,9 @@ const T = {
     'panel.takerPressure': 'Presión Taker', 'panel.oiSurge': 'Aumento OI', 'panel.spreadMonitor': 'Monitor Spread', 'panel.indexComposition': 'Composición Índice', 'panel.fundingScanner': 'Escáner Funding', 'panel.momentumScreener': 'Filtro Momentum', 'panel.volatilityRank': 'Ranking Volatilidad', 'panel.volumeProfile': 'Perfil Volumen', 'panel.whaleTracker': 'Rastreador Ballenas', 'nav.derivatives': 'Derivados', 'nav.screener': 'Filtro', 'nav.convergence': 'Convergencia', 'nav.smartMoney': 'Dinero Inteligente', 'panel.smartMoneyRadar': 'Radar Dinero Inteligente', 'panel.intelligenceFeed': 'Feed de Inteligencia', 'nav.speak': 'Habla con Binance', 'panel.intelligenceChat': 'Habla con Binance',
     'panel.crossExchangeArb': 'Arb Inter Bolsas', 'panel.sentimentConvergence': 'Convergencia Sentimiento', 'panel.termStructure': 'Estructura Plazo',
     'panel.anomalyComposite': 'Compuesto Anomalías', 'panel.momentumCascade': 'Cascada Momentum', 'panel.microstructureHealth': 'Salud Microestructura',
-    'nav.bnbChainGroup': 'Cadena BNB', 'nav.bnbChain': 'Cadena BNB',
+    'nav.bnbChainGroup': 'Cadena BNB', 'nav.blockchainGroup': 'Blockchain', 'nav.bnbChain': 'Cadena BNB', 'nav.bitcoin': 'Bitcoin',
     'panel.txExplorer': 'Explorador TX', 'panel.nftPortfolio': 'Portafolio NFT', 'panel.greenfieldExplorer': 'Explorador Greenfield',
+    'panel.btcMacro': 'BTC Macro', 'panel.deribitOptions': 'Opciones Deribit', 'panel.onchainStats': 'Datos On-Chain', 'panel.binanceOptions': 'Opciones Binance',
   },
 };
 
@@ -1451,6 +1461,10 @@ const _tagToKey = {
   'tx-explorer-panel': 'panel.txExplorer',
   'nft-portfolio-panel': 'panel.nftPortfolio',
   'greenfield-explorer-panel': 'panel.greenfieldExplorer',
+  'btc-macro-panel': 'panel.btcMacro',
+  'deribit-options-panel': 'panel.deribitOptions',
+  'onchain-stats-panel': 'panel.onchainStats',
+  'binance-options-panel': 'panel.binanceOptions',
 };
 
 let _lang = 'en';
