@@ -96,6 +96,9 @@ const panelRegistry = {
   'deribit-options': 'deribit-options-panel',
   'onchain-stats': 'onchain-stats-panel',
   'binance-options': 'binance-options-panel',
+  'trade-setup': 'trade-setup-panel',
+  'funding-alert': 'funding-alert-panel',
+  'liquidation-magnet': 'liquidation-magnet-panel',
 };
 
 // Layout presets
@@ -240,6 +243,11 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['btc-macro', 'deribit-options', 'onchain-stats', 'binance-options'],
   },
+  'trade-signals': {
+    name: 'Trade Signals',
+    grid: 'grid-2x2',
+    panels: ['trade-setup', 'funding-alert', 'liquidation-magnet', 'futures-pulse'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -273,10 +281,11 @@ async function loadPanels() {
     'smart-money-radar', 'intelligence-feed', 'intelligence-chat',
     'tx-explorer', 'nft-portfolio', 'greenfield-explorer',
     'btc-macro', 'deribit-options', 'onchain-stats', 'binance-options',
+    'trade-setup', 'funding-alert', 'liquidation-magnet',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1710300000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1710400000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
