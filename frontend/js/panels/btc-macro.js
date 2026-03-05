@@ -112,7 +112,9 @@ export class BtcMacroPanel extends BasePanel {
     if (!apiData?.data?.price) return '<div class="bm-desc">Rainbow data unavailable</div>';
 
     const d = apiData.data;
-    const currentZone = Array.isArray(d.currentZone) && d.currentZone.length > 0 ? d.currentZone[d.currentZone.length - 1] : null;
+    const currentZone = d.currentZone
+      ? (Array.isArray(d.currentZone) ? d.currentZone[d.currentZone.length - 1] : d.currentZone)
+      : null;
     const zones = d.zones || [];
 
     let h = '<div class="bm-desc">Rainbow Chart: Logarithmic regression bands showing which market phase BTC is in. Historically, buying in blue/green zones outperforms.</div>';
