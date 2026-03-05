@@ -2,7 +2,7 @@
 
 Complete mapping of all 48 skills to panels and API endpoints.
 
-## Core CEX Skills (1-7)
+## Core CEX Skills (1 to 7)
 
 ### Skill 1: Binance Spot CEX API
 | Endpoint | Panel | Method |
@@ -21,19 +21,19 @@ Complete mapping of all 48 skills to panels and API endpoints.
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `pulse/rank/list` | Meme Rush Board | POST |
-| `social-rush/rank/list` | Topic Rush | GET |
+| `social rush/rank/list` | Topic Rush | GET |
 
 ### Skill 3: Query Address Info
 | Endpoint | Panel | Method |
 |----------|-------|--------|
-| `active-position-list` | Wallet Tracker | GET |
+| `active position list` | Wallet Tracker | GET |
 
 ### Skill 4: Trading Signal
 | Endpoint | Panel | Method |
 |----------|-------|--------|
-| `signal/smart-money` | Smart Money Signals | POST |
+| `signal/smart money` | Smart Money Signals | POST |
 
-### Skill 5: Market Rankings (5 sub-APIs)
+### Skill 5: Market Rankings (5 sub APIs)
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `social/hype/rank/leaderboard` | Social Hype | GET |
@@ -49,15 +49,15 @@ Complete mapping of all 48 skills to panels and API endpoints.
 | GoPlus `address_security` | Wallet Risk Score | GET |
 | GoPlus `token_security` | GoPlus Scanner | GET |
 
-### Skill 7: Token Info (4 sub-APIs)
+### Skill 7: Token Info (4 sub APIs)
 | Endpoint | Panel | Method |
 |----------|-------|--------|
 | `token/search` | Token Search | GET |
 | `token/meta/info` | Token Profile | GET |
 | `token/dynamic/info` | Token Profile | GET |
-| `k-line/candles` | DEX Chart | GET |
+| `k line/candles` | DEX Chart | GET |
 
-## Derivatives Skills (28-38)
+## Derivatives Skills (28 to 38)
 
 ### Binance Futures Exclusive APIs
 | Endpoint | Panels Using It | Exclusive? |
@@ -72,38 +72,38 @@ Complete mapping of all 48 skills to panels and API endpoints.
 | `/futures/data/openInterestHist` | OI Surge, Anomaly Composite, Microstructure Health, Smart Money Radar, Intelligence Feed | Partial |
 | `/fapi/v1/fundingInfo` | Funding Scanner | No |
 | `/fapi/v1/indexInfo` | Index Composition | Partial |
-| `/fapi/v1/constituents` | Cross-Exchange Arb | **BINANCE ONLY** |
+| `/fapi/v1/constituents` | Cross Exchange Arb | **BINANCE ONLY** |
 | `/futures/data/basis` | Basis Spread, Term Structure | **BINANCE ONLY** |
-| `/futures/data/delivery-price` | Term Structure | Partial |
+| `/futures/data/delivery price` | Term Structure | Partial |
 
-## Convergence Intelligence (39-44)
+## Convergence Intelligence (39 to 44)
 
-### Skill 39: Cross-Exchange Arb
-Uses `/fapi/v1/constituents` — 8-exchange composite weights for price comparison.
+### Skill 39: Cross Exchange Arb
+Uses `/fapi/v1/constituents` — 8 exchange composite weights for price comparison.
 
 ### Skill 40: Sentiment Convergence
 Combines 6 sources: retail L/S, top account L/S, top position L/S, taker B/S, funding rate, OI change.
 
 ### Skill 41: Term Structure Analyzer
-Uses basis history + delivery prices + exchange info for contango/backwardation analysis.
+Uses basis history + delivery prices + exchange info for contango backwardation analysis.
 
 ### Skill 42: Anomaly Composite
-6 anomaly signals: VWAP deviation, large move, funding extreme, OI spike, spot-futures gap, taker flow.
+6 anomaly signals: VWAP deviation, large move, funding extreme, OI spike, spot futures gap, taker flow.
 
 ### Skill 43: Momentum Cascade
-Uses `api/v3/ticker` with custom `windowSize` (1h, 4h) — underutilized Binance API feature.
+Uses `api/v3/ticker` with custom `windowSize` (1h, 4h). Underutilized Binance API feature.
 
 ### Skill 44: Microstructure Health
-5 metrics → single health score (0-100): spread, spot-futures gap, funding, taker balance, OI stability.
+5 metrics → single health score (0-100): spread, spot futures gap, funding, taker balance, OI stability.
 
-## Flagship Intelligence (45-47)
+## Flagship Intelligence (45 to 47)
 
 ### Skill 45: Smart Money Radar
-**6-factor model using Binance-exclusive data:**
-1. Smart Money Direction (`topLongShortPositionRatio`) — **BINANCE ONLY**
+**6 factor model using Binance exclusive data:**
+1. Smart Money Direction (`topLongShortPositionRatio`) **BINANCE ONLY**
 2. Retail Contrarian (`globalLongShortAccountRatio`)
 3. Smart vs Retail Divergence (computed)
-4. Taker Pressure (`takerlongshortRatio`) — **BINANCE ONLY**
+4. Taker Pressure (`takerlongshortRatio`) **BINANCE ONLY**
 5. Funding Signal (`premiumIndex`, contrarian)
 6. OI Momentum (`openInterestHist`)
 
@@ -112,36 +112,36 @@ Uses `api/v3/ticker` with custom `windowSize` (1h, 4h) — underutilized Binance
 ### Skill 46: AI Intelligence Feed
 **Synthesizes all engines into natural language events:**
 - Smart Money alerts (score + direction + factor analysis)
-- Anomaly detection (multi-signal firing)
+- Anomaly detection (multi signal firing)
 - Divergence alerts (smart vs retail disagreement)
 - Funding extremes (contrarian signals)
 - OI surges (position buildup detection)
 - Microstructure stress (execution environment warnings)
 
-**Output:** Prioritized, timestamped, severity-ranked intelligence feed with human-readable market analysis.
+**Output:** Prioritized, timestamped, severity ranked intelligence feed with human readable market analysis.
 
 ### Skill 47: AI Market Assistant (Speak to Binance)
 **Interactive conversational AI using 9 Binance API endpoints per query:**
-- `/fapi/v1/ticker/24hr` — Price, volume, 24h metrics
-- `/fapi/v1/premiumIndex` — Funding rate, mark/index price
-- `/fapi/v1/ticker/bookTicker` — Bid/ask spread
-- `/futures/data/globalLongShortAccountRatio` — Retail positioning — **BINANCE ONLY**
-- `/futures/data/topLongShortAccountRatio` — Top account positioning — **BINANCE ONLY**
-- `/futures/data/topLongShortPositionRatio` — Smart money positioning — **BINANCE ONLY**
-- `/futures/data/takerlongshortRatio` — Taker flow — **BINANCE ONLY**
-- `/futures/data/openInterestHist` — OI change
-- `/api/v3/ticker/bookTicker` — Spot price for basis
+- `/fapi/v1/ticker/24hr`: Price, volume, 24h metrics
+- `/fapi/v1/premiumIndex`: Funding rate, mark/index price
+- `/fapi/v1/ticker/bookTicker`: Bid/ask spread
+- `/futures/data/globalLongShortAccountRatio` — Retail positioning. **BINANCE ONLY**
+- `/futures/data/topLongShortAccountRatio` — Top account positioning. **BINANCE ONLY**
+- `/futures/data/topLongShortPositionRatio` — Smart money positioning. **BINANCE ONLY**
+- `/futures/data/takerlongshortRatio` — Taker flow. **BINANCE ONLY**
+- `/futures/data/openInterestHist`: OI change
+- `/api/v3/ticker/bookTicker`: Spot price for basis
 
-**Commands:** analyze, compare, summary, risk, opportunities, funding, health
+**Commands:** analyze, compare, summary, risk, opportunities, funding, health, portfolio, dca, whale, momentum, divergence, learn, help
 **Output:** Natural language analysis with Smart Money Score, Health Grade, Regime, Anomaly Flags, and actionable verdict.
 
 ## Meta Skills
 
-### Auto-Scanner (All 7 Core Skills)
+### Auto Scanner (All 7 Core Skills)
 Pipeline: Skill 2 → Skill 6 → Skill 5.3 → Skill 4 → Skill 7.3 → Composite Score
 
 ### Smart Flow (Skill 4 + 5)
 Hybrid smart money + market ranking analysis.
 
 ### Alpha Radar (Skill 8.1)
-5-source convergence scoring across smart money, social, trending, meme, and inflow data.
+5 source convergence scoring across smart money, social, trending, meme, and inflow data.

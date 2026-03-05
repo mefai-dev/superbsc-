@@ -11,7 +11,7 @@ const CHAINS = [
 
 export class MultiChainWalletPanel extends BasePanel {
   static skill = 'Skill 15';
-  static defaultTitle = 'Multi-Chain Wallet';
+  static defaultTitle = 'Multi Chain Wallet';
 
   constructor() {
     super();

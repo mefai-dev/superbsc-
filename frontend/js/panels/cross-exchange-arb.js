@@ -5,7 +5,7 @@ const { formatPrice, formatPercent } = window.mefaiUtils;
 
 export class CrossExchangeArbPanel extends BasePanel {
   static skill = 'Skill 39';
-  static defaultTitle = 'Cross-Exchange Arb';
+  static defaultTitle = 'Cross Exchange Arb';
 
   constructor() {
     super();
