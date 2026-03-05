@@ -263,6 +263,7 @@ select.lang-select.header-lang-select option {
 .grid-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
 .grid-3col { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
 .grid-2x3 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.grid-1x1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
 .grid-1x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
 .grid-1x4 { grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: 1fr; }
 

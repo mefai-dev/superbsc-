@@ -210,8 +210,8 @@ const layouts = {
   },
   'speak': {
     name: 'Speak to Binance',
-    grid: 'grid-1x2',
-    panels: ['intelligence-chat', 'smart-money-radar'],
+    grid: 'grid-1x1',
+    panels: ['intelligence-chat'],
   },
   'smart-money': {
     name: 'Smart Money',
