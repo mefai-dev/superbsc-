@@ -36,11 +36,17 @@ export class SquareContentPanel extends BasePanel {
     this._template = 'market-brief';
     this._symbol = 'BTCUSDT';
     this._content = '';
+    this._customMsg = '';
     this._editing = false;
     this._posting = false;
     this._history = JSON.parse(localStorage.getItem('mefai_square_history') || '[]');
     this._apiKey = localStorage.getItem('mefai_square_apikey') || '';
     this._showHistory = false;
+    // Tabs: 'create' or 'analyze'
+    this._tab = 'create';
+    this._analyzeText = '';
+    this._analyzeResult = null;
+    this._analyzing = false;
   }
 
   connectedCallback() {
@@ -57,47 +63,86 @@ export class SquareContentPanel extends BasePanel {
         <div class="panel-actions"><button class="panel-refresh" title="Refresh">&#8635;</button></div>
       </div>
       <div class="panel-body sq-studio">
-        ${this._renderStudio()}
+        ${this._renderStyles()}
+        ${this._renderTabs()}
+        ${this._tab === 'create' ? this._renderCreate() : this._renderAnalyze()}
       </div>
     `;
     this.querySelector('.panel-refresh')?.addEventListener('click', () => this.render());
     this._bindEvents();
   }
 
-  _renderStudio() {
+  _renderStyles() {
     let h = '<style scoped>';
     h += '.sq-studio{display:flex;flex-direction:column;gap:8px;padding:4px}';
+    // Tabs
+    h += '.sq-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:4px}';
+    h += '.sq-tab{padding:6px 16px;font-size:11px;font-weight:600;border:none;background:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}';
+    h += '.sq-tab:hover{color:var(--text)}';
+    h += '.sq-tab.active{color:#f0b90b;border-bottom-color:#f0b90b}';
+    // Templates
     h += '.sq-templates{display:flex;gap:4px;flex-wrap:wrap}';
-    h += '.sq-tpl-btn{padding:4px 8px;font-size:10px;border:1px solid var(--border);border-radius:4px;background:var(--bg-secondary);color:var(--text);cursor:pointer;transition:all .15s}';
-    h += '.sq-tpl-btn:hover{border-color:#f0b90b}';
+    h += '.sq-tpl-btn{padding:4px 8px;font-size:10px;border:1px solid var(--border);border-radius:4px;background:#1e2329;color:#848e9c;cursor:pointer;transition:all .15s}';
+    h += '.sq-tpl-btn:hover{border-color:#f0b90b;color:#eaecef}';
     h += '.sq-tpl-btn.active{background:#f0b90b;color:#0b0e11;border-color:#f0b90b;font-weight:600}';
+    // Row + Select
     h += '.sq-row{display:flex;gap:6px;align-items:center}';
-    h += '.sq-select{flex:1;padding:4px 6px;font-size:11px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:4px;color:var(--text);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'8\' height=\'5\'%3E%3Cpath d=\'M0 0l4 5 4-5z\' fill=\'%23848e9c\'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;padding-right:18px}';
+    h += '.sq-select{flex:1;padding:5px 8px;font-size:11px;background:#1e2329;border:1px solid #2b3139;border-radius:4px;color:#eaecef}';
     h += '.sq-select option{background:#1e2329;color:#eaecef}';
-    h += '.sq-preview{background:var(--bg-secondary);border:1px solid var(--border);border-radius:4px;padding:8px;font-size:11px;line-height:1.5;white-space:pre-wrap;font-family:monospace;min-height:120px;max-height:280px;overflow-y:auto;color:var(--text)}';
-    h += '.sq-preview-edit{background:var(--bg);border:1px solid #f0b90b;border-radius:4px;padding:8px;font-size:11px;line-height:1.5;white-space:pre-wrap;font-family:monospace;min-height:120px;max-height:280px;overflow-y:auto;color:var(--text);outline:none;resize:none;width:100%;box-sizing:border-box}';
+    // Preview
+    h += '.sq-preview{background:#1e2329;border:1px solid #2b3139;border-radius:4px;padding:8px;font-size:11px;line-height:1.5;white-space:pre-wrap;font-family:monospace;min-height:100px;max-height:240px;overflow-y:auto;color:#eaecef}';
+    h += '.sq-preview-edit{background:#0b0e11;border:1px solid #f0b90b;border-radius:4px;padding:8px;font-size:11px;line-height:1.5;font-family:monospace;min-height:100px;max-height:240px;overflow-y:auto;color:#eaecef;outline:none;resize:none;width:100%;box-sizing:border-box}';
+    // Buttons
     h += '.sq-actions{display:flex;gap:6px;flex-wrap:wrap}';
     h += '.sq-btn{padding:5px 12px;font-size:10px;font-weight:600;border:none;border-radius:4px;cursor:pointer;transition:all .15s}';
     h += '.sq-btn-primary{background:#f0b90b;color:#0b0e11}';
     h += '.sq-btn-primary:hover{background:#d4a20a}';
-    h += '.sq-btn-secondary{background:var(--bg-secondary);color:var(--text);border:1px solid var(--border)}';
+    h += '.sq-btn-secondary{background:#2b3139;color:#eaecef;border:1px solid #363c45}';
     h += '.sq-btn-secondary:hover{border-color:#f0b90b}';
-    h += '.sq-btn-danger{background:#f6465d;color:#fff}';
-    h += '.sq-btn-danger:hover{background:#d43b50}';
     h += '.sq-btn:disabled{opacity:.4;cursor:not-allowed}';
-    h += '.sq-char-count{font-size:9px;color:var(--text-muted);text-align:right}';
+    // Misc
+    h += '.sq-char-count{font-size:9px;color:#848e9c;text-align:right}';
     h += '.sq-char-warn{color:#f6465d}';
-    h += '.sq-history-item{padding:6px 0;border-bottom:1px solid var(--border);font-size:10px}';
-    h += '.sq-history-meta{display:flex;justify-content:space-between;color:var(--text-muted);margin-bottom:2px}';
-    h += '.sq-history-content{font-size:10px;line-height:1.4;white-space:pre-wrap;max-height:60px;overflow:hidden}';
     h += '.sq-msg{padding:6px 8px;border-radius:4px;font-size:10px;margin-top:4px}';
     h += '.sq-msg-ok{background:rgba(14,203,129,.15);color:#0ecb81}';
     h += '.sq-msg-err{background:rgba(246,70,93,.15);color:#f6465d}';
-    h += '.sq-key-row{display:flex;gap:4px;align-items:center}';
-    h += '.sq-key-input{flex:1;padding:4px 6px;font-size:10px;background:#1e2329;border:1px solid var(--border);border-radius:4px;color:#eaecef;font-family:monospace}';
-    h += '.sq-section-title{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px}';
-    h += '.sq-loading{text-align:center;padding:20px;color:var(--text-muted);font-size:11px}';
+    h += '.sq-section-title{font-size:10px;font-weight:600;color:#848e9c;text-transform:uppercase;letter-spacing:.5px}';
+    h += '.sq-loading{text-align:center;padding:20px;color:#848e9c;font-size:11px}';
+    h += '.sq-input{width:100%;padding:5px 8px;font-size:11px;background:#1e2329;border:1px solid #2b3139;border-radius:4px;color:#eaecef;box-sizing:border-box;font-family:monospace}';
+    h += '.sq-textarea{width:100%;padding:6px 8px;font-size:11px;background:#1e2329;border:1px solid #2b3139;border-radius:4px;color:#eaecef;box-sizing:border-box;resize:vertical;min-height:40px;font-family:inherit;line-height:1.4}';
+    // History
+    h += '.sq-history-item{padding:6px 0;border-bottom:1px solid #2b3139;font-size:10px}';
+    h += '.sq-history-meta{display:flex;justify-content:space-between;color:#848e9c;margin-bottom:2px}';
+    h += '.sq-history-content{font-size:10px;line-height:1.4;white-space:pre-wrap;max-height:60px;overflow:hidden;color:#eaecef}';
+    // Analyzer
+    h += '.sq-score-box{text-align:center;padding:12px;border-radius:6px;margin:6px 0}';
+    h += '.sq-score-num{font-size:32px;font-weight:700;line-height:1}';
+    h += '.sq-score-grade{font-size:14px;font-weight:600;margin-top:2px}';
+    h += '.sq-score-label{font-size:10px;margin-top:2px}';
+    h += '.sq-check{display:flex;align-items:flex-start;gap:6px;padding:4px 0;font-size:10px;border-bottom:1px solid #2b3139}';
+    h += '.sq-check-icon{font-size:12px;flex-shrink:0;width:14px;text-align:center}';
+    h += '.sq-check-pass{color:#0ecb81}';
+    h += '.sq-check-fail{color:#f6465d}';
+    h += '.sq-check-warn{color:#f0b90b}';
+    h += '.sq-check-info{color:#848e9c}';
+    h += '.sq-check-name{font-weight:600;color:#eaecef;min-width:90px}';
+    h += '.sq-check-detail{color:#b7bdc6}';
+    h += '.sq-verdict{padding:8px;background:#1e2329;border-radius:4px;font-size:10px;line-height:1.5;color:#b7bdc6;margin-top:4px;white-space:pre-wrap}';
+    h += '.sq-help{font-size:9px;color:#848e9c;line-height:1.4;margin-top:4px}';
+    h += '.sq-help a{color:#f0b90b}';
     h += '</style>';
+    return h;
+  }
+
+  _renderTabs() {
+    return `<div class="sq-tabs">
+      <button class="sq-tab${this._tab === 'create' ? ' active' : ''}" data-tab="create">Create Post</button>
+      <button class="sq-tab${this._tab === 'analyze' ? ' active' : ''}" data-tab="analyze">Post Analyzer</button>
+    </div>`;
+  }
+
+  _renderCreate() {
+    let h = '';
 
     // Template picker
     h += '<div class="sq-section-title">Template</div>';
@@ -115,8 +160,12 @@ export class SquareContentPanel extends BasePanel {
       h += `<option value="${p}"${p === this._symbol ? ' selected' : ''}>${p.replace('USDT', '')}</option>`;
     });
     h += '</select>';
-    h += `<button class="sq-btn sq-btn-primary" id="sq-generate">Generate</button>`;
+    h += '<button class="sq-btn sq-btn-primary" id="sq-generate">Generate</button>';
     h += '</div>';
+
+    // Custom message
+    h += '<div class="sq-section-title">Custom Message (optional)</div>';
+    h += `<textarea class="sq-textarea" id="sq-custom-msg" rows="2" placeholder="Add your own analysis, commentary, or call-to-action...">${escapeHtml(this._customMsg)}</textarea>`;
 
     // Content preview
     h += '<div class="sq-section-title">Preview</div>';
@@ -130,7 +179,7 @@ export class SquareContentPanel extends BasePanel {
       }
       h += `<div class="sq-char-count${warnCls}">${charCount} / 2000</div>`;
     } else {
-      h += '<div class="sq-preview" style="display:flex;align-items:center;justify-content:center;color:var(--text-muted)">Select a template and click Generate</div>';
+      h += '<div class="sq-preview" style="display:flex;align-items:center;justify-content:center;color:#848e9c;font-size:11px">Select a template and click Generate</div>';
     }
 
     // Action buttons
@@ -149,16 +198,21 @@ export class SquareContentPanel extends BasePanel {
     // Message area
     h += '<div id="sq-message"></div>';
 
-    // API Key config
-    h += '<div class="sq-section-title" style="margin-top:4px">API Key</div>';
-    h += '<div class="sq-key-row">';
-    h += `<input type="password" class="sq-key-input" id="sq-apikey" placeholder="X-Square-OpenAPI-Key" value="${escapeHtml(this._apiKey)}">`;
+    // API Key
+    h += '<div class="sq-section-title" style="margin-top:4px">Square API Key</div>';
+    h += '<div class="sq-row">';
+    h += `<input type="password" class="sq-input" id="sq-apikey" placeholder="Paste your X-Square-OpenAPI-Key here" value="${escapeHtml(this._apiKey)}" style="font-size:10px">`;
     h += '<button class="sq-btn sq-btn-secondary" id="sq-save-key">Save</button>';
     h += '</div>';
-    h += '<div style="font-size:9px;color:var(--text-muted);line-height:1.4;margin-top:4px">';
-    h += 'To get your Square API Key: Log in to Binance > Navigate to ';
-    h += '<a href="https://www.binance.com/en/square" target="_blank" style="color:#f0b90b">Binance Square</a>';
-    h += ' > Settings > API Key > Create New Key. Copy the key and paste it above.';
+    h += '<div class="sq-help">';
+    h += '<b>How to get your API Key:</b><br>';
+    h += '1. Go to <a href="https://www.binance.com/en/square" target="_blank">binance.com/square</a><br>';
+    h += '2. Click your profile icon (top right)<br>';
+    h += '3. Select "Creator Center"<br>';
+    h += '4. Go to "OpenAPI" section<br>';
+    h += '5. Click "Create API Key"<br>';
+    h += '6. Copy the key and paste it above<br>';
+    h += 'Note: You need a verified Binance account and Square creator status.';
     h += '</div>';
 
     // Post history
@@ -166,7 +220,7 @@ export class SquareContentPanel extends BasePanel {
       h += '<div class="sq-section-title" style="margin-top:6px">Post History</div>';
       this._history.slice(0, 10).forEach(item => {
         h += '<div class="sq-history-item">';
-        h += `<div class="sq-history-meta"><span>${item.template || 'Unknown'}</span><span>${item.date || ''}</span></div>`;
+        h += `<div class="sq-history-meta"><span>${escapeHtml(item.template || 'Unknown')}</span><span>${escapeHtml(item.date || '')}</span></div>`;
         h += `<div class="sq-history-content">${escapeHtml((item.content || '').slice(0, 150))}${(item.content || '').length > 150 ? '...' : ''}</div>`;
         if (item.postUrl) {
           h += `<a href="${escapeHtml(item.postUrl)}" target="_blank" style="font-size:9px;color:#f0b90b">View post</a>`;
@@ -178,7 +232,69 @@ export class SquareContentPanel extends BasePanel {
     return h;
   }
 
+  _renderAnalyze() {
+    let h = '';
+
+    h += '<div class="sq-section-title">Paste a Binance Square post to analyze</div>';
+    h += `<textarea class="sq-preview-edit" id="sq-analyze-input" style="min-height:80px;border-color:#2b3139" placeholder="Paste the text of any Binance Square post here to check if its claims match real market data...">${escapeHtml(this._analyzeText)}</textarea>`;
+
+    h += '<div class="sq-actions" style="margin-top:4px">';
+    h += `<button class="sq-btn sq-btn-primary" id="sq-analyze-btn" ${this._analyzing ? 'disabled' : ''}>${this._analyzing ? 'Analyzing...' : 'Analyze Post'}</button>`;
+    h += '<button class="sq-btn sq-btn-secondary" id="sq-analyze-clear">Clear</button>';
+    h += '</div>';
+
+    if (this._analyzeResult) {
+      const r = this._analyzeResult;
+      const scoreColor = r.score >= 80 ? '#0ecb81' : (r.score >= 60 ? '#f0b90b' : '#f6465d');
+      const scoreBg = r.score >= 80 ? 'rgba(14,203,129,.1)' : (r.score >= 60 ? 'rgba(240,185,11,.1)' : 'rgba(246,70,93,.1)');
+
+      h += `<div class="sq-score-box" style="background:${scoreBg};border:1px solid ${scoreColor}">`;
+      h += `<div class="sq-score-num" style="color:${scoreColor}">${r.score}</div>`;
+      h += `<div class="sq-score-grade" style="color:${scoreColor}">${escapeHtml(r.grade)}</div>`;
+      h += `<div class="sq-score-label" style="color:#b7bdc6">${escapeHtml(r.label)}</div>`;
+      h += '</div>';
+
+      // Checks
+      if (r.checks && r.checks.length) {
+        h += '<div class="sq-section-title">Verification Checks</div>';
+        r.checks.forEach(c => {
+          const icon = c.status === 'pass' ? '&#10003;' : (c.status === 'fail' ? '&#10007;' : (c.status === 'warn' ? '!' : '?'));
+          const cls = `sq-check-${c.status}`;
+          h += `<div class="sq-check">`;
+          h += `<span class="sq-check-icon ${cls}">${icon}</span>`;
+          h += `<span class="sq-check-name">${escapeHtml(c.name)}</span>`;
+          h += `<span class="sq-check-detail">${escapeHtml(c.detail)}</span>`;
+          h += '</div>';
+        });
+      }
+
+      // Verdict
+      if (r.verdict) {
+        h += '<div class="sq-section-title" style="margin-top:6px">Verdict</div>';
+        h += `<div class="sq-verdict">${escapeHtml(r.verdict)}</div>`;
+      }
+    }
+
+    return h;
+  }
+
   _bindEvents() {
+    // Tabs
+    this.querySelectorAll('.sq-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        this._tab = tab.dataset.tab;
+        this._rerender();
+      });
+    });
+
+    if (this._tab === 'create') {
+      this._bindCreateEvents();
+    } else {
+      this._bindAnalyzeEvents();
+    }
+  }
+
+  _bindCreateEvents() {
     // Template buttons
     this.querySelectorAll('.sq-tpl-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -189,51 +305,35 @@ export class SquareContentPanel extends BasePanel {
       });
     });
 
-    // Symbol selector
-    this.querySelector('#sq-symbol')?.addEventListener('change', (e) => {
-      this._symbol = e.target.value;
-    });
-
-    // Generate
+    this.querySelector('#sq-symbol')?.addEventListener('change', (e) => { this._symbol = e.target.value; });
+    this.querySelector('#sq-custom-msg')?.addEventListener('input', (e) => { this._customMsg = e.target.value; });
     this.querySelector('#sq-generate')?.addEventListener('click', () => this._generate());
 
-    // Edit
     this.querySelector('#sq-edit')?.addEventListener('click', () => {
       this._editing = true;
       this._rerender();
     });
-
-    // Save edit
     this.querySelector('#sq-save-edit')?.addEventListener('click', () => {
       const area = this.querySelector('#sq-edit-area');
       if (area) this._content = area.value;
       this._editing = false;
       this._rerender();
     });
-
-    // Cancel edit
     this.querySelector('#sq-cancel-edit')?.addEventListener('click', () => {
       this._editing = false;
       this._rerender();
     });
 
-    // Post
     this.querySelector('#sq-post')?.addEventListener('click', () => this._post());
-
-    // Copy
     this.querySelector('#sq-copy')?.addEventListener('click', () => {
       navigator.clipboard.writeText(this._content).then(() => {
         this._showMsg('Content copied to clipboard', false);
       });
     });
-
-    // Toggle history
     this.querySelector('#sq-toggle-history')?.addEventListener('click', () => {
       this._showHistory = !this._showHistory;
       this._rerender();
     });
-
-    // Save API key
     this.querySelector('#sq-save-key')?.addEventListener('click', () => {
       const input = this.querySelector('#sq-apikey');
       if (input) {
@@ -244,10 +344,23 @@ export class SquareContentPanel extends BasePanel {
     });
   }
 
+  _bindAnalyzeEvents() {
+    this.querySelector('#sq-analyze-input')?.addEventListener('input', (e) => {
+      this._analyzeText = e.target.value;
+    });
+    this.querySelector('#sq-analyze-btn')?.addEventListener('click', () => this._analyze());
+    this.querySelector('#sq-analyze-clear')?.addEventListener('click', () => {
+      this._analyzeText = '';
+      this._analyzeResult = null;
+      this._rerender();
+    });
+  }
+
   _rerender() {
     const body = this.querySelector('.panel-body');
     if (body) {
-      body.innerHTML = this._renderStudio();
+      body.innerHTML = this._renderStyles() + this._renderTabs() +
+        (this._tab === 'create' ? this._renderCreate() : this._renderAnalyze());
       this._bindEvents();
     }
   }
@@ -261,15 +374,11 @@ export class SquareContentPanel extends BasePanel {
   }
 
   async _generate() {
-    const body = this.querySelector('.panel-body');
     const preview = this.querySelector('#sq-preview-box') || this.querySelector('.sq-preview');
     if (preview) preview.innerHTML = '<div class="sq-loading">Generating content...</div>';
 
     try {
-      const params = new URLSearchParams({
-        template: this._template,
-        symbol: this._symbol,
-      });
+      const params = new URLSearchParams({ template: this._template, symbol: this._symbol });
       const resp = await fetch(`/superbsc/api/square/preview?${params}`);
       const data = await resp.json();
 
@@ -278,7 +387,21 @@ export class SquareContentPanel extends BasePanel {
         return;
       }
 
-      this._content = data.content || '';
+      let content = data.content || '';
+
+      // Append custom message before hashtags
+      if (this._customMsg.trim()) {
+        const hashtagIdx = content.lastIndexOf('\n\n#');
+        if (hashtagIdx > -1) {
+          const body = content.slice(0, hashtagIdx);
+          const tags = content.slice(hashtagIdx);
+          content = body + '\n\n' + this._customMsg.trim() + tags;
+        } else {
+          content += '\n\n' + this._customMsg.trim();
+        }
+      }
+
+      this._content = content;
       this._editing = false;
       this._rerender();
     } catch (e) {
@@ -288,7 +411,7 @@ export class SquareContentPanel extends BasePanel {
 
   async _post() {
     if (!this._apiKey) {
-      this._showMsg('Set your Square API Key first', true);
+      this._showMsg('Set your Square API Key first (see instructions below)', true);
       return;
     }
     if (!this._content) {
@@ -303,15 +426,11 @@ export class SquareContentPanel extends BasePanel {
       const resp = await fetch('/superbsc/api/square/post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          apiKey: this._apiKey,
-          content: this._content,
-        }),
+        body: JSON.stringify({ apiKey: this._apiKey, content: this._content }),
       });
       const data = await resp.json();
 
       if (data.success) {
-        // Add to history
         this._history.unshift({
           template: this._template,
           content: this._content,
@@ -321,7 +440,6 @@ export class SquareContentPanel extends BasePanel {
         });
         if (this._history.length > 50) this._history = this._history.slice(0, 50);
         localStorage.setItem('mefai_square_history', JSON.stringify(this._history));
-
         this._showMsg(data.message + (data.postUrl ? ` — ${data.postUrl}` : ''), false);
       } else {
         this._showMsg(data.message || 'Post failed', true);
@@ -334,7 +452,33 @@ export class SquareContentPanel extends BasePanel {
     }
   }
 
-  // Override BasePanel methods — this panel doesn't auto-refresh
+  async _analyze() {
+    if (!this._analyzeText.trim()) {
+      return;
+    }
+
+    this._analyzing = true;
+    this._analyzeResult = null;
+    this._rerender();
+
+    try {
+      // Check if this is our own generated content
+      const isOwn = this._history.some(h => h.content && this._analyzeText.includes(h.content.slice(0, 50)));
+
+      const resp = await fetch('/superbsc/api/square/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: this._analyzeText, isOwn }),
+      });
+      this._analyzeResult = await resp.json();
+    } catch (e) {
+      this._analyzeResult = { score: 0, grade: 'ERR', label: 'Analysis Failed', checks: [], verdict: e.message };
+    } finally {
+      this._analyzing = false;
+      this._rerender();
+    }
+  }
+
   async fetchData() { return {}; }
   renderContent() { return ''; }
 }
