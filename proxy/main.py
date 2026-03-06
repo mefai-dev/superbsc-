@@ -35,6 +35,7 @@ from proxy.routes import (
     deribit,
     onchain,
     binance_options,
+    square,
 )
 from proxy.routes import scanner as scanner_routes
 from proxy.cache import fetch_json, post_json
@@ -106,6 +107,11 @@ app.include_router(
     prefix="/api/options",
     tags=["Skill 26: Binance Options"],
 )
+app.include_router(
+    square.router,
+    prefix="/api/square",
+    tags=["Skill 60: Square Content Intelligence"],
+)
 
 # Serve frontend
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
@@ -129,6 +135,14 @@ async def index():
 async def dna_page():
     return FileResponse(
         os.path.join(frontend_dir, "dna.html"),
+        headers={"Cache-Control": "no-cache, must-revalidate"},
+    )
+
+
+@app.get("/mercury")
+async def mercury_page():
+    return FileResponse(
+        os.path.join(frontend_dir, "mercury.html"),
         headers={"Cache-Control": "no-cache, must-revalidate"},
     )
 
