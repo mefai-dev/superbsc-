@@ -135,6 +135,48 @@ Uses `api/v3/ticker` with custom `windowSize` (1h, 4h). Underutilized Binance AP
 **Commands:** analyze, compare, summary, risk, opportunities, funding, health, portfolio, dca, whale, momentum, divergence, learn, help
 **Output:** Natural language analysis with Smart Money Score, Health Grade, Regime, Anomaly Flags, and actionable verdict.
 
+## Insider Intelligence (48 to 50)
+
+### Skill 48: Whale Footprint
+| Endpoint | Panel | Method |
+|----------|-------|--------|
+| `/api/v3/aggTrades` (x10 pairs, 500 each) | Whale Footprint | GET |
+
+Real-time large trade detection ($50K+) across 10 top pairs. Trades classified as Dolphin ($50K+), Whale ($250K+), Mega ($1M+). Live feed with net buy/sell pressure, 15s refresh.
+
+### Skill 49: Market Impact Simulator
+| Endpoint | Panel | Method |
+|----------|-------|--------|
+| `/api/v3/depth` (limit 1000) | Market Impact Simulator | GET |
+
+Order book walk-through simulator. User enters symbol, amount (USDT), side → calculates levels consumed, avg/worst fill price, slippage %, and dollar impact cost. Visual cumulative depth bars.
+
+### Skill 50: Smart Accumulation Detector
+| Endpoint | Panel | Method |
+|----------|-------|--------|
+| `/api/v3/klines` (4h, 30 bars) | Smart Accumulation | GET |
+| `/futures/data/openInterestHist` (4h, 30 bars) | Smart Accumulation | GET |
+| `/fapi/v1/premiumIndex` | Smart Accumulation | GET |
+| `/futures/data/takerlongshortRatio` (4h) | Smart Accumulation | GET |
+
+4-factor composite scoring (0-100) across 12 pairs: Volume Surge, OI Buildup, Stealth Mode (price stability + near-zero funding), Buyer Aggression (taker ratio). Detects institutional accumulation before price moves.
+
+## Content Skills (60)
+
+### Skill 60: Square Content Intelligence
+| Endpoint | Panel | Method |
+|----------|-------|--------|
+| `/bapi/composite/v1/public/pgc/openApi/content/add` | Content Studio | POST |
+| `/api/v3/ticker/24hr` | Content Studio | GET |
+| `/futures/data/topLongShortPositionRatio` | Content Studio | GET |
+| `/fapi/v1/premiumIndex` | Content Studio | GET |
+| Smart Money Radar (internal) | Content Studio | GET |
+| Funding Rate Scanner (internal) | Content Studio | GET |
+| Regime Detection (internal) | Content Studio | GET |
+| Accumulation Scanner (internal) | Content Studio | GET |
+
+Data-driven content creation for Binance Square. 7 content templates (Market Brief, Smart Money Alert, Funding Snapshot, Sector Rotation, Regime Change, Accumulation Watchlist, Custom Analysis) populated with live data from 8 endpoints. Preview, edit, post, and track history.
+
 ## Meta Skills
 
 ### Auto Scanner (All 7 Core Skills)

@@ -99,6 +99,11 @@ const panelRegistry = {
   'trade-setup': 'trade-setup-panel',
   'funding-alert': 'funding-alert-panel',
   'liquidation-magnet': 'liquidation-magnet-panel',
+  'whale-footprint': 'whale-footprint-panel',
+  'market-impact': 'market-impact-panel',
+  'smart-accumulation': 'smart-accumulation-panel',
+  'intelligence-dashboard': 'intelligence-dashboard-panel',
+  'square-content': 'square-content-panel',
 };
 
 // Layout presets
@@ -248,6 +253,21 @@ const layouts = {
     grid: 'grid-2x2',
     panels: ['trade-setup', 'funding-alert', 'liquidation-magnet', 'futures-pulse'],
   },
+  'insider': {
+    name: 'Insider',
+    grid: 'grid-1x3',
+    panels: ['whale-footprint', 'market-impact', 'smart-accumulation'],
+  },
+  'intelligence': {
+    name: 'Intelligence',
+    grid: 'grid-1x1',
+    panels: ['intelligence-dashboard'],
+  },
+  'content-studio': {
+    name: 'Content Studio',
+    grid: 'grid-1x1',
+    panels: ['square-content'],
+  },
 };
 
 const grid = document.getElementById('grid');
@@ -282,10 +302,12 @@ async function loadPanels() {
     'tx-explorer', 'nft-portfolio', 'greenfield-explorer',
     'btc-macro', 'deribit-options', 'onchain-stats', 'binance-options',
     'trade-setup', 'funding-alert', 'liquidation-magnet',
+    'whale-footprint', 'market-impact', 'smart-accumulation', 'intelligence-dashboard',
+    'square-content',
   ];
   await Promise.allSettled(
     panelModules.map(name =>
-      import(`./panels/${name}.js?v=1710500000`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
+      import(`./panels/${name}.js?v=1772810121`).catch(e => console.warn(`Panel ${name} not loaded:`, e.message))
     )
   );
 }
