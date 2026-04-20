@@ -1,4 +1,4 @@
-// MEFAI Stablecoin Flow Tracker — cross-chain stablecoin supply from DefiLlama
+// MEFAI Stablecoin Flow Tracker ··· cross-chain stablecoin supply from DefiLlama
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -76,7 +76,7 @@ export class StablecoinFlowPanel extends BasePanel {
     h += '<div class="sf-cards">';
     h += `<div class="sf-card"><div class="sf-card-label">BSC Total</div><div class="sf-card-value">${formatCurrency(totalBsc)}</div></div>`;
     h += `<div class="sf-card"><div class="sf-card-label">Stablecoins</div><div class="sf-card-value">${totalStables}</div></div>`;
-    h += `<div class="sf-card"><div class="sf-card-label">#1 on BSC</div><div class="sf-card-value">${escapeHtml(data.stables[0]?.symbol || '—')}</div></div>`;
+    h += `<div class="sf-card"><div class="sf-card-label">#1 on BSC</div><div class="sf-card-value">${escapeHtml(data.stables[0]?.symbol || '···')}</div></div>`;
     h += '</div>';
 
     // Chain distribution bar

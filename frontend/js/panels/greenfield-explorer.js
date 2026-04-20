@@ -1,4 +1,4 @@
-// MEFAI Greenfield Explorer — BNB Greenfield Decentralized Storage Browser
+// MEFAI Greenfield Explorer ··· BNB Greenfield Decentralized Storage Browser
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

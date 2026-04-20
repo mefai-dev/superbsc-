@@ -1,4 +1,4 @@
-// Volume Profile Analyzer — Track volume distribution and unusual volume spikes
+// Volume Profile Analyzer ··· Track volume distribution and unusual volume spikes
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatCurrency } = window.mefaiUtils;

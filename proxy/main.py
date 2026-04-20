@@ -42,17 +42,17 @@ from proxy.config import settings
 
 logger = logging.getLogger("mefai")
 
-# Rate limiter — 200 requests/minute per IP (generous for active trading)
+# Rate limiter ··· 200 requests/minute per IP (generous for active trading)
 limiter = Limiter(key_func=get_remote_address, default_limits=["200/minute"])
 
 app = FastAPI(title="MEFAI Terminal Proxy", version="1.0.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# GZip — compress responses > 500 bytes (huge savings on JSON)
+# GZip ··· compress responses > 500 bytes (huge savings on JSON)
 app.add_middleware(GZipMiddleware, minimum_size=500)
 
-# CORS — no credentials needed (no cookies/auth), so use wildcard safely
+# CORS ··· no credentials needed (no cookies/auth), so use wildcard safely
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -239,7 +239,7 @@ def _warmup_tasks():
             ),
             {"params": {"chainId": "56", "rankType": 10, "sort": 10}},
         ),
-        # FAPI2 (Frankfurt proxy — futures endpoints)
+        # FAPI2 (Frankfurt proxy ··· futures endpoints)
         (fetch_json, (f"{FAPI2}/fapi/v1/indexInfo",), {"ttl": 120}),
         (fetch_json, (f"{FAPI2}/fapi/v1/fundingInfo",), {"ttl": 300}),
         (

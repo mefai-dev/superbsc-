@@ -1,4 +1,4 @@
-// MEFAI Command Palette — / prefix commands
+// MEFAI Command Palette ··· / prefix commands
 
 const overlay = () => document.getElementById('command-overlay');
 const input = () => document.getElementById('command-input');

@@ -1,4 +1,4 @@
-// Margin Interest Rate Optimizer — Compare rates across VIP tiers
+// Margin Interest Rate Optimizer ··· Compare rates across VIP tiers
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice } = window.mefaiUtils;

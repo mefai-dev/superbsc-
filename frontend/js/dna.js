@@ -13,7 +13,7 @@ let bbL, bbR, pts1, pts2, sel = null, hov = null, avgATR = 1;
 const $ = id => document.getElementById(id);
 const mob = () => innerWidth < 768;
 
-// â•â•â• FETCH â•â•â•
+// Â·•Â·•Â·• FETCH Â·•Â·•Â·•
 async function load() {
   const t0 = performance.now();
   const res = await Promise.all([
@@ -115,10 +115,10 @@ function merge(sm, fund, reg, bas, acc) {
     cS += d.comp; rsiS += d.rsi; macdS += d.macd;
   }
   mv('v-bull', bulls, 'up'); mv('v-bear', bears, 'dn');
-  mv('v-comp', syms.length?(cS/syms.length).toFixed(1):'â€”', '');
-  mv('v-rsi', syms.length?(rsiS/syms.length).toFixed(1):'â€”', '');
-  mv('v-macd', syms.length?(macdS/syms.length).toFixed(3):'â€”', macdS>=0?'up':'dn');
-  mv('v-vol', syms.length? (syms.reduce((a,s)=>a+Math.abs(m[s].volc),0)/syms.length).toFixed(1)+'%' :'â€”', '');
+  mv('v-comp', syms.length?(cS/syms.length).toFixed(1):'Â·Â·Â·', '');
+  mv('v-rsi', syms.length?(rsiS/syms.length).toFixed(1):'Â·Â·Â·', '');
+  mv('v-macd', syms.length?(macdS/syms.length).toFixed(3):'Â·Â·Â·', macdS>=0?'up':'dn');
+  mv('v-vol', syms.length? (syms.reduce((a,s)=>a+Math.abs(m[s].volc),0)/syms.length).toFixed(1)+'%' :'Â·Â·Â·', '');
   $('sym-count').textContent = syms.length+' sym';
   $('sb-sym').textContent = syms.length+' symbols';
 
@@ -131,7 +131,7 @@ function merge(sm, fund, reg, bas, acc) {
 }
 function mv(id,v,c) { const e=$(id); e.textContent=v; e.className='met-v '+(c||''); }
 
-// â•â•â• OVERLAYS â•â•â•
+// Â·•Â·•Â·• OVERLAYS Â·•Â·•Â·•
 function updateOverlays(reg, fund, bas) {
   if (reg?.results) $('cov-reg').innerHTML = reg.results.slice(0,10).map(r =>
     `<div class="cov-r"><span class="s">${r.symbol.replace('USDT','')}</span><span class="${r.regime==='VOLATILE_BREAKOUT'?'dn':r.regime==='TRENDING'?'up':''}">${r.regime.replace('_',' ')}</span></div>`).join('');
@@ -156,13 +156,13 @@ function updateOverlays(reg, fund, bas) {
   }).join('');
 }
 
-// â•â•â• DATA FLY PARTICLES â•â•â•
+// Â·•Â·•Â·• DATA FLY PARTICLES Â·•Â·•Â·•
 let flyTimer;
 function startDataFly() {
   if (flyTimer) clearInterval(flyTimer);
   flyTimer = setInterval(spawnFly, 500);
 }
-// Project 3D node position â†’ 2D screen coords relative to canvas-wrap
+// Project 3D node position Â·†’ 2D screen coords relative to canvas-wrap
 function nodeToScreen(nodeIdx) {
   if (!nds[nodeIdx] || !cam || !ren) return null;
   const v = nds[nodeIdx].position.clone().project(cam);
@@ -205,11 +205,11 @@ function spawnFly() {
   setTimeout(()=>el.remove(),2500);
 }
 
-// â•â•â• FEEDS â•â•â•
+// Â·•Â·•Â·• FEEDS Â·•Â·•Â·•
 function updateFeeds() {
   $('feed-left').innerHTML = D.map(d => {
     const c = d.comp>=60?'--up':d.comp<=40?'--dn':'--acc';
-    return `<div class="fr" data-s="${d.s}"><span class="fr-s">${d.s.replace('USDT','')}</span><span class="fr-v" style="color:var(${c})">${d.comp.toFixed(1)}</span><div class="bar"><div class="bar-f" style="width:${d.comp}%;background:var(${c})"></div></div><span class="fr-v ${d.bias==='BULLISH'?'up':'dn'}">${d.bias==='BULLISH'?'â–²':'â–¼'}</span></div>`;
+    return `<div class="fr" data-s="${d.s}"><span class="fr-s">${d.s.replace('USDT','')}</span><span class="fr-v" style="color:var(${c})">${d.comp.toFixed(1)}</span><div class="bar"><div class="bar-f" style="width:${d.comp}%;background:var(${c})"></div></div><span class="fr-v ${d.bias==='BULLISH'?'up':'dn'}">${d.bias==='BULLISH'?'Â·–²':'Â·–¼'}</span></div>`;
   }).join('');
   $('feed-left').querySelectorAll('.fr').forEach(r=>r.onclick=()=>{const d=D.find(x=>x.s===r.dataset.s);if(d)showDet(d);});
 
@@ -220,7 +220,7 @@ function updateFeeds() {
   $('feed-right').querySelectorAll('.fr').forEach(r=>r.onclick=()=>{const d=D.find(x=>x.s===r.dataset.s);if(d)showDet(d);});
 }
 
-// â•â•â• SIGNALS â•â•â•
+// Â·•Â·•Â·• SIGNALS Â·•Â·•Â·•
 let sigHistory = [];
 function genSignals() {
   if (!D.length) return;
@@ -251,7 +251,7 @@ function startSignals() {
   sigTimer = setInterval(genSignals, 3000);
 }
 
-// â•â•â• THREE.JS â•â•â•
+// Â·•Â·•Â·• THREE.JS Â·•Â·•Â·•
 function compC(v) {
   const t = Math.max(0,Math.min(100,v))/100;
   if (t<0.4) return new THREE.Color(0.96, 0.27+t*0.3, 0.15);
@@ -335,7 +335,7 @@ function mkStreamPts() {
   scene.add(stPts);
 }
 
-// â•â•â• BUILD HELIX â•â•â•
+// Â·•Â·•Â·• BUILD HELIX Â·•Â·•Â·•
 function build() {
   for (const m of [...nds,...rng,...glo,...lbl,...bra]) scene.remove(m);
   if (bbL) scene.remove(bbL); if (bbR) scene.remove(bbR);
@@ -377,7 +377,7 @@ function build() {
       scene.add(gm); glo.push(gm);
     }
 
-    // â”€â”€ BRANCHES: RSI, MACD, OI, Funding â”€â”€
+    // Â·Â·Â·Â·Â·Â· BRANCHES: RSI, MACD, OI, Funding Â·Â·Â·Â·Â·Â·
     if (d.sig >= 0.25) {
       // RSI branch
       mkBranch(nm.position, a+Math.PI*0.35, .5+d.rsi/120, y+.12, d.rsi>70?0xf6465d:d.rsi<30?0x0ecb81:0xf0b90b, .45);
@@ -459,7 +459,7 @@ function mkLbl(text) {
   return new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:.6}));
 }
 
-// â•â•â• ANIMATE â•â•â•
+// Â·•Â·•Â·• ANIMATE Â·•Â·•Â·•
 function animate() {
   requestAnimationFrame(animate);
   const t = clk.getElapsedTime();
@@ -503,7 +503,7 @@ function animate() {
   ren.render(scene, cam);
 }
 
-// â•â•â• INTERACTION â•â•â•
+// Â·•Â·•Â·• INTERACTION Â·•Â·•Â·•
 function onMM(e) {
   const r=ren.domElement.getBoundingClientRect();
   mouse.x=((e.clientX-r.left)/r.width)*2-1;
@@ -529,7 +529,7 @@ function showTip(mesh) {
 }
 function hideTip() { $('tip').classList.add('hidden'); }
 
-// â•â•â• DETAIL PANEL â•â•â•
+// Â·•Â·•Â·• DETAIL PANEL Â·•Â·•Â·•
 function showDet(d) {
   sel = d.s;
   $('det-title').textContent = d.s.replace('USDT','')+'/USDT';
@@ -574,7 +574,7 @@ ${B(d.bear,1,'--dn')}
 
 function hideDet() { $('detail').classList.remove('open'); sel=null; }
 
-// â•â•â• MOBILE â•â•â•
+// Â·•Â·•Â·• MOBILE Â·•Â·•Â·•
 function renderMob() {
   const el=$('mob');
   el.innerHTML = `
@@ -586,7 +586,7 @@ function renderMob() {
 </div>`;
 }
 
-// â•â•â• RESIZE â•â•â•
+// Â·•Â·•Â·• RESIZE Â·•Â·•Â·•
 function onRS() {
   if (mob()) {
     $('canvas-wrap').style.display='none';
@@ -608,7 +608,7 @@ function onRS() {
   }
 }
 
-// â•â•â• INIT â•â•â•
+// Â·•Â·•Â·• INIT Â·•Â·•Â·•
 async function init() {
   $('det-close').onclick = hideDet;
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') hideDet(); });

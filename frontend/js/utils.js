@@ -1,9 +1,9 @@
-// MEFAI Utils — Formatters and helpers
+// MEFAI Utils ··· Formatters and helpers
 
 export function formatCurrency(n, decimals = 2) {
-  if (n === null || n === undefined) return '—';
+  if (n === null || n === undefined) return '···';
   const num = Number(n);
-  if (isNaN(num)) return '—';
+  if (isNaN(num)) return '···';
   if (Math.abs(num) >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
   if (Math.abs(num) >= 1e6) return `$${(num / 1e6).toFixed(2)}M`;
   if (Math.abs(num) >= 1e3) return `$${(num / 1e3).toFixed(2)}K`;
@@ -11,9 +11,9 @@ export function formatCurrency(n, decimals = 2) {
 }
 
 export function formatPrice(n) {
-  if (n === null || n === undefined) return '—';
+  if (n === null || n === undefined) return '···';
   const num = Number(n);
-  if (isNaN(num)) return '—';
+  if (isNaN(num)) return '···';
   if (num >= 1) return num.toFixed(2);
   if (num >= 0.01) return num.toFixed(4);
   if (num >= 0.0001) return num.toFixed(6);
@@ -21,18 +21,18 @@ export function formatPrice(n) {
 }
 
 export function formatPercent(n) {
-  if (n === null || n === undefined) return '—';
+  if (n === null || n === undefined) return '···';
   const num = Number(n);
-  if (isNaN(num)) return '—';
-  const arrow = num >= 0 ? '↑' : '↓';
+  if (isNaN(num)) return '···';
+  const arrow = num >= 0 ? '·��' : '·�·';
   const cls = num >= 0 ? 'val-up' : 'val-down';
   return `<span class="${cls}">${arrow}${Math.abs(num).toFixed(2)}%</span>`;
 }
 
 export function formatNumber(n) {
-  if (n === null || n === undefined) return '—';
+  if (n === null || n === undefined) return '···';
   const num = Number(n);
-  if (isNaN(num)) return '—';
+  if (isNaN(num)) return '···';
   if (Math.abs(num) >= 1e9) return `${(num / 1e9).toFixed(2)}B`;
   if (Math.abs(num) >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
   if (Math.abs(num) >= 1e3) return `${(num / 1e3).toFixed(1)}K`;
@@ -40,18 +40,18 @@ export function formatNumber(n) {
 }
 
 export function formatAddress(addr) {
-  if (!addr) return '—';
+  if (!addr) return '···';
   return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 }
 
 export function formatTime(ts) {
-  if (!ts) return '—';
+  if (!ts) return '···';
   const d = new Date(typeof ts === 'number' && ts < 1e12 ? ts * 1000 : ts);
   return d.toLocaleTimeString('en-US', { hour12: false });
 }
 
 export function formatAge(ts) {
-  if (!ts) return '—';
+  if (!ts) return '···';
   const ms = Date.now() - (typeof ts === 'number' && ts < 1e12 ? ts * 1000 : ts);
   const m = Math.floor(ms / 60000);
   if (m < 60) return `${m}m`;

@@ -1,4 +1,4 @@
-// MEFAI TX Explorer — BSC Transaction & Block Explorer
+// MEFAI TX Explorer ··· BSC Transaction & Block Explorer
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatNumber, escapeHtml } = window.mefaiUtils;
@@ -75,7 +75,7 @@ export class TxExplorerPanel extends BasePanel {
     h += '<div class="txe-cards">';
     h += `<div class="txe-card"><div class="txe-label">Block</div><div class="txe-val">${formatNumber(data.blockNum)}</div></div>`;
     h += `<div class="txe-card"><div class="txe-label">Gas Price</div><div class="txe-val">${data.gasPrice.toFixed(1)}</div><div class="txe-sub">Gwei</div></div>`;
-    h += `<div class="txe-card"><div class="txe-label">TXs</div><div class="txe-val">${data.block ? data.block.txCount : '—'}</div><div class="txe-sub">in block</div></div>`;
+    h += `<div class="txe-card"><div class="txe-label">TXs</div><div class="txe-val">${data.block ? data.block.txCount : '···'}</div><div class="txe-sub">in block</div></div>`;
     h += '</div>';
 
     // Tabs
@@ -123,12 +123,12 @@ export class TxExplorerPanel extends BasePanel {
         h += `<div class="txe-detail" style="color:var(--text-muted)">Transaction not found</div>`;
       } else {
         const val = r.value ? (parseInt(r.value, 16) / 1e18).toFixed(6) : '0';
-        const gasP = r.gasPrice ? (parseInt(r.gasPrice, 16) / 1e9).toFixed(2) : '—';
+        const gasP = r.gasPrice ? (parseInt(r.gasPrice, 16) / 1e9).toFixed(2) : '···';
         const status = r._receipt?.status === '0x1' ? '<span class="val-up">Success</span>' : r._receipt?.status === '0x0' ? '<span class="val-down">Failed</span>' : 'Pending';
-        const gasUsed = r._receipt?.gasUsed ? formatNumber(parseInt(r._receipt.gasUsed, 16)) : '—';
+        const gasUsed = r._receipt?.gasUsed ? formatNumber(parseInt(r._receipt.gasUsed, 16)) : '···';
         h += '<div class="txe-detail">';
         h += `<div class="txe-row"><span class="txe-key">Status</span><span class="txe-value">${status}</span></div>`;
-        h += `<div class="txe-row"><span class="txe-key">From</span><span class="txe-value txe-hash">${r.from || '—'}</span></div>`;
+        h += `<div class="txe-row"><span class="txe-key">From</span><span class="txe-value txe-hash">${r.from || '···'}</span></div>`;
         h += `<div class="txe-row"><span class="txe-key">To</span><span class="txe-value txe-hash">${r.to || 'Contract Creation'}</span></div>`;
         h += `<div class="txe-row"><span class="txe-key">Value</span><span class="txe-value">${val} BNB</span></div>`;
         h += `<div class="txe-row"><span class="txe-key">Gas Price</span><span class="txe-value">${gasP} Gwei</span></div>`;

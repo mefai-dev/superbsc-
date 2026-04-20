@@ -17,7 +17,7 @@ class Settings:
         return bool(self.binance_api_key and self.binance_api_secret)
 
     # Base URLs
-    # data-api.binance.vision — no geo-restriction for CEX market data
+    # data-api.binance.vision ··· no geo-restriction for CEX market data
     SPOT_BASE = "https://data-api.binance.vision"
     # Binance Web3 wallet API (correct base)
     WEB3_BASE = "https://web3.binance.com/bapi/defi"
@@ -27,7 +27,7 @@ class Settings:
     BAPI_BASE = "https://www.binance.com/bapi"
     # P2P marketplace API
     P2P_BASE = "https://p2p.binance.com/bapi"
-    # Signed API (SAPI endpoints — earn, convert, etc.)
+    # Signed API (SAPI endpoints ··· earn, convert, etc.)
     SAPI_BASE = "https://api.binance.com"
 
 

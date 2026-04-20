@@ -1,4 +1,4 @@
-// MEFAI Order Book â€” Professional Binance-style depth view
+// MEFAI Order Book Â·Â·Â· Professional Binance-style depth view
 import { BasePanel } from '../components/base-panel.js';
 
 export class OrderBookPanel extends BasePanel {
@@ -46,7 +46,7 @@ export class OrderBookPanel extends BasePanel {
         <div class="panel-actions" style="display:flex;gap:4px;align-items:center">
           <span style="font-size:9px;color:var(--text-muted)">${_t('trade.depth')}:</span>
           ${[5, 10, 20].map(d => `<button class="btn ob-depth-btn${this._depth === d ? ' btn-primary' : ''}" data-d="${d}" style="font-size:9px;padding:1px 6px">${d}</button>`).join('')}
-          <button class="panel-refresh" title="Refresh">â†»</button>
+          <button class="panel-refresh" title="Refresh">Â·†»</button>
         </div>
       </div>
       <div class="panel-body" style="padding:0">
@@ -77,7 +77,7 @@ export class OrderBookPanel extends BasePanel {
   renderContent(data) {
     const u = window.mefaiUtils;
     if (!data || (!data.bids?.length && !data.asks?.length)) {
-      return `<div class="panel-loading">Waiting for ${u.escapeHtml(this._symbol)} depthâ€¦</div>`;
+      return `<div class="panel-loading">Waiting for ${u.escapeHtml(this._symbol)} depthÂ·Â·¦</div>`;
     }
 
     const rows = this._depth;
@@ -122,7 +122,7 @@ export class OrderBookPanel extends BasePanel {
 
     const midDir = bp >= mid;
     const midColor = midDir ? '#0ecb81' : '#f6465d';
-    const midArrow = midDir ? 'â–²' : 'â–¼';
+    const midArrow = midDir ? 'Â·–²' : 'Â·–¼';
 
     return `<style>
 .ob-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden;font-variant-numeric:tabular-nums;font-size:11px}
@@ -158,7 +158,7 @@ export class OrderBookPanel extends BasePanel {
       <span style="color:${midColor}">${u.formatPrice(mid)}</span>
     </span>
     <div style="display:flex;flex-direction:column;align-items:flex-end">
-      <span class="ob-mid-usd">â‰ˆ $${u.formatPrice(mid)}</span>
+      <span class="ob-mid-usd">Â·‰ˆ $${u.formatPrice(mid)}</span>
       <span class="ob-mid-spread">${_t('ob.spread')}: ${u.formatPrice(spr)} (${sprP.toFixed(3)}%)</span>
     </div>
   </div>

@@ -46,7 +46,7 @@ export class SmartSignalsPanel extends BasePanel {
       const iconUrl = window.mefaiUtils.tokenIcon(s.logo);
       const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
       const dirCls = s.direction === 'buy' ? 'val-up' : s.direction === 'sell' ? 'val-down' : '';
-      const dirText = s.direction === 'buy' ? _t('trade.buyUp') : s.direction === 'sell' ? _t('trade.sellDown') : '—';
+      const dirText = s.direction === 'buy' ? _t('trade.buyUp') : s.direction === 'sell' ? _t('trade.sellDown') : '···';
       const gainCls = s.maxGain > 0 ? 'val-up' : s.maxGain < 0 ? 'val-down' : '';
       const statusCls = s.status === 'active' ? 'color:var(--up);font-weight:700' : s.status === 'timeout' ? 'color:var(--down);font-weight:400' : 'color:var(--text-muted)';
 
@@ -57,7 +57,7 @@ export class SmartSignalsPanel extends BasePanel {
       h += `<td class="val-num">$${formatPrice(s.alertPrice)}</td>`;
       h += `<td class="val-num">$${formatPrice(s.currentPrice)}</td>`;
       h += `<td class="${gainCls}">${s.maxGain > 0 ? '+' : ''}${s.maxGain.toFixed(1)}%</td>`;
-      h += `<td style="${statusCls};font-size:10px;text-transform:uppercase">${escapeHtml(s.status || '—')}</td>`;
+      h += `<td style="${statusCls};font-size:10px;text-transform:uppercase">${escapeHtml(s.status || '···')}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

@@ -1,10 +1,10 @@
-// MEFAI API v6 — Persistent cache + stale-while-revalidate. Instant page loads.
+// MEFAI API v6 ··· Persistent cache + stale-while-revalidate. Instant page loads.
 
 const BASE_URI = document.baseURI || window.location.href;
 const CACHE_KEY = 'mefai-api-cache';
 const CACHE_MAX_AGE = 300000; // 5 min max localStorage staleness
 
-// ── Persistent Cache — survives page reload ──────────────────────────
+// ······ Persistent Cache ··· survives page reload ··············································································
 const _c = new Map();
 
 // Restore cache from localStorage on load
@@ -32,7 +32,7 @@ function _persistCache() {
         if (now - v.t < CACHE_MAX_AGE) entries.push([k, v]);
       }
       localStorage.setItem(CACHE_KEY, JSON.stringify(entries.slice(-100)));
-    } catch(e) { /* localStorage full — ignore */ }
+    } catch(e) { /* localStorage full ··· ignore */ }
   }, 1000);
 }
 
@@ -79,7 +79,7 @@ async function get(path, params = {}, ttl = 30000) {
     return stale;
   }
 
-  // No cache — must wait
+  // No cache ··· must wait
   if (_inflight.has(url)) return _inflight.get(url);
   const p = _fetchGet(url);
   _inflight.set(url, p);
@@ -138,7 +138,7 @@ async function _fetchPost(url, body, key) {
   } finally { clearTimeout(tid); _inflight.delete(key); }
 }
 
-// ── Public API ───────────────────────────────────────────────────────
+// ······ Public API ·····································································································································································
 export const api = {
   // Skill 1: Spot CEX
   spot: {

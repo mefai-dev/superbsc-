@@ -46,9 +46,9 @@ export class SocialHypePanel extends BasePanel {
       h += `<tr data-a="${t.address}" data-c="${t.chain}"><td>${t.rank}</td>`;
       h += `<td>${icon}<span style="font-weight:600">${u.escapeHtml(t.symbol)}</span></td>`;
       h += `<td class="val-num">${u.formatNumber(t.hypeScore)}</td>`;
-      h += `<td style="color:${sColor};font-size:10px">${u.escapeHtml(t.sentiment || '—')}</td>`;
+      h += `<td style="color:${sColor};font-size:10px">${u.escapeHtml(t.sentiment || '···')}</td>`;
       h += `<td class="val-num">${u.formatCurrency(t.mcap)}</td>`;
-      h += `<td class="${cls}">${t.change >= 0 ? '↑' : '↓'}${Math.abs(t.change).toFixed(2)}%</td></tr>`;
+      h += `<td class="${cls}">${t.change >= 0 ? '·��' : '·�·'}${Math.abs(t.change).toFixed(2)}%</td></tr>`;
     }
     h += '</tbody></table>';
     return h;

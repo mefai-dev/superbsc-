@@ -1,4 +1,4 @@
-"""Binance Simple Earn — SAPI signed endpoints."""
+"""Binance Simple Earn ··· SAPI signed endpoints."""
 
 import hashlib
 import hmac

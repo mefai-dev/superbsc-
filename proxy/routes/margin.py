@@ -1,4 +1,4 @@
-"""Binance margin data — public VIP interest rates."""
+"""Binance margin data ··· public VIP interest rates."""
 
 from fastapi import APIRouter
 

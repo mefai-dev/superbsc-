@@ -1,4 +1,4 @@
-// MEFAI Spot Trading Panel — Shows "API Key Required" message (spot.account needs key)
+// MEFAI Spot Trading Panel ··· Shows "API Key Required" message (spot.account needs key)
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

@@ -1,4 +1,4 @@
-// MEFAI Smart Money Flow — SVG network visualization
+// MEFAI Smart Money Flow ··· SVG network visualization
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -88,7 +88,7 @@ export class SmartFlowPanel extends BasePanel {
       svg += `<text x="${rightX + 2}" y="${y + 3}" fill="var(--text)" font-size="9" font-weight="600" font-family="var(--font-mono)">${escapeHtml(tk.symbol.slice(0, 10))}</text>`;
     });
 
-    // Draw flow lines (wallet → token)
+    // Draw flow lines (wallet ·�� token)
     for (let i = 0; i < walletCount; i++) {
       const wy = 40 + i * walletSpacing;
       const s = signals[i];

@@ -1,10 +1,10 @@
-// MEFAI App — Panel registry, layout engine, keyboard shortcuts
+// MEFAI App ··· Panel registry, layout engine, keyboard shortcuts
 
 import store from './store.js';
 import { openSearch, closeSearch, isSearchOpen } from './components/search-bar.js';
 import { openPalette, closePalette, isPaletteOpen } from './components/command-palette.js';
 
-// Panel registry — maps panel names to their tag names
+// Panel registry ··· maps panel names to their tag names
 const panelRegistry = {
   'market-overview': 'market-overview-panel',
   'order-book': 'order-book-panel',
@@ -252,7 +252,7 @@ const layouts = {
 
 const grid = document.getElementById('grid');
 
-// Load all panel modules dynamically — returns when all loaded
+// Load all panel modules dynamically ··· returns when all loaded
 async function loadPanels() {
   const panelModules = [
     'market-overview', 'order-book', 'price-chart', 'spot-trading',
@@ -368,7 +368,7 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // Cmd+K / Ctrl+K — Search
+  // Cmd+K / Ctrl+K ··· Search
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
     if (isSearchOpen()) closeSearch();
@@ -376,7 +376,7 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // Escape — close overlays + dropdowns
+  // Escape ··· close overlays + dropdowns
   if (e.key === 'Escape') {
     closeSearch();
     closePalette();
@@ -387,7 +387,7 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // / — command palette
+  // / ··· command palette
   if (e.key === '/') {
     e.preventDefault();
     if (isPaletteOpen()) closePalette();
@@ -395,27 +395,27 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  // ? — help
+  // ? ··· help
   if (e.key === '?') {
     const help = document.getElementById('help-overlay');
     help?.classList.toggle('hidden');
     return;
   }
 
-  // d — toggle theme
+  // d ··· toggle theme
   if (e.key === 'd') {
     const current = store.get('theme');
     store.set('theme', current === 'dark' ? 'light' : 'dark');
     return;
   }
 
-  // r — refresh all panels
+  // r ··· refresh all panels
   if (e.key === 'r') {
     document.querySelectorAll('.panel').forEach(p => { if (p.refresh) p.refresh(); });
     return;
   }
 
-  // 1-7 — switch layout
+  // 1-7 ··· switch layout
   const num = parseInt(e.key);
   if (num >= 1 && num <= 14) {
     const keys = Object.keys(layouts);
@@ -424,7 +424,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Layout nav clicks (desktop — direct buttons and dropdown items)
+// Layout nav clicks (desktop ··· direct buttons and dropdown items)
 document.querySelectorAll('.layout-btn[data-layout]').forEach(btn => {
   btn.addEventListener('click', () => setLayout(btn.dataset.layout));
 });
@@ -442,7 +442,7 @@ document.querySelectorAll('.nav-dropdown').forEach(dd => {
   });
   dd.addEventListener('mouseleave', () => menu.classList.remove('open'));
 
-  // Click on dropdown items → select layout + close
+  // Click on dropdown items ·�� select layout + close
   menu.querySelectorAll('[data-layout]').forEach(item => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();

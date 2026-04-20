@@ -1,4 +1,4 @@
-// Volatility Rank — Rank coins by intraday volatility and range for day trading
+// Volatility Rank ··· Rank coins by intraday volatility and range for day trading
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatCurrency } = window.mefaiUtils;
@@ -73,7 +73,7 @@ export class VolatilityRankPanel extends BasePanel {
     h += '<div class="vr-stats">';
     h += `<div class="vr-stat"><div class="vr-stat-label">High Vol (>5%)</div><div class="vr-stat-value">${highVol}</div></div>`;
     h += `<div class="vr-stat"><div class="vr-stat-label">Avg Range</div><div class="vr-stat-value">${avgRange.toFixed(1)}%</div></div>`;
-    h += `<div class="vr-stat"><div class="vr-stat-label">Top Mover</div><div class="vr-stat-value">${topMover ? topMover.symbol : '—'}</div></div>`;
+    h += `<div class="vr-stat"><div class="vr-stat-label">Top Mover</div><div class="vr-stat-value">${topMover ? topMover.symbol : '···'}</div></div>`;
     h += '</div>';
 
     const top30 = rows.slice(0, 30);

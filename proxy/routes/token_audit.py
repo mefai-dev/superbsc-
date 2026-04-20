@@ -28,7 +28,7 @@ async def token_audit_check(request: Request):
             status_code=400, detail="contractAddress is required in request body"
         )
 
-    # Map chain field to binanceChainId — accept all naming conventions
+    # Map chain field to binanceChainId ··· accept all naming conventions
     _CHAIN_MAP = {
         "bsc": "56",
         "eth": "1",

@@ -1,4 +1,4 @@
-// Funding Rate Heatmap — All futures symbols funding rates at a glance
+// Funding Rate Heatmap ··· All futures symbols funding rates at a glance
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice } = window.mefaiUtils;

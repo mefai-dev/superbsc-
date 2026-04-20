@@ -1,4 +1,4 @@
-// Futures Term Structure & Delivery Analyzer — Basis curves, settlement history, contango/backwardation
+// Futures Term Structure & Delivery Analyzer ··· Basis curves, settlement history, contango/backwardation
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatCurrency } = window.mefaiUtils;
@@ -157,9 +157,9 @@ export class TermStructurePanel extends BasePanel {
         return `<span class="${cls}">${v.toFixed(1)}%</span>`;
       }},
       { key: 'basisTrend', label: 'Trend', align: 'center', render: v => {
-        if (Math.abs(v) < 0.5) return '<span class="ts-trend" style="color:var(--text-muted)">—</span>';
+        if (Math.abs(v) < 0.5) return '<span class="ts-trend" style="color:var(--text-muted)">···</span>';
         const cls = v > 0 ? 'val-up' : 'val-down';
-        const arrow = v > 0 ? '↑' : '↓';
+        const arrow = v > 0 ? '·��' : '·�·';
         return `<span class="ts-trend ${cls}">${arrow}${Math.abs(v).toFixed(1)}</span>`;
       }},
       { key: 'change', label: '24h%', align: 'right', render: v => formatPercent(v) },

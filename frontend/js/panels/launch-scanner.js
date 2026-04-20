@@ -1,4 +1,4 @@
-// MEFAI Token Launch Safety Scanner — DexScreener boosts + GoPlus security
+// MEFAI Token Launch Safety Scanner ··· DexScreener boosts + GoPlus security
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatPrice, escapeHtml } = window.mefaiUtils;
@@ -125,7 +125,7 @@ export class LaunchScannerPanel extends BasePanel {
       h += `<tr data-a="${t.address}" data-c="${t.chain.toLowerCase()}">`;
       h += `<td>${iconHtml}<span style="font-weight:600">${escapeHtml(t.name)}</span><br><span style="font-size:9px;color:var(--text-muted)">${t.symbol}</span></td>`;
       h += `<td><span class="ls-chain">${escapeHtml(t.chain)}</span></td>`;
-      h += `<td style="text-align:right">${t.amount || '—'}</td>`;
+      h += `<td style="text-align:right">${t.amount || '···'}</td>`;
       h += `<td style="text-align:right"><span class="ls-score ${scoreCls}">${t.safetyScore}/100</span></td>`;
       h += `<td>${t.risks.length ? t.risks.slice(0, 3).map(r => `<span class="ls-risk ${riskCls}">${escapeHtml(r)}</span>`).join('') : '<span class="ls-risk ls-risk-low">CLEAN</span>'}</td>`;
       h += '</tr>';

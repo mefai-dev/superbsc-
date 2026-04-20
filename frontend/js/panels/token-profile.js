@@ -1,4 +1,4 @@
-// MEFAI Token Profile Panel — token.meta() + token.dynamic(), default BNB
+// MEFAI Token Profile Panel ··· token.meta() + token.dynamic(), default BNB
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatPercent, formatNumber, formatAddress, escapeHtml, copyToClipboard } = window.mefaiUtils;
@@ -82,7 +82,7 @@ export class TokenProfilePanel extends BasePanel {
     const logo = m.icon || m.logo || d.icon || '';
     const description = m.description || '';
 
-    // Price data — dynamic has: price, volume24h, volume24hBuy/Sell
+    // Price data ··· dynamic has: price, volume24h, volume24hBuy/Sell
     const price = parseFloat(d.price || m.price || 0);
     const volume24h = parseFloat(d.volume24h || 0);
     const volume24hBuy = parseFloat(d.volume24hBuy || 0);

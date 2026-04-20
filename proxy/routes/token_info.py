@@ -14,7 +14,7 @@ WEB3 = settings.WEB3_BASE
 DQUERY = settings.DQUERY_BASE
 SPOT_BASE = settings.SPOT_BASE
 
-# Common DEX token addresses → Binance CEX symbol mappings for kline fallback
+# Common DEX token addresses ·�� Binance CEX symbol mappings for kline fallback
 _ADDR_TO_SYMBOL = {
     "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": "BNBUSDT",
     "0x2170ed0880ac9a755fd29b2688956bd959f933f8": "ETHUSDT",
@@ -87,7 +87,7 @@ async def token_dynamic(
     return await fetch_json(url, params=params, ttl=60)
 
 
-# chainId → DQuery platform mapping
+# chainId ·�� DQuery platform mapping
 _CHAIN_TO_PLATFORM = {
     "56": "bsc",
     "bsc": "bsc",
@@ -120,7 +120,7 @@ async def token_kline(
     if not address:
         raise HTTPException(status_code=400, detail="address is required")
 
-    # DQuery supported intervals — others need Binance spot fallback
+    # DQuery supported intervals ··· others need Binance spot fallback
     dquery_intervals = {
         "1m",
         "1h",
@@ -169,7 +169,7 @@ async def token_kline(
     if isinstance(result, dict):
         status = result.get("status", {})
         if status.get("error_code") not in (None, "0", 0):
-            # DQuery failed — try Binance spot as last resort
+            # DQuery failed ··· try Binance spot as last resort
             if symbol:
                 fallback_url = f"{SPOT_BASE}/api/v3/klines"
                 fallback_params = {

@@ -1,4 +1,4 @@
-// MEFAI DeFi Yield Radar — BSC yield pools from DefiLlama
+// MEFAI DeFi Yield Radar ··· BSC yield pools from DefiLlama
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -82,7 +82,7 @@ export class YieldRadarPanel extends BasePanel {
       h += `<td style="text-align:right" class="${apyCls}">${p.apy.toFixed(2)}%</td>`;
       h += `<td style="text-align:right">${formatCurrency(p.tvl)}</td>`;
       h += `<td><span class="yr-il ${ilCls}">${p.ilRisk === 'no' ? 'NONE' : 'YES'}</span></td>`;
-      h += `<td>${p.stablecoin ? '<span class="yr-stable">STABLE</span>' : '—'}</td>`;
+      h += `<td>${p.stablecoin ? '<span class="yr-stable">STABLE</span>' : '···'}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

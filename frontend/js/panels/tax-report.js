@@ -1,4 +1,4 @@
-// MEFAI Tax Report Assistant — API Key required informational panel
+// MEFAI Tax Report Assistant ··· API Key required informational panel
 import { BasePanel } from '../components/base-panel.js';
 
 export class TaxReportPanel extends BasePanel {

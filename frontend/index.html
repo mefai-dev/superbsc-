@@ -23,7 +23,7 @@
         }).join('');
         var trs = rows.map(function(row, i) {
           var tds = cols.map(function(c) {
-            var v = c.render ? c.render(row[c.key], row) : (row[c.key] != null ? row[c.key] : '—');
+            var v = c.render ? c.render(row[c.key], row) : (row[c.key] != null ? row[c.key] : '···');
             var a = c.align === 'right' ? 'text-align:right' : '';
             return '<td style="'+a+'" data-key="'+c.key+'">'+v+'</td>';
           }).join('');
@@ -68,7 +68,7 @@
     }
     if (!window.mefaiUtils.formatPrice) {
       window.mefaiUtils.formatPrice = function(n) {
-        n = Number(n); if (isNaN(n)) return '—';
+        n = Number(n); if (isNaN(n)) return '···';
         if (n >= 1) return n.toFixed(2);
         if (n >= 0.01) return n.toFixed(4);
         if (n >= 0.0001) return n.toFixed(6);
@@ -77,7 +77,7 @@
     }
     if (!window.mefaiUtils.formatCurrency) {
       window.mefaiUtils.formatCurrency = function(n) {
-        n = Number(n); if (isNaN(n)) return '—';
+        n = Number(n); if (isNaN(n)) return '···';
         if (Math.abs(n) >= 1e9) return '$'+(n/1e9).toFixed(2)+'B';
         if (Math.abs(n) >= 1e6) return '$'+(n/1e6).toFixed(2)+'M';
         if (Math.abs(n) >= 1e3) return '$'+(n/1e3).toFixed(2)+'K';
@@ -86,15 +86,15 @@
     }
     if (!window.mefaiUtils.formatPercent) {
       window.mefaiUtils.formatPercent = function(n) {
-        n = Number(n); if (isNaN(n)) return '—';
+        n = Number(n); if (isNaN(n)) return '···';
         var cls = n >= 0 ? 'val-up' : 'val-down';
-        var a = n >= 0 ? '↑' : '↓';
+        var a = n >= 0 ? '·��' : '·�·';
         return '<span class="'+cls+'">'+a+Math.abs(n).toFixed(2)+'%</span>';
       };
     }
     if (!window.mefaiUtils.formatNumber) {
       window.mefaiUtils.formatNumber = function(n) {
-        n = Number(n); if (isNaN(n)) return '—';
+        n = Number(n); if (isNaN(n)) return '···';
         if (Math.abs(n) >= 1e9) return (n/1e9).toFixed(2)+'B';
         if (Math.abs(n) >= 1e6) return (n/1e6).toFixed(2)+'M';
         if (Math.abs(n) >= 1e3) return (n/1e3).toFixed(1)+'K';
@@ -102,17 +102,17 @@
       };
     }
     if (!window.mefaiUtils.formatAddress) {
-      window.mefaiUtils.formatAddress = function(a) { return a ? a.slice(0,6)+'...'+a.slice(-4) : '—'; };
+      window.mefaiUtils.formatAddress = function(a) { return a ? a.slice(0,6)+'...'+a.slice(-4) : '···'; };
     }
     if (!window.mefaiUtils.formatTime) {
       window.mefaiUtils.formatTime = function(ts) {
-        if (!ts) return '—';
+        if (!ts) return '···';
         return new Date(typeof ts==='number' && ts<1e12 ? ts*1000 : ts).toLocaleTimeString('en-US',{hour12:false});
       };
     }
     if (!window.mefaiUtils.formatAge) {
       window.mefaiUtils.formatAge = function(ts) {
-        if (!ts) return '—';
+        if (!ts) return '···';
         var m = Math.floor((Date.now()-(typeof ts==='number'&&ts<1e12?ts*1000:ts))/60000);
         if (m<60) return m+'m'; var h=Math.floor(m/60);
         if (h<24) return h+'h'; return Math.floor(h/24)+'d';
@@ -239,7 +239,7 @@
     <status-bar></status-bar>
   </footer>
 
-  <!-- Mobile bottom bar — 5 quick tabs + hamburger -->
+  <!-- Mobile bottom bar ··· 5 quick tabs + hamburger -->
   <nav id="mobile-nav">
     <button class="mobile-nav-btn active" data-layout="mefai" data-i18n="nav.mefai">MEFAI</button>
     <button class="mobile-nav-btn" data-layout="trader" data-i18n="nav.trade">Trade</button>

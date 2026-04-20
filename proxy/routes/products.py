@@ -1,4 +1,4 @@
-"""Binance public product data — market cap, symbols, asset details."""
+"""Binance public product data ··· market cap, symbols, asset details."""
 
 from fastapi import APIRouter
 

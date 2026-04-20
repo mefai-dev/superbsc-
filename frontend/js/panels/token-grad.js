@@ -1,4 +1,4 @@
-// MEFAI Token Graduation Tracker — Launch-to-CEX lifecycle tracking
+// MEFAI Token Graduation Tracker ··· Launch-to-CEX lifecycle tracking
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatPercent, escapeHtml } = window.mefaiUtils;
@@ -6,11 +6,11 @@ const { renderTable, bindTableEvents, sortRows } = window.mefaiTable;
 
 // Graduation stages
 const STAGES = [
-  { id: 0, label: 'Launch', color: '#474d57', icon: '🚀' },
-  { id: 1, label: 'Trending', color: '#f0b90b', icon: '📈' },
+  { id: 0, label: 'Launch', color: '#474d57', icon: '�·' },
+  { id: 1, label: 'Trending', color: '#f0b90b', icon: '�·�' },
   { id: 2, label: 'Ranked', color: '#0ecb81', icon: '🏆' },
-  { id: 3, label: 'Alpha', color: '#1e90ff', icon: '⭐' },
-  { id: 4, label: 'CEX Ready', color: '#a855f7', icon: '🎓' },
+  { id: 3, label: 'Alpha', color: '#1e90ff', icon: '·��' },
+  { id: 4, label: 'CEX Ready', color: '#a855f7', icon: '�·' },
 ];
 
 export class TokenGradPanel extends BasePanel {
@@ -25,7 +25,7 @@ export class TokenGradPanel extends BasePanel {
   }
 
   async fetchData() {
-    // Fetch meme rank data — contains alphaStatus, score, holders, volume
+    // Fetch meme rank data ··· contains alphaStatus, score, holders, volume
     const res = await window.mefaiApi.rank.memeRank({ page: 1, size: 50 });
     if (!res || res?.error) return [];
     const items = res?.data?.tokens || res?.data || (Array.isArray(res) ? res : []);
@@ -98,7 +98,7 @@ export class TokenGradPanel extends BasePanel {
 
     const sorted = sortRows(data, this._sortKey, this._sortDir);
 
-    // Summary — stage distribution
+    // Summary ··· stage distribution
     const stageCounts = [0, 0, 0, 0, 0];
     for (const t of data) stageCounts[t.stage]++;
     const alphaCount = data.filter(t => t.alphaStatus === 1).length;
@@ -144,7 +144,7 @@ export class TokenGradPanel extends BasePanel {
       { key: 'price', label: _t('col.price'), align: 'right', render: v => `$${formatPrice(v)}` },
       { key: 'change', label: _t('col.change24h'), align: 'right', render: v => formatPercent(v) },
       { key: 'mcap', label: _t('col.mcap'), align: 'right', render: v => formatCurrency(v) },
-      { key: 'holders', label: _t('grad.holders'), align: 'right', render: v => v > 0 ? v.toLocaleString() : '—' },
+      { key: 'holders', label: _t('grad.holders'), align: 'right', render: v => v > 0 ? v.toLocaleString() : '···' },
     ];
 
     h += renderTable(columns, sorted, { sortKey: this._sortKey, sortDir: this._sortDir });

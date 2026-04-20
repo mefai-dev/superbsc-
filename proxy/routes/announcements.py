@@ -1,4 +1,4 @@
-"""Binance public announcements — CMS article list."""
+"""Binance public announcements ··· CMS article list."""
 
 from fastapi import APIRouter, Query
 

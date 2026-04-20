@@ -1,4 +1,4 @@
-"""Binance P2P marketplace proxy — public ad search."""
+"""Binance P2P marketplace proxy ··· public ad search."""
 
 from fastapi import APIRouter
 from fastapi.requests import Request

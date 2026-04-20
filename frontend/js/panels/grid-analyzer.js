@@ -1,4 +1,4 @@
-// MEFAI Grid Trading Analyzer — ATR, Bollinger, Volatility analysis
+// MEFAI Grid Trading Analyzer ··· ATR, Bollinger, Volatility analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatPrice, formatPercent } = window.mefaiUtils;

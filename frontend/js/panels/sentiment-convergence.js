@@ -1,4 +1,4 @@
-// Derivatives Sentiment Convergence Engine — 6-source sentiment composite score
+// Derivatives Sentiment Convergence Engine ··· 6-source sentiment composite score
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent, formatCurrency } = window.mefaiUtils;

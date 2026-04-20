@@ -1,4 +1,4 @@
-// Smart Money Radar — Institutional vs Retail positioning intelligence using Binance-exclusive data
+// Smart Money Radar ··· Institutional vs Retail positioning intelligence using Binance-exclusive data
 // Uses 6 signals ONLY available on Binance: topLongShortAccount, topLongShortPosition,
 // globalLongShortAccount, takerBuySellRatio, openInterestHist, premiumIndex
 import { BasePanel } from '../components/base-panel.js';
@@ -85,12 +85,12 @@ export class SmartMoneyRadarPanel extends BasePanel {
       // >1 = smart money long, <1 = smart money short
       factors.smartDir = Math.max(-1, Math.min(1, (topPosRatio - 1) * 5));
 
-      // 2. Retail Contrarian (inverse of retail — when retail is short, it's bullish)
+      // 2. Retail Contrarian (inverse of retail ··· when retail is short, it's bullish)
       // Retail long (>1) = bearish signal, Retail short (<1) = bullish signal
       factors.retailContra = Math.max(-1, Math.min(1, (1 - retailRatio) * 5));
 
       // 3. Smart vs Retail Divergence
-      // When smart money and retail disagree → stronger signal
+      // When smart money and retail disagree ·�� stronger signal
       const divergence = topPosRatio - retailRatio;
       factors.divergence = Math.max(-1, Math.min(1, divergence * 3));
 
@@ -98,7 +98,7 @@ export class SmartMoneyRadarPanel extends BasePanel {
       // >1 = aggressive buying, <1 = aggressive selling
       factors.takerPressure = Math.max(-1, Math.min(1, (takerRatio - 1) * 5));
 
-      // 5. Funding Signal (contrarian — negative funding = bullish, longs get paid)
+      // 5. Funding Signal (contrarian ··· negative funding = bullish, longs get paid)
       factors.fundingSignal = Math.max(-1, Math.min(1, -fundingBps * 0.1));
 
       // 6. OI Momentum (rising OI = conviction behind the move)
@@ -204,7 +204,7 @@ export class SmartMoneyRadarPanel extends BasePanel {
     h += '.smr-NONE{background:#33333344;color:var(--text-muted)}';
     h += '</style>';
 
-    // Hero card — top signal spotlight
+    // Hero card ··· top signal spotlight
     if (topSignal && topSignal.smartScore >= 40) {
       const heroColor = topSignal.direction === 'LONG' ? '#0ecb81' : topSignal.direction === 'SHORT' ? '#f6465d' : '#3b82f6';
       h += '<div class="smr-hero">';
@@ -258,7 +258,7 @@ export class SmartMoneyRadarPanel extends BasePanel {
           let f = '<div class="smr-factors">';
           for (const [lbl, val] of labels) {
             const cls = val > 0.1 ? 'smr-f-bull' : val < -0.1 ? 'smr-f-bear' : 'smr-f-neutral';
-            const arrow = val > 0.1 ? '↑' : val < -0.1 ? '↓' : '·';
+            const arrow = val > 0.1 ? '·��' : val < -0.1 ? '·�·' : '·';
             f += `<span class="smr-f ${cls}">${lbl}${arrow}</span>`;
           }
           f += '</div>';

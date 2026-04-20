@@ -25,7 +25,7 @@ async def address_security(
     address: str = Query(..., min_length=10),
     chainId: str = Query("56"),
 ):
-    """GoPlus wallet/address security check — 20 risk flags."""
+    """GoPlus wallet/address security check ··· 20 risk flags."""
     return await fetch_json(
         f"{GOPLUS}/api/v1/address_security/{address.lower()}",
         params={"chain_id": chainId},

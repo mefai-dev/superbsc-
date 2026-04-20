@@ -1,4 +1,4 @@
-"""Bitcoin on-chain & network stats — blockchain.info free API."""
+"""Bitcoin on-chain & network stats ··· blockchain.info free API."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json
@@ -10,7 +10,7 @@ BC_API = "https://api.blockchain.info"
 
 @router.get("/stats")
 async def network_stats():
-    """BTC network stats — hashrate, difficulty, tx count, block time, market price."""
+    """BTC network stats ··· hashrate, difficulty, tx count, block time, market price."""
     return await fetch_json(f"{BC_API}/stats", ttl=120)
 
 
@@ -22,7 +22,7 @@ async def chart(
     ),
     timespan: str = Query("30days"),
 ):
-    """Time-series chart data — hash-rate, difficulty, n-transactions, etc."""
+    """Time-series chart data ··· hash-rate, difficulty, n-transactions, etc."""
     return await fetch_json(
         f"{BC_API}/charts/{name}",
         params={"timespan": timespan, "format": "json"},

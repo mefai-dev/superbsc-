@@ -1,4 +1,4 @@
-"""Etherscan V2 API proxy — contract source code, ABI, proxy detection."""
+"""Etherscan V2 API proxy ··· contract source code, ABI, proxy detection."""
 
 import os
 

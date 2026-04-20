@@ -1,4 +1,4 @@
-// MEFAI Funding Rate Alert — High funding rate arbitrage opportunities
+// MEFAI Funding Rate Alert ··· High funding rate arbitrage opportunities
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;

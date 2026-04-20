@@ -1,4 +1,4 @@
-// Trading Rules Validator — Check symbol filters, lot sizes, notional limits
+// Trading Rules Validator ··· Check symbol filters, lot sizes, notional limits
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatPrice } = window.mefaiUtils;
@@ -102,7 +102,7 @@ export class TradingRulesPanel extends BasePanel {
         h += `<div class="tr-row"><span>Max Qty</span><span>${f.maxQty}</span></div>`;
         h += `<div class="tr-row"><span>Step Size</span><span>${f.stepSize}</span></div>`;
       } else if (type === 'NOTIONAL' || type === 'MIN_NOTIONAL') {
-        h += `<div class="tr-row"><span>Min Notional</span><span>$${f.minNotional || f.notional || '—'}</span></div>`;
+        h += `<div class="tr-row"><span>Min Notional</span><span>$${f.minNotional || f.notional || '···'}</span></div>`;
       } else if (type === 'PERCENT_PRICE_BY_SIDE') {
         h += `<div class="tr-row"><span>Bid Multiplier Up</span><span>${f.bidMultiplierUp}</span></div>`;
         h += `<div class="tr-row"><span>Ask Multiplier Down</span><span>${f.askMultiplierDown}</span></div>`;

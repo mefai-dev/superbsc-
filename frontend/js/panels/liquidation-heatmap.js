@@ -1,4 +1,4 @@
-// MEFAI Liquidation Heatmap — Futures risk zones & crowding analysis
+// MEFAI Liquidation Heatmap ··· Futures risk zones & crowding analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -147,7 +147,7 @@ export class LiquidationHeatmapPanel extends BasePanel {
       h += `<td><span class="liq-dir ${dirCls}">${r.direction}</span></td>`;
       h += `<td class="${rateCls}">${r.fundingRate >= 0 ? '+' : ''}${r.fundingRate.toFixed(4)}%</td>`;
       h += `<td class="val-num">$${formatPrice(r.markPrice)}</td>`;
-      h += `<td class="${cls24}">${r.change24h >= 0 ? '↑' : '↓'}${Math.abs(r.change24h).toFixed(2)}%</td>`;
+      h += `<td class="${cls24}">${r.change24h >= 0 ? '·��' : '·�·'}${Math.abs(r.change24h).toFixed(2)}%</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

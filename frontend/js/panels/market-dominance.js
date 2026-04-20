@@ -1,4 +1,4 @@
-// Market Cap Dominance Tracker — BTC/ETH/BNB dominance + sector breakdown
+// Market Cap Dominance Tracker ··· BTC/ETH/BNB dominance + sector breakdown
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatPercent } = window.mefaiUtils;
@@ -68,7 +68,7 @@ export class MarketDominancePanel extends BasePanel {
 
     h += `<div class="md-total">Total Market Cap: ${formatCurrency(cgTotalMcap || totalMcap)}</div>`;
 
-    // Dominance bar — use CoinGecko global percentages
+    // Dominance bar ··· use CoinGecko global percentages
     const domColors = { btc: '#f0b90b', eth: '#627eea', usdt: '#26a17b', bnb: '#f3ba2f', xrp: '#23292f', sol: '#9945ff' };
     const domEntries = Object.entries(cgDominance).filter(([, v]) => v > 1).slice(0, 6);
     h += '<div class="md-bar">';

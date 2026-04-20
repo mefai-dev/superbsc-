@@ -1,4 +1,4 @@
-// AI Market Intelligence Feed — Real-time natural language market analysis
+// AI Market Intelligence Feed ··· Real-time natural language market analysis
 // Synthesizes data from Smart Money, Anomaly, Microstructure, Momentum, and Funding engines
 // into a prioritized, human-readable intelligence feed
 import { BasePanel } from '../components/base-panel.js';
@@ -153,13 +153,13 @@ export class IntelligenceFeedPanel extends BasePanel {
         const severity = smartScore >= 75 ? 'CRITICAL' : smartScore >= 60 ? 'HIGH' : 'MEDIUM';
         const smartAction = direction === 'LONG' ? 'going long aggressively' : 'building short positions';
         const retailAction = retailRatio > 1.1 ? 'heavily long' : retailRatio < 0.9 ? 'heavily short' : 'neutral';
-        const fundingNote = fundingBps < -3 ? ` Funding at ${fundingBps.toFixed(1)}bps — longs getting paid to hold.` :
-                           fundingBps > 5 ? ` Funding elevated at +${fundingBps.toFixed(1)}bps — shorts getting paid.` : '';
-        const oiNote = oiChange > 2 ? ` OI rising ${oiChange.toFixed(1)}% — new positions being opened with conviction.` :
-                      oiChange < -2 ? ` OI declining ${oiChange.toFixed(1)}% — positions being closed.` : '';
+        const fundingNote = fundingBps < -3 ? ` Funding at ${fundingBps.toFixed(1)}bps ··· longs getting paid to hold.` :
+                           fundingBps > 5 ? ` Funding elevated at +${fundingBps.toFixed(1)}bps ··· shorts getting paid.` : '';
+        const oiNote = oiChange > 2 ? ` OI rising ${oiChange.toFixed(1)}% ··· new positions being opened with conviction.` :
+                      oiChange < -2 ? ` OI declining ${oiChange.toFixed(1)}% ··· positions being closed.` : '';
         const healthNote = ` Microstructure: Grade ${healthGrade} (${healthScore}/100).`;
 
-        let text = `Smart Money Score ${smartScore}/100 — Top traders ${smartAction} while retail is ${retailAction}.`;
+        let text = `Smart Money Score ${smartScore}/100 ··· Top traders ${smartAction} while retail is ${retailAction}.`;
         text += ` ${agreeing}/6 factors aligned (${direction}).`;
         text += fundingNote + oiNote + healthNote;
 
@@ -180,7 +180,7 @@ export class IntelligenceFeedPanel extends BasePanel {
         const smartSide = topPosRatio > 1 ? 'long' : 'short';
         const retailSide = retailRatio > 1 ? 'long' : 'short';
         if (smartSide !== retailSide) {
-          let text = `Smart-Retail Divergence — Top traders are ${smartSide} (${topPosRatio.toFixed(2)}) while retail is ${retailSide} (${retailRatio.toFixed(2)}).`;
+          let text = `Smart-Retail Divergence ··· Top traders are ${smartSide} (${topPosRatio.toFixed(2)}) while retail is ${retailSide} (${retailRatio.toFixed(2)}).`;
           text += ` Divergence gap: ${Math.abs(topPosRatio - retailRatio).toFixed(2)}.`;
           text += ` Historically, smart money wins this divergence.`;
           events.push({ sym, severity: 'HIGH', direction: smartSide === 'long' ? 'LONG' : 'SHORT', smartScore, text, ts, type: 'divergence', sortPriority: 65 });
@@ -192,7 +192,7 @@ export class IntelligenceFeedPanel extends BasePanel {
         const side = fundingBps > 0 ? 'positive' : 'negative';
         const contrarian = fundingBps > 0 ? 'SHORT' : 'LONG';
         let text = `Funding rate extreme: ${fundingBps > 0 ? '+' : ''}${fundingBps.toFixed(1)}bps (${side}).`;
-        text += ` Market is crowded ${fundingBps > 0 ? 'long' : 'short'} — contrarian ${contrarian} signal.`;
+        text += ` Market is crowded ${fundingBps > 0 ? 'long' : 'short'} ··· contrarian ${contrarian} signal.`;
         text += ` Current 24h: ${change24h > 0 ? '+' : ''}${change24h.toFixed(2)}%.`;
         events.push({ sym, severity: 'MEDIUM', direction: contrarian, smartScore, text, ts, type: 'funding', sortPriority: Math.abs(fundingBps) * 2 });
       }
@@ -200,7 +200,7 @@ export class IntelligenceFeedPanel extends BasePanel {
       // 5. OI Surge
       if (Math.abs(oiChange) > 5) {
         let text = `Open Interest ${oiChange > 0 ? 'surged' : 'dropped'} ${oiChange > 0 ? '+' : ''}${oiChange.toFixed(1)}% in recent hours.`;
-        text += oiChange > 0 ? ' Significant new position buildup — watch for breakout or squeeze.' : ' Rapid position unwind — potential capitulation or profit-taking.';
+        text += oiChange > 0 ? ' Significant new position buildup ··· watch for breakout or squeeze.' : ' Rapid position unwind ··· potential capitulation or profit-taking.';
         text += ` Price: ${change24h > 0 ? '+' : ''}${change24h.toFixed(2)}% 24h.`;
         events.push({ sym, severity: Math.abs(oiChange) > 8 ? 'HIGH' : 'MEDIUM', direction: oiChange > 0 ? (change24h > 0 ? 'LONG' : 'SHORT') : 'ALERT', smartScore, text, ts, type: 'oi', sortPriority: Math.abs(oiChange) * 5 });
       }
@@ -210,7 +210,7 @@ export class IntelligenceFeedPanel extends BasePanel {
         let text = `Microstructure degraded to Grade ${healthGrade} (${healthScore}/100).`;
         text += ` Spread: ${spreadBps.toFixed(1)}bps.`;
         if (Math.abs(sfGap) > 5) text += ` Spot-futures gap: ${sfGap.toFixed(0)}bps.`;
-        text += ` Exercise caution — poor execution environment for large orders.`;
+        text += ` Exercise caution ··· poor execution environment for large orders.`;
         events.push({ sym, severity: healthScore < 20 ? 'HIGH' : 'MEDIUM', direction: 'ALERT', smartScore, text, ts, type: 'health', sortPriority: (100 - healthScore) / 2 });
       }
     }
@@ -331,7 +331,7 @@ export class IntelligenceFeedPanel extends BasePanel {
   }
 
   afterRender() {
-    // No table events needed — feed is not sortable
+    // No table events needed ··· feed is not sortable
   }
 }
 customElements.define('intelligence-feed-panel', IntelligenceFeedPanel);

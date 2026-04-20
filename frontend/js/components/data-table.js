@@ -1,4 +1,4 @@
-// MEFAI Data Table — Sortable, filterable table component
+// MEFAI Data Table ··· Sortable, filterable table component
 
 export function renderTable(columns, rows, options = {}) {
   const { sortKey, sortDir = 'desc', onSort, onRowClick, id = '' } = options;
@@ -11,7 +11,7 @@ export function renderTable(columns, rows, options = {}) {
 
   const trs = rows.map((row, i) => {
     const tds = columns.map(col => {
-      const val = col.render ? col.render(row[col.key], row) : (row[col.key] ?? '—');
+      const val = col.render ? col.render(row[col.key], row) : (row[col.key] ?? '···');
       const align = col.align === 'right' ? 'text-align:right' : '';
       return `<td style="${align}" data-key="${col.key}">${val}</td>`;
     }).join('');

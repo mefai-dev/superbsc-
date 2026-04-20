@@ -1,4 +1,4 @@
-// MEFAI Order Book Intelligence — Market microstructure analysis
+// MEFAI Order Book Intelligence ··· Market microstructure analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -43,7 +43,7 @@ export class OrderBookIntelPanel extends BasePanel {
     const askTotal = asks.reduce((s, [, q]) => s + q, 0);
     const imbalance = bidTotal + askTotal > 0 ? ((bidTotal - askTotal) / (bidTotal + askTotal)) * 100 : 0;
 
-    // Whale walls — orders > 3x average
+    // Whale walls ··· orders > 3x average
     const avgBid = bidTotal / bids.length;
     const avgAsk = askTotal / asks.length;
     const bidWalls = bids.filter(([, q]) => q > avgBid * 3).sort((a, b) => b[1] - a[1]).slice(0, 5);

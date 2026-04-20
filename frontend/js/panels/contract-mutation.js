@@ -1,4 +1,4 @@
-// MEFAI Contract Mutation Monitor — Proxy detection + Trust Decay Score
+// MEFAI Contract Mutation Monitor ··· Proxy detection + Trust Decay Score
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

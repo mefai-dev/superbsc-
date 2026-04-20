@@ -1,4 +1,4 @@
-// Multi-Timeframe Momentum Screener — Compare 1h, 4h, 1d momentum across coins
+// Multi-Timeframe Momentum Screener ··· Compare 1h, 4h, 1d momentum across coins
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent, formatPrice } = window.mefaiUtils;
@@ -16,7 +16,7 @@ export class MomentumScreenerPanel extends BasePanel {
   }
 
   async fetchData() {
-    // Use spot tickers for 24h data — it's the most reliable
+    // Use spot tickers for 24h data ··· it's the most reliable
     const tickers = await window.mefaiApi.spot.tickers();
     return tickers;
   }

@@ -1,4 +1,4 @@
-// MEFAI Alpha Airdrop Claimer — Token discovery + Binance Alpha program overview
+// MEFAI Alpha Airdrop Claimer ··· Token discovery + Binance Alpha program overview
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatAge, formatCurrency } = window.mefaiUtils;

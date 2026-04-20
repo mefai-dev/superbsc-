@@ -1,4 +1,4 @@
-// MEFAI Store — Pub/sub state management + preferences persistence
+// MEFAI Store ··· Pub/sub state management + preferences persistence
 
 const PREFS_KEY = 'mefai-prefs';
 

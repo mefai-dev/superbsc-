@@ -1,4 +1,4 @@
-// MEFAI Binance Options — Greeks, OI by Expiry, Max Pain
+// MEFAI Binance Options ··· Greeks, OI by Expiry, Max Pain
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -111,7 +111,7 @@ export class BinanceOptionsPanel extends BasePanel {
     } else if (this._tab === 'expiry') {
       h += '<table class="data-table"><thead><tr><th>Expiry</th><th style="text-align:right">Call OI</th><th style="text-align:right">Put OI</th><th style="text-align:right">P/C</th></tr></thead><tbody>';
       data.expiries.forEach(e => {
-        const pc = e.callOI > 0 ? (e.putOI / e.callOI).toFixed(2) : '—';
+        const pc = e.callOI > 0 ? (e.putOI / e.callOI).toFixed(2) : '···';
         h += `<tr><td style="font-weight:600">${escapeHtml(e.expiry)}</td><td style="text-align:right">${formatNumber(e.callOI)}</td><td style="text-align:right">${formatNumber(e.putOI)}</td><td style="text-align:right">${pc}</td></tr>`;
       });
       h += '</tbody></table>';
@@ -145,7 +145,7 @@ export class BinanceOptionsPanel extends BasePanel {
     h += '</style>';
     h += '<div class="bo-geo">';
     h += '<div class="bo-geo-icon">&#127760;</div>';
-    h += '<div class="bo-geo-title">Binance Options — Region Restricted</div>';
+    h += '<div class="bo-geo-title">Binance Options ··· Region Restricted</div>';
     h += '<div class="bo-geo-sub">Binance European Options API (eapi.binance.com) is not available in this server region.<br>When accessible, this panel provides:</div>';
     h += '<div class="bo-features">';
     h += '<div class="bo-feat"><div class="bo-feat-title">Options Greeks</div><div class="bo-feat-desc">Delta, Gamma, Theta, Vega, IV for all BTC/ETH contracts</div></div>';

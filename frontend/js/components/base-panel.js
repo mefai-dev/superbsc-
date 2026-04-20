@@ -1,4 +1,4 @@
-// MEFAI Base Panel — Web Component base class for all panels
+// MEFAI Base Panel ··· Web Component base class for all panels
 
 export class BasePanel extends HTMLElement {
   static skill = '';
@@ -50,7 +50,7 @@ export class BasePanel extends HTMLElement {
           ${skill ? `<span class="panel-skill">${skill}</span>` : ''}
         </div>
         <div class="panel-actions">
-          <button class="panel-refresh" title="Refresh">↻</button>
+          <button class="panel-refresh" title="Refresh">·��</button>
         </div>
       </div>
       <div class="panel-body">
@@ -92,7 +92,7 @@ export class BasePanel extends HTMLElement {
     } catch (e) {
       this._error = e;
       if (this._data && !this._firstLoad) {
-        // Silent fail — keep existing content
+        // Silent fail ··· keep existing content
       } else {
         const msg = (window.mefaiUtils?.escapeHtml || ((s) => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }))(e.message || 'Unknown error');
         body.innerHTML = `<div class="panel-error">Error: ${msg}</div>`;

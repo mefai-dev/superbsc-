@@ -1,4 +1,4 @@
-// MEFAI Multi-Chain Portfolio — Cross-chain wallet tracking
+// MEFAI Multi-Chain Portfolio ··· Cross-chain wallet tracking
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatAddress, escapeHtml } = window.mefaiUtils;
@@ -183,8 +183,8 @@ export class MultiChainWalletPanel extends BasePanel {
       h += `<tr data-a="${p.address}" data-c="${p.chain}">`;
       h += `<td>${icon}<span style="font-weight:600">${escapeHtml(p.symbol)}</span></td>`;
       h += `<td><span class="mcw-chain-badge" style="background:${p.chainColor}">${p.chain}</span></td>`;
-      h += `<td class="val-num">${p.price ? '$' + formatPrice(p.price) : '—'}</td>`;
-      h += `<td class="val-num">${p.amount ? formatCurrency(p.amount).replace('$', '') : '—'}</td>`;
+      h += `<td class="val-num">${p.price ? '$' + formatPrice(p.price) : '···'}</td>`;
+      h += `<td class="val-num">${p.amount ? formatCurrency(p.amount).replace('$', '') : '···'}</td>`;
       h += `<td class="val-num">${formatCurrency(p.value)} <span style="color:var(--text-muted);font-size:9px">(${pctOfTotal}%)</span></td>`;
       h += '</tr>';
     }

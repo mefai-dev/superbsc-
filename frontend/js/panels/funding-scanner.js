@@ -1,4 +1,4 @@
-// Funding Arbitrage Scanner — Find extreme funding rates for arbitrage opportunities
+// Funding Arbitrage Scanner ··· Find extreme funding rates for arbitrage opportunities
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent } = window.mefaiUtils;

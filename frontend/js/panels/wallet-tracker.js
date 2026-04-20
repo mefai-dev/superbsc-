@@ -1,4 +1,4 @@
-// MEFAI Wallet Tracker Panel — address.positions(), manual address input
+// MEFAI Wallet Tracker Panel ··· address.positions(), manual address input
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatPercent, formatNumber, formatAddress, escapeHtml } = window.mefaiUtils;

@@ -1,4 +1,4 @@
-// MEFAI BSC Chain Growth Tracker — TVL history + multi-chain comparison
+// MEFAI BSC Chain Growth Tracker ··· TVL history + multi-chain comparison
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -91,14 +91,14 @@ export class ChainGrowthPanel extends BasePanel {
     const c30d = chg30d >= 0 ? 'val-up' : 'val-down';
 
     h += '<div class="cg-cards">';
-    h += `<div class="cg-card"><div class="cg-label">BSC TVL</div><div class="cg-val">${formatCurrency(data.currentTvl)}</div><div class="cg-sub ${c1d}">${chg1d >= 0 ? '↑' : '↓'}${Math.abs(chg1d).toFixed(2)}% 24h</div></div>`;
+    h += `<div class="cg-card"><div class="cg-label">BSC TVL</div><div class="cg-val">${formatCurrency(data.currentTvl)}</div><div class="cg-sub ${c1d}">${chg1d >= 0 ? '·��' : '·�·'}${Math.abs(chg1d).toFixed(2)}% 24h</div></div>`;
     h += `<div class="cg-card"><div class="cg-label">Rank</div><div class="cg-val">#${data.bscRank}</div><div class="cg-sub">${data.bscShare.toFixed(1)}% share</div></div>`;
     h += `<div class="cg-card"><div class="cg-label">ATH TVL</div><div class="cg-val">${formatCurrency(data.athTvl)}</div><div class="cg-sub">${athDist.toFixed(1)}% from ATH</div></div>`;
     h += '</div>';
 
     h += '<div class="cg-cards" style="grid-template-columns:1fr 1fr">';
-    h += `<div class="cg-card"><div class="cg-label">7d Change</div><div class="cg-val ${c7d}">${chg7d >= 0 ? '↑' : '↓'}${Math.abs(chg7d).toFixed(2)}%</div></div>`;
-    h += `<div class="cg-card"><div class="cg-label">30d Change</div><div class="cg-val ${c30d}">${chg30d >= 0 ? '↑' : '↓'}${Math.abs(chg30d).toFixed(2)}%</div></div>`;
+    h += `<div class="cg-card"><div class="cg-label">7d Change</div><div class="cg-val ${c7d}">${chg7d >= 0 ? '·��' : '·�·'}${Math.abs(chg7d).toFixed(2)}%</div></div>`;
+    h += `<div class="cg-card"><div class="cg-label">30d Change</div><div class="cg-val ${c30d}">${chg30d >= 0 ? '·��' : '·�·'}${Math.abs(chg30d).toFixed(2)}%</div></div>`;
     h += '</div>';
 
     // 30-day TVL sparkline
@@ -132,7 +132,7 @@ export class ChainGrowthPanel extends BasePanel {
       h += `<td style="font-weight:600">${escapeHtml(c.name)}</td>`;
       h += `<td style="text-align:right">${formatCurrency(c.tvl)}</td>`;
       h += `<td style="text-align:right">${share.toFixed(1)}%</td>`;
-      h += `<td style="font-size:9px;color:var(--text-muted)">${escapeHtml(c.tokenSymbol || '—')}</td>`;
+      h += `<td style="font-size:9px;color:var(--text-muted)">${escapeHtml(c.tokenSymbol || '···')}</td>`;
       h += '</tr>';
     });
     h += '</tbody></table>';

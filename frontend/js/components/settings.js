@@ -1,4 +1,4 @@
-// MEFAI Settings — Overlay component for user preferences
+// MEFAI Settings ··· Overlay component for user preferences
 
 import store from '../store.js';
 

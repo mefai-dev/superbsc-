@@ -1,4 +1,4 @@
-// Binance Product Explorer — All trading products with live data
+// Binance Product Explorer ··· All trading products with live data
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatPrice, formatCurrency, formatPercent } = window.mefaiUtils;

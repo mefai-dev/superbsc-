@@ -1,4 +1,4 @@
-// MEFAI Context Menu â€” Right-click on tokens/addresses
+// MEFAI Context Menu Â·Â·Â· Right-click on tokens/addresses
 
 const menu = () => document.getElementById('context-menu');
 
@@ -11,15 +11,15 @@ export function showContextMenu(e, context) {
 
   const items = [];
   if (context.address) {
-    items.push({ label: 'Audit Token', icon: 'â– ', action: 'audit' });
-    items.push({ label: 'View Profile', icon: 'â—†', action: 'profile' });
-    items.push({ label: 'Copy Address', icon: 'â¬¡', action: 'copy-address' });
+    items.push({ label: 'Audit Token', icon: 'Â·– ', action: 'audit' });
+    items.push({ label: 'View Profile', icon: 'Â·—†', action: 'profile' });
+    items.push({ label: 'Copy Address', icon: 'Â·¬¡', action: 'copy-address' });
     items.push({ type: 'sep' });
-    items.push({ label: 'Track Wallet', icon: 'â—', action: 'track' });
+    items.push({ label: 'Track Wallet', icon: 'Â·—', action: 'track' });
   }
   if (context.symbol) {
-    items.push({ label: `View ${context.symbol} Chart`, icon: 'â–²', action: 'chart' });
-    items.push({ label: 'Smart Money Signals', icon: 'â—‰', action: 'signals' });
+    items.push({ label: `View ${context.symbol} Chart`, icon: 'Â·–²', action: 'chart' });
+    items.push({ label: 'Smart Money Signals', icon: 'Â·—‰', action: 'signals' });
   }
 
   m.innerHTML = items.map(item => {

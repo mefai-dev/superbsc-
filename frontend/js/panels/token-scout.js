@@ -1,4 +1,4 @@
-// MEFAI Token Scout — New BSC token discovery via DexScreener + GoPlus (PR #2)
+// MEFAI Token Scout ··· New BSC token discovery via DexScreener + GoPlus (PR #2)
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -50,7 +50,7 @@ export class TokenScoutPanel extends BasePanel {
       });
     }
 
-    // Enrich top tokens with pair data (batch — only first 10 to avoid rate limits)
+    // Enrich top tokens with pair data (batch ··· only first 10 to avoid rate limits)
     const enrichPromises = tokens.slice(0, 15).map(async (tok) => {
       try {
         const pairRes = await fetch(this._apiBase() + '/api/dex/token?address=' + tok.address).then(r => r.json());
@@ -106,8 +106,8 @@ export class TokenScoutPanel extends BasePanel {
       h += `<td class="val-num">$${formatPrice(t.price)}</td>`;
       h += `<td class="val-num">${formatCurrency(t.liquidity)}</td>`;
       h += `<td class="val-num">${formatCurrency(t.volume24h)}</td>`;
-      h += `<td class="${cls1}">${t.change1h >= 0 ? '↑' : '↓'}${Math.abs(t.change1h).toFixed(1)}%</td>`;
-      h += `<td class="${cls24}">${t.change24h >= 0 ? '↑' : '↓'}${Math.abs(t.change24h).toFixed(1)}%</td>`;
+      h += `<td class="${cls1}">${t.change1h >= 0 ? '·��' : '·�·'}${Math.abs(t.change1h).toFixed(1)}%</td>`;
+      h += `<td class="${cls24}">${t.change24h >= 0 ? '·��' : '·�·'}${Math.abs(t.change24h).toFixed(1)}%</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

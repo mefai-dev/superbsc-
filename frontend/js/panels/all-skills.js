@@ -1,4 +1,4 @@
-// MEFAI All Skills Panel — Multi-skill fusion dashboard (card-based, NOT table)
+// MEFAI All Skills Panel ··· Multi-skill fusion dashboard (card-based, NOT table)
 import { BasePanel } from '../components/base-panel.js';
 
 export class AllSkillsPanel extends BasePanel {
@@ -112,7 +112,7 @@ export class AllSkillsPanel extends BasePanel {
 
     h += `<div class="dash">`;
 
-    // Row 1 — Market Pulse (BTC, ETH, BNB) + Signal Stats
+    // Row 1 ··· Market Pulse (BTC, ETH, BNB) + Signal Stats
     h += `<div class="dash-row">`;
     // BTC
     h += `<div class="dash-card">
@@ -141,13 +141,13 @@ export class AllSkillsPanel extends BasePanel {
           <div class="dash-sub">${_t('trade.total')}</div>
         </div>
         <div>
-          <span class="dash-pill pill-buy">▲ ${st.buys} ${_t('trade.buy')}</span>
+          <span class="dash-pill pill-buy">·�� ${st.buys} ${_t('trade.buy')}</span>
         </div>
         <div>
-          <span class="dash-pill pill-sell">▼ ${st.sells} ${_t('trade.sell')}</span>
+          <span class="dash-pill pill-sell">·�� ${st.sells} ${_t('trade.sell')}</span>
         </div>
         <div>
-          <span class="dash-pill pill-active">● ${st.active} ${_t('trade.active')}</span>
+          <span class="dash-pill pill-active">·�� ${st.active} ${_t('trade.active')}</span>
         </div>
       </div>
       <div class="dash-bar-row">
@@ -157,7 +157,7 @@ export class AllSkillsPanel extends BasePanel {
     </div>`;
     h += `</div>`;
 
-    // Row 2 — Hot Signals (cards, not table!)
+    // Row 2 ··· Hot Signals (cards, not table!)
     h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.hotSignals')}</div></div>`;
     h += `<div class="dash-grid">`;
     for (const s of data.hotSignals) {
@@ -173,14 +173,14 @@ export class AllSkillsPanel extends BasePanel {
           <div class="dash-mini-val">${_t('label.smartMoney')}: ${smCount} · $${u.formatPrice(parseFloat(s.currentPrice || 0))}</div>
         </div>
         <div style="text-align:right">
-          <span class="dash-pill ${dir === 'buy' ? 'pill-buy' : 'pill-sell'}">${dir === 'buy' ? '▲' : '▼'} ${dir}</span>
+          <span class="dash-pill ${dir === 'buy' ? 'pill-buy' : 'pill-sell'}">${dir === 'buy' ? '·��' : '·��'} ${dir}</span>
           <div style="font-size:9px;margin-top:2px" class="${gain >= 0 ? 'val-up' : 'val-down'}">${gain >= 0 ? '+' : ''}${gain.toFixed(1)}%</div>
         </div>
       </div>`;
     }
     h += `</div>`;
 
-    // Row 3 — Top Gainers + Losers side by side
+    // Row 3 ··· Top Gainers + Losers side by side
     h += `<div class="dash-row">`;
     // Gainers
     h += `<div class="dash-card" style="flex:1">
@@ -204,7 +204,7 @@ export class AllSkillsPanel extends BasePanel {
     h += `</div>`;
     h += `</div>`;
 
-    // Row 4 — Trending tokens (mini cards)
+    // Row 4 ··· Trending tokens (mini cards)
     if (data.trending.length) {
       h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.trendingTokens')}</div></div>`;
       h += `<div class="dash-grid">`;
@@ -224,7 +224,7 @@ export class AllSkillsPanel extends BasePanel {
       h += `</div>`;
     }
 
-    // Row 5 — Smart Inflow (if available)
+    // Row 5 ··· Smart Inflow (if available)
     if (data.inflow.length) {
       h += `<div class="dash-section"><div class="dash-section-title">${_t('dash.smartInflow')}</div></div>`;
       h += `<div class="dash-grid">`;

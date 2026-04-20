@@ -1,4 +1,4 @@
-// Whale Activity Tracker — Detect large trades and unusual order book depth
+// Whale Activity Tracker ··· Detect large trades and unusual order book depth
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatCurrency } = window.mefaiUtils;
@@ -116,7 +116,7 @@ export class WhaleTrackerPanel extends BasePanel {
         let s = '';
         if (v > 0) s += `<span class="wt-wall wt-wall-bid">${v}B</span>`;
         if (row.askWalls > 0) s += `<span class="wt-wall wt-wall-ask">${row.askWalls}A</span>`;
-        return s || '—';
+        return s || '···';
       }},
       { key: 'spreadBps', label: 'Spread', align: 'right', render: v => v.toFixed(1) + ' bps' },
     ];

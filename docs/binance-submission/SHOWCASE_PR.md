@@ -1,4 +1,4 @@
-# Showcase: MEFAI — Crypto Intelligence Terminal
+# Showcase: MEFAI ··· Crypto Intelligence Terminal
 
 ## What is MEFAI?
 
@@ -7,10 +7,10 @@ MEFAI is an open-source, Bloomberg Terminal-inspired crypto intelligence termina
 ## Why This Matters
 
 - **First project to use ALL 7 Skills Hub APIs** in a single application
-- **Cross-skill intelligence pipeline** — tokens flow through audit, signals, rankings, and profile in one workflow
-- **Auto-Scanner** — continuously discovers and scores new tokens using multi-API analysis
-- **Zero framework** — pure vanilla JS + Web Components, no build step
-- **Plugin architecture** — add a panel in one file, under 100 lines
+- **Cross-skill intelligence pipeline** ··· tokens flow through audit, signals, rankings, and profile in one workflow
+- **Auto-Scanner** ··· continuously discovers and scores new tokens using multi-API analysis
+- **Zero framework** ··· pure vanilla JS + Web Components, no build step
+- **Plugin architecture** ··· add a panel in one file, under 100 lines
 
 ## Skills Map
 

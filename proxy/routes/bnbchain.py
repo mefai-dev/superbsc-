@@ -1,4 +1,4 @@
-"""BNB Chain on-chain data — TX Explorer, NFT Portfolio, Greenfield Storage."""
+"""BNB Chain on-chain data ··· TX Explorer, NFT Portfolio, Greenfield Storage."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json, post_json
@@ -19,7 +19,7 @@ async def _rpc_call(method: str, params: list, ttl: int = 30) -> dict:
     )
 
 
-# ── TX Explorer ──────────────────────────────────────────────────────
+# ······ TX Explorer ··································································································································································
 
 
 @router.get("/block")
@@ -66,7 +66,7 @@ async def gas_price():
     return await _rpc_call("eth_gasPrice", [], ttl=10)
 
 
-# ── NFT Portfolio ────────────────────────────────────────────────────
+# ······ NFT Portfolio ····························································································································································
 
 # ERC721 balanceOf(address) selector
 _ERC721_BALANCE = "0x70a08231"
@@ -117,7 +117,7 @@ async def nft_tokens(
     return {"tokens": results, "contract": contract, "owner": owner}
 
 
-# ── Greenfield Storage ───────────────────────────────────────────────
+# ······ Greenfield Storage ·············································································································································
 
 
 @router.get("/greenfield/status")

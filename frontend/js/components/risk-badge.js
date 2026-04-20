@@ -1,7 +1,7 @@
-// MEFAI Risk Badge — Token audit risk display
+// MEFAI Risk Badge ··· Token audit risk display
 
 export function renderRiskBadge(level) {
-  if (level === null || level === undefined) return '<span class="risk-badge risk-low">—</span>';
+  if (level === null || level === undefined) return '<span class="risk-badge risk-low">···</span>';
   // Handle numeric levels (0=safe, 1=medium, 2+=high) and string levels
   const s = String(level);
   const n = Number(level);

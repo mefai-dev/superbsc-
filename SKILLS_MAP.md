@@ -79,7 +79,7 @@ Complete mapping of all 48 skills to panels and API endpoints.
 ## Convergence Intelligence (39 to 44)
 
 ### Skill 39: Cross Exchange Arb
-Uses `/fapi/v1/constituents` — 8 exchange composite weights for price comparison.
+Uses `/fapi/v1/constituents` ··· 8 exchange composite weights for price comparison.
 
 ### Skill 40: Sentiment Convergence
 Combines 6 sources: retail L/S, top account L/S, top position L/S, taker B/S, funding rate, OI change.
@@ -94,7 +94,7 @@ Uses basis history + delivery prices + exchange info for contango backwardation 
 Uses `api/v3/ticker` with custom `windowSize` (1h, 4h). Underutilized Binance API feature.
 
 ### Skill 44: Microstructure Health
-5 metrics → single health score (0-100): spread, spot futures gap, funding, taker balance, OI stability.
+5 metrics ·�� single health score (0-100): spread, spot futures gap, funding, taker balance, OI stability.
 
 ## Flagship Intelligence (45 to 47)
 
@@ -125,10 +125,10 @@ Uses `api/v3/ticker` with custom `windowSize` (1h, 4h). Underutilized Binance AP
 - `/fapi/v1/ticker/24hr`: Price, volume, 24h metrics
 - `/fapi/v1/premiumIndex`: Funding rate, mark/index price
 - `/fapi/v1/ticker/bookTicker`: Bid/ask spread
-- `/futures/data/globalLongShortAccountRatio` — Retail positioning. **BINANCE ONLY**
-- `/futures/data/topLongShortAccountRatio` — Top account positioning. **BINANCE ONLY**
-- `/futures/data/topLongShortPositionRatio` — Smart money positioning. **BINANCE ONLY**
-- `/futures/data/takerlongshortRatio` — Taker flow. **BINANCE ONLY**
+- `/futures/data/globalLongShortAccountRatio` ··· Retail positioning. **BINANCE ONLY**
+- `/futures/data/topLongShortAccountRatio` ··· Top account positioning. **BINANCE ONLY**
+- `/futures/data/topLongShortPositionRatio` ··· Smart money positioning. **BINANCE ONLY**
+- `/futures/data/takerlongshortRatio` ··· Taker flow. **BINANCE ONLY**
 - `/futures/data/openInterestHist`: OI change
 - `/api/v3/ticker/bookTicker`: Spot price for basis
 
@@ -138,7 +138,7 @@ Uses `api/v3/ticker` with custom `windowSize` (1h, 4h). Underutilized Binance AP
 ## Meta Skills
 
 ### Auto Scanner (All 7 Core Skills)
-Pipeline: Skill 2 → Skill 6 → Skill 5.3 → Skill 4 → Skill 7.3 → Composite Score
+Pipeline: Skill 2 ·�� Skill 6 ·�� Skill 5.3 ·�� Skill 4 ·�� Skill 7.3 ·�� Composite Score
 
 ### Smart Flow (Skill 4 + 5)
 Hybrid smart money + market ranking analysis.

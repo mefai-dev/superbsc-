@@ -2,12 +2,12 @@
 
 Hey Binance community!
 
-We built **MEFAI** — an open-source, keyboard-driven crypto intelligence terminal that uses **every single Binance Skills Hub API** in a unified workflow. Think Bloomberg Terminal for crypto, but free and open source.
+We built **MEFAI** ··· an open-source, keyboard-driven crypto intelligence terminal that uses **every single Binance Skills Hub API** in a unified workflow. Think Bloomberg Terminal for crypto, but free and open source.
 
 ## What Makes It Different
 
 **1. All 7 Skills in One Place**
-No other project connects all 7 APIs. MEFAI does — from spot trading to meme discovery to security audits to smart money tracking.
+No other project connects all 7 APIs. MEFAI does ··· from spot trading to meme discovery to security audits to smart money tracking.
 
 **2. Auto-Scanner (Unique Feature)**
 A background engine that continuously:

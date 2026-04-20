@@ -1,4 +1,4 @@
-// MEFAI DexScreener Intelligence — DEX token discovery & analysis
+// MEFAI DexScreener Intelligence ··· DEX token discovery & analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -130,9 +130,9 @@ export class DexIntelPanel extends BasePanel {
       h += `<tr data-a="${t.address}" data-c="${t.chain}">`;
       h += `<td>${iconHtml}<span style="font-weight:600">${escapeHtml(t.symbol)}</span><br><span style="font-size:9px;color:var(--text-muted)">${escapeHtml(t.name)}</span></td>`;
       h += `<td><span class="dex-chain">${escapeHtml((t.chain || '').toUpperCase())}</span></td>`;
-      h += `<td class="val-num">${t.price ? '$' + formatPrice(t.price) : '—'}</td>`;
-      h += `<td class="${cls24}">${t.change24h ? (t.change24h >= 0 ? '↑' : '↓') + Math.abs(t.change24h).toFixed(1) + '%' : '—'}</td>`;
-      h += `<td class="val-num">${t.volume ? formatCurrency(t.volume) : '—'}</td>`;
+      h += `<td class="val-num">${t.price ? '$' + formatPrice(t.price) : '···'}</td>`;
+      h += `<td class="${cls24}">${t.change24h ? (t.change24h >= 0 ? '·��' : '·�·') + Math.abs(t.change24h).toFixed(1) + '%' : '···'}</td>`;
+      h += `<td class="val-num">${t.volume ? formatCurrency(t.volume) : '···'}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';
@@ -159,8 +159,8 @@ export class DexIntelPanel extends BasePanel {
       const cls24 = t.change24h >= 0 ? 'val-up' : 'val-down';
       h += `<tr data-a="${t.address}" data-c="${t.chain}">`;
       h += `<td><span style="font-weight:600">${escapeHtml(t.symbol)}</span><span class="dex-chain">${escapeHtml(t.chain)}</span></td>`;
-      h += `<td class="val-num">${t.price ? '$' + formatPrice(t.price) : '—'}</td>`;
-      h += `<td class="${cls24}">${t.change24h >= 0 ? '↑' : '↓'}${Math.abs(t.change24h).toFixed(1)}%</td>`;
+      h += `<td class="val-num">${t.price ? '$' + formatPrice(t.price) : '···'}</td>`;
+      h += `<td class="${cls24}">${t.change24h >= 0 ? '·��' : '·�·'}${Math.abs(t.change24h).toFixed(1)}%</td>`;
       h += `<td class="val-num">${formatCurrency(t.volume)}</td>`;
       h += `<td class="val-num">${formatCurrency(t.liquidity)}</td>`;
       h += `<td class="dex-txn"><span class="dex-buy">${t.buys24h}B</span>/<span class="dex-sell">${t.sells24h}S</span></td>`;
@@ -187,7 +187,7 @@ export class DexIntelPanel extends BasePanel {
       this.afterRender(body);
     }));
 
-    // Row click → focusToken
+    // Row click ·�� focusToken
     body.querySelectorAll('tr[data-a]').forEach(tr => tr.addEventListener('click', () => {
       this.emitTokenFocus({ address: tr.dataset.a, chain: tr.dataset.c });
     }));

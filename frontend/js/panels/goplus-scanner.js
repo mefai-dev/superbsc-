@@ -1,4 +1,4 @@
-// MEFAI GoPlus Security Scanner — Third-party token security analysis
+// MEFAI GoPlus Security Scanner ··· Third-party token security analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

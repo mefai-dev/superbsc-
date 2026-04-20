@@ -1,4 +1,4 @@
-// MEFAI Announcement Monitor — Binance CMS article feed
+// MEFAI Announcement Monitor ··· Binance CMS article feed
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatAge } = window.mefaiUtils;

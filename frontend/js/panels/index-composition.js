@@ -1,4 +1,4 @@
-// Index Composition Tracker — View Binance composite index weights (BTCDOM, DEFI)
+// Index Composition Tracker ··· View Binance composite index weights (BTCDOM, DEFI)
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent } = window.mefaiUtils;
@@ -61,7 +61,7 @@ export class IndexCompositionPanel extends BasePanel {
     });
 
     h += '<div class="ic-info">';
-    h += `<div class="ic-card"><div class="ic-card-label">Index</div><div class="ic-card-value">${selected.symbol || '—'}</div></div>`;
+    h += `<div class="ic-card"><div class="ic-card-label">Index</div><div class="ic-card-value">${selected.symbol || '···'}</div></div>`;
     h += `<div class="ic-card"><div class="ic-card-label">Components</div><div class="ic-card-value">${assets.length}</div></div>`;
     h += '</div>';
 

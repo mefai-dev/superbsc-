@@ -1,4 +1,4 @@
-"""Deribit options & volatility — public endpoints, no auth."""
+"""Deribit options & volatility ··· public endpoints, no auth."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json
@@ -26,7 +26,7 @@ async def volatility_index(
     currency: str = Query("BTC"),
     resolution: int = Query(3600),
 ):
-    """DVOL (Deribit Volatility Index) — 30-day expected volatility."""
+    """DVOL (Deribit Volatility Index) ··· 30-day expected volatility."""
     import time
 
     end = int(time.time() * 1000)

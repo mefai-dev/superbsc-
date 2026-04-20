@@ -1,7 +1,7 @@
-// MEFAI Social-Smart Divergence — ORIGINAL SKILL
+// MEFAI Social-Smart Divergence ··· ORIGINAL SKILL
 // Problem: Retail follows social hype, smart money acts independently.
-// When hype is HIGH but SM is SELLING → distribution (trap for retail).
-// When hype is LOW but SM is BUYING → accumulation (smart money loading before pump).
+// When hype is HIGH but SM is SELLING ·�� distribution (trap for retail).
+// When hype is LOW but SM is BUYING ·�� accumulation (smart money loading before pump).
 // This divergence signal is one of the strongest alpha indicators.
 import { BasePanel } from '../components/base-panel.js';
 
@@ -44,7 +44,7 @@ export class SocialDivergencePanel extends BasePanel {
       });
     }
 
-    // Parse SM signals — aggregate by symbol
+    // Parse SM signals ··· aggregate by symbol
     const smMap = new Map();
     const smData = smRes.status === 'fulfilled' && smRes.value?.code === '000000' ? (smRes.value.data || []) : [];
     for (const s of (Array.isArray(smData) ? smData : [])) {
@@ -103,12 +103,12 @@ export class SocialDivergencePanel extends BasePanel {
       }
       // CONFIRM BULL: High hype + SM buying (aligned, not divergence but useful)
       else if (hypeScore > 50 && smDir === 'buy' && smCount >= 2) {
-        divType = 'CONFIRM↑';
+        divType = 'CONFIRM·��';
         divScore = (smCount * 5) + (hypeScore / 2);
       }
       // CONFIRM BEAR: Low hype + SM selling (aligned bearish)
       else if (hypeScore < 20 && smDir === 'sell' && smCount >= 2) {
-        divType = 'CONFIRM↓';
+        divType = 'CONFIRM·�·';
         divScore = (smCount * 5) + (20 - hypeScore);
       }
 
@@ -123,7 +123,7 @@ export class SocialDivergencePanel extends BasePanel {
       results.push({
         symbol: sym,
         hypeScore,
-        sentiment: social?.sentiment || '—',
+        sentiment: social?.sentiment || '···',
         smDir,
         smCount,
         divType,
@@ -147,11 +147,11 @@ export class SocialDivergencePanel extends BasePanel {
 
     const divColors = {
       ACCUM: '#0ecb81', DISTRIB: '#f6465d',
-      'CONFIRM↑': '#f0b90b', 'CONFIRM↓': '#a855f7',
+      'CONFIRM·��': '#f0b90b', 'CONFIRM·�·': '#a855f7',
     };
     const divLabels = {
-      ACCUM: '🟢 ACCUMULATION', DISTRIB: '🔴 DISTRIBUTION',
-      'CONFIRM↑': '🟡 ALIGNED BULL', 'CONFIRM↓': '🟣 ALIGNED BEAR',
+      ACCUM: '🟢 ACCUMULATION', DISTRIB: '�·� DISTRIBUTION',
+      'CONFIRM·��': '🟡 ALIGNED BULL', 'CONFIRM·�·': '🟣 ALIGNED BEAR',
     };
 
     let h = '<style scoped>';
@@ -182,9 +182,9 @@ export class SocialDivergencePanel extends BasePanel {
       h += `<td>${icon}<span style="font-weight:600">${escapeHtml(r.symbol)}</span></td>`;
       h += `<td><span class="div-badge" style="color:${divColor};border:1px solid ${divColor}">${divLabels[r.divType] || r.divType}</span></td>`;
       h += `<td class="val-num">${r.hypeScore}<span class="hype-bar"><span class="hype-fill" style="width:${hypePct}%;background:${hypeColor}"></span></span></td>`;
-      h += `<td class="${smCls}" style="font-weight:700">${r.smDir === 'buy' ? 'BUY↑' : r.smDir === 'sell' ? 'SELL↓' : '—'} (${r.smCount})</td>`;
-      h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '—'}</td>`;
-      h += `<td class="${cls}">${r.change ? (r.change >= 0 ? '↑' : '↓') + Math.abs(r.change).toFixed(2) + '%' : '—'}</td>`;
+      h += `<td class="${smCls}" style="font-weight:700">${r.smDir === 'buy' ? 'BUY·��' : r.smDir === 'sell' ? 'SELL·�·' : '···'} (${r.smCount})</td>`;
+      h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '···'}</td>`;
+      h += `<td class="${cls}">${r.change ? (r.change >= 0 ? '·��' : '·�·') + Math.abs(r.change).toFixed(2) + '%' : '···'}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

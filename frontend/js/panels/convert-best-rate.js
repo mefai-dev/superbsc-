@@ -1,4 +1,4 @@
-// MEFAI Convert Best Rate — Compare Spot vs P2P pricing
+// MEFAI Convert Best Rate ··· Compare Spot vs P2P pricing
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatPrice } = window.mefaiUtils;
@@ -83,8 +83,8 @@ export class ConvertBestRatePanel extends BasePanel {
     h += '</style>';
 
     h += '<div class="cvt-cards">';
-    h += `<div class="cvt-card"><div class="cvt-label">P2P Buy Price</div><div class="cvt-val val-up">${bestBuy ? bestBuy.toFixed(2) : '—'}</div><div class="cvt-sub">${escapeHtml(this._fiat)} per ${escapeHtml(this._asset)}</div></div>`;
-    h += `<div class="cvt-card"><div class="cvt-label">P2P Sell Price</div><div class="cvt-val val-down">${bestSell ? bestSell.toFixed(2) : '—'}</div><div class="cvt-sub">${escapeHtml(this._fiat)} per ${escapeHtml(this._asset)}</div></div>`;
+    h += `<div class="cvt-card"><div class="cvt-label">P2P Buy Price</div><div class="cvt-val val-up">${bestBuy ? bestBuy.toFixed(2) : '···'}</div><div class="cvt-sub">${escapeHtml(this._fiat)} per ${escapeHtml(this._asset)}</div></div>`;
+    h += `<div class="cvt-card"><div class="cvt-label">P2P Sell Price</div><div class="cvt-val val-down">${bestSell ? bestSell.toFixed(2) : '···'}</div><div class="cvt-sub">${escapeHtml(this._fiat)} per ${escapeHtml(this._asset)}</div></div>`;
     h += '</div>';
 
     if (bestBuy && bestSell) {

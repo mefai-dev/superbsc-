@@ -1,4 +1,4 @@
-// MEFAI Bitcoin On-Chain Stats — Hashrate, Difficulty, Mining, Network
+// MEFAI Bitcoin On-Chain Stats ··· Hashrate, Difficulty, Mining, Network
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;

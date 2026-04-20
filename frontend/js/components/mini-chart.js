@@ -1,4 +1,4 @@
-// MEFAI Mini Chart — SVG sparkline component
+// MEFAI Mini Chart ··· SVG sparkline component
 
 export function renderSparkline(values, width = 60, height = 16) {
   if (!values || !values.length) return '';

@@ -1,4 +1,4 @@
-// MEFAI Signal P&L — Smart Money signal performance tracker
+// MEFAI Signal P&L ··· Smart Money signal performance tracker
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, escapeHtml } = window.mefaiUtils;
@@ -94,7 +94,7 @@ export class SignalPnlPanel extends BasePanel {
       const iconUrl = window.mefaiUtils.tokenIcon(s.logo);
       const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
       const dirCls = s.direction === 'buy' ? 'val-up' : s.direction === 'sell' ? 'val-down' : '';
-      const dirText = s.direction === 'buy' ? _t('trade.buyUp') : s.direction === 'sell' ? _t('trade.sellDown') : '—';
+      const dirText = s.direction === 'buy' ? _t('trade.buyUp') : s.direction === 'sell' ? _t('trade.sellDown') : '···';
       const gainCls = s.gain > 0 ? 'val-up' : s.gain < 0 ? 'val-down' : '';
       const statusStyle = s.status === 'active' ? 'color:var(--up);font-weight:700' : s.status === 'timeout' ? 'color:var(--down)' : 'color:var(--text-muted)';
 
@@ -105,7 +105,7 @@ export class SignalPnlPanel extends BasePanel {
       h += `<td class="val-num">$${formatPrice(s.currentPrice)}</td>`;
       h += `<td class="${gainCls}" style="font-weight:700">${s.gain > 0 ? '+' : ''}${s.gain}%</td>`;
       h += `<td class="val-num">${s.smCount}</td>`;
-      h += `<td style="${statusStyle};font-size:10px;text-transform:uppercase">${escapeHtml(s.status || '—')}</td>`;
+      h += `<td style="${statusStyle};font-size:10px;text-transform:uppercase">${escapeHtml(s.status || '···')}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

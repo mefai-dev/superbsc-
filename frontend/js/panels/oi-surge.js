@@ -1,4 +1,4 @@
-// Open Interest Surge Detector — Detect sudden OI changes across futures
+// Open Interest Surge Detector ··· Detect sudden OI changes across futures
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatPercent } = window.mefaiUtils;

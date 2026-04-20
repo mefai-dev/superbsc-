@@ -1,4 +1,4 @@
-"""DefiLlama API proxy — yields, protocols, stablecoins."""
+"""DefiLlama API proxy ··· yields, protocols, stablecoins."""
 
 from fastapi import APIRouter
 from proxy.cache import fetch_json
@@ -38,13 +38,13 @@ async def stablecoin_chains():
 
 @router.get("/dex-volume")
 async def dex_volume():
-    """BSC DEX volume overview — 129+ protocols."""
+    """BSC DEX volume overview ··· 129+ protocols."""
     return await fetch_json(f"{API}/overview/dexs/BSC", ttl=120)
 
 
 @router.get("/fees")
 async def fees():
-    """BSC protocol fees & revenue — 237+ protocols."""
+    """BSC protocol fees & revenue ··· 237+ protocols."""
     return await fetch_json(f"{API}/overview/fees/BSC", ttl=120)
 
 

@@ -1,4 +1,4 @@
-"""DexScreener API proxy — new token discovery."""
+"""DexScreener API proxy ··· new token discovery."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json

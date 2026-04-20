@@ -1,4 +1,4 @@
-// Taker Pressure Scanner — Buy/sell volume pressure across top futures pairs
+// Taker Pressure Scanner ··· Buy/sell volume pressure across top futures pairs
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent, formatCurrency } = window.mefaiUtils;

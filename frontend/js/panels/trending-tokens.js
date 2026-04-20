@@ -1,4 +1,4 @@
-// MEFAI Trending Tokens Panel — rank.trending() data
+// MEFAI Trending Tokens Panel ··· rank.trending() data
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;

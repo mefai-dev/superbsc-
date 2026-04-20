@@ -1,4 +1,4 @@
-// API & Maintenance Monitor — Binance system status announcements
+// API & Maintenance Monitor ··· Binance system status announcements
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

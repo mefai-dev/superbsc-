@@ -1,4 +1,4 @@
-// MEFAI Toast — Notification toasts
+// MEFAI Toast ··· Notification toasts
 
 export function showToast(message, duration = 3000) {
   const container = document.getElementById('toast-container');

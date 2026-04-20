@@ -1,4 +1,4 @@
-// Momentum Cascade Tracker — Track how momentum propagates across assets in real-time
+// Momentum Cascade Tracker ··· Track how momentum propagates across assets in real-time
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent } = window.mefaiUtils;

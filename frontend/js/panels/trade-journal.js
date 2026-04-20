@@ -1,4 +1,4 @@
-// MEFAI Trade Journal — API Key required informational panel
+// MEFAI Trade Journal ··· API Key required informational panel
 import { BasePanel } from '../components/base-panel.js';
 
 export class TradeJournalPanel extends BasePanel {
@@ -49,10 +49,10 @@ export class TradeJournalPanel extends BasePanel {
     h += '<div class="tj-desc">Track and analyze your trading performance with automated journaling from Binance trade history.</div>';
 
     h += '<div class="tj-metrics">';
-    h += '<div class="tj-metric"><div class="tj-metric-label">Win Rate</div><div class="tj-metric-val">—%</div></div>';
-    h += '<div class="tj-metric"><div class="tj-metric-label">Avg Hold Time</div><div class="tj-metric-val">—</div></div>';
-    h += '<div class="tj-metric"><div class="tj-metric-label">Top Pair</div><div class="tj-metric-val">—</div></div>';
-    h += '<div class="tj-metric"><div class="tj-metric-label">PnL Summary</div><div class="tj-metric-val">—</div></div>';
+    h += '<div class="tj-metric"><div class="tj-metric-label">Win Rate</div><div class="tj-metric-val">···%</div></div>';
+    h += '<div class="tj-metric"><div class="tj-metric-label">Avg Hold Time</div><div class="tj-metric-val">···</div></div>';
+    h += '<div class="tj-metric"><div class="tj-metric-label">Top Pair</div><div class="tj-metric-val">···</div></div>';
+    h += '<div class="tj-metric"><div class="tj-metric-label">PnL Summary</div><div class="tj-metric-val">···</div></div>';
     h += '</div>';
 
     h += '<div class="tj-preview"><h4>Features</h4>';

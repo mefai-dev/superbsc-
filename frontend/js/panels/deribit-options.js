@@ -1,4 +1,4 @@
-// MEFAI Deribit Options — Implied Volatility, Put/Call Ratio, Max Pain
+// MEFAI Deribit Options ··· Implied Volatility, Put/Call Ratio, Max Pain
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -62,7 +62,7 @@ export class DeribitOptionsPanel extends BasePanel {
     avgPutIV = putCount > 0 ? avgPutIV / putCount : 0;
     const pcRatio = totalCallOI > 0 ? totalPutOI / totalCallOI : 0;
 
-    // Max pain — strike where total pain is minimized
+    // Max pain ··· strike where total pain is minimized
     let maxPainStrike = 0, minPain = Infinity;
     const strikes = Object.keys(strikeOI).map(Number).sort((a, b) => a - b);
     strikes.forEach(s => {

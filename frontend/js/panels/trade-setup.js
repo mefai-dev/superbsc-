@@ -1,4 +1,4 @@
-// MEFAI Trade Setup Scanner — RSI, MACD, Bollinger Band setups
+// MEFAI Trade Setup Scanner ··· RSI, MACD, Bollinger Band setups
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;

@@ -1,4 +1,4 @@
-// Spot-Futures Basis Spread — Compare spot vs futures prices
+// Spot-Futures Basis Spread ··· Compare spot vs futures prices
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent } = window.mefaiUtils;

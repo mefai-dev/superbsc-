@@ -1,4 +1,4 @@
-// MEFAI Chart — TradingView lightweight-charts wrapper
+// MEFAI Chart ··· TradingView lightweight-charts wrapper
 
 let _loadPromise = null;
 

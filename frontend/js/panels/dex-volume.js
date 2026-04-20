@@ -1,4 +1,4 @@
-// MEFAI BSC DEX Volume Analytics â€” 129+ DEX volume rankings
+// MEFAI BSC DEX Volume Analytics Â·Â·Â· 129+ DEX volume rankings
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -57,9 +57,9 @@ export class DexVolumePanel extends BasePanel {
     const c1m = data.change1m >= 0 ? 'val-up' : 'val-down';
 
     h += '<div class="dv-cards">';
-    h += `<div class="dv-card"><div class="dv-label">24h Vol</div><div class="dv-val">${formatCurrency(data.total24h)}</div><div class="dv-sub ${c1d}">${data.change1d >= 0 ? 'â†‘' : 'â†“'}${Math.abs(data.change1d).toFixed(1)}%</div></div>`;
-    h += `<div class="dv-card"><div class="dv-label">7d Vol</div><div class="dv-val">${formatCurrency(data.total7d)}</div><div class="dv-sub ${c7d}">${data.change7d >= 0 ? 'â†‘' : 'â†“'}${Math.abs(data.change7d).toFixed(1)}%</div></div>`;
-    h += `<div class="dv-card"><div class="dv-label">30d Vol</div><div class="dv-val">${formatCurrency(data.total30d)}</div><div class="dv-sub ${c1m}">${data.change1m >= 0 ? 'â†‘' : 'â†“'}${Math.abs(data.change1m).toFixed(1)}%</div></div>`;
+    h += `<div class="dv-card"><div class="dv-label">24h Vol</div><div class="dv-val">${formatCurrency(data.total24h)}</div><div class="dv-sub ${c1d}">${data.change1d >= 0 ? 'Â·†‘' : 'Â·†Â·'}${Math.abs(data.change1d).toFixed(1)}%</div></div>`;
+    h += `<div class="dv-card"><div class="dv-label">7d Vol</div><div class="dv-val">${formatCurrency(data.total7d)}</div><div class="dv-sub ${c7d}">${data.change7d >= 0 ? 'Â·†‘' : 'Â·†Â·'}${Math.abs(data.change7d).toFixed(1)}%</div></div>`;
+    h += `<div class="dv-card"><div class="dv-label">30d Vol</div><div class="dv-val">${formatCurrency(data.total30d)}</div><div class="dv-sub ${c1m}">${data.change1m >= 0 ? 'Â·†‘' : 'Â·†Â·'}${Math.abs(data.change1m).toFixed(1)}%</div></div>`;
     h += '</div>';
 
     const sorted = [...data.protocols].sort((a, b) =>
@@ -97,9 +97,9 @@ export class DexVolumePanel extends BasePanel {
       h += `<td style="color:var(--text-muted)">${i + 1}</td>`;
       h += `<td>${logo}<span style="font-weight:600">${escapeHtml(p.name)}</span></td>`;
       h += `<td style="text-align:right">${formatCurrency(p.total24h)}</td>`;
-      h += `<td style="text-align:right" class="${cls1d}">${p.change1d >= 0 ? 'â†‘' : 'â†“'}${Math.abs(p.change1d).toFixed(1)}%</td>`;
+      h += `<td style="text-align:right" class="${cls1d}">${p.change1d >= 0 ? 'Â·†‘' : 'Â·†Â·'}${Math.abs(p.change1d).toFixed(1)}%</td>`;
       h += `<td style="text-align:right">${formatCurrency(p.total7d)}</td>`;
-      h += `<td style="text-align:right" class="${cls7d}">${p.change7d >= 0 ? 'â†‘' : 'â†“'}${Math.abs(p.change7d).toFixed(1)}%</td>`;
+      h += `<td style="text-align:right" class="${cls7d}">${p.change7d >= 0 ? 'Â·†‘' : 'Â·†Â·'}${Math.abs(p.change7d).toFixed(1)}%</td>`;
       h += '</tr>';
     });
     h += '</tbody></table>';

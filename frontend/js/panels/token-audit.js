@@ -1,4 +1,4 @@
-// MEFAI Token Audit Panel — audit.check() data
+// MEFAI Token Audit Panel ··· audit.check() data
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, riskClass } = window.mefaiUtils;

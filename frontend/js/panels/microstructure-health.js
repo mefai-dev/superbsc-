@@ -1,4 +1,4 @@
-// Market Microstructure Health Index — 5 metrics fused into a single health score per pair
+// Market Microstructure Health Index ··· 5 metrics fused into a single health score per pair
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent } = window.mefaiUtils;

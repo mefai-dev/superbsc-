@@ -1,4 +1,4 @@
-// MEFAI Token Search Panel — token.search() data
+// MEFAI Token Search Panel ··· token.search() data
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatAddress, escapeHtml } = window.mefaiUtils;

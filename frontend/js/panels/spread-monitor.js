@@ -1,4 +1,4 @@
-// Spread & Liquidity Monitor — Compare spot vs futures spread and order book depth
+// Spread & Liquidity Monitor ··· Compare spot vs futures spread and order book depth
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent } = window.mefaiUtils;

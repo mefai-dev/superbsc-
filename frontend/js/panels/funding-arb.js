@@ -1,7 +1,7 @@
-// MEFAI Funding Arbitrage Scanner — ORIGINAL SKILL
-// Problem: When funding rates are extreme AND smart money disagrees → contrarian alpha.
-// Extreme positive funding = crowded longs. If SM is selling → high prob reversal signal.
-// Extreme negative funding = crowded shorts. If SM is buying → high prob bounce signal.
+// MEFAI Funding Arbitrage Scanner ··· ORIGINAL SKILL
+// Problem: When funding rates are extreme AND smart money disagrees ·�� contrarian alpha.
+// Extreme positive funding = crowded longs. If SM is selling ·�� high prob reversal signal.
+// Extreme negative funding = crowded shorts. If SM is buying ·�� high prob bounce signal.
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, escapeHtml } = window.mefaiUtils;
@@ -79,7 +79,7 @@ export class FundingArbPanel extends BasePanel {
         signal = 'LONG';
         arbScore = absRate * 100 + sm.smCount * 5;
       } else if (absRate > 0.05) {
-        // Very extreme funding without SM confirmation — still notable
+        // Very extreme funding without SM confirmation ··· still notable
         signal = fund.fundingRate > 0 ? 'CROWD-L' : 'CROWD-S';
         arbScore = absRate * 50;
       }
@@ -93,7 +93,7 @@ export class FundingArbPanel extends BasePanel {
         fundingRate: fund.fundingRate,
         absRate,
         markPrice: fund.markPrice,
-        smDir: sm?.direction || '—',
+        smDir: sm?.direction || '···',
         smCount: sm?.smCount || 0,
         signal,
         arbScore: parseFloat(arbScore.toFixed(1)),
@@ -145,7 +145,7 @@ export class FundingArbPanel extends BasePanel {
       h += `<td class="arb-score" style="color:${sigColor}">${r.arbScore}</td>`;
       h += `<td><span class="arb-signal" style="color:${sigColor};border:1px solid ${sigColor}">${r.signal}</span></td>`;
       h += `<td style="${rateCls};font-weight:700">${r.fundingRate >= 0 ? '+' : ''}${r.fundingRate.toFixed(4)}%${timer}</td>`;
-      h += `<td class="${smCls}" style="font-weight:700">${r.smDir === 'buy' ? 'BUY↑' : r.smDir === 'sell' ? 'SELL↓' : '—'} <span style="color:var(--text-muted);font-weight:400">(${r.smCount})</span></td>`;
+      h += `<td class="${smCls}" style="font-weight:700">${r.smDir === 'buy' ? 'BUY·��' : r.smDir === 'sell' ? 'SELL·�·' : '···'} <span style="color:var(--text-muted);font-weight:400">(${r.smCount})</span></td>`;
       h += `<td class="val-num">$${formatPrice(r.markPrice)}</td>`;
       h += '</tr>';
     }

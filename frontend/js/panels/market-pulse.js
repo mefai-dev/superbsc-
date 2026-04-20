@@ -1,4 +1,4 @@
-// MEFAI Global Market Pulse — crypto market overview from CoinGecko
+// MEFAI Global Market Pulse ··· crypto market overview from CoinGecko
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -55,7 +55,7 @@ export class MarketPulsePanel extends BasePanel {
     h += '<div class="mp-cards">';
     h += `<div class="mp-card"><div class="mp-label">Total MCap</div><div class="mp-val">${formatCurrency(totalMcap)}</div>`;
     const mcapCls = mcapChange >= 0 ? 'val-up' : 'val-down';
-    h += `<div class="mp-sub ${mcapCls}">${mcapChange >= 0 ? '↑' : '↓'}${Math.abs(mcapChange).toFixed(2)}%</div></div>`;
+    h += `<div class="mp-sub ${mcapCls}">${mcapChange >= 0 ? '·��' : '·�·'}${Math.abs(mcapChange).toFixed(2)}%</div></div>`;
     h += `<div class="mp-card"><div class="mp-label">24h Volume</div><div class="mp-val">${formatCurrency(totalVol)}</div></div>`;
     h += `<div class="mp-card"><div class="mp-label">BTC Dom</div><div class="mp-val">${btcDom.toFixed(1)}%</div>`;
     h += `<div class="mp-sub">${formatNumber(activeCoins)} coins</div></div>`;
@@ -85,7 +85,7 @@ export class MarketPulsePanel extends BasePanel {
       const defiVol = parseFloat(d.trading_volume_24h || 0);
       const defiDom = parseFloat(d.defi_dominance || 0);
       const ethRatio = parseFloat(d.eth_market_cap || 0);
-      const topCoin = d.top_coin_name || '—';
+      const topCoin = d.top_coin_name || '···';
       const topDom = parseFloat(d.top_coin_defi_dominance || 0);
 
       h += '<div class="mp-section"><div class="mp-section-title">DeFi Overview</div>';

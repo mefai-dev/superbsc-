@@ -1,4 +1,4 @@
-// MEFAI Earn Product Comparator — Binance Simple Earn (auth required)
+// MEFAI Earn Product Comparator ··· Binance Simple Earn (auth required)
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;
@@ -72,7 +72,7 @@ export class EarnComparatorPanel extends BasePanel {
       const asset = escapeHtml(p.asset || '');
       const apy = parseFloat(p.latestAnnualPercentageRate || p.annualPercentageRate || 0) * 100;
       const duration = p.duration ? p.duration + 'd' : 'Flex';
-      const minAmt = p.minPurchaseAmount || '—';
+      const minAmt = p.minPurchaseAmount || '···';
       h += `<div class="earn-row"><span style="font-weight:600">${asset}</span><span>${this._tab}</span><span class="earn-apy">${apy.toFixed(2)}%</span><span>${duration}</span><span>${minAmt}</span></div>`;
     });
 

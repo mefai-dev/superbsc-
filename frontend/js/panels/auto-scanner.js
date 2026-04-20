@@ -16,7 +16,7 @@ export class AutoScannerPanel extends BasePanel {
   }
 
   async fetchData() {
-    // Always show data — combine meme rank + trending + signals for a composite view
+    // Always show data ··· combine meme rank + trending + signals for a composite view
     const [memeRes, trendRes, sigRes] = await Promise.allSettled([
       window.mefaiApi.rank.memeRank(),
       window.mefaiApi.rank.trending(),
@@ -80,7 +80,7 @@ export class AutoScannerPanel extends BasePanel {
       const barW = Math.max(5, pct);
       h += `<td><span style="font-weight:700;color:${hex}">${t.score.toFixed(0)}</span> <span class="score-bar"><span class="score-fill" style="width:${barW}%;background:${hex}"></span></span></td>`;
       h += `<td style="font-weight:600">${escapeHtml(t.token)} <span class="chain-badge">${t.chain}</span></td>`;
-      h += `<td class="${sigCls}">${t.signal || '—'}</td>`;
+      h += `<td class="${sigCls}">${t.signal || '···'}</td>`;
       h += `<td class="val-num">${formatCurrency(t.mcap)}</td>`;
       h += `<td class="val-num">$${formatPrice(t.price)}</td>`;
       h += `<td>${formatAge(t.age)}</td></tr>`;

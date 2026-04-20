@@ -1,4 +1,4 @@
-// MEFAI Swap Router — Binance Web3 Wallet swap overview (informational)
+// MEFAI Swap Router ··· Binance Web3 Wallet swap overview (informational)
 import { BasePanel } from '../components/base-panel.js';
 
 export class SwapRouterPanel extends BasePanel {

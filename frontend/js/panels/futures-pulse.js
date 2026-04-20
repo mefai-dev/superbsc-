@@ -1,4 +1,4 @@
-// MEFAI Futures Pulse — Funding rates, OI, Long/Short ratios (PR #5)
+// MEFAI Futures Pulse ··· Funding rates, OI, Long/Short ratios (PR #5)
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -100,7 +100,7 @@ export class FuturesPulsePanel extends BasePanel {
       h += `<td><span style="font-weight:600">${escapeHtml(r.symbol)}</span></td>`;
       h += `<td class="${rateCls}">${r.fundingRate >= 0 ? '+' : ''}${r.fundingRate.toFixed(4)}%${timer}</td>`;
       h += `<td class="val-num">$${formatPrice(r.markPrice)}</td>`;
-      h += `<td class="${cls24}">${r.change24h >= 0 ? '↑' : '↓'}${Math.abs(r.change24h).toFixed(2)}%</td>`;
+      h += `<td class="${cls24}">${r.change24h >= 0 ? '·��' : '·�·'}${Math.abs(r.change24h).toFixed(2)}%</td>`;
       h += `<td class="val-num">${formatCurrency(r.volume24h)}</td>`;
       h += '</tr>';
     }

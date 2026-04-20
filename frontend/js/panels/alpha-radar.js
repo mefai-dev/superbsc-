@@ -1,4 +1,4 @@
-// MEFAI Alpha Radar — 5-source convergence scoring
+// MEFAI Alpha Radar ··· 5-source convergence scoring
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent, formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -211,9 +211,9 @@ export class AlphaRadarPanel extends BasePanel {
       h += `<td>${icon}<span style="font-weight:600">${escapeHtml(r.symbol)}</span></td>`;
       h += `<td class="${tierCls}" style="font-weight:700">${r.alphaScore}<span class="alpha-bar"><span class="alpha-fill" style="width:${pct}%;background:${barColor};${barGlow}"></span></span></td>`;
       h += `<td>${badgesHtml}</td>`;
-      h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '—'}</td>`;
-      h += `<td class="${cls24}">${r.change24h ? (r.change24h >= 0 ? '↑' : '↓') + Math.abs(r.change24h).toFixed(1) + '%' : '—'}</td>`;
-      h += `<td class="val-num">${r.smCount || '—'}</td>`;
+      h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '···'}</td>`;
+      h += `<td class="${cls24}">${r.change24h ? (r.change24h >= 0 ? '·��' : '·�·') + Math.abs(r.change24h).toFixed(1) + '%' : '···'}</td>`;
+      h += `<td class="val-num">${r.smCount || '···'}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

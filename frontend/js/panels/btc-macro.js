@@ -1,4 +1,4 @@
-// MEFAI BTC Macro Indicators — Pi Cycle, Rainbow, Golden Ratio
+// MEFAI BTC Macro Indicators ··· Pi Cycle, Rainbow, Golden Ratio
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -132,7 +132,7 @@ export class BtcMacroPanel extends BasePanel {
       const isCurrent = currentZone && currentZone.name === name;
       h += `<div style="display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:3px;background:${color}${isCurrent ? '44' : '22'};${isCurrent ? 'border:1px solid ' + color : ''}">`;
       h += `<div style="width:10px;height:10px;border-radius:2px;background:${color}"></div>`;
-      h += `<span style="font-size:10px;color:var(--text);${isCurrent ? 'font-weight:700' : ''}">${name}${isCurrent ? ' ← Current' : ''}</span>`;
+      h += `<span style="font-size:10px;color:var(--text);${isCurrent ? 'font-weight:700' : ''}">${name}${isCurrent ? ' ·�� Current' : ''}</span>`;
       h += '</div>';
     });
     h += '</div>';

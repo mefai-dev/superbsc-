@@ -1,4 +1,4 @@
-// Composite Anomaly Detector — 6 independent anomaly signals fused into one alert system
+// Composite Anomaly Detector ··· 6 independent anomaly signals fused into one alert system
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent } = window.mefaiUtils;

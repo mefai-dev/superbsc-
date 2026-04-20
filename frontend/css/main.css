@@ -1,4 +1,4 @@
-/* MEFAI Terminal — Binance Theme, Dark Default */
+/* MEFAI Terminal ··· Binance Theme, Dark Default */
 
 :root {
   --bg: #0b0e11;
@@ -419,8 +419,8 @@ select.lang-select.header-lang-select option {
   background: var(--bg-panel);
 }
 .data-table th:hover { color: var(--text); }
-.data-table th.sorted::after { content: ' ▼'; }
-.data-table th.sorted.asc::after { content: ' ▲'; }
+.data-table th.sorted::after { content: ' ·��'; }
+.data-table th.sorted.asc::after { content: ' ·��'; }
 .data-table td {
   padding: 4px 8px;
   border-bottom: 1px solid var(--border);
@@ -432,7 +432,7 @@ select.lang-select.header-lang-select option {
 .data-table tr:hover { background: var(--bg-hover); }
 .data-table tr { cursor: pointer; }
 
-/* Values — green/red */
+/* Values ··· green/red */
 .val-up { font-weight: 600; color: var(--up); }
 .val-down { font-weight: 400; color: var(--down); }
 .val-num { font-variant-numeric: tabular-nums; }
@@ -869,7 +869,7 @@ status-bar {
 }
 .settings-toggle .toggle-switch.on::after { transform: translateX(18px); }
 
-/* Mobile bottom nav + actions — hidden on desktop */
+/* Mobile bottom nav + actions ··· hidden on desktop */
 #mobile-nav { display: none; }
 #mobile-actions { display: none; }
 .hamburger-drawer { display: none; }
@@ -934,7 +934,7 @@ select.lang-select {
     flex-direction: column;
   }
 
-  /* Header — compact, logo only (action buttons moved to bottom) */
+  /* Header ··· compact, logo only (action buttons moved to bottom) */
   #header {
     flex-shrink: 0;
     height: 40px;
@@ -947,7 +947,7 @@ select.lang-select {
   .logo { font-size: 13px; }
   .logo svg { width: 18px; height: 18px; }
 
-  /* Grid — scrollable panel container, fills remaining space */
+  /* Grid ··· scrollable panel container, fills remaining space */
   .grid {
     flex: 1;
     display: flex !important;
@@ -966,7 +966,7 @@ select.lang-select {
     flex-shrink: 0;
   }
 
-  /* Premium panels — rounded, elevated, accent border */
+  /* Premium panels ··· rounded, elevated, accent border */
   .panel {
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -992,7 +992,7 @@ select.lang-select {
   /* Status bar hidden */
   #status-bar { display: none; }
 
-  /* Mobile bottom bar — 5 items (4 tabs + hamburger) */
+  /* Mobile bottom bar ··· 5 items (4 tabs + hamburger) */
   #mobile-nav {
     display: flex;
     flex-shrink: 0;
@@ -1153,7 +1153,7 @@ select.lang-select {
   .help-content { padding: 12px; }
   .help-content td { font-size: 11px; padding: 3px 6px; }
 
-  /* Toast — above bottom bars */
+  /* Toast ··· above bottom bars */
   #toast-container { bottom: 100px; right: 8px; left: 8px; }
   .toast { font-size: 11px; }
 

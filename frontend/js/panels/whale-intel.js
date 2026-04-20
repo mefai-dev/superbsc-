@@ -1,4 +1,4 @@
-// MEFAI Whale Wallet Intelligence — 3-stage whale tracking pipeline
+// MEFAI Whale Wallet Intelligence ··· 3-stage whale tracking pipeline
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatAddress, escapeHtml } = window.mefaiUtils;
@@ -15,7 +15,7 @@ export class WhaleIntelPanel extends BasePanel {
   }
 
   async fetchData() {
-    // Stage 1: Leaderboard Discovery — top whales
+    // Stage 1: Leaderboard Discovery ··· top whales
     const res = await window.mefaiApi.rank.topTraders({
       pageNo: 1, pageSize: 20, period: '7d', chainId: '56',
       tag: 'ALL', sortBy: 0, orderBy: 0,
@@ -24,7 +24,7 @@ export class WhaleIntelPanel extends BasePanel {
     const items = res?.data?.data || res?.data || [];
     if (!Array.isArray(items) || !items.length) return [];
 
-    // Stage 2: Portfolio Tracking — fetch positions for top 5 whales
+    // Stage 2: Portfolio Tracking ··· fetch positions for top 5 whales
     const top5 = items.slice(0, 5);
     const posResults = await Promise.allSettled(
       top5.map(w => window.mefaiApi.address.positions({ address: w.address, chainId: '56' }))
@@ -98,7 +98,7 @@ export class WhaleIntelPanel extends BasePanel {
 
     for (const w of sorted) {
       const cls = w.pnl >= 0 ? 'val-up' : 'val-down';
-      const ar = w.pnl >= 0 ? '↑' : '↓';
+      const ar = w.pnl >= 0 ? '·��' : '·�·';
       const wrCls = w.winRate >= 0.6 ? 'val-up' : w.winRate >= 0.4 ? '' : 'val-down';
       const tagHtml = w.tags ? `<span class="whale-tag">${escapeHtml(String(w.tags).split(',')[0])}</span>` : '';
 
@@ -108,7 +108,7 @@ export class WhaleIntelPanel extends BasePanel {
       h += `<td class="${cls}">${ar}${formatCurrency(Math.abs(w.pnl))}</td>`;
       h += `<td class="${wrCls}">${(w.winRate * 100).toFixed(1)}%</td>`;
       h += `<td class="val-num">${formatCurrency(w.balance)}</td>`;
-      h += `<td>${w.topHoldings ? `<span class="whale-holdings">${escapeHtml(w.topHoldings)}</span><span style="color:var(--text-muted);font-size:9px"> (${w.posCount})</span>` : '<span style="color:var(--text-muted)">—</span>'}</td>`;
+      h += `<td>${w.topHoldings ? `<span class="whale-holdings">${escapeHtml(w.topHoldings)}</span><span style="color:var(--text-muted);font-size:9px"> (${w.posCount})</span>` : '<span style="color:var(--text-muted)">···</span>'}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

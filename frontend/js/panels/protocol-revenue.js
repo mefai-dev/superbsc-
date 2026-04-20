@@ -1,4 +1,4 @@
-// MEFAI BSC Protocol Revenue Intelligence — fee & revenue rankings
+// MEFAI BSC Protocol Revenue Intelligence ··· fee & revenue rankings
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -23,7 +23,7 @@ export class ProtocolRevenuePanel extends BasePanel {
       .map(p => ({
         name: p.displayName || p.name || '?',
         logo: p.logo || '',
-        category: p.category || '—',
+        category: p.category || '···',
         total24h: p.total24h || 0,
         total7d: p.total7d || 0,
         total30d: p.total30d || 0,
@@ -59,7 +59,7 @@ export class ProtocolRevenuePanel extends BasePanel {
     const annualized = data.total24h * 365;
 
     h += '<div class="pr-cards">';
-    h += `<div class="pr-card"><div class="pr-label">24h Fees</div><div class="pr-val">${formatCurrency(data.total24h)}</div><div class="pr-sub ${c1d}">${data.change1d >= 0 ? '↑' : '↓'}${Math.abs(data.change1d).toFixed(1)}%</div></div>`;
+    h += `<div class="pr-card"><div class="pr-label">24h Fees</div><div class="pr-val">${formatCurrency(data.total24h)}</div><div class="pr-sub ${c1d}">${data.change1d >= 0 ? '·��' : '·�·'}${Math.abs(data.change1d).toFixed(1)}%</div></div>`;
     h += `<div class="pr-card"><div class="pr-label">7d Fees</div><div class="pr-val">${formatCurrency(data.total7d)}</div></div>`;
     h += `<div class="pr-card"><div class="pr-label">Ann. Revenue</div><div class="pr-val">${formatCurrency(annualized)}</div></div>`;
     h += '</div>';
@@ -83,7 +83,7 @@ export class ProtocolRevenuePanel extends BasePanel {
       h += `<td>${logo}<span style="font-weight:600">${escapeHtml(p.name)}</span></td>`;
       h += `<td style="font-size:9px;color:var(--text-muted)">${escapeHtml(p.category)}</td>`;
       h += `<td style="text-align:right">${formatCurrency(p.total24h)}</td>`;
-      h += `<td style="text-align:right" class="${cls1d}">${p.change1d >= 0 ? '↑' : '↓'}${Math.abs(p.change1d).toFixed(1)}%</td>`;
+      h += `<td style="text-align:right" class="${cls1d}">${p.change1d >= 0 ? '·��' : '·�·'}${Math.abs(p.change1d).toFixed(1)}%</td>`;
       h += `<td style="text-align:right">${formatCurrency(p.total30d)}</td>`;
       h += '</tr>';
       // Methodology row (expandable)

@@ -1,4 +1,4 @@
-"""Binance Options (EAPI) — public market data, no auth."""
+"""Binance Options (EAPI) ··· public market data, no auth."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json
@@ -23,7 +23,7 @@ async def ticker():
 
 @router.get("/exchange-info")
 async def exchange_info():
-    """All active option contracts — strikes, expiries, types."""
+    """All active option contracts ··· strikes, expiries, types."""
     return await fetch_json(f"{EAPI}/exchangeInfo", ttl=600)
 
 

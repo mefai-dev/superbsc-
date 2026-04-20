@@ -1,4 +1,4 @@
-// MEFAI Meme Rank Panel — rank.memeRank() data
+// MEFAI Meme Rank Panel ··· rank.memeRank() data
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatPercent, escapeHtml } = window.mefaiUtils;

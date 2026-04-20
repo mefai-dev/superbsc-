@@ -8,11 +8,11 @@ A Bloomberg Terminal inspired, keyboard driven, multi panel interface that unifi
 
 ```
 +---------------------------+---------------------------+
-| 🔴 CRITICAL | BTC         | SMART MONEY RADAR         |
-| Smart Money Score 85/100  | BTC  LONG  ████████░ 85   |
-| Top traders going long    | ETH  SHORT ████░░░░░ 52   |
-| aggressively while retail | SOL  LONG  ██████░░░ 71   |
-| is short. 5/6 factors     | BNB  NEUTRAL ███░░░░ 38   |
+| �·� CRITICAL | BTC         | SMART MONEY RADAR         |
+| Smart Money Score 85/100  | BTC  LONG  ·��·��·��·��·��·��·��·��·�� 85   |
+| Top traders going long    | ETH  SHORT ·��·��·��·��·��·��·��·��·�� 52   |
+| aggressively while retail | SOL  LONG  ·��·��·��·��·��·��·��·��·�� 71   |
+| is short. 5/6 factors     | BNB  NEUTRAL ·��·��·��·��·��·��·�� 38   |
 | aligned. Funding -4.2bps  +---------------------------+
 | longs getting paid.     | ANOMALY COMPOSITE         |
 +---------------------------+ BTC: 4/6 signals firing   |
@@ -20,8 +20,8 @@ A Bloomberg Terminal inspired, keyboard driven, multi panel interface that unifi
 | Smart Retail Divergence   | SOL: NORMAL               |
 | Top traders long (1.82)   +---------------------------+
 | retail short (0.74).      | MICROSTRUCTURE HEALTH     |
-| Gap: 1.08, smart money   | BTC: A (92) ████████████ |
-| historically wins.        | ETH: B (71) █████████░░░ |
+| Gap: 1.08, smart money   | BTC: A (92) ·��·��·��·��·��·��·��·��·��·��·��·�� |
+| historically wins.        | ETH: B (71) ·��·��·��·��·��·��·��·��·��·��·��·�� |
 +---------------------------+---------------------------+
 ```
 
@@ -90,12 +90,12 @@ MEFAI uses **4 data signals that only Binance publishes**: no other exchange pro
 No other project connects this many APIs into a single workflow:
 ```
 Market Data (Binance CEX + Futures + DeFi)
-    → Smart Money Analysis (top trader positioning)
-    → Anomaly Detection (6-signal composite)
-    → Microstructure Health (5-metric scoring)
-    → Momentum Cascade (cross asset propagation)
-    → AI Intelligence Feed (natural language synthesis)
-    → AI Market Assistant (conversational interface)
+    ·�� Smart Money Analysis (top trader positioning)
+    ·�� Anomaly Detection (6-signal composite)
+    ·�� Microstructure Health (5-metric scoring)
+    ·�� Momentum Cascade (cross asset propagation)
+    ·�� AI Intelligence Feed (natural language synthesis)
+    ·�� AI Market Assistant (conversational interface)
 ```
 
 ### 58 Analytical Skills
@@ -265,29 +265,29 @@ Open `http://localhost:8000`
 
 ```
 Browser (Vanilla JS + Web Components, zero dependencies)
-    │
-    ├── 97 Panels (one file each, auto-registered)
-    ├── 58 Skills (independent analytical engines)
-    ├── Intelligence Feed (cross-skill synthesis)
-    ├── 31 Layout Presets
-    ├── 10 Language Support (EN/ZH/TR/VI/HI/FA/DE/FR/AR/ES)
-    └── Keyboard first UX (Command Palette, Search, Shortcuts)
-    │
+    ··�
+    ··�······ 97 Panels (one file each, auto-registered)
+    ··�······ 58 Skills (independent analytical engines)
+    ··�······ Intelligence Feed (cross-skill synthesis)
+    ··�······ 31 Layout Presets
+    ··�······ 10 Language Support (EN/ZH/TR/VI/HI/FA/DE/FR/AR/ES)
+    ········· Keyboard first UX (Command Palette, Search, Shortcuts)
+    ··�
     v
 FastAPI Proxy (Python, async, in-memory cache + startup warmup)
-    │
-    ├── Spot CEX: data-api.binance.vision
-    ├── Futures: fapi.binance.com (via geo unblocking proxies)
-    ├── Web3 Skills: web3.binance.com/bapi/defi/
-    ├── DeFi: DeFi Llama, DexScreener, GoPlus
-    ├── Global: CoinGecko
-    ├── P2P: p2p.binance.com/bapi/c2c
-    ├── BAPI: binance.com/bapi/composite
-    └── Scanner Engine (background asyncio task)
+    ··�
+    ··�······ Spot CEX: data-api.binance.vision
+    ··�······ Futures: fapi.binance.com (via geo unblocking proxies)
+    ··�······ Web3 Skills: web3.binance.com/bapi/defi/
+    ··�······ DeFi: DeFi Llama, DexScreener, GoPlus
+    ··�······ Global: CoinGecko
+    ··�······ P2P: p2p.binance.com/bapi/c2c
+    ··�······ BAPI: binance.com/bapi/composite
+    ········· Scanner Engine (background asyncio task)
 ```
 
 - **Frontend**: Vanilla JS, Web Components, zero dependencies, no build step
-- **3D Engine**: Three.js v0.162.0 (Market DNA Helix — ES module via CDN)
+- **3D Engine**: Three.js v0.162.0 (Market DNA Helix ··· ES module via CDN)
 - **Backend**: Python FastAPI with async httpx client and in-memory TTL cache
 - **Charts**: TradingView lightweight-charts (vendored, MIT license)
 - **Cache**: Server-side TTL + client-side localStorage + startup warmup
@@ -335,51 +335,51 @@ Register in `app.js` panel registry. No build step needed.
 
 ```
 mefai-terminal/
-├── proxy/                     # Python FastAPI backend
-│   ├── main.py                # App entry, CORS, routes, warmup
-│   ├── cache.py               # Async HTTP client + TTL cache
-│   ├── config.py              # Environment settings
-│   ├── scanner.py             # Auto scan engine
-│   └── routes/                # 26 route modules
-│       ├── spot.py            # Binance Spot CEX
-│       ├── futures.py         # Binance Futures (4 proxy sources)
-│       ├── web3.py            # Web3 Skills Hub
-│       ├── dex.py             # DexScreener
-│       ├── goplus.py          # GoPlus Security
-│       ├── coingecko.py       # CoinGecko Global
-│       ├── defillama.py       # DeFi Llama
-│       ├── p2p.py             # P2P Market
-│       ├── announcements.py   # Binance Announcements
-│       ├── earn.py            # Binance Earn
-│       ├── margin.py          # Margin Trading
-│       ├── products.py        # Binance Products
-│       ├── binance_options.py # Binance Options Chain
-│       ├── deribit.py         # Deribit Options Analytics
-│       ├── btc_macro.py       # Bitcoin Macro & On-Chain
-│       ├── bnbchain.py        # BNB Chain Explorer
-│       ├── onchain.py         # On-Chain Statistics
-│       ├── etherscan.py       # Etherscan Integration
-│       ├── signals.py         # Trade Signal Engine
-│       ├── market_rank.py     # Market Rankings
-│       ├── token_audit.py     # Token Security Audit
-│       ├── token_info.py      # Token Information
-│       ├── address.py         # Address Analytics
-│       └── scanner.py         # Background Scanner Engine
-├── frontend/
-│   ├── index.html             # Single page shell
-│   ├── dna.html               # Market DNA 3D visualization page
-│   ├── css/main.css           # All styles (responsive)
-│   ├── css/dna.css            # Market DNA standalone styles
-│   └── js/
-│       ├── app.js             # Panel registry, layouts, keyboard
-│       ├── api.js             # API client with cache
-│       ├── store.js           # Pub/sub state management
-│       ├── i18n.js            # 10 language translations
-│       ├── utils.js           # Formatting utilities
-│       ├── components/        # Reusable Web Components
-│       └── panels/            # 97 panel files (one each)
-├── Dockerfile + docker-compose.yml
-└── Makefile
+··�······ proxy/                     # Python FastAPI backend
+··�   ··�······ main.py                # App entry, CORS, routes, warmup
+··�   ··�······ cache.py               # Async HTTP client + TTL cache
+··�   ··�······ config.py              # Environment settings
+··�   ··�······ scanner.py             # Auto scan engine
+··�   ········· routes/                # 26 route modules
+··�       ··�······ spot.py            # Binance Spot CEX
+··�       ··�······ futures.py         # Binance Futures (4 proxy sources)
+··�       ··�······ web3.py            # Web3 Skills Hub
+··�       ··�······ dex.py             # DexScreener
+··�       ··�······ goplus.py          # GoPlus Security
+··�       ··�······ coingecko.py       # CoinGecko Global
+··�       ··�······ defillama.py       # DeFi Llama
+··�       ··�······ p2p.py             # P2P Market
+··�       ··�······ announcements.py   # Binance Announcements
+··�       ··�······ earn.py            # Binance Earn
+··�       ··�······ margin.py          # Margin Trading
+··�       ··�······ products.py        # Binance Products
+··�       ··�······ binance_options.py # Binance Options Chain
+··�       ··�······ deribit.py         # Deribit Options Analytics
+··�       ··�······ btc_macro.py       # Bitcoin Macro & On-Chain
+··�       ··�······ bnbchain.py        # BNB Chain Explorer
+··�       ··�······ onchain.py         # On-Chain Statistics
+··�       ··�······ etherscan.py       # Etherscan Integration
+··�       ··�······ signals.py         # Trade Signal Engine
+··�       ··�······ market_rank.py     # Market Rankings
+··�       ··�······ token_audit.py     # Token Security Audit
+··�       ··�······ token_info.py      # Token Information
+··�       ··�······ address.py         # Address Analytics
+··�       ········· scanner.py         # Background Scanner Engine
+··�······ frontend/
+··�   ··�······ index.html             # Single page shell
+··�   ··�······ dna.html               # Market DNA 3D visualization page
+··�   ··�······ css/main.css           # All styles (responsive)
+··�   ··�······ css/dna.css            # Market DNA standalone styles
+··�   ········· js/
+··�       ··�······ app.js             # Panel registry, layouts, keyboard
+··�       ··�······ api.js             # API client with cache
+··�       ··�······ store.js           # Pub/sub state management
+··�       ··�······ i18n.js            # 10 language translations
+··�       ··�······ utils.js           # Formatting utilities
+··�       ··�······ components/        # Reusable Web Components
+··�       ········· panels/            # 97 panel files (one each)
+··�······ Dockerfile + docker-compose.yml
+········· Makefile
 ```
 
 ## Configuration
@@ -425,4 +425,4 @@ MIT
 
 ## Acknowledgments
 
-Built on [Binance Skills Hub](https://github.com/binance/binance-skills-hub) — the open marketplace of crypto AI skills for developers.
+Built on [Binance Skills Hub](https://github.com/binance/binance-skills-hub) ··· the open marketplace of crypto AI skills for developers.

@@ -1,4 +1,4 @@
-// MEFAI NFT Portfolio — BNB Chain NFT Balance & Collection Viewer
+// MEFAI NFT Portfolio ··· BNB Chain NFT Balance & Collection Viewer
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

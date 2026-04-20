@@ -1,4 +1,4 @@
-"""CoinGecko API proxy — sector/category data for capital rotation."""
+"""CoinGecko API proxy ··· sector/category data for capital rotation."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json
@@ -33,11 +33,11 @@ async def category_coins(
 
 @router.get("/global")
 async def global_data():
-    """Global crypto market data — total mcap, volume, dominance."""
+    """Global crypto market data ··· total mcap, volume, dominance."""
     return await fetch_json(f"{CG}/global", ttl=60)
 
 
 @router.get("/global-defi")
 async def global_defi():
-    """Global DeFi market data — DeFi mcap, ratio, top coin."""
+    """Global DeFi market data ··· DeFi mcap, ratio, top coin."""
     return await fetch_json(f"{CG}/global/decentralized_finance_defi", ttl=60)

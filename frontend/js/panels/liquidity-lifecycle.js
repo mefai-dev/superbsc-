@@ -1,4 +1,4 @@
-// MEFAI Liquidity Lifecycle — LP lock status, holder concentration, DEX distribution
+// MEFAI Liquidity Lifecycle ··· LP lock status, holder concentration, DEX distribution
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatCurrency, formatNumber } = window.mefaiUtils;

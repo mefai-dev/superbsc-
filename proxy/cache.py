@@ -1,5 +1,5 @@
 """
-MEFAI Cache — Aggressive in-memory cache with stale-while-revalidate.
+MEFAI Cache ··· Aggressive in-memory cache with stale-while-revalidate.
 
 Strategy:
 - Fresh TTL (60s): serve from cache instantly
@@ -7,7 +7,7 @@ Strategy:
 - Beyond stale: fetch new data (blocking)
 - Startup warmup pre-fills cache
 
-This means users NEVER wait for Binance API — they always get instant cached data.
+This means users NEVER wait for Binance API ··· they always get instant cached data.
 Background refresh keeps it fresh.
 """
 
@@ -67,7 +67,7 @@ def set_cached(
     k = _key(url, params, body)
     _cache[k] = (time.time(), data)
     _cache.move_to_end(k)
-    # O(1) LRU eviction — pop from front (oldest access)
+    # O(1) LRU eviction ··· pop from front (oldest access)
     while len(_cache) > MAX_CACHE_ENTRIES:
         _cache.popitem(last=False)
 
@@ -161,7 +161,7 @@ async def _do_post(
 
 
 def _bg_refresh_get(url: str, params: dict | None, headers: dict):
-    """Schedule a background refresh — non-blocking."""
+    """Schedule a background refresh ··· non-blocking."""
     k = _key(url, params)
     if k in _refreshing:
         return  # already refreshing
@@ -211,7 +211,7 @@ async def fetch_json(url: str, params: dict | None = None, ttl: int = FRESH_TTL)
         _bg_refresh_get(url, params, headers)
         return cached
 
-    # Nothing cached — must fetch (blocking)
+    # Nothing cached ··· must fetch (blocking)
     data = await _do_fetch(url, params, headers)
     if isinstance(data, dict) and data.get("_no_cache"):
         return data  # don't cache retryable errors (429/503)

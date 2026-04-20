@@ -1,4 +1,4 @@
-// MEFAI Search Bar — Cmd+K global token search
+// MEFAI Search Bar ··· Cmd+K global token search
 
 import { debounce } from '../utils.js';
 
@@ -50,7 +50,7 @@ function renderResults() {
   results().innerHTML = items.slice(0, 10).map((item, i) => `
     <div class="search-result ${i === activeIndex ? 'active' : ''}" data-index="${i}">
       <div>
-        <span class="token-name">${item.symbol || item.name || '—'}</span>
+        <span class="token-name">${item.symbol || item.name || '···'}</span>
         <span class="token-chain">${item.chain || item.network || ''}</span>
       </div>
       <span class="token-price">${item.address ? item.address.slice(0, 10) + '...' : ''}</span>

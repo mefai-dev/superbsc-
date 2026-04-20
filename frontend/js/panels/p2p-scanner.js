@@ -1,4 +1,4 @@
-// MEFAI P2P Market Scanner — Binance P2P ad search
+// MEFAI P2P Market Scanner ··· Binance P2P ad search
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatNumber } = window.mefaiUtils;

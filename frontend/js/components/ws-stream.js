@@ -1,4 +1,4 @@
-// MEFAI WebSocket Stream â€” Real-time Binance price updates
+// MEFAI WebSocket Stream Â·Â·Â· Real-time Binance price updates
 // Uses data-stream.binance.vision (no geo-restriction)
 
 const WS_BASE = 'wss://data-stream.binance.vision/ws';
@@ -6,11 +6,11 @@ const WS_BASE = 'wss://data-stream.binance.vision/ws';
 class BinanceStream {
   constructor() {
     this._ws = null;
-    this._subs = new Map();     // stream â†’ Set of callbacks
-    this._prices = new Map();   // symbol â†’ {price, change, volume, high, low}
+    this._subs = new Map();     // stream Â·†’ Set of callbacks
+    this._prices = new Map();   // symbol Â·†’ {price, change, volume, high, low}
     this._reconnectTimer = null;
     this._connected = false;
-    this._reconnectDelay = 1000; // exponential backoff: 1s â†’ 2s â†’ 4s â†’ 8s â†’ max 30s
+    this._reconnectDelay = 1000; // exponential backoff: 1s Â·†’ 2s Â·†’ 4s Â·†’ 8s Â·†’ max 30s
   }
 
   // Subscribe to a ticker stream

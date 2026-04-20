@@ -1,4 +1,4 @@
-// MEFAI Liquidation Magnet — Estimated liquidation clusters that attract price
+// MEFAI Liquidation Magnet ··· Estimated liquidation clusters that attract price
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, formatNumber, escapeHtml } = window.mefaiUtils;
@@ -110,7 +110,7 @@ export class LiquidationMagnetPanel extends BasePanel {
 
     const magCls = data.magnetDirection === 'UP' ? 'lm-magnet-up' : 'lm-magnet-down';
     const magColor = data.magnetDirection === 'UP' ? '#00c853' : '#ff5252';
-    const magArrow = data.magnetDirection === 'UP' ? '↑' : '↓';
+    const magArrow = data.magnetDirection === 'UP' ? '·��' : '·�·';
     h += `<div class="lm-magnet ${magCls}">`;
     h += '<div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Liquidation Magnet</div>';
     h += `<div style="font-size:20px;font-weight:800;color:${magColor};margin:4px 0">${magArrow} ${data.magnetDirection}</div>`;

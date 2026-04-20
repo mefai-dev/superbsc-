@@ -1,4 +1,4 @@
-// MEFAI SM Acceleration — Multi-timeframe smart money inflow with pace detection (PR #11)
+// MEFAI SM Acceleration ··· Multi-timeframe smart money inflow with pace detection (PR #11)
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -59,7 +59,7 @@ export class SmAccelerationPanel extends BasePanel {
       const inflow4h = d4h?.inflow || 0;
       const inflow24h = d24h?.inflow || 0;
 
-      // Pace ratio: (1h * 4) / 4h — measures acceleration
+      // Pace ratio: (1h * 4) / 4h ··· measures acceleration
       let paceRatio = 0;
       let pace = 'STEADY';
       if (inflow1h > 0 && inflow4h > 0) {
@@ -124,7 +124,7 @@ export class SmAccelerationPanel extends BasePanel {
     for (const r of sorted) {
       const iconUrl = window.mefaiUtils.tokenIcon(r.icon);
       const icon = iconUrl ? `<img src="${iconUrl}" style="width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:4px" onerror="this.style.display='none'">` : '';
-      const paceIcon = r.pace === 'ACCEL' ? '⚡' : r.pace === 'DECEL' ? '↘' : '→';
+      const paceIcon = r.pace === 'ACCEL' ? '·��' : r.pace === 'DECEL' ? '·��' : '·��';
 
       h += `<tr data-a="${r.address}">`;
       h += `<td>${icon}<span style="font-weight:600">${escapeHtml(r.symbol)}</span></td>`;
@@ -133,7 +133,7 @@ export class SmAccelerationPanel extends BasePanel {
       h += `<td class="val-num">${formatCurrency(r.inflow4h)}</td>`;
       h += `<td class="val-num">${formatCurrency(r.inflow24h)}</td>`;
       h += `<td style="color:${consColors[r.consensus]};font-size:10px;font-weight:700">${r.consensus} <span style="font-weight:400;color:var(--text-muted)">(${r.traders})</span></td>`;
-      h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '—'}</td>`;
+      h += `<td class="val-num">${r.price ? '$' + formatPrice(r.price) : '···'}</td>`;
       h += '</tr>';
     }
     h += '</tbody></table>';

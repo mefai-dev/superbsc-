@@ -1,4 +1,4 @@
-// ATH Tracker — Distance from 24h high/low + market cap recovery analysis
+// ATH Tracker ··· Distance from 24h high/low + market cap recovery analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatCurrency, formatPercent, escapeHtml } = window.mefaiUtils;

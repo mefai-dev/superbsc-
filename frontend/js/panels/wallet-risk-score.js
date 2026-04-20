@@ -1,4 +1,4 @@
-// MEFAI Wallet Risk Score — GoPlus address security analysis
+// MEFAI Wallet Risk Score ··· GoPlus address security analysis
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

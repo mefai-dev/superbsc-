@@ -1,4 +1,4 @@
-// Top Trader vs Retail Divergence — Compare pro vs retail positioning
+// Top Trader vs Retail Divergence ··· Compare pro vs retail positioning
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPercent } = window.mefaiUtils;

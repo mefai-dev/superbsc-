@@ -1,4 +1,4 @@
-// Airdrop & Delisting Calendar — Binance listing/delisting announcements
+// Airdrop & Delisting Calendar ··· Binance listing/delisting announcements
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml } = window.mefaiUtils;

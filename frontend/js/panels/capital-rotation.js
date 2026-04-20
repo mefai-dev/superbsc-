@@ -1,4 +1,4 @@
-// MEFAI Capital Rotation Radar — Sector capital flow detection
+// MEFAI Capital Rotation Radar ··· Sector capital flow detection
 import { BasePanel } from '../components/base-panel.js';
 
 const { escapeHtml, formatCurrency, formatPercent } = window.mefaiUtils;

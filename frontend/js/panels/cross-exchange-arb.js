@@ -1,4 +1,4 @@
-// Cross-Exchange Price Arbitrage Monitor — Compare prices across 8 exchanges feeding Binance's index
+// Cross-Exchange Price Arbitrage Monitor ··· Compare prices across 8 exchanges feeding Binance's index
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatPrice, formatPercent } = window.mefaiUtils;
@@ -103,7 +103,7 @@ export class CrossExchangeArbPanel extends BasePanel {
     h += '<div class="cea-stats">';
     h += `<div class="cea-stat"><div class="cea-stat-label">Arb Opps >5bps</div><div class="cea-stat-value" style="color:#f0b90b">${arbOpps}</div></div>`;
     h += `<div class="cea-stat"><div class="cea-stat-label">Avg Spread</div><div class="cea-stat-value">${avgSpread.toFixed(1)} bps</div></div>`;
-    h += `<div class="cea-stat"><div class="cea-stat-label">Max Spread</div><div class="cea-stat-value val-up">${maxSpreadRow?.symbol || '—'} ${maxSpreadRow?.spread?.toFixed(1) || 0}</div></div>`;
+    h += `<div class="cea-stat"><div class="cea-stat-label">Max Spread</div><div class="cea-stat-value val-up">${maxSpreadRow?.symbol || '···'} ${maxSpreadRow?.spread?.toFixed(1) || 0}</div></div>`;
     h += '</div>';
 
     const { renderTable } = window.mefaiTable;
@@ -121,7 +121,7 @@ export class CrossExchangeArbPanel extends BasePanel {
         return `<div class="cea-bar"><div class="cea-bar-fill" style="width:${pct}%;background:${color};left:${v > 0 ? 50 : 50 - pct}%"></div></div> <span class="cea-dev" style="color:${color}">${v > 0 ? '+' : ''}${v.toFixed(1)}</span> <span class="cea-exch">${exch}</span>`;
       }},
       { key: 'minDevExchange', label: 'Cheapest', align: 'center', render: (v, row) => {
-        return `<span class="cea-exch">${v || '—'}</span>`;
+        return `<span class="cea-exch">${v || '···'}</span>`;
       }},
     ];
     h += renderTable(cols, rows, { sortKey: this._sortKey, sortDir: this._sortDir });

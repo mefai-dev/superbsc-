@@ -1,4 +1,4 @@
-"""Binance USDM Futures — public market data (no auth needed)."""
+"""Binance USDM Futures ··· public market data (no auth needed)."""
 
 from fastapi import APIRouter, Query
 from proxy.cache import fetch_json
@@ -186,5 +186,5 @@ async def delivery_price(pair: str = Query("BTCUSDT")):
 
 @router.get("/exchangeInfo")
 async def exchange_info():
-    """Futures exchange info — symbols, contract types, filters."""
+    """Futures exchange info ··· symbols, contract types, filters."""
     return await fetch_json(f"{FAPI_TESTNET}/fapi/v1/exchangeInfo", ttl=600)

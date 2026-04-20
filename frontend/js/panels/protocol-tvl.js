@@ -1,4 +1,4 @@
-// MEFAI Protocol TVL Tracker — BSC protocol rankings from DefiLlama
+// MEFAI Protocol TVL Tracker ··· BSC protocol rankings from DefiLlama
 import { BasePanel } from '../components/base-panel.js';
 
 const { formatCurrency, escapeHtml } = window.mefaiUtils;
@@ -31,7 +31,7 @@ export class ProtocolTvlPanel extends BasePanel {
         const totalTvl = p.tvl || 0;
         return {
           name: p.name || '?',
-          category: p.category || '—',
+          category: p.category || '···',
           bscTvl,
           totalTvl,
           bscPct: totalTvl > 0 ? (bscTvl / totalTvl * 100) : 0,
@@ -77,7 +77,7 @@ export class ProtocolTvlPanel extends BasePanel {
 
     sorted.forEach((p, i) => {
       const chgCls = p.change1d >= 0 ? 'val-up' : 'val-down';
-      const chgArrow = p.change1d >= 0 ? '↑' : '↓';
+      const chgArrow = p.change1d >= 0 ? '·��' : '·�·';
       h += '<tr>';
       h += `<td style="color:var(--text-muted)">${i + 1}</td>`;
       h += `<td style="font-weight:600">${escapeHtml(p.name)}</td>`;

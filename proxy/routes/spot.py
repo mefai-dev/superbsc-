@@ -75,7 +75,7 @@ _tickers_cache = {"data": None, "ts": 0}
 async def tickers(
     symbols: Optional[str] = Query(None, description="Comma-separated symbols"),
 ):
-    """Get 24hr ticker data — pre-filtered USDT pairs, sorted by volume."""
+    """Get 24hr ticker data ··· pre-filtered USDT pairs, sorted by volume."""
     import time as _time
 
     # Aggressive caching: keep tickers for 30s in a dedicated fast-path cache
@@ -92,7 +92,7 @@ async def tickers(
             url, params={"symbols": _json.dumps(symbol_list)}, ttl=30
         )
 
-    # No params = all tickers — use aggressive cache + filter
+    # No params = all tickers ··· use aggressive cache + filter
     if _tickers_cache["data"] and now - _tickers_cache["ts"] < 30:
         return _tickers_cache["data"]
 

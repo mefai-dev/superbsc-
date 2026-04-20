@@ -1,4 +1,4 @@
-/* Market DNA — Standalone (superbsc theme colors, NO main.css import) */
+/* Market DNA ··· Standalone (superbsc theme colors, NO main.css import) */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0b0e11;--bgp:#1e2329;--bgh:#2b3139;--bgi:#1e2329;
@@ -14,7 +14,7 @@ body{display:flex;flex-direction:column}
 .warn{color:var(--acc)!important}
 .hidden{display:none!important}
 
-/* ── Header 44px ── */
+/* ······ Header 44px ······ */
 #hdr{display:flex;align-items:center;justify-content:space-between;height:44px;padding:0 16px;background:var(--bgp);border-bottom:1px solid var(--brd);flex-shrink:0;z-index:100}
 .hdr-l{display:flex;align-items:center;gap:0}
 .hdr-r{display:flex;align-items:center;gap:10px}
@@ -29,17 +29,17 @@ body{display:flex;flex-direction:column}
 .dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:var(--txm)}
 .dot.ok{background:var(--up)}.dot.err{background:var(--dn)}
 
-/* ── Metrics 28px ── */
+/* ······ Metrics 28px ······ */
 #metrics{display:flex;align-items:center;height:28px;padding:0 16px;background:var(--bg);border-bottom:1px solid var(--brd);flex-shrink:0;overflow-x:auto}
 .met{display:flex;align-items:center;gap:6px;padding:0 10px;white-space:nowrap}
 .met-k{font-size:10px;font-weight:600;color:var(--txm);text-transform:uppercase;letter-spacing:.5px}
 .met-v{font-size:11px;font-weight:600;color:var(--tx);font-variant-numeric:tabular-nums}
 .sep{width:1px;height:14px;background:var(--brd);flex-shrink:0;font-style:normal}
 
-/* ── Main 3-col ── */
+/* ······ Main 3-col ······ */
 #main{flex:1;display:flex;overflow:hidden;min-height:0}
 
-/* ── Side Panels ── */
+/* ······ Side Panels ······ */
 .side-panel{width:210px;flex-shrink:0;display:flex;flex-direction:column;background:var(--bgp);overflow:hidden}
 #sp-left{border-right:1px solid var(--brd)}
 #sp-right{border-left:1px solid var(--brd)}
@@ -69,12 +69,12 @@ body{display:flex;flex-direction:column}
 .bar-f{height:100%;border-radius:1.5px;min-width:2px;transition:width .3s}
 .bar-lg{width:100%;height:3px;background:var(--bg);border-radius:1.5px;overflow:hidden;margin-top:3px}
 
-/* ── Canvas ── */
+/* ······ Canvas ······ */
 #canvas-wrap{flex:1;position:relative;overflow:hidden;cursor:grab;background:var(--bg);min-width:0}
 #canvas-wrap:active{cursor:grabbing}
 #cv{width:100%!important;height:100%!important;display:block}
 
-/* ── Streams (data flowing in CSS) ── */
+/* ······ Streams (data flowing in CSS) ······ */
 .streams{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:5}
 .stl{position:absolute;height:1px;opacity:0}
 .stl1{top:12%;width:50%;left:-50%;background:linear-gradient(90deg,transparent,var(--up) 40%,var(--acc) 70%,transparent);animation:sfl 3.5s linear infinite}
@@ -86,7 +86,7 @@ body{display:flex;flex-direction:column}
 @keyframes sfl{0%{transform:translateX(0);opacity:0}5%{opacity:.6}50%{opacity:.3}95%{opacity:.5}100%{transform:translateX(200vw);opacity:0}}
 @keyframes sfr{0%{transform:translateX(0);opacity:0}5%{opacity:.6}50%{opacity:.3}95%{opacity:.5}100%{transform:translateX(-200vw);opacity:0}}
 
-/* ── Corner overlays ── */
+/* ······ Corner overlays ······ */
 .cov{position:absolute;width:160px;background:rgba(11,14,17,.9);border:1px solid var(--brd);font-size:10px;z-index:8;pointer-events:none;max-height:32%;overflow:hidden}
 .cov-tl{top:6px;left:6px}.cov-tr{top:6px;right:6px}.cov-bl{bottom:6px;left:6px}.cov-br{bottom:6px;right:6px}
 .cov-h{padding:3px 7px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--txm);border-bottom:1px solid var(--brd);background:rgba(30,35,41,.95)}
@@ -94,14 +94,14 @@ body{display:flex;flex-direction:column}
 .cov-r{display:flex;justify-content:space-between;padding:1px 7px;font-size:10px;color:var(--tx2)}
 .cov-r .s{color:var(--tx);font-weight:500}
 
-/* ── Tooltip ── */
+/* ······ Tooltip ······ */
 .tip{position:absolute;pointer-events:none;background:var(--bgp);border:1px solid var(--brd);box-shadow:0 4px 16px rgba(0,0,0,.5);padding:8px 12px;font-size:11px;line-height:1.5;z-index:50;min-width:200px}
 .tip.hidden{opacity:0;display:none}
 .tip-s{font-weight:700;font-size:12px;color:var(--acc);margin-bottom:3px;letter-spacing:.5px}
 .tip-r{display:flex;justify-content:space-between;gap:14px}
 .tip-k{color:var(--txm);font-size:10px;text-transform:uppercase}.tip-v{font-variant-numeric:tabular-nums}
 
-/* ── Detail Panel ── */
+/* ······ Detail Panel ······ */
 .detail-panel{position:fixed;top:0;right:0;bottom:0;width:320px;background:var(--bgp);border-left:1px solid var(--brd);z-index:200;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .2s ease}
 .detail-panel.open{transform:translateX(0)}
 .det-x{background:none;border:none;color:var(--txm);font-size:18px;cursor:pointer;padding:2px 6px;line-height:1}
@@ -111,7 +111,7 @@ body{display:flex;flex-direction:column}
 .det-r{display:flex;justify-content:space-between;padding:2px 0;font-size:11px}
 .det-r .l{color:var(--tx2)}.det-r .v{font-weight:500;font-variant-numeric:tabular-nums}
 
-/* ── Mobile ── */
+/* ······ Mobile ······ */
 #mob{flex:1;overflow-y:auto}
 .mc{display:flex;align-items:center;gap:8px;padding:6px 10px;border-bottom:1px solid var(--brd);cursor:pointer}
 .mc:hover{background:var(--bgh)}
@@ -119,22 +119,22 @@ body{display:flex;flex-direction:column}
 .mc-i{flex:1;min-width:0}.mc-s{font-weight:600;font-size:11px}.mc-m{font-size:10px;color:var(--txm)}
 .mc-v{text-align:right;font-size:10px;line-height:1.5}
 
-/* ── Data Fly Particles ── */
+/* ······ Data Fly Particles ······ */
 .dfly{position:absolute;font-size:15px;font-weight:800;font-family:var(--f);pointer-events:none;z-index:12;white-space:nowrap;text-shadow:0 0 10px currentColor,0 0 20px currentColor;opacity:0;letter-spacing:.5px}
 
-/* ── Status Bar 26px ── */
+/* ······ Status Bar 26px ······ */
 #sbar{display:flex;align-items:center;justify-content:space-between;height:26px;padding:0 16px;background:var(--bgp);border-top:1px solid var(--brd);font-size:10px;color:var(--txm);letter-spacing:.3px;flex-shrink:0;z-index:100}
 .sb-l,.sb-r{display:flex;align-items:center;gap:8px}
 .sb-sep{color:var(--brd)}
 
-/* ── Scrollbar ── */
+/* ······ Scrollbar ······ */
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--brd);border-radius:1.5px}
 ::-webkit-scrollbar-thumb:hover{background:var(--txm)}
 ::selection{background:rgba(240,185,11,.3)}
 
-/* ── Responsive ── */
+/* ······ Responsive ······ */
 @media(max-width:1100px){.side-panel{width:170px}.cov{width:140px}}
 @media(max-width:900px){.side-panel{display:none!important}.cov{display:none}#canvas-wrap{border:none}}
 @media(max-width:768px){
